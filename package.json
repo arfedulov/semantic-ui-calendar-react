@@ -1,0 +1,17 @@
+{
+  "name": "semantic-ui-calendar-react",
+  "version": "1.0.0",
+  "description": "date/time picker built from semantic-ui elements",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "semantic",
+    "react",
+    "calendar",
+    "datepicker"
+  ],
+  "author": "Artem Fedulov",
+  "license": "MIT"
+}
