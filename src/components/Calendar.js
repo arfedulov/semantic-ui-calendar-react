@@ -40,13 +40,14 @@ function Calendar(props) {
     onNextBtnClick,
     onPrevBtnClick,
     activeDate,
+    showedMonth,
     className
   } = props;
-  const data = getArrayOfWeeks(activeDate);
-  const _getBodyRow = (week) => {
+  const data = getArrayOfWeeks(showedMonth);
+  const _getBodyRow = (week, key) => {
     const days = week.map((day) => {
       const active = compareDates(day, activeDate);
-      const disabled = !isDayInMonth(day, activeDate);
+      const disabled = !isDayInMonth(day, showedMonth);
       return (
         <Cell
           onClick={onDateClick.bind(null, day)}
@@ -58,14 +59,14 @@ function Calendar(props) {
       );
     });
     return (
-      <Table.Row>
+      <Table.Row key={key}>
         { days }
       </Table.Row>
     );
   };
 
   const _getBody = (weeks) => {
-    return weeks.map((week) => _getBodyRow(week));
+    return weeks.map((week) => _getBodyRow(week, week[0].format('YYYY-MM-DD')));
   };
 
   const _getWeekDayHeaders = () => {
@@ -98,7 +99,7 @@ function Calendar(props) {
               onClick={onPrevBtnClick}
               name="chevron left" />
           </Table.HeaderCell>
-          <Table.HeaderCell className={cellClasses} colSpan="5">{activeDate.format('MMMM YYYY')}</Table.HeaderCell>
+          <Table.HeaderCell className={cellClasses} colSpan="5">{showedMonth.format('MMMM YYYY')}</Table.HeaderCell>
           <Table.HeaderCell className={cellClasses} colSpan="1">
             <Icon
               className={buttonClasses}
@@ -135,6 +136,8 @@ Calendar.propTypes = {
   onPrevBtnClick: PropTypes.func.isRequired,
   /** Currently selected date */
   activeDate: PropTypes.instanceOf(moment).isRequired,
+  /** calendar shows month of this `moment` */
+  showedMonth: PropTypes.instanceOf(moment).isRequired,
   className: PropTypes.string
 };
 
