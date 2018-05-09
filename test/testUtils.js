@@ -95,7 +95,7 @@ test('Utils testing: getArrayOfWeeks (ru locale)', (t) => {
     return true;
   };
 
-  const testingValue = getArrayOfWeeks();
+  const testingValue = getArrayOfWeeks(moment());
   t.equal(testingValue.length, expected.length, '`getArrayOfWeeks` return array of length 6');
   t.equal(weekLengthChecker(testingValue), true, 'each week has length 7');
   t.equal(comparator(testingValue, expected), true, '`getArrayOfWeeks` return expected array of weeks');
@@ -192,7 +192,7 @@ test('Utils testing: getArrayOfWeeks (en locale)', (t) => {
     return true;
   };
 
-  const testingValue = getArrayOfWeeks();
+  const testingValue = getArrayOfWeeks(moment());
   t.equal(testingValue.length, expected.length, '`getArrayOfWeeks` return array of length 6');
   t.equal(weekLengthChecker(testingValue), true, 'each week has length 7');
   t.equal(comparator(testingValue, expected), true, '`getArrayOfWeeks` return expected array of weeks');

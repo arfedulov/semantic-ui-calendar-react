@@ -16,14 +16,11 @@
   "author": "Artem Fedulov",
   "license": "MIT",
   "peerDependencies": {
-    "aphrodite": "^2.2.0",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
-    "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.80.0"
   },
   "devDependencies": {
-    "aphrodite": "^2.2.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
@@ -32,6 +29,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
     "doubler": "^0.6.0",
     "enzyme": "^3.3.0",
