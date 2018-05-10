@@ -16,7 +16,19 @@
     "calendar",
     "datepicker"
   ],
-  "author": "Artem Fedulov",
+  "author": "Artem Fedulov <arfedulov@gmail.com>",
+  "homepage": "https://github.com/arfedulov/semantic-ui-calendar-react#readme",
+  "bugs": {
+    "url": "https://github.com/arfedulov/semantic-ui-calendar-react/issues"
+  },
+  "files": [
+    "src",
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arfedulov/semantic-ui-calendar-react.git"
+  },
   "license": "MIT",
   "peerDependencies": {
     "react": "^16.3.2",
