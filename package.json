@@ -1,11 +1,14 @@
 {
   "name": "semantic-ui-calendar-react",
-  "version": "1.0.0",
+  "version": "0.1.3",
   "description": "date/time picker built from semantic-ui elements",
   "main": "dist/index.js",
   "scripts": {
     "test": "npx tape -r babel-register ./test/test*.js | tap-spec",
-    "start": "npx webpack-dev-server"
+    "start": "npx webpack-dev-server",
+    "prebuild": "npx rimraf dist/*",
+    "build": "npx babel src -d dist",
+    "postbuild": "npx mkdirp dist/css && uglifycss src/css/calendar.css > dist/css/calendar.min.css"
   },
   "keywords": [
     "semantic",
@@ -31,18 +34,22 @@
     "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-1": "^6.24.1",
     "babel-register": "^6.26.0",
+    "cpy-cli": "^1.0.1",
     "doubler": "^0.6.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.19.1",
     "eslint-plugin-react": "^7.7.0",
+    "mkdirp": "^0.5.1",
     "mockdate": "^2.0.2",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
+    "rimraf": "^2.6.2",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.80.0",
     "tap-spec": "^4.1.1",
     "tape": "^4.9.0",
+    "uglifycss": "0.0.29",
     "webpack": "^4.7.0",
     "webpack-cli": "^2.1.3",
     "webpack-dev-server": "^3.1.4"

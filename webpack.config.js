@@ -1,34 +1,13 @@
 const path = require('path');
-
-const baseConfig = {
-  module: {
-    rules: [
-      {
-        test: /(\.jsx)|(\.js)$/,
-        exclude: /node-modules/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: ['env', 'stage-0', 'react'],
-          }
-        }
-      }
-    ]
-  },
-  devServer: {
-    contentBase: path.resolve(__dirname, 'dist'),
-    port: 9000
-  }
-};
+const baseConfig = require('./webpack.base.config.js');
 
 const config = Object.assign({
   entry: {
-    base: './src/index.js',
-    test: './src/test.js'
+    calendar: './example/calendar.js'
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, 'example'),
+    filename: '[name].bundle.js'
   },
   mode: 'development'
 }, baseConfig);

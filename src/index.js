@@ -1,0 +1,1 @@
+export { CalendarContainer as Calendar } from './components';

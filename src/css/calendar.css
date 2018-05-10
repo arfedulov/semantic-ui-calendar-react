@@ -1,0 +1,21 @@
+.tmp-calendar-container {
+  padding: 100px;
+}
+
+.suir-calendar.cell {
+  border: none !important;
+}
+
+.suir-calendar.week-day {
+  border: none !important;
+  border-bottom: 1px solid rgba(34,36,38,.1) !important;
+}
+
+.suir-calendar.date:hover {
+  outline: 1px solid #85b7d9;
+  cursor: pointer;
+}
+
+.suir-calendar.button:hover {
+  cursor: pointer;
+}
