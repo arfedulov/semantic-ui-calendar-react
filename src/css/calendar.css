@@ -1,5 +1,7 @@
 .tmp-calendar-container {
-  padding: 100px;
+  padding: 0 25px;
+  max-width: 500px;
+  margin: 50px auto;
 }
 
 .suir-calendar.cell {
@@ -11,7 +13,11 @@
   border-bottom: 1px solid rgba(34,36,38,.1) !important;
 }
 
-.suir-calendar.date:hover {
+.suir-calendar.time-picker-header {
+  border-bottom: 1px solid rgba(34,36,38,.1) !important;
+}
+
+.suir-calendar.date:hover, .suir-calendar.time:hover {
   outline: 1px solid #85b7d9;
   cursor: pointer;
 }

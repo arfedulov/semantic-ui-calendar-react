@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Calendar } from '../src';
+import { DatePicker, TimePicker, DateTimePicker } from '../src';
 import moment from 'moment';
 
 moment.locale('en');
@@ -8,7 +8,12 @@ moment.locale('en');
 function App(props) {
   return (
     <div className="tmp-calendar-container">
-      <Calendar />
+      <h2>Inline datepicker</h2>
+      <DatePicker />
+      <h2>Time picker</h2>
+      <TimePicker />
+      <h2>DateTime picker</h2>
+      <DateTimePicker />
     </div>
   );
 }
