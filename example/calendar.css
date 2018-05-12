@@ -25,3 +25,7 @@
 .suir-calendar.button:hover {
   cursor: pointer;
 }
+
+.suir-calendar.popup {
+  padding: 0;
+}

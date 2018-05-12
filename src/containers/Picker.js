@@ -10,11 +10,33 @@ class Picker extends React.Component {
     super(props);
 
     this.state = {
-      activeDate: '',
+      activeDate: null,
       showedMonth: moment(),
       activeHour: '',
       activeMinute: ''
     };
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const {
+      activeDate,
+      activeHour,
+      activeMinute
+    } = this.state;
+    const {
+      onDateChange,
+      onTimeChange
+    } = this.props;
+    const dateChanged = activeDate && activeDate.isSame && !activeDate.isSame(prevState.activeDate);
+    const timeChanged = activeHour
+      && activeMinute && (activeHour !== prevState.activeHour || activeMinute !== prevState.activeMinute);
+
+    if (dateChanged) {
+      onDateChange(activeDate);
+    }
+    if (timeChanged) {
+      onTimeChange(activeHour + ':' + activeMinute);
+    }
   }
 
   onDateClick = (clickedDate) => {
@@ -118,11 +140,17 @@ class Picker extends React.Component {
     const {
       pickDate,
       pickTime,
-      pickDateTime
+      pickDateTime,
+      className
     } = this.props;
+    const containerClasses = className;
     if (pickDate) {
       return (
-        <Table unstackable celled textAlign="center">
+        <Table
+          className={containerClasses}
+          unstackable
+          celled
+          textAlign="center">
           <DateTimePickerHeader
             onNextBtnClick={this.onNextBtnClick}
             onPrevBtnClick={this.onPrevBtnClick}
@@ -139,7 +167,11 @@ class Picker extends React.Component {
     }
     if (pickTime) {
       return (
-        <Table unstackable celled textAlign="center">
+        <Table
+          className={containerClasses}
+          unstackable
+          celled
+          textAlign="center">
           <TimePickerComponent
             activeHour={this.state.activeHour}
             activeMinute={this.state.activeMinute}
@@ -150,7 +182,11 @@ class Picker extends React.Component {
     }
     if (pickDateTime) {
       return (
-        <Table unstackable celled textAlign="center">
+        <Table
+          className={containerClasses}
+          unstackable
+          celled
+          textAlign="center">
           { this.getDateTimePicker() }
         </Table>
       );
@@ -161,13 +197,23 @@ class Picker extends React.Component {
 Picker.propTypes = {
   pickDate: PropTypes.bool,
   pickTime: PropTypes.bool,
-  pickDateTime: PropTypes.bool
+  pickDateTime: PropTypes.bool,
+  /** (newDate) => {} 
+   * 
+   * @param newDate {moment}
+  */
+  onDateChange: PropTypes.func,
+  /** (newTime) => {}
+   * 
+   * @param newTime {string} hh:mm
+   */
+  onTimeChange: PropTypes.func,
+  className: PropTypes.string
 };
 
 Picker.defaultProps = {
-  pickDate: false,
-  pickTime: false,
-  pickDateTime: false
+  onDateChange: () => {},
+  onTimeChange: () => {}
 };
 
 export default Picker;

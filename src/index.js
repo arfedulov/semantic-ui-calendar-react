@@ -3,3 +3,8 @@ export {
   TimePicker,
   DateTimePicker
 } from './containers';
+export {
+  DateInput,
+  TimeInput,
+  DateTimeInput
+} from './components';

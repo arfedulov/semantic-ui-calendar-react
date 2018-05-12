@@ -1,6 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { DatePicker, TimePicker, DateTimePicker } from '../src';
+import {
+  DatePicker,
+  TimePicker,
+  DateTimePicker,
+  DateInput,
+  TimeInput,
+  DateTimeInput } from '../src';
 import moment from 'moment';
 
 moment.locale('en');
