@@ -35,20 +35,36 @@ class Picker extends React.Component {
     });
   }
 
-  onNextBtnClick = () => {
-    this.setState(({ showedMonth }) => {
-      let nextMonth = showedMonth.clone();
-      nextMonth.add(1, 'M');
-      return { showedMonth: nextMonth };
-    });
+  onNextBtnClick = ({ day }) => {
+    if (day) {
+      this.setState(({ activeDate }) => {
+        let nextDay = activeDate.clone();
+        nextDay.add(1, 'd');
+        return { activeDate: nextDay };
+      });
+    } else {
+      this.setState(({ showedMonth }) => {
+        let nextMonth = showedMonth.clone();
+        nextMonth.add(1, 'M');
+        return { showedMonth: nextMonth };
+      });
+    }
   }
 
-  onPrevBtnClick = () => {
-    this.setState(({ showedMonth }) => {
-      let prevMonth = showedMonth.clone();
-      prevMonth.add(-1, 'M');
-      return { showedMonth: prevMonth };
-    });
+  onPrevBtnClick = ({ day }) => {
+    if (day) {
+      this.setState(({ activeDate }) => {
+        let prevDay = activeDate.clone();
+        prevDay.add(-1, 'd');
+        return { activeDate: prevDay };
+      });
+    } else {
+      this.setState(({ showedMonth }) => {
+        let prevMonth = showedMonth.clone();
+        prevMonth.add(-1, 'M');
+        return { showedMonth: prevMonth };
+      });
+    }
   }
 
   getActiveDate = () => {
@@ -83,8 +99,8 @@ class Picker extends React.Component {
     return (
       <React.Fragment>
         <DateTimePickerHeader
-          onNextBtnClick={this.onNextBtnClick}
-          onPrevBtnClick={this.onPrevBtnClick}
+          onNextBtnClick={this.onNextBtnClick.bind(null, { day: true })}
+          onPrevBtnClick={this.onPrevBtnClick.bind(null, { day: true })}
           showedDate={activeDate}
           showDate
           showWeeks={false}
