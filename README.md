@@ -16,7 +16,7 @@ Let's create a form that needs date/time/date-time input fields. We use ``semant
 ``TimeInput`` and ``DateTimeInput`` elements.
 
 Import input components:
-```
+```javascript
 import {
   DateInput,
   TimeInput,
@@ -24,7 +24,7 @@ import {
 } from 'semantic-ui-calendar-react';
 ```
 Then build a form:
-```
+```javascript
 class DateTimeForm extends React.Component {
   constructor(props) {
     super(props);
