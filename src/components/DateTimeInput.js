@@ -38,10 +38,16 @@ class DateTimeInput extends React.Component {
   }
 
   render() {
-    const { value } = this.props;
+    const {
+      value,
+      className,
+      placeholder
+    } = this.props;
   
     const inputElement = (
       <Input
+        placeholder={placeholder}
+        className={className}
         value={value}
         icon="calendar"
         iconPosition="left"
@@ -65,11 +71,14 @@ DateTimeInput.propTypes = {
   /** (value) => {} where value has format 'DD-MM-YYYY hh:mm' */
   onChange: PropTypes.func,
   /** selected date and time value in format 'DD-MM-YYYY hh:mm' */
-  value: PropTypes.string
+  value: PropTypes.string,
+  className: PropTypes.string,
+  placeholder: PropTypes.string
 };
 
 DateTimeInput.defaultProps = {
-  value: ''
+  value: '',
+  placeholder: ''
 };
 
 export default DateTimeInput;

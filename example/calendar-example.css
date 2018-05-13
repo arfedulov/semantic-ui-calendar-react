@@ -1,0 +1,9 @@
+.example-calendar-container {
+  padding: 0 25px;
+  max-width: 500px;
+  margin: 50px auto;
+}
+
+.example-calendar-input {
+  margin: 15px 0;
+}

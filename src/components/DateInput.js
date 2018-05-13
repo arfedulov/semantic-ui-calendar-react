@@ -6,7 +6,9 @@ import PropTypes from 'prop-types';
 function DateInput(props) {
   const {
     onChange,
-    value
+    value,
+    className,
+    placeholder
   } = props;
   const onDateChange = (newDate) => {
     onChange(newDate.format('DD-MM-YYYY'));
@@ -14,7 +16,9 @@ function DateInput(props) {
 
   const inputElement = (
     <Input
+      className={className}
       value={value}
+      placeholder={placeholder}
       icon="calendar"
       iconPosition="left"
       type="text" />
@@ -35,11 +39,14 @@ DateInput.propTypes = {
   /** (value) => {} where value has format 'DD-MM-YYYY' */
   onChange: PropTypes.func,
   /** selected date value in format 'DD-MM-YYYY' */
-  value: PropTypes.string
+  value: PropTypes.string,
+  className: PropTypes.string,
+  placeholder: PropTypes.string
 };
 
 DateInput.defaultProps = {
-  value: ''
+  value: '',
+  placeholder: ''
 };
 
 export default DateInput;
