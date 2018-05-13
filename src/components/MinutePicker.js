@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getMinutes } from '../utils.js';
 import { Table } from 'semantic-ui-react';
+import { getUnhandledProps } from '../utils.js';
 
 function MinutePicker(props) {
   const {
@@ -9,6 +10,8 @@ function MinutePicker(props) {
     hour,
     activeMinute
   } = props;
+  const rest = getUnhandledProps(MinutePicker, props);
+
   const minutes = getMinutes().map((minute) => (
     <Table.Cell
       onClick={onTimeClick.bind(null, minute)}
@@ -28,7 +31,7 @@ function MinutePicker(props) {
     return rows;
   }().map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
-    <Table.Body>
+    <Table.Body { ...rest }>
       { rows }
     </Table.Body>
   );

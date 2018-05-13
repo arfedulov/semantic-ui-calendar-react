@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getHours } from '../utils.js';
+import { getHours, getUnhandledProps } from '../utils.js';
 import { Table } from 'semantic-ui-react';
 
 function HourPicker(props) {
@@ -8,6 +8,8 @@ function HourPicker(props) {
     onTimeClick,
     activeHour
   } = props;
+  const rest = getUnhandledProps(HourPicker, props);
+
   const hours = getHours().map((hour) => (
     <Table.Cell
       onClick={onTimeClick.bind(null, hour)}
@@ -27,7 +29,7 @@ function HourPicker(props) {
     return rows;
   }().map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
-    <Table.Body>
+    <Table.Body { ...rest }>
       { rows }
     </Table.Body>
   );

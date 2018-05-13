@@ -2,19 +2,20 @@ import React from 'react';
 import { Input, Popup } from 'semantic-ui-react';
 import { TimePicker } from '../containers';
 import PropTypes from 'prop-types';
+import { getUnhandledProps } from '../utils.js';
 
 function TimeInput(props) {
   const {
     onChange,
     value,
-    className,
     placeholder
   } = props;
+  const rest = getUnhandledProps(TimeInput, props);
 
   const inputElement = (
     <Input
+      { ...rest }
       placeholder={placeholder}
-      className={className}
       value={value}
       icon="time"
       iconPosition="left"
@@ -37,7 +38,6 @@ TimeInput.propTypes = {
   onChange: PropTypes.func,
   /** selected time value in format 'hh:mm' */
   value: PropTypes.string,
-  className: PropTypes.string,
   placeholder: PropTypes.string
 };
 

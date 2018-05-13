@@ -40,6 +40,7 @@
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
+    "babel-plugin-transform-react-handled-props": "^1.0.0",
     "babel-preset-airbnb": "^2.4.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",

@@ -2,6 +2,7 @@ import React from 'react';
 import { Input, Popup } from 'semantic-ui-react';
 import { DateTimePicker } from '../containers';
 import PropTypes from 'prop-types';
+import { getUnhandledProps } from '../utils.js';
 
 class DateTimeInput extends React.Component {
   constructor(props) {
@@ -40,14 +41,14 @@ class DateTimeInput extends React.Component {
   render() {
     const {
       value,
-      className,
       placeholder
     } = this.props;
-  
+    const rest = getUnhandledProps(DateTimeInput, this.props);
+
     const inputElement = (
       <Input
+        { ...rest }
         placeholder={placeholder}
-        className={className}
         value={value}
         icon="calendar"
         iconPosition="left"
@@ -72,7 +73,6 @@ DateTimeInput.propTypes = {
   onChange: PropTypes.func,
   /** selected date and time value in format 'DD-MM-YYYY hh:mm' */
   value: PropTypes.string,
-  className: PropTypes.string,
   placeholder: PropTypes.string
 };
 

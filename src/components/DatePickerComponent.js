@@ -1,22 +1,22 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
-import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import { DatePickerCell as Cell } from './DatePickerCell.js';
 import moment from 'moment';
 import { 
   compareDates,
   isDayInMonth,
-  getArrayOfWeeks
+  getArrayOfWeeks,
+  getUnhandledProps
 } from '../utils.js';
 
 function DatePickerComponent(props) {
   const {
     onDateClick,
     activeDate,
-    showedMonth,
-    className
+    showedMonth
   } = props;
+  const rest = getUnhandledProps(DatePickerComponent, props);
   const data = getArrayOfWeeks(showedMonth);
   const _getRow = (week, key) => {
     const days = week.map((day) => {
@@ -43,9 +43,8 @@ function DatePickerComponent(props) {
     return weeks.map((week) => _getRow(week, week[0].format('YYYY-MM-DD')));
   };
 
-  const classes = ClassNames(className);
   return (
-    <Table.Body>
+    <Table.Body { ...rest }>
       { _getTableContent(data) }
     </Table.Body>
   );
@@ -60,8 +59,7 @@ DatePickerComponent.propTypes = {
   /** Currently selected date */
   activeDate: PropTypes.instanceOf(moment).isRequired,
   /** calendar shows month of this `moment` */
-  showedMonth: PropTypes.instanceOf(moment).isRequired,
-  className: PropTypes.string
+  showedMonth: PropTypes.instanceOf(moment).isRequired
 };
 
 export default DatePickerComponent;

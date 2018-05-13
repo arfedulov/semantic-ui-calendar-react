@@ -2,21 +2,21 @@ import React from 'react';
 import { Input, Popup } from 'semantic-ui-react';
 import { DatePicker } from '../containers';
 import PropTypes from 'prop-types';
+import { getUnhandledProps } from '../utils.js';
 
 function DateInput(props) {
   const {
     onChange,
     value,
-    className,
     placeholder
   } = props;
   const onDateChange = (newDate) => {
     onChange(newDate.format('DD-MM-YYYY'));
   };
-
+  const rest = getUnhandledProps(DateInput, props);
   const inputElement = (
     <Input
-      className={className}
+      { ...rest }
       value={value}
       placeholder={placeholder}
       icon="calendar"
@@ -40,7 +40,6 @@ DateInput.propTypes = {
   onChange: PropTypes.func,
   /** selected date value in format 'DD-MM-YYYY' */
   value: PropTypes.string,
-  className: PropTypes.string,
   placeholder: PropTypes.string
 };
 

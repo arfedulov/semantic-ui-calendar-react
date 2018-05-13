@@ -10,6 +10,7 @@ const baseConfig = {
           loader: 'babel-loader',
           options: {
             presets: ['env', 'stage-0', 'react'],
+            plugins: ['transform-react-handled-props']
           }
         }
       }

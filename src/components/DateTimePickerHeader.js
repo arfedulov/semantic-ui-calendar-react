@@ -3,7 +3,7 @@ import { Table, Icon } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { getWeekDays } from '../utils.js';
+import { getWeekDays, getUnhandledProps } from '../utils.js';
 
 function DateTimePickerHeader(props) {
   const {
@@ -14,6 +14,7 @@ function DateTimePickerHeader(props) {
     showWeeks,
     width
   } = props;
+  const rest = getUnhandledProps(DateTimePickerHeader, props);
 
   const _getWeekDayHeaders = () => {
     return getWeekDays().map((weekDay) => (
@@ -36,7 +37,7 @@ function DateTimePickerHeader(props) {
     'button'
   );
   return (
-    <Table.Header>
+    <Table.Header { ...rest }>
       <Table.Row>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon

@@ -13,6 +13,7 @@ function TimePickerComponent(props) {
     activeHour,
     activeMinute
   } = props;
+
   if (activeHour) {
     return (
       <React.Fragment>

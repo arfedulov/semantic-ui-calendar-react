@@ -4,6 +4,7 @@ import { TimePickerComponent } from '../components';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
+import { getUnhandledProps } from '../utils.js';
 
 class Picker extends React.Component {
   constructor(props) {
@@ -140,14 +141,14 @@ class Picker extends React.Component {
     const {
       pickDate,
       pickTime,
-      pickDateTime,
-      className
+      pickDateTime
     } = this.props;
-    const containerClasses = className;
+    const rest = getUnhandledProps(Picker, this.props);
+
     if (pickDate) {
       return (
         <Table
-          className={containerClasses}
+          { ...rest }
           unstackable
           celled
           textAlign="center">
@@ -168,7 +169,7 @@ class Picker extends React.Component {
     if (pickTime) {
       return (
         <Table
-          className={containerClasses}
+          { ...rest }
           unstackable
           celled
           textAlign="center">
@@ -183,7 +184,7 @@ class Picker extends React.Component {
     if (pickDateTime) {
       return (
         <Table
-          className={containerClasses}
+          { ...rest }
           unstackable
           celled
           textAlign="center">
@@ -207,8 +208,7 @@ Picker.propTypes = {
    * 
    * @param newTime {string} hh:mm
    */
-  onTimeChange: PropTypes.func,
-  className: PropTypes.string
+  onTimeChange: PropTypes.func
 };
 
 Picker.defaultProps = {

@@ -2,6 +2,7 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
+import { getUnhandledProps } from '../utils.js';
 
 function DatePickerCell(props) {
   const {
@@ -16,8 +17,10 @@ function DatePickerCell(props) {
     'suir-calendar',
     'date'
   );
+  const rest = getUnhandledProps(DatePickerCell, props);
   return (
     <Table.Cell
+      { ...rest }
       onClick={onClick}
       active={active}
       disabled={disabled}
