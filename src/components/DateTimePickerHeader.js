@@ -10,6 +10,7 @@ function DateTimePickerHeader(props) {
     onNextBtnClick,
     onPrevBtnClick,
     showedDate,
+    showedRange,
     showDate,
     showWeeks,
     width
@@ -32,12 +33,35 @@ function DateTimePickerHeader(props) {
     'cell',
     showWeeks? '' : 'time-picker-header'
   );
+  
   const buttonClasses = ClassNames(
     'suir-calendar',
     'button'
   );
+
+  const getRangeRow = () => {
+    const getContent = () => {
+      const { start, end } = showedRange;
+      if (start && end) {
+        return start.format('MMM DD, YYYY') + ' - ' + end.format('MMM DD, YYYY');
+      }
+      if (start) {
+        return start.format('MMMM DD, YYYY') + ' - ' + '. . .';
+      }
+      return '. . . - . . .';
+    };
+    return (
+      <Table.Row>
+        <Table.HeaderCell className="suir-calendar cell" colSpan="7">
+          { getContent() }
+        </Table.HeaderCell>
+      </Table.Row>
+    );
+  };
+
   return (
     <Table.Header { ...rest }>
+      { showedRange && getRangeRow() }
       <Table.Row>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
@@ -46,7 +70,7 @@ function DateTimePickerHeader(props) {
             name="chevron left" />
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan={(parseInt(width) - 2).toString()}>
-          {showDate? showedDate.format('MMMM DD, YYYY') : showedDate.format('MMMM YYYY')}
+          { showDate? showedDate.format('MMMM DD, YYYY') : showedDate.format('MMMM YYYY') }
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
@@ -63,10 +87,14 @@ function DateTimePickerHeader(props) {
 DateTimePickerHeader.propTypes = {
   onNextBtnClick: PropTypes.func.isRequired,
   onPrevBtnClick: PropTypes.func.isRequired,
-  /** calendar shows date of this `moment` */
-  showedDate: PropTypes.instanceOf(moment).isRequired,
   /** Header's width in table columns */
   width: PropTypes.string.isRequired,
+  /** calendar shows date of this `moment` */
+  showedDate: PropTypes.instanceOf(moment).isRequired,
+  showedRange: PropTypes.shape({
+    start: PropTypes.instanceOf(moment),
+    end: PropTypes.instanceOf(moment)
+  }),
   showDate: PropTypes.bool,
   showWeeks: PropTypes.bool,
   className: PropTypes.string

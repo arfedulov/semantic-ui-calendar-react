@@ -1,5 +1,5 @@
 import test from 'tape';
-import { getArrayOfWeeks, compareDates } from '../src/utils.js';
+import { getArrayOfWeeks, isActiveDate } from '../src/utils.js';
 import moment from 'moment';
 import mockdate from 'mockdate';
 
@@ -97,8 +97,8 @@ test('Utils testing: getArrayOfWeeks (ru locale)', (t) => {
 
   const testingValue = getArrayOfWeeks(moment());
   t.equal(testingValue.length, expected.length, '`getArrayOfWeeks` return array of length 6');
-  t.equal(weekLengthChecker(testingValue), true, 'each week has length 7');
-  t.equal(comparator(testingValue, expected), true, '`getArrayOfWeeks` return expected array of weeks');
+  t.ok(weekLengthChecker(testingValue), 'each week has length 7');
+  t.ok(comparator(testingValue, expected), '`getArrayOfWeeks` return expected array of weeks');
   t.end();
 });
 
@@ -194,16 +194,71 @@ test('Utils testing: getArrayOfWeeks (en locale)', (t) => {
 
   const testingValue = getArrayOfWeeks(moment());
   t.equal(testingValue.length, expected.length, '`getArrayOfWeeks` return array of length 6');
-  t.equal(weekLengthChecker(testingValue), true, 'each week has length 7');
-  t.equal(comparator(testingValue, expected), true, '`getArrayOfWeeks` return expected array of weeks');
+  t.ok(weekLengthChecker(testingValue), 'each week has length 7');
+  t.ok(comparator(testingValue, expected), '`getArrayOfWeeks` return expected array of weeks');
   t.end();
 });
 
-test('Utils testing: compareDates', (t) => {
-  t.equal(compareDates(moment('2015-06-08'), moment('2015-06-09')), false, '2015-06-08 and 2015-06-09 are different days');
-  t.equal(compareDates(moment('2015-06-10'), moment('2015-06-10')), true, '2015-06-10 and 2015-06-10 are the same day');
-  t.equal(compareDates(moment('2016-06-08'), moment('2017-06-08')), false, '2016-06-08 and 2017-06-08 are different days');
-  t.equal(compareDates(moment('2015-06-08'), moment('2015-07-08')), false, '2015-06-08 and 2015-07-08 are different days');
-  t.equal(compareDates(moment('2018-05-02'), moment('2018-05-09')), false, '2018-05-02 and 2018-05-09 are different days');
+test('Utils testing: isActiveDate(dateA, dateB)', (t) => {
+  t.notOk(isActiveDate(moment('2015-06-08'), moment('2015-06-09')), '2015-06-08 and 2015-06-09 are different days');
+  t.ok(isActiveDate(moment('2015-06-10'), moment('2015-06-10')), '2015-06-10 and 2015-06-10 are the same day');
+  t.notOk(isActiveDate(moment('2016-06-08'), moment('2017-06-08')), '2016-06-08 and 2017-06-08 are different days');
+  t.notOk(isActiveDate(moment('2015-06-08'), moment('2015-07-08')), '2015-06-08 and 2015-07-08 are different days');
+  t.notOk(isActiveDate(moment('2018-05-02'), moment('2018-05-09')), '2018-05-02 and 2018-05-09 are different days');
+  t.end();
+});
+
+test('Utils testing: isActiveDate(date, datesRange)', (t) => {
+  const range = {
+    start: moment('2015-06-08'),
+    end: moment('2015-06-15')
+  };
+  const diffMonthRange = {
+    start: moment('2015-06-08'),
+    end: moment('2015-07-15')
+  };
+  t.ok(isActiveDate(moment('2015-06-10'), range), '2015-06-10 in range [2015-06-08, 2015-06-15]');
+  t.ok(isActiveDate(moment('2015-06-08'), range), '2015-06-08 in range [2015-06-08, 2015-06-15]');
+  t.ok(isActiveDate(moment('2015-06-15'), range), '2015-06-15 in range [2015-06-08, 2015-06-15]');
+  t.notOk(isActiveDate(moment('2015-06-07'), range), '2015-06-07 out of range [2015-06-08, 2015-06-15]');
+  t.notOk(isActiveDate(moment('2015-06-16'), range), '2015-06-16 out of range [2015-06-08, 2015-06-15]');
+
+  t.ok(isActiveDate(moment('2015-06-16'), diffMonthRange), '2015-06-16 in range [2015-06-08, 2015-07-15]');
+  t.ok(isActiveDate(moment('2015-07-03'), diffMonthRange), '2015-07-03 in range [2015-06-08, 2015-07-15]');
+  t.notOk(isActiveDate(moment('2015-08-03'), diffMonthRange), '2015-08-03 out of range [2015-06-08, 2015-07-15]');
+  t.notOk(isActiveDate(moment('2015-05-03'), diffMonthRange), '2015-05-03 out of range [2015-06-08, 2015-07-15]');
+  t.end();
+});
+
+test('Utils testing: isActiveDate(date, date || datesRange)', (t) => {
+  const range = {
+    start: moment('2015-06-08'),
+    end: moment('2015-06-15')
+  };
+  const date = moment('2015-06-11');
+  t.notOk(isActiveDate(moment('2015-06-10'), date || range), '2015-06-10 not equal 2015-06-11');
+  t.ok(isActiveDate(moment('2015-06-11'), date || range), '2015-06-11 equal 2015-06-11');
+  t.ok(isActiveDate(moment('2015-06-15'), undefined || range), '2015-06-15 in range [2015-06-08, 2015-06-15]');
+  t.ok(isActiveDate(moment('2015-06-14'), undefined || range), '2015-06-14 in range [2015-06-08, 2015-06-15]');
+  t.notOk(isActiveDate(moment('2015-06-07'), undefined || range), '2015-06-07 out of range [2015-06-08, 2015-06-15]');
+  t.end();
+});
+
+test('Utils testing: isActiveDate(date, [someDate, undefined])', (t) => {
+  const range = {
+    start: moment('2015-06-08'),
+    end: undefined
+  };
+  t.ok(isActiveDate(moment('2015-06-08'), range), '2015-06-08 is start of range [2015-06-08, undefined]');
+  t.notOk(isActiveDate(moment('2015-06-09'), range), '2015-06-09 is not active if range [2015-06-08, undefined]');
+  t.end();
+});
+
+test('Utils testing: isActiveDate(date, [undefined, undefined])', (t) => {
+  const range = {
+    start: undefined,
+    end: undefined
+  };
+  t.notOk(isActiveDate(moment('2015-06-08'), range), 'should always be falsy');
   t.end();
 });

@@ -31,11 +31,15 @@ function DatePickerCell(props) {
 }
 
 DatePickerCell.propTypes = {
-  active: PropTypes.bool.isRequired,
   disabled: PropTypes.bool.isRequired,
+  active: PropTypes.bool,
   className: PropTypes.string,
   children: PropTypes.node,
   onClick: PropTypes.func
+};
+
+DatePickerCell.defaultProps = {
+  active: false
 };
 
 export default DatePickerCell;

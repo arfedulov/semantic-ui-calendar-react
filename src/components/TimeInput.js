@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input, Popup } from 'semantic-ui-react';
-import { TimePicker } from '../containers';
+import { Input } from 'semantic-ui-react';
+import { TimePicker, CustomPopup as Popup } from '../containers';
 import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../utils.js';
 
@@ -12,9 +12,19 @@ function TimeInput(props) {
   } = props;
   const rest = getUnhandledProps(TimeInput, props);
 
+  const onTimeChange = (newTime) => {
+    if (typeof newTime === 'string') {
+      onChange(newTime);
+    }
+    if (newTime.target) {
+      onChange(newTime.target.value);
+    }
+  };
+
   const inputElement = (
     <Input
       { ...rest }
+      onChange={onTimeChange}
       placeholder={placeholder}
       value={value}
       icon="time"
@@ -28,7 +38,7 @@ function TimeInput(props) {
       hoverable
       trigger={inputElement}>
       <TimePicker
-        onTimeChange={onChange} />
+        onTimeChange={onTimeChange} />
     </Popup>
   );
 }

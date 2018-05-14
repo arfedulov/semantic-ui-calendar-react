@@ -14,7 +14,8 @@ class Picker extends React.Component {
       activeDate: null,
       showedMonth: moment(),
       activeHour: '',
-      activeMinute: ''
+      activeMinute: '',
+      datesRange: { start: null, end: null }
     };
   }
 
@@ -22,15 +23,19 @@ class Picker extends React.Component {
     const {
       activeDate,
       activeHour,
-      activeMinute
+      activeMinute,
+      datesRange
     } = this.state;
     const {
       onDateChange,
-      onTimeChange
+      onTimeChange,
+      onDatesRangeChange
     } = this.props;
     const dateChanged = activeDate && activeDate.isSame && !activeDate.isSame(prevState.activeDate);
     const timeChanged = activeHour
       && activeMinute && (activeHour !== prevState.activeHour || activeMinute !== prevState.activeMinute);
+    const datesRangeChanged = datesRange.start && datesRange.end
+      && (!datesRange.start.isSame(prevState.datesRange.start) || !datesRange.end.isSame(prevState.datesRange.end));
 
     if (dateChanged) {
       onDateChange(activeDate);
@@ -38,12 +43,44 @@ class Picker extends React.Component {
     if (timeChanged) {
       onTimeChange(activeHour + ':' + activeMinute);
     }
+    if (datesRangeChanged) {
+      onDatesRangeChange(datesRange);
+    }
+  }
+
+  setDatesRange = (clickedDate) => {
+    this.setState(({ datesRange }) => {
+      if (datesRange.start && datesRange.end) {
+        return {
+          datesRange: { start: null, end: null }
+        };
+      }
+      if (datesRange.start) {
+        if (datesRange.start.isAfter(clickedDate)) {
+          return {
+            datesRange: { start: null, end: null }
+          };
+        }
+        return {
+          datesRange: { start: datesRange.start, end: clickedDate }
+        };
+      }
+      return {
+        datesRange: { start: clickedDate, end: datesRange.end }
+      };
+    });
   }
 
   onDateClick = (clickedDate) => {
-    this.setState({
-      activeDate: clickedDate
-    });
+    const { pickDatesRange } = this.props;
+
+    if (pickDatesRange) {
+      this.setDatesRange(clickedDate);
+    } else {
+      this.setState({
+        activeDate: clickedDate
+      });
+    }
   }
 
   onHourClick = (clickedHour) => {
@@ -141,7 +178,8 @@ class Picker extends React.Component {
     const {
       pickDate,
       pickTime,
-      pickDateTime
+      pickDateTime,
+      pickDatesRange
     } = this.props;
     const rest = getUnhandledProps(Picker, this.props);
 
@@ -192,6 +230,28 @@ class Picker extends React.Component {
         </Table>
       );
     }
+    if (pickDatesRange) {
+      return (
+        <Table
+          { ...rest }
+          unstackable
+          celled
+          textAlign="center">
+          <DateTimePickerHeader
+            onNextBtnClick={this.onNextBtnClick}
+            onPrevBtnClick={this.onPrevBtnClick}
+            showedDate={this.state.showedMonth}
+            showedRange={this.state.datesRange}
+            showDate={false}
+            showWeeks
+            width="7" />
+          <DatePickerComponent
+            datesRange={this.state.datesRange}
+            onDateClick={this.onDateClick}
+            showedMonth={this.state.showedMonth} />
+        </Table>
+      );
+    }
   }
 }
 
@@ -199,21 +259,25 @@ Picker.propTypes = {
   pickDate: PropTypes.bool,
   pickTime: PropTypes.bool,
   pickDateTime: PropTypes.bool,
+  pickDatesRange: PropTypes.bool,
   /** (newDate) => {} 
-   * 
-   * @param newDate {moment}
+   * @param {moment} newDate
   */
   onDateChange: PropTypes.func,
   /** (newTime) => {}
-   * 
-   * @param newTime {string} hh:mm
+   * @param {string} newTime hh:mm
    */
-  onTimeChange: PropTypes.func
+  onTimeChange: PropTypes.func,
+  /** (newDatesRange) => {}
+   * @param {{start: moment, end: moment}} newDatesRange
+  */
+  onDatesRangeChange: PropTypes.func
 };
 
 Picker.defaultProps = {
   onDateChange: () => {},
-  onTimeChange: () => {}
+  onTimeChange: () => {},
+  onDatesRangeChange: () => {}
 };
 
 export default Picker;

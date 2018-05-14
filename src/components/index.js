@@ -6,3 +6,4 @@ export { TimePickerComponent } from './TimePickerComponent.js';
 export { DateInput } from './DateInput.js';
 export { TimeInput } from './TimeInput.js';
 export { DateTimeInput } from './DateTimeInput.js';
+export { DatesRangeInput } from './DatesRangeInput.js';

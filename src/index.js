@@ -1,10 +1,12 @@
 export {
   DatePicker,
   TimePicker,
-  DateTimePicker
+  DateTimePicker,
+  DatesRangePicker
 } from './containers';
 export {
   DateInput,
   TimeInput,
-  DateTimeInput
+  DateTimeInput,
+  DatesRangeInput
 } from './components';

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { DatePickerCell as Cell } from './DatePickerCell.js';
 import moment from 'moment';
 import { 
-  compareDates,
+  isActiveDate,
   isDayInMonth,
   getArrayOfWeeks,
   getUnhandledProps
@@ -14,13 +14,14 @@ function DatePickerComponent(props) {
   const {
     onDateClick,
     activeDate,
-    showedMonth
+    showedMonth,
+    datesRange
   } = props;
   const rest = getUnhandledProps(DatePickerComponent, props);
   const data = getArrayOfWeeks(showedMonth);
   const _getRow = (week, key) => {
     const days = week.map((day) => {
-      const active = compareDates(day, activeDate);
+      const active = isActiveDate(day, activeDate || datesRange);
       const disabled = !isDayInMonth(day, showedMonth);
       return (
         <Cell
@@ -56,10 +57,15 @@ DatePickerComponent.propTypes = {
    * @param clickedDate `moment` instance
    */
   onDateClick: PropTypes.func.isRequired,
-  /** Currently selected date */
-  activeDate: PropTypes.instanceOf(moment).isRequired,
   /** calendar shows month of this `moment` */
-  showedMonth: PropTypes.instanceOf(moment).isRequired
+  showedMonth: PropTypes.instanceOf(moment).isRequired,
+  /** Currently selected date */
+  activeDate: PropTypes.instanceOf(moment),
+  /** Dates range */
+  datesRange: PropTypes.shape({
+    start: PropTypes.instanceOf(moment),
+    end: PropTypes.instanceOf(moment)
+  })
 };
 
 export default DatePickerComponent;
