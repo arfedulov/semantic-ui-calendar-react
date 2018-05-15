@@ -38,6 +38,10 @@ class DateTimeInput extends React.Component {
     });
   }
 
+  onInputFieldChange = (event) => {
+    this.props.onChange(event.target.value);
+  }
+
   render() {
     const {
       value,
@@ -48,6 +52,7 @@ class DateTimeInput extends React.Component {
     const inputElement = (
       <Input
         { ...rest }
+        onChange={this.onInputFieldChange}
         placeholder={placeholder}
         value={value}
         icon="calendar"

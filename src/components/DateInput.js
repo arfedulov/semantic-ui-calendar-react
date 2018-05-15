@@ -11,13 +11,19 @@ function DateInput(props) {
     placeholder
   } = props;
   const onDateChange = (newDate) => {
-    onChange(newDate.format('DD-MM-YYYY'));
+    if (newDate.format) {
+      onChange(newDate.format('DD-MM-YYYY'));
+    }
+    if (newDate.target) {
+      onChange(newDate.target.value);
+    }
   };
   const rest = getUnhandledProps(DateInput, props);
   const inputElement = (
     <Input
       { ...rest }
       value={value}
+      onChange={onDateChange}
       placeholder={placeholder}
       icon="calendar"
       iconPosition="left"

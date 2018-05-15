@@ -12,9 +12,19 @@ function TimeInput(props) {
   } = props;
   const rest = getUnhandledProps(TimeInput, props);
 
+  const onTimeChange = (newTime) => {
+    if (typeof newTime === 'string') {
+      onChange(newTime);
+    }
+    if (newTime.target) {
+      onChange(newTime.target.value);
+    }
+  };
+
   const inputElement = (
     <Input
       { ...rest }
+      onChange={onTimeChange}
       placeholder={placeholder}
       value={value}
       icon="time"
@@ -28,7 +38,7 @@ function TimeInput(props) {
       hoverable
       trigger={inputElement}>
       <TimePicker
-        onTimeChange={onChange} />
+        onTimeChange={onTimeChange} />
     </Popup>
   );
 }
