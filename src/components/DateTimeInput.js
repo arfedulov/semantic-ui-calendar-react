@@ -1,6 +1,6 @@
 import React from 'react';
-import { Input, Popup } from 'semantic-ui-react';
-import { DateTimePicker } from '../containers';
+import { Input } from 'semantic-ui-react';
+import { DateTimePicker, CustomPopup as Popup } from '../containers';
 import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../utils.js';
 
