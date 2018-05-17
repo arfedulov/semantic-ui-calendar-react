@@ -12,15 +12,15 @@ Also you need to add css in your html:
 ``<link rel="stylesheet" type="text/css" href="node_modules/semantic-ui-calendar-react/dist/css/calendar.min.css">``
 
 # usage
-Let's create a form that needs date/time/date-time input fields. We use ``semantic-ui-calendar-react``'s ``DateInput``,
-``TimeInput`` and ``DateTimeInput`` elements.
+Let's create a form that needs date-related input fields.
 
 Import input components:
 ```javascript
 import {
   DateInput,
   TimeInput,
-  DateTimeInput
+  DateTimeInput,
+  DatesRangeInput
 } from 'semantic-ui-calendar-react';
 ```
 Then build a form:
@@ -32,7 +32,8 @@ class DateTimeForm extends React.Component {
     this.state = {
       date: '',
       time: '',
-      dateTime: ''
+      dateTime: '',
+      datesRange: ''
     };
   }
 
@@ -46,6 +47,10 @@ class DateTimeForm extends React.Component {
 
   handleDateTimeChange = (newDateTime) => {
     this.setState({ dateTime: newDateTime });
+  }
+
+  handleDatesRangeChange = (newDatesRange) => {
+    this.setState({ datesRange: newDatesRange });
   }
 
   render() {
@@ -68,6 +73,12 @@ class DateTimeForm extends React.Component {
           className="example-calendar-input"
           value={this.state.dateTime}
           onChange={this.handleDateTimeChange} />
+        <br />
+        <DatesRangeInput
+          placeholder="From - To"
+          className="example-calendar-input"
+          value={this.state.datesRange}
+          onChange={this.handleDatesRangeChange} />
       </Form>
     );
   }

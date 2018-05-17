@@ -22,6 +22,42 @@ const compareDates = (oneDate, otherDate) => {
   return oneDate.year() === otherDate.year() && oneDate.month() === otherDate.month() && oneDate.date() === otherDate.date();
 };
 
+/** Check if date should be showed as active in calendar.
+ * Check if date is the same as `active` or is date included in given date's interval.
+ * @param {moment} checkedDate Date which compared with `active`
+ * @param {moment||{start: moment, end: moment}} active Eather date or date's interval as [start, end]
+*/
+const isActiveDate = (checkedDate, active) => {
+  if (active.hasOwnProperty('start') && active.hasOwnProperty('end')) {
+    if (!active.start) {
+      return;
+    }
+    if (!active.end) {
+      return compareDates(checkedDate, active.start);
+    }
+    const normStart = moment({
+      year: active.start.year(),
+      month: active.start.month(),
+      date: active.start.date()
+    });
+    const normEnd = moment({
+      year: active.end.year(),
+      month: active.end.month(),
+      date: active.end.date()
+    });
+    const normCheckedDate = moment({
+      year: checkedDate.year(),
+      month: checkedDate.month(),
+      date: checkedDate.date()
+    });
+    return normStart.isBefore(normCheckedDate)
+      && normEnd.isAfter(normCheckedDate)
+      || normStart.isSame(normCheckedDate)
+      || normEnd.isSame(normCheckedDate);
+  }
+  return compareDates(checkedDate, active);
+};
+
 /** Check if given day is in the `date`'s month. */
 const isDayInMonth = (day, date) => {
   const currentMonth = date.month();
@@ -108,7 +144,7 @@ const getUnhandledProps = (Component, props) => {
 
 export {
   getArrayOfWeeks,
-  compareDates,
+  isActiveDate,
   isDayInMonth,
   getWeekDays,
   getHours,

@@ -7,7 +7,9 @@ import {
   DateTimePicker,
   DateInput,
   TimeInput,
-  DateTimeInput } from '../src';
+  DateTimeInput,
+  DatesRangePicker,
+  DatesRangeInput } from '../src';
 import moment from 'moment';
 
 moment.locale('en');
@@ -24,6 +26,8 @@ function App(props) {
       <TimePicker />
       <h3>DateTime-picker</h3>
       <DateTimePicker />
+      <h3>Dates range picker</h3>
+      <DatesRangePicker />
     </div>
   );
 }
@@ -35,7 +39,8 @@ class DateTimeForm extends React.Component {
     this.state = {
       date: '',
       time: '',
-      dateTime: ''
+      dateTime: '',
+      datesRange: ''
     };
   }
 
@@ -49,6 +54,10 @@ class DateTimeForm extends React.Component {
 
   handleDateTimeChange = (newDateTime) => {
     this.setState({ dateTime: newDateTime });
+  }
+
+  handleDatesRangeChange = (newDatesRange) => {
+    this.setState({ datesRange: newDatesRange });
   }
 
   render() {
@@ -71,6 +80,12 @@ class DateTimeForm extends React.Component {
           className="example-calendar-input"
           value={this.state.dateTime}
           onChange={this.handleDateTimeChange} />
+        <br />
+        <DatesRangeInput
+          placeholder="From - To"
+          className="example-calendar-input"
+          value={this.state.datesRange}
+          onChange={this.handleDatesRangeChange} />
       </Form>
     );
   }
