@@ -23,13 +23,6 @@ function DatePickerComponent(props) {
     const days = week.map((day) => {
       const active = isActiveDate(day, activeDate || datesRange);
       const disabled = !isDayInMonth(day, showedMonth);
-      // const onCellClick = (event, data) => {
-      //   onDateClick(event, { ...props, value: day});
-      //   // onDateClick(day);
-      //   // console.log(event);
-      //   // console.log(data.value);
-      //   // onDateClick(day);
-      // };
       return (
         <Cell
           onClick={onDateClick}
@@ -58,10 +51,7 @@ function DatePickerComponent(props) {
 }
 
 DatePickerComponent.propTypes = {
-  /** (clickedDate) => { do something }
-   * 
-   * @param clickedDate `moment` instance
-   */
+  /** (event, data) => { do something } */
   onDateClick: PropTypes.func.isRequired,
   /** calendar shows month of this `moment` */
   showedMonth: PropTypes.instanceOf(moment).isRequired,
