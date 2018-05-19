@@ -19,34 +19,34 @@ class Picker extends React.Component {
     };
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    const {
-      activeDate,
-      activeHour,
-      activeMinute,
-      datesRange
-    } = this.state;
-    const {
-      onDateChange,
-      onTimeChange,
-      onDatesRangeChange
-    } = this.props;
-    const dateChanged = activeDate && activeDate.isSame && !activeDate.isSame(prevState.activeDate);
-    const timeChanged = activeHour
-      && activeMinute && (activeHour !== prevState.activeHour || activeMinute !== prevState.activeMinute);
-    const datesRangeChanged = datesRange.start && datesRange.end
-      && (!datesRange.start.isSame(prevState.datesRange.start) || !datesRange.end.isSame(prevState.datesRange.end));
+  // componentDidUpdate = (prevProps, prevState) => {
+  //   const {
+  //     activeDate,
+  //     activeHour,
+  //     activeMinute,
+  //     datesRange
+  //   } = this.state;
+  //   const {
+  //     onDateChange,
+  //     onTimeChange,
+  //     onDatesRangeChange
+  //   } = this.props;
+  //   const dateChanged = activeDate && activeDate.isSame && !activeDate.isSame(prevState.activeDate);
+  //   const timeChanged = activeHour
+  //     && activeMinute && (activeHour !== prevState.activeHour || activeMinute !== prevState.activeMinute);
+  //   const datesRangeChanged = datesRange.start && datesRange.end
+  //     && (!datesRange.start.isSame(prevState.datesRange.start) || !datesRange.end.isSame(prevState.datesRange.end));
 
-    if (dateChanged) {
-      onDateChange(activeDate);
-    }
-    if (timeChanged) {
-      onTimeChange(activeHour + ':' + activeMinute);
-    }
-    if (datesRangeChanged) {
-      onDatesRangeChange(datesRange);
-    }
-  }
+  //   if (dateChanged) {
+  //     onDateChange(activeDate);
+  //   }
+  //   if (timeChanged) {
+  //     onTimeChange(activeHour + ':' + activeMinute);
+  //   }
+  //   if (datesRangeChanged) {
+  //     onDatesRangeChange(datesRange);
+  //   }
+  // }
 
   setDatesRange = (clickedDate) => {
     this.setState(({ datesRange }) => {
@@ -71,16 +71,17 @@ class Picker extends React.Component {
     });
   }
 
-  onDateClick = (event, { value }) => {
-    const { pickDatesRange } = this.props;
+  onDateClick = (event, data) => {
+    const { pickDatesRange, onDateChange } = this.props;
 
     if (pickDatesRange) {
-      this.setDatesRange(value);
+      this.setDatesRange(data.value);
     } else {
       this.setState({
-        activeDate: value
+        activeDate: data.value
       });
     }
+    onDateChange(event, data);
   }
 
   onHourClick = (event, { value }) => {
