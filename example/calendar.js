@@ -12,7 +12,7 @@ import {
   DatesRangeInput } from '../src';
 import moment from 'moment';
 
-moment.locale('en');
+moment.locale('ru');
 
 function App(props) {
   return (

@@ -4,13 +4,11 @@ import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../utils.js';
 
+/** Semantic-ui-react's ``Table.Cell`` wrapper */
 function DatePickerCell(props) {
   const {
-    active,
-    disabled,
     className,
-    children,
-    onClick
+    children
   } = props;
   const classes = ClassNames(
     className,
@@ -21,9 +19,6 @@ function DatePickerCell(props) {
   return (
     <Table.Cell
       { ...rest }
-      onClick={onClick}
-      active={active}
-      disabled={disabled}
       className={classes}>
       {children}
     </Table.Cell>
@@ -31,15 +26,8 @@ function DatePickerCell(props) {
 }
 
 DatePickerCell.propTypes = {
-  disabled: PropTypes.bool.isRequired,
-  active: PropTypes.bool,
   className: PropTypes.string,
-  children: PropTypes.node,
-  onClick: PropTypes.func
-};
-
-DatePickerCell.defaultProps = {
-  active: false
+  children: PropTypes.node
 };
 
 export default DatePickerCell;
