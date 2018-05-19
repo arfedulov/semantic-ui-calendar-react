@@ -4,7 +4,7 @@ import { TimePickerComponent } from '../components';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps, cloneReplaceValue } from '../utils.js';
 
 class Picker extends React.Component {
   constructor(props) {
@@ -27,17 +27,17 @@ class Picker extends React.Component {
         newState = {
           datesRange: { start: null, end: null }
         };
-        onDatesRangeChange(event, this.cloneReplaceValue(data, this.getDatesRange()));
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
       } else if (datesRange.start && datesRange.start.isAfter(data.value)) {
         newState = {
           datesRange: { start: null, end: null }
         };
-        onDatesRangeChange(event, this.cloneReplaceValue(data, this.getDatesRange()));
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
       } else if (datesRange.start) {
         newState = {
           datesRange: { start: datesRange.start, end: data.value }
         };
-        onDatesRangeChange(event, this.cloneReplaceValue(data, this.getDatesRange({
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
           start: datesRange.start,
           end: data.value
         })));
@@ -45,7 +45,7 @@ class Picker extends React.Component {
         newState = {
           datesRange: { start: data.value, end: datesRange.end }
         };
-        onDatesRangeChange(event, this.cloneReplaceValue(data, this.getDatesRange({
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
           start: data.value,
           end: datesRange.end
         })));
@@ -76,7 +76,7 @@ class Picker extends React.Component {
 
   onHourClick = (event, data) => {
     this.setState(prevState => {
-      const newData = this.cloneReplaceValue(data, this.getTime({
+      const newData = cloneReplaceValue(data, this.getTime({
         hour: data.value,
         minute: ''
       }));
@@ -89,7 +89,7 @@ class Picker extends React.Component {
 
   onMinuteClick = (event, data) => {
     this.setState(prevState => {
-      const newData = this.cloneReplaceValue(data, this.getTime({
+      const newData = cloneReplaceValue(data, this.getTime({
         hour: prevState.activeHour,
         minute: data.value
       }));
@@ -98,10 +98,6 @@ class Picker extends React.Component {
         activeMinute: data.value
       };
     });
-  }
-
-  cloneReplaceValue = (data, newValue) => {
-    return Object.assign({}, data, { value: newValue });
   }
 
   getTime = ({hour = '', minute = ''}) => {

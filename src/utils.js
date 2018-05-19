@@ -96,10 +96,15 @@ const getUnhandledProps = (Component, props) => {
   }, {});
 };
 
+const cloneReplaceValue = (data, newValue) => {
+  return Object.assign({}, data, { value: newValue });
+};
+
 export {
   getArrayOfWeeks,
   isActiveDate,
   isDayInMonth,
   getWeekDays,
-  getUnhandledProps
+  getUnhandledProps,
+  cloneReplaceValue
 };
