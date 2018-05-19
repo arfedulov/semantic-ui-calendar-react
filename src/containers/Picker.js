@@ -83,15 +83,15 @@ class Picker extends React.Component {
     }
   }
 
-  onHourClick = (clickedHour) => {
+  onHourClick = (event, { value }) => {
     this.setState({
-      activeHour: clickedHour
+      activeHour: value
     });
   }
 
-  onMinuteClick = (clickedMinute) => {
+  onMinuteClick = (event, { value }) => {
     this.setState({
-      activeMinute: clickedMinute
+      activeMinute: value
     });
   }
 
