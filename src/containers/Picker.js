@@ -71,14 +71,14 @@ class Picker extends React.Component {
     });
   }
 
-  onDateClick = (clickedDate) => {
+  onDateClick = (event, { value }) => {
     const { pickDatesRange } = this.props;
 
     if (pickDatesRange) {
-      this.setDatesRange(clickedDate);
+      this.setDatesRange(value);
     } else {
       this.setState({
-        activeDate: clickedDate
+        activeDate: value
       });
     }
   }

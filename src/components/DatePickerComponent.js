@@ -23,14 +23,20 @@ function DatePickerComponent(props) {
     const days = week.map((day) => {
       const active = isActiveDate(day, activeDate || datesRange);
       const disabled = !isDayInMonth(day, showedMonth);
+      // const onCellClick = (event, data) => {
+      //   onDateClick(event, { ...props, value: day});
+      //   // onDateClick(day);
+      //   // console.log(event);
+      //   // console.log(data.value);
+      //   // onDateClick(day);
+      // };
       return (
         <Cell
-          onClick={onDateClick.bind(null, day)}
+          onClick={onDateClick}
           active={active}
           disabled={disabled}
-          key={day.format('DD-MM-YYYY')}>
-          { day.format('D') }
-        </Cell>
+          data={day}
+          key={day.format('DD-MM-YYYY')} />
       );
     });
     return (
