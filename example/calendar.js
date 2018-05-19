@@ -56,8 +56,8 @@ class DateTimeForm extends React.Component {
     this.setState({ dateTime: newDateTime });
   }
 
-  handleDatesRangeChange = (newDatesRange) => {
-    this.setState({ datesRange: newDatesRange });
+  handleDatesRangeChange = (event, { value }) => {
+    this.setState({ datesRange: value });
   }
 
   render() {
