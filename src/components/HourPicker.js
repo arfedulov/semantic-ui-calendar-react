@@ -1,7 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getHours, getUnhandledProps } from '../utils.js';
+import { getUnhandledProps } from '../utils.js';
 import { Table } from 'semantic-ui-react';
+
+const HOURS = [
+  '00',
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
+  '07',
+  '08',
+  '09',
+  '10',
+  '11',
+  '12',
+  '13',
+  '14',
+  '15',
+  '16',
+  '17',
+  '18',
+  '19',
+  '20',
+  '21',
+  '22',
+  '23'
+];
 
 function HourPickerCell(props) {
   const { 
@@ -32,7 +59,7 @@ function HourPicker(props) {
   } = props;
   const rest = getUnhandledProps(HourPicker, props);
 
-  const hours = getHours().map((hour) => (
+  const hours = HOURS.map((hour) => (
     <HourPickerCell 
       onClick={onHourClick}
       active={hour === activeHour}

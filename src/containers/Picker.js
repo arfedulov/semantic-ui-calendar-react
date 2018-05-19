@@ -14,7 +14,6 @@ class Picker extends React.Component {
       activeDate: null,
       showedMonth: moment(),
       activeHour: '',
-      activeMinute: '',
       datesRange: { start: null, end: null }
     };
   }
@@ -84,16 +83,38 @@ class Picker extends React.Component {
     onDateChange(event, data);
   }
 
-  onHourClick = (event, { value }) => {
-    this.setState({
-      activeHour: value
+  onHourClick = (event, data) => {
+    this.setState(prevState => {
+      const newData = this.cloneReplaceValue(data, this.getTime({
+        hour: data.value,
+        minute: ''
+      }));
+      this.props.onTimeChange(event, newData);
+      return {
+        activeHour: data.value
+      };
     });
   }
 
-  onMinuteClick = (event, { value }) => {
-    this.setState({
-      activeMinute: value
+  onMinuteClick = (event, data) => {
+    this.setState(prevState => {
+      const newData = this.cloneReplaceValue(data, this.getTime({
+        hour: prevState.activeHour,
+        minute: data.value
+      }));
+      this.props.onTimeChange(event, newData);
+      return {
+        activeMinute: data.value
+      };
     });
+  }
+
+  cloneReplaceValue = (data, newValue) => {
+    return Object.assign({}, data, { value: newValue });
+  }
+
+  getTime = ({hour = '', minute = ''}) => {
+    return `${hour}:${minute}`;
   }
 
   onNextBtnClick = ({ day }) => {

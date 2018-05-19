@@ -1,8 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getMinutes } from '../utils.js';
 import { Table } from 'semantic-ui-react';
 import { getUnhandledProps } from '../utils.js';
+
+const MINUTES = [
+  '00',
+  '05',
+  '10',
+  '15',
+  '20',
+  '25',
+  '30',
+  '35',
+  '40',
+  '45',
+  '50',
+  '55'
+];
 
 function MinutePickerCell(props) {
   const { 
@@ -35,7 +49,7 @@ function MinutePicker(props) {
   } = props;
   const rest = getUnhandledProps(MinutePicker, props);
 
-  const minutes = getMinutes().map((minute) => (
+  const minutes = MINUTES.map((minute) => (
     <MinutePickerCell
       onClick={onMinuteClick}
       active={minute === activeMinute}
