@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Form } from 'semantic-ui-react';
+import { Form, Icon } from 'semantic-ui-react';
 import {
   DatePicker,
   TimePicker,
@@ -67,24 +67,28 @@ class DateTimeForm extends React.Component {
           placeholder="Date"
           className="example-calendar-input"
           value={this.state.date}
+          iconPosition="left"
           onChange={this.handleDateChange} />
         <br />
         <TimeInput
           placeholder="Time"
           className="example-calendar-input"
           value={this.state.time}
+          iconPosition="left"
           onChange={this.handleTimeChange} />
         <br />
         <DateTimeInput
           placeholder="Date Time"
           className="example-calendar-input"
           value={this.state.dateTime}
+          iconPosition="left"
           onChange={this.handleDateTimeChange} />
         <br />
         <DatesRangeInput
           placeholder="From - To"
           className="example-calendar-input"
           value={this.state.datesRange}
+          iconPosition="left"
           onChange={this.handleDatesRangeChange} />
       </Form>
     );

@@ -7,20 +7,15 @@ import { getUnhandledProps } from '../utils.js';
 function TimeInput(props) {
   const {
     onChange,
-    value,
-    placeholder
+    icon
   } = props;
   const rest = getUnhandledProps(TimeInput, props);
 
   const inputElement = (
     <Input
       { ...rest }
-      onChange={onChange}
-      placeholder={placeholder}
-      value={value}
-      icon="time"
-      iconPosition="left"
-      type="text" />
+      icon={icon}
+      onChange={onChange} />
   );
   return (
     <Popup
@@ -35,16 +30,17 @@ function TimeInput(props) {
 }
 
 TimeInput.propTypes = {
-  /** (event, data) => {} where data.value has format 'hh:mm' */
+  /** Called on change.
+   * @param {SyntheticEvent} event React's original SyntheticEvent.
+   * @param {object} data All props and proposed value.
+  */
   onChange: PropTypes.func,
-  /** selected time value in format 'hh:mm' */
-  value: PropTypes.string,
-  placeholder: PropTypes.string
+  /** Same as semantic-ui-react Input's ``icon`` prop. */
+  icon: PropTypes.any
 };
 
 TimeInput.defaultProps = {
-  value: '',
-  placeholder: ''
+  icon: 'time'
 };
 
 export default TimeInput;

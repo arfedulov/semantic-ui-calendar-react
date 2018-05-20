@@ -58,23 +58,23 @@ class DateTimeForm extends React.Component {
       <Form>
         <DateInput
           placeholder="Date"
-          className="example-calendar-input"
           value={this.state.date}
+          iconPosition="left"
           onChange={this.handleDateChange} />
         <TimeInput
           placeholder="Time"
-          className="example-calendar-input"
           value={this.state.time}
+          iconPosition="left"
           onChange={this.handleTimeChange} />
         <DateTimeInput
           placeholder="Date Time"
-          className="example-calendar-input"
           value={this.state.dateTime}
+          iconPosition="left"
           onChange={this.handleDateTimeChange} />
         <DatesRangeInput
           placeholder="From - To"
-          className="example-calendar-input"
           value={this.state.datesRange}
+          iconPosition="left"
           onChange={this.handleDatesRangeChange} />
       </Form>
     );
@@ -82,3 +82,12 @@ class DateTimeForm extends React.Component {
 }
 ```
 And you have a form with date/time inputs.
+
+# Suppported elements
+
+| Element Name        | Props                                 | Description      |
+| ------------------- |:-------------------------------------:| ----------------:|
+| DateInput           | all that can be used with SUIR Input  | todo             |
+| TimeInput           | all that can be used with SUIR Input  | todo             |
+| DateTimeInput       | all that can be used with SUIR Input  | todo             |
+| DatesRangeInput     | all that can be used with SUIR Input  | todo             |

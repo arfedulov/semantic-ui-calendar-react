@@ -40,8 +40,7 @@ class DateTimeInput extends React.Component {
 
   render() {
     const {
-      value,
-      placeholder,
+      icon,
       onChange
     } = this.props;
     const rest = getUnhandledProps(DateTimeInput, this.props);
@@ -50,11 +49,7 @@ class DateTimeInput extends React.Component {
       <Input
         { ...rest }
         onChange={onChange}
-        placeholder={placeholder}
-        value={value}
-        icon="calendar"
-        iconPosition="left"
-        type="text" />
+        icon={icon} />
     );
     return (
       <Popup
@@ -71,16 +66,17 @@ class DateTimeInput extends React.Component {
 }
 
 DateTimeInput.propTypes = {
-  /** (value) => {} where value has format 'DD-MM-YYYY hh:mm' */
+  /** Called on change.
+   * @param {SyntheticEvent} event React's original SyntheticEvent.
+   * @param {object} data All props and proposed value.
+  */
   onChange: PropTypes.func,
-  /** selected date and time value in format 'DD-MM-YYYY hh:mm' */
-  value: PropTypes.string,
-  placeholder: PropTypes.string
+  /** Same as semantic-ui-react Input's ``icon`` prop. */
+  icon: PropTypes.any
 };
 
 DateTimeInput.defaultProps = {
-  value: '',
-  placeholder: ''
+  icon: 'calendar'
 };
 
 export default DateTimeInput;

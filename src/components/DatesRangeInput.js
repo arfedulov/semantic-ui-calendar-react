@@ -7,20 +7,15 @@ import { getUnhandledProps } from '../utils.js';
 function DatesRangeInput(props) {
   const {
     onChange,
-    value,
-    placeholder
+    icon
   } = props;
   const rest = getUnhandledProps(DatesRangeInput, props);
   
   const inputElement = (
     <Input
       { ...rest }
-      value={value}
       onChange={onChange}
-      placeholder={placeholder}
-      icon="calendar"
-      iconPosition="left"
-      type="text" />
+      icon={icon} />
   );
   return (
     <Popup
@@ -35,16 +30,17 @@ function DatesRangeInput(props) {
 }
 
 DatesRangeInput.propTypes = {
-  /** (value) => {} where value has format 'DD-MM-YYYY - DD-MM-YYYY' */
+  /** Called on change.
+   * @param {SyntheticEvent} event React's original SyntheticEvent.
+   * @param {object} data All props and proposed value.
+  */
   onChange: PropTypes.func,
-  /** selected date value in format 'DD-MM-YYYY - DD-MM-YYYY' */
-  value: PropTypes.string,
-  placeholder: PropTypes.string
+  /** Same as semantic-ui-react Input's ``icon`` prop. */
+  icon: PropTypes.any
 };
 
 DatesRangeInput.defaultProps = {
-  value: '',
-  placeholder: ''
+  icon: 'calendar'
 };
 
 export default DatesRangeInput;
