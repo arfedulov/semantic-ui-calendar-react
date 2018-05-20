@@ -12,19 +12,10 @@ function TimeInput(props) {
   } = props;
   const rest = getUnhandledProps(TimeInput, props);
 
-  const onTimeChange = (newTime) => {
-    if (typeof newTime === 'string') {
-      onChange(newTime);
-    }
-    if (newTime.target) {
-      onChange(newTime.target.value);
-    }
-  };
-
   const inputElement = (
     <Input
       { ...rest }
-      onChange={onTimeChange}
+      onChange={onChange}
       placeholder={placeholder}
       value={value}
       icon="time"
@@ -38,13 +29,13 @@ function TimeInput(props) {
       hoverable
       trigger={inputElement}>
       <TimePicker
-        onTimeChange={onTimeChange} />
+        onTimeChange={onChange} />
     </Popup>
   );
 }
 
 TimeInput.propTypes = {
-  /** (value) => {} where value has format 'hh:mm' */
+  /** (event, data) => {} where data.value has format 'hh:mm' */
   onChange: PropTypes.func,
   /** selected time value in format 'hh:mm' */
   value: PropTypes.string,

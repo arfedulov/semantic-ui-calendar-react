@@ -4,7 +4,7 @@ import { TimePickerComponent } from '../components';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps, cloneReplaceValue } from '../utils.js';
 
 class Picker extends React.Component {
   constructor(props) {
@@ -14,85 +14,94 @@ class Picker extends React.Component {
       activeDate: null,
       showedMonth: moment(),
       activeHour: '',
-      activeMinute: '',
       datesRange: { start: null, end: null }
     };
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    const {
-      activeDate,
-      activeHour,
-      activeMinute,
-      datesRange
-    } = this.state;
-    const {
-      onDateChange,
-      onTimeChange,
-      onDatesRangeChange
-    } = this.props;
-    const dateChanged = activeDate && activeDate.isSame && !activeDate.isSame(prevState.activeDate);
-    const timeChanged = activeHour
-      && activeMinute && (activeHour !== prevState.activeHour || activeMinute !== prevState.activeMinute);
-    const datesRangeChanged = datesRange.start && datesRange.end
-      && (!datesRange.start.isSame(prevState.datesRange.start) || !datesRange.end.isSame(prevState.datesRange.end));
 
-    if (dateChanged) {
-      onDateChange(activeDate);
-    }
-    if (timeChanged) {
-      onTimeChange(activeHour + ':' + activeMinute);
-    }
-    if (datesRangeChanged) {
-      onDatesRangeChange(datesRange);
-    }
-  }
-
-  setDatesRange = (clickedDate) => {
+  setDatesRange = (event, data) => {
+    const { onDatesRangeChange } = this.props;
     this.setState(({ datesRange }) => {
+      let newState;
       if (datesRange.start && datesRange.end) {
-        return {
+        newState = {
           datesRange: { start: null, end: null }
         };
-      }
-      if (datesRange.start) {
-        if (datesRange.start.isAfter(clickedDate)) {
-          return {
-            datesRange: { start: null, end: null }
-          };
-        }
-        return {
-          datesRange: { start: datesRange.start, end: clickedDate }
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
+      } else if (datesRange.start && datesRange.start.isAfter(data.value)) {
+        newState = {
+          datesRange: { start: null, end: null }
         };
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
+      } else if (datesRange.start) {
+        newState = {
+          datesRange: { start: datesRange.start, end: data.value }
+        };
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
+          start: datesRange.start,
+          end: data.value
+        })));
+      } else {
+        newState = {
+          datesRange: { start: data.value, end: datesRange.end }
+        };
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
+          start: data.value,
+          end: datesRange.end
+        })));
       }
+      return newState;
+    });
+  }
+
+  getDatesRange = (range) => {
+    const { start, end } = range? range : { start: null, end: null };
+    const startStr = start && start.format? start.format('DD.MM.YY') : '. . .';
+    const endStr = end && end.format? end.format('DD.MM.YY') : '. . .';
+    return `${startStr} - ${endStr}`;
+  }
+
+  onDateClick = (event, data) => {
+    const { pickDatesRange, onDateChange } = this.props;
+
+    if (pickDatesRange) {
+      this.setDatesRange(event, data);
+    } else {
+      this.setState({
+        activeDate: data.value
+      });
+    }
+    onDateChange(event, data);
+  }
+
+  onHourClick = (event, data) => {
+    this.setState(prevState => {
+      const newData = cloneReplaceValue(data, this.getTime({
+        hour: data.value,
+        minute: ''
+      }));
+      this.props.onTimeChange(event, newData);
       return {
-        datesRange: { start: clickedDate, end: datesRange.end }
+        activeHour: data.value
       };
     });
   }
 
-  onDateClick = (clickedDate) => {
-    const { pickDatesRange } = this.props;
-
-    if (pickDatesRange) {
-      this.setDatesRange(clickedDate);
-    } else {
-      this.setState({
-        activeDate: clickedDate
-      });
-    }
-  }
-
-  onHourClick = (clickedHour) => {
-    this.setState({
-      activeHour: clickedHour
+  onMinuteClick = (event, data) => {
+    this.setState(prevState => {
+      const newData = cloneReplaceValue(data, this.getTime({
+        hour: prevState.activeHour,
+        minute: data.value
+      }));
+      this.props.onTimeChange(event, newData);
+      return {
+        activeMinute: data.value
+      };
     });
   }
 
-  onMinuteClick = (clickedMinute) => {
-    this.setState({
-      activeMinute: clickedMinute
-    });
+  getTime = ({hour = '', minute = ''}) => {
+    return `${hour}:${minute}`;
   }
 
   onNextBtnClick = ({ day }) => {

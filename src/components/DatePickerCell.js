@@ -3,14 +3,13 @@ import { Table } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../utils.js';
+import moment from 'moment';
 
 function DatePickerCell(props) {
   const {
-    active,
-    disabled,
     className,
-    children,
-    onClick
+    onClick,
+    data
   } = props;
   const classes = ClassNames(
     className,
@@ -18,28 +17,25 @@ function DatePickerCell(props) {
     'date'
   );
   const rest = getUnhandledProps(DatePickerCell, props);
+  const onCellClick = (event) => {
+    event.stopPropagation();
+    onClick(event, { ...props, value: data});
+  };
   return (
     <Table.Cell
       { ...rest }
-      onClick={onClick}
-      active={active}
-      disabled={disabled}
+      onClick={onCellClick}
       className={classes}>
-      {children}
+      { data.format('D') }
     </Table.Cell>
   );
 }
 
 DatePickerCell.propTypes = {
-  disabled: PropTypes.bool.isRequired,
-  active: PropTypes.bool,
+  data: PropTypes.instanceOf(moment).isRequired,
   className: PropTypes.string,
-  children: PropTypes.node,
+  /** (event, data) => {} */
   onClick: PropTypes.func
-};
-
-DatePickerCell.defaultProps = {
-  active: false
 };
 
 export default DatePickerCell;

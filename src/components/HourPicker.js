@@ -1,22 +1,70 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getHours, getUnhandledProps } from '../utils.js';
+import { getUnhandledProps } from '../utils.js';
 import { Table } from 'semantic-ui-react';
+
+const HOURS = [
+  '00',
+  '01',
+  '02',
+  '03',
+  '04',
+  '05',
+  '06',
+  '07',
+  '08',
+  '09',
+  '10',
+  '11',
+  '12',
+  '13',
+  '14',
+  '15',
+  '16',
+  '17',
+  '18',
+  '19',
+  '20',
+  '21',
+  '22',
+  '23'
+];
+
+function HourPickerCell(props) {
+  const { 
+    onClick,
+    hour
+  } = props;
+  const rest = getUnhandledProps(HourPickerCell, props);
+
+  const onHourClick = (event) => {
+    event.stopPropagation();
+    onClick(event, { ...props, value: hour});
+  };
+  return (
+    <Table.Cell
+      { ...rest }
+      onClick={onHourClick}
+      className="suir-calendar time"
+      textAlign="center">
+      { hour + ':00' }
+    </Table.Cell>
+  );
+}
 
 function HourPicker(props) {
   const { 
-    onTimeClick,
+    onHourClick,
     activeHour
   } = props;
   const rest = getUnhandledProps(HourPicker, props);
 
-  const hours = getHours().map((hour) => (
-    <Table.Cell
-      onClick={onTimeClick.bind(null, hour)}
-      className="suir-calendar time"
+  const hours = HOURS.map((hour) => (
+    <HourPickerCell 
+      onClick={onHourClick}
       active={hour === activeHour}
-      textAlign="center"
-      key={hour}>{hour + ':00'}</Table.Cell>
+      hour={hour}
+      key={hour} />
   ));
   const rows = function() {
     const rows = [];
@@ -35,12 +83,15 @@ function HourPicker(props) {
   );
 }
 
+HourPickerCell.propTypes = {
+  /** (event, data) => {} */
+  onClick: PropTypes.func.isRequired,
+  hour: PropTypes.string.isRequired
+};
+
 HourPicker.propTypes = {
-  /** (clickedTime) => do somthing
-   * 
-   * @param clickedTime {string} 'hh'
-   */
-  onTimeClick: PropTypes.func.isRequired,
+  /** (event, data) => {} */
+  onHourClick: PropTypes.func.isRequired,
   activeHour: PropTypes.string
 };
 

@@ -10,21 +10,13 @@ function DatesRangeInput(props) {
     value,
     placeholder
   } = props;
-  const onDatesRangeChange = (newDatesRange) => {
-    const { start, end } = newDatesRange;
-    if (start && end) {
-      onChange(start.format('DD-MM-YY') + ' - ' + end.format('DD-MM-YY'));
-    }
-    if (newDatesRange.target) {
-      onChange(newDatesRange.target.value);
-    }
-  };
   const rest = getUnhandledProps(DatesRangeInput, props);
+  
   const inputElement = (
     <Input
       { ...rest }
       value={value}
-      onChange={onDatesRangeChange}
+      onChange={onChange}
       placeholder={placeholder}
       icon="calendar"
       iconPosition="left"
@@ -37,7 +29,7 @@ function DatesRangeInput(props) {
       hoverable
       trigger={inputElement}>
       <DatesRangePicker
-        onDatesRangeChange={onDatesRangeChange} />
+        onDatesRangeChange={onChange} />
     </Popup>
   );
 }

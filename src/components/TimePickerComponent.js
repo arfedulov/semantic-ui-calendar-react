@@ -29,7 +29,7 @@ function TimePickerComponent(props) {
         <MinutePicker
           hour={activeHour}
           activeMinute={activeMinute}
-          onTimeClick={onMinuteClick} />
+          onMinuteClick={onMinuteClick} />
       </React.Fragment>
     );
   } else {
@@ -46,14 +46,16 @@ function TimePickerComponent(props) {
         ) }
         <HourPicker
           activeHour={activeHour}
-          onTimeClick={onHourClick} />
+          onHourClick={onHourClick} />
       </React.Fragment>
     );
   }
 }
 
 TimePickerComponent.propTypes = {
+  /** (event, data) => {} */
   onHourClick: PropTypes.func.isRequired,
+  /** (event, data) => {} */
   onMinuteClick: PropTypes.func.isRequired,
   /** Show date in header if given */
   selectedDate: PropTypes.instanceOf(moment),

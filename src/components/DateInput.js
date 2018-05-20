@@ -10,13 +10,11 @@ function DateInput(props) {
     value,
     placeholder
   } = props;
-  const onDateChange = (newDate) => {
-    if (newDate.format) {
-      onChange(newDate.format('DD-MM-YYYY'));
+  const onDateChange = (event, data) => {
+    if (data.value.format) {
+      data.value = data.value.format('DD-MM-YYYY');
     }
-    if (newDate.target) {
-      onChange(newDate.target.value);
-    }
+    onChange(event, data);
   };
   const rest = getUnhandledProps(DateInput, props);
   const inputElement = (

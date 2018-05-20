@@ -2,7 +2,7 @@ import React from 'react';
 import { Input } from 'semantic-ui-react';
 import { DateTimePicker, CustomPopup as Popup } from '../containers';
 import PropTypes from 'prop-types';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps, cloneReplaceValue } from '../utils.js';
 
 class DateTimeInput extends React.Component {
   constructor(props) {
@@ -14,45 +14,42 @@ class DateTimeInput extends React.Component {
     };
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    const {
-      selectedDate,
-      selectedTime
-    } = this.state;
-    const filled = selectedDate && selectedTime;
-    const updated = (selectedDate !== prevState.selectedDate || selectedTime !== prevState.selectedTime);
-    if (filled && updated) {
-      this.props.onChange(selectedDate + ' ' + selectedTime);
-    }
+  getDateTime = ({ date = '', time = '' }) => {
+    return `${date} ${time}`;
   }
 
-  onDateChange = (newDate) => {
-    this.setState({
-      selectedDate: newDate.format('DD-MM-YYYY')
+  onDateChange = (event, data) => {
+    this.setState(prevState => {
+      const newData = cloneReplaceValue(data, this.getDateTime({ date: data.value.format('DD-MM-YYYY') }));
+      this.props.onChange(event, newData);
+      return {
+        selectedDate: data.value.format('DD-MM-YYYY')
+      };
     });
   }
 
-  onTimeChange = (newTime) => {
-    this.setState({
-      selectedTime: newTime
+  onTimeChange = (event, data) => {
+    this.setState(prevState => {
+      const newData = cloneReplaceValue(data, this.getDateTime({ date: prevState.selectedDate, time: data.value }));
+      this.props.onChange(event, newData);
+      return {
+        selectedTime: data.value
+      };
     });
-  }
-
-  onInputFieldChange = (event) => {
-    this.props.onChange(event.target.value);
   }
 
   render() {
     const {
       value,
-      placeholder
+      placeholder,
+      onChange
     } = this.props;
     const rest = getUnhandledProps(DateTimeInput, this.props);
 
     const inputElement = (
       <Input
         { ...rest }
-        onChange={this.onInputFieldChange}
+        onChange={onChange}
         placeholder={placeholder}
         value={value}
         icon="calendar"

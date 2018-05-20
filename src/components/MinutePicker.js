@@ -1,24 +1,61 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getMinutes } from '../utils.js';
 import { Table } from 'semantic-ui-react';
 import { getUnhandledProps } from '../utils.js';
 
+const MINUTES = [
+  '00',
+  '05',
+  '10',
+  '15',
+  '20',
+  '25',
+  '30',
+  '35',
+  '40',
+  '45',
+  '50',
+  '55'
+];
+
+function MinutePickerCell(props) {
+  const { 
+    onClick,
+    hour,
+    minute
+  } = props;
+  const rest = getUnhandledProps(MinutePickerCell, props);
+
+  const onMinuteClick = (event) => {
+    event.stopPropagation();
+    onClick(event, { ...props, value: minute});
+  };
+  return (
+    <Table.Cell
+      { ...rest }
+      onClick={onMinuteClick}
+      className="suir-calendar time"
+      textAlign="center">
+      { hour + ':' + minute }
+    </Table.Cell>
+  );
+}
+
 function MinutePicker(props) {
   const {
-    onTimeClick,
+    onMinuteClick,
     hour,
     activeMinute
   } = props;
   const rest = getUnhandledProps(MinutePicker, props);
 
-  const minutes = getMinutes().map((minute) => (
-    <Table.Cell
-      onClick={onTimeClick.bind(null, minute)}
-      className="suir-calendar time"
+  const minutes = MINUTES.map((minute) => (
+    <MinutePickerCell
+      onClick={onMinuteClick}
       active={minute === activeMinute}
-      textAlign="center"
-      key={minute}>{hour + ':' + minute}</Table.Cell>
+      hour={hour}
+      minute={minute}
+      key={minute} />
   ));
   const rows = function() {
     const rows = [];
@@ -37,12 +74,16 @@ function MinutePicker(props) {
   );
 }
 
+MinutePickerCell.propTypes = {
+  /** (event, data) => {} */
+  onClick: PropTypes.func.isRequired,
+  hour: PropTypes.string.isRequired,
+  minute: PropTypes.string.isRequired
+};
+
 MinutePicker.propTypes = {
-  /** (clickedTime) => do somthing
-   * 
-   * @param clickedTime {string} 'mm'
-   */
-  onTimeClick: PropTypes.func.isRequired,
+  /** (event, data) => {} */
+  onMinuteClick: PropTypes.func.isRequired,
   /** 'hh' */
   hour: PropTypes.string.isRequired,
   activeMinute: PropTypes.string
