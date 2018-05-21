@@ -15,15 +15,16 @@ class DateTimeInput extends React.Component {
   }
 
   getDateTime = ({ date = '', time = '' }) => {
-    return `${date} ${time}`;
+    return `${date}${this.props.divider}${time}`;
   }
 
   onDateChange = (event, data) => {
+    const { dateFormat } = this.props;
     this.setState(prevState => {
-      const newData = cloneReplaceValue(data, this.getDateTime({ date: data.value.format('DD-MM-YYYY') }));
+      const newData = cloneReplaceValue(data, this.getDateTime({ date: data.value.format(dateFormat) }));
       this.props.onChange(event, newData);
       return {
-        selectedDate: data.value.format('DD-MM-YYYY')
+        selectedDate: data.value.format(dateFormat)
       };
     });
   }
@@ -72,11 +73,19 @@ DateTimeInput.propTypes = {
   */
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
-  icon: PropTypes.any
+  icon: PropTypes.any,
+  /** Date formatting string.
+   * Anything that that can be passed to ``moment().format``.
+   */
+  dateFormat: PropTypes.string,
+  /** Characters that are used to divide date and time in string. */
+  divider: PropTypes.string
 };
 
 DateTimeInput.defaultProps = {
-  icon: 'calendar'
+  icon: 'calendar',
+  dateFormat: 'DD-MM-YYYY',
+  divider: ' '
 };
 
 export default DateTimeInput;

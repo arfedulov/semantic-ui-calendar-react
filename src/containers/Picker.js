@@ -55,10 +55,11 @@ class Picker extends React.Component {
   }
 
   getDatesRange = (range) => {
+    const { dateFormat, divider } = this.props;
     const { start, end } = range? range : { start: null, end: null };
-    const startStr = start && start.format? start.format('DD.MM.YY') : '. . .';
-    const endStr = end && end.format? end.format('DD.MM.YY') : '. . .';
-    return `${startStr} - ${endStr}`;
+    const startStr = start && start.format? start.format(dateFormat) : '. . .';
+    const endStr = end && end.format? end.format(dateFormat) : '. . .';
+    return `${startStr}${divider}${endStr}`;
   }
 
   onDateClick = (event, data) => {
@@ -280,13 +281,21 @@ Picker.propTypes = {
   /** (newDatesRange) => {}
    * @param {{start: moment, end: moment}} newDatesRange
   */
-  onDatesRangeChange: PropTypes.func
+  onDatesRangeChange: PropTypes.func,
+  /** Date formatting string.
+   * Anything that that can be passed to ``moment().format``.
+   */
+  dateFormat: PropTypes.string,
+  /** Characters that are used to divide dates in string. */
+  divider: PropTypes.string
 };
 
 Picker.defaultProps = {
   onDateChange: () => {},
   onTimeChange: () => {},
-  onDatesRangeChange: () => {}
+  onDatesRangeChange: () => {},
+  dateFormat: 'DD.MM.YY',
+  divider: ' - '
 };
 
 export default Picker;

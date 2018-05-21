@@ -83,11 +83,33 @@ class DateTimeForm extends React.Component {
 ```
 And you have a form with date/time inputs.
 
-# Suppported elements
+# Supported elements
 
-| Element Name        | Props                                 | Description      |
-| ------------------- |:-------------------------------------:| ----------------:|
-| DateInput           | all that can be used with SUIR Input  | todo             |
-| TimeInput           | all that can be used with SUIR Input  | todo             |
-| DateTimeInput       | all that can be used with SUIR Input  | todo             |
-| DatesRangeInput     | all that can be used with SUIR Input  | todo             |
+### DateInput
+
+| Prop | Description |
+| -----| ------------|
+| all that can be used with SUIR Input | |
+| ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``|
+
+### TimeInput
+
+| Prop | Description |
+| -----| ------------|
+| all that can be used with SUIR Input | |
+
+### DateTimeInput
+
+| Prop | Description |
+| -----| ------------|
+| all that can be used with SUIR Input | |
+| ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``|
+| ``divider`` | {string} Date and time divider. Default: `` `` |
+
+### DatesRangeInput
+
+| Prop | Description |
+| -----| ------------|
+| all that can be used with SUIR Input | |
+| ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD.MM.YY``|
+| ``divider`` | {string} Dates divider. Default: `` - `` |

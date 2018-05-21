@@ -7,7 +7,9 @@ import { getUnhandledProps } from '../utils.js';
 function DatesRangeInput(props) {
   const {
     onChange,
-    icon
+    icon,
+    dateFormat,
+    divider
   } = props;
   const rest = getUnhandledProps(DatesRangeInput, props);
   
@@ -24,6 +26,8 @@ function DatesRangeInput(props) {
       hoverable
       trigger={inputElement}>
       <DatesRangePicker
+        dateFormat={dateFormat}
+        divider={divider}
         onDatesRangeChange={onChange} />
     </Popup>
   );
@@ -36,7 +40,13 @@ DatesRangeInput.propTypes = {
   */
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
-  icon: PropTypes.any
+  icon: PropTypes.any,
+  /** Date formatting string.
+   * Anything that that can be passed to ``moment().format``.
+   */
+  dateFormat: PropTypes.string,
+  /** Character that used to divide dates in string. */
+  divider: PropTypes.string
 };
 
 DatesRangeInput.defaultProps = {
