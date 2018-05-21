@@ -90,7 +90,7 @@ And you have a form with date/time inputs.
 | Prop | Description |
 | -----| ------------|
 | all that can be used with SUIR Input | |
-| ``dateFormat``| Date formatting string. You can use here anything that can be passed to ``moment().format``|
+| ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``|
 
 ### TimeInput
 
@@ -103,13 +103,13 @@ And you have a form with date/time inputs.
 | Prop | Description |
 | -----| ------------|
 | all that can be used with SUIR Input | |
-| ``dateFormat``| Date formatting string. You can use here anything that can be passed to ``moment().format``|
-| ``divider`` | Date and time divider |
+| ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``|
+| ``divider`` | {string} Date and time divider. Default: `` `` |
 
 ### DatesRangeInput
 
 | Prop | Description |
 | -----| ------------|
 | all that can be used with SUIR Input | |
-| ``dateFormat``| Date formatting string. You can use here anything that can be passed to ``moment().format``|
-| ``divider`` | Dates divider |
+| ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD.MM.YY``|
+| ``divider`` | {string} Dates divider. Default: `` - `` |
