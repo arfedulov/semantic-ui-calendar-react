@@ -7,11 +7,12 @@ import { getUnhandledProps } from '../utils.js';
 function DateInput(props) {
   const {
     onChange,
-    icon
+    icon,
+    dateFormat
   } = props;
   const onDateChange = (event, data) => {
     if (data.value.format) {
-      data.value = data.value.format('DD-MM-YYYY');
+      data.value = data.value.format(dateFormat);
     }
     onChange(event, data);
   };
@@ -41,11 +42,16 @@ DateInput.propTypes = {
   */
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
-  icon: PropTypes.any
+  icon: PropTypes.any,
+  /** Date formatting string.
+   * Anything that that can be passed to ``moment().format``
+   */
+  dateFormat: PropTypes.string
 };
 
 DateInput.defaultProps = {
-  icon: 'calendar'
+  icon: 'calendar',
+  dateFormat: 'DD-MM-YYYY'
 };
 
 export default DateInput;
