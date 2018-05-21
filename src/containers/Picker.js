@@ -286,7 +286,7 @@ Picker.propTypes = {
    * Anything that that can be passed to ``moment().format``.
    */
   dateFormat: PropTypes.string,
-  /** Character that used to divide dates in string. */
+  /** Characters that are used to divide dates in string. */
   divider: PropTypes.string
 };
 

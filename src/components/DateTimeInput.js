@@ -78,7 +78,7 @@ DateTimeInput.propTypes = {
    * Anything that that can be passed to ``moment().format``.
    */
   dateFormat: PropTypes.string,
-  /** Character that used to divide date and time in string. */
+  /** Characters that are used to divide date and time in string. */
   divider: PropTypes.string
 };
 
