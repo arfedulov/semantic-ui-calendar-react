@@ -49,8 +49,13 @@ function MinutePicker(props) {
   } = props;
   const rest = getUnhandledProps(MinutePicker, props);
 
+  const cellStyle = {
+    width: '33.33333%',
+    minWidth: '8em'
+  };
   const minutes = MINUTES.map((minute) => (
     <MinutePickerCell
+      style={cellStyle}
       onClick={onMinuteClick}
       active={minute === activeMinute}
       hour={hour}

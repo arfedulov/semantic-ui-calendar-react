@@ -5,17 +5,18 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { getWeekDays, getUnhandledProps } from '../utils.js';
 
-function DateTimePickerHeader(props) {
+function PickerHeader(props) {
   const {
     onNextBtnClick,
     onPrevBtnClick,
-    showedDate,
-    showedRange,
-    showDate,
+    activeDate,
+    activeDatesRange,
+    activeYears,
+    includeDay,
     showWeeks,
     width
   } = props;
-  const rest = getUnhandledProps(DateTimePickerHeader, props);
+  const rest = getUnhandledProps(PickerHeader, props);
 
   const _getWeekDayHeaders = () => {
     return getWeekDays().map((weekDay) => (
@@ -41,7 +42,7 @@ function DateTimePickerHeader(props) {
 
   const getRangeRow = () => {
     const getContent = () => {
-      const { start, end } = showedRange;
+      const { start, end } = activeDatesRange;
       if (start && end) {
         return start.format('MMM DD, YYYY') + ' - ' + end.format('MMM DD, YYYY');
       }
@@ -59,9 +60,19 @@ function DateTimePickerHeader(props) {
     );
   };
 
+  const getContent = () => {
+    if (activeDate) {
+      return includeDay? activeDate.format('MMMM DD, YYYY') : activeDate.format('MMMM YYYY');
+    }
+
+    if (activeYears) {
+      return `${activeYears.start} - ${activeYears.end}`;
+    }
+  };
+
   return (
     <Table.Header { ...rest }>
-      { showedRange && getRangeRow() }
+      { activeDatesRange && getRangeRow() }
       <Table.Row>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
@@ -70,7 +81,7 @@ function DateTimePickerHeader(props) {
             name="chevron left" />
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan={(parseInt(width) - 2).toString()}>
-          { showDate? showedDate.format('MMMM DD, YYYY') : showedDate.format('MMMM YYYY') }
+          { getContent() }
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
@@ -84,28 +95,32 @@ function DateTimePickerHeader(props) {
   );
 }
 
-DateTimePickerHeader.propTypes = {
+PickerHeader.propTypes = {
   onNextBtnClick: PropTypes.func.isRequired,
   onPrevBtnClick: PropTypes.func.isRequired,
   /** Header's width in table columns */
   width: PropTypes.string.isRequired,
   /** calendar shows date of this `moment` */
-  showedDate: PropTypes.instanceOf(moment).isRequired,
-  showedRange: PropTypes.shape({
+  activeDate: PropTypes.instanceOf(moment),
+  activeYears: PropTypes.shape({
+    start: PropTypes.number,
+    end: PropTypes.number
+  }),
+  activeDatesRange: PropTypes.shape({
     start: PropTypes.instanceOf(moment),
     end: PropTypes.instanceOf(moment)
   }),
-  showDate: PropTypes.bool,
+  includeDay: PropTypes.bool,
   showWeeks: PropTypes.bool,
   className: PropTypes.string
 };
 
-DateTimePickerHeader.defaultProps = {
-  showDate: false,
-  showWeeks: true
+PickerHeader.defaultProps = {
+  includeDay: false,
+  showWeeks: false
 };
 
-export default DateTimePickerHeader;
+export default PickerHeader;
 export {
-  DateTimePickerHeader
+  PickerHeader
 };

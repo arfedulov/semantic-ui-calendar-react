@@ -100,11 +100,14 @@ const cloneReplaceValue = (data, newValue) => {
   return Object.assign({}, data, { value: newValue });
 };
 
+const emptyFunction = () => {};
+
 export {
   getArrayOfWeeks,
   isActiveDate,
   isDayInMonth,
   getWeekDays,
   getUnhandledProps,
-  cloneReplaceValue
+  cloneReplaceValue,
+  emptyFunction
 };

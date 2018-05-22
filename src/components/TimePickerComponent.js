@@ -1,5 +1,5 @@
 import React from 'react';
-import { HourPicker, MinutePicker, DateTimePickerHeader } from '.';
+import { HourPicker, MinutePicker, PickerHeader } from '.';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -18,11 +18,10 @@ function TimePickerComponent(props) {
     return (
       <React.Fragment>
         { selectedDate && (
-          <DateTimePickerHeader
+          <PickerHeader
             width="3"
-            showWeeks={false}
-            showDate
-            showedDate={selectedDate}
+            includeDay
+            activeDate={selectedDate}
             onNextBtnClick={onNextDayBtnClick}
             onPrevBtnClick={onPrevDayBtnClick} />
         ) }
@@ -36,11 +35,10 @@ function TimePickerComponent(props) {
     return (
       <React.Fragment>
         { selectedDate && (
-          <DateTimePickerHeader
+          <PickerHeader
             width="4"
-            showWeeks={false}
-            showDate
-            showedDate={selectedDate}
+            includeDay
+            activeDate={selectedDate}
             onNextBtnClick={onNextDayBtnClick}
             onPrevBtnClick={onPrevDayBtnClick} />
         ) }
