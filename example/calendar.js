@@ -11,8 +11,9 @@ import {
   DatesRangePicker,
   DatesRangeInput,
   YearPicker,
-  YearInput } from '../src';
-// import { YearPicker } from '../src/containers/YearPicker.js';
+  YearInput,
+  MonthPicker,
+  MonthInput } from '../src';
 import moment from 'moment';
 
 moment.locale('en');
@@ -29,6 +30,8 @@ function App(props) {
       <TimePicker />
       <h3>Year-picker</h3>
       <YearPicker />
+      <h3>Month-picker</h3>
+      <MonthPicker />
       <h3>DateTime-picker</h3>
       <DateTimePicker />
       <h3>Dates range picker</h3>
@@ -43,6 +46,7 @@ class DateTimeForm extends React.Component {
 
     this.state = {
       year: '',
+      month: '',
       date: '',
       time: '',
       dateTime: '',
@@ -52,6 +56,10 @@ class DateTimeForm extends React.Component {
 
   handleYearChange = (event, { value }) => {
     this.setState({ year: value });
+  }
+
+  handleMonthChange = (event, { value }) => {
+    this.setState({ month: value });
   }
 
   handleDateChange = (event, { value }) => {
@@ -107,6 +115,13 @@ class DateTimeForm extends React.Component {
           value={this.state.year}
           iconPosition="left"
           onChange={this.handleYearChange} />
+        <br />
+        <MonthInput
+          placeholder="Month"
+          className="example-calendar-input"
+          value={this.state.month}
+          iconPosition="left"
+          onChange={this.handleMonthChange} />
       </Form>
     );
   }
