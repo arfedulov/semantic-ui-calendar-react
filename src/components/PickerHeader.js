@@ -12,6 +12,7 @@ function PickerHeader(props) {
     activeDate,
     activeDatesRange,
     activeYears,
+    activeYear,
     includeDay,
     showWeeks,
     width
@@ -61,12 +62,16 @@ function PickerHeader(props) {
   };
 
   const getContent = () => {
-    if (activeDate) {
-      return includeDay? activeDate.format('MMMM DD, YYYY') : activeDate.format('MMMM YYYY');
-    }
-
     if (activeYears) {
       return `${activeYears.start} - ${activeYears.end}`;
+    }
+
+    if (activeYear) {
+      return activeYear;
+    }
+
+    if (activeDate) {
+      return includeDay? activeDate.format('MMMM DD, YYYY') : activeDate.format('MMMM YYYY');
     }
   };
 
@@ -102,6 +107,7 @@ PickerHeader.propTypes = {
   width: PropTypes.string.isRequired,
   /** calendar shows date of this `moment` */
   activeDate: PropTypes.instanceOf(moment),
+  activeYear: PropTypes.string,
   activeYears: PropTypes.shape({
     start: PropTypes.number,
     end: PropTypes.number

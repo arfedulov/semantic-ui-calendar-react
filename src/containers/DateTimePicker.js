@@ -1,7 +1,11 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
-import { getUnhandledProps, emptyFunction, cloneReplaceValue } from '../utils.js';
-import { PickerHeader, DatePickerComponent, TimePickerComponent } from '../components';
+import { getUnhandledProps, emptyFunction, cloneReplaceValue, monthIndex } from '../utils.js';
+import { PickerHeader,
+  DatePickerComponent,
+  TimePickerComponent,
+  MonthPickerComponent } from '../components';
+import { YearPicker } from '.';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
@@ -9,9 +13,12 @@ class DateTimePicker extends React.Component {
   constructor(props) {
     super(props);
 
+    const initialDate = moment();
     this.state = {
       activeDate: null,
-      activeMonth: moment(),
+      dateToShow: initialDate,
+      year: this.props.startMode !== 'year'? initialDate.year().toString() : '',
+      month: '',
       activeHour: '',
       activeMinute: ''
     };
@@ -52,44 +59,95 @@ class DateTimePicker extends React.Component {
     });
   }
 
+  onYearChange = (event, data) => {
+    const date = {
+      year: data.value
+    };
+    this.setState({
+      dateToShow: moment(date),
+      year: data.value
+    });
+  }
+
+  onMonthChange = (event, data) => {
+    const date = {
+      year: this.state.year,
+      month: monthIndex(data.value)
+    };
+    this.setState({
+      dateToShow: moment(date),
+      month: data.value
+    });
+  }
+
   getTime = ({hour = '', minute = ''}) => {
     return `${hour}:${minute}`;
   }
 
-  onNextBtnClick = ({ day }) => {
-    if (day) {
-      this.setState(({ activeDate }) => {
-        let nextDay = activeDate.clone();
-        nextDay.add(1, 'd');
-        return { activeDate: nextDay };
-      });
-    } else {
-      this.setState(({ activeMonth }) => {
-        let nextMonth = activeMonth.clone();
-        nextMonth.add(1, 'M');
-        return { activeMonth: nextMonth };
-      });
-    }
+  showNextMonth = () => {
+    this.setState(({ dateToShow }) => {
+      let nextMonth = dateToShow.clone();
+      nextMonth.add(1, 'M');
+      return { dateToShow: nextMonth };
+    });
   }
 
-  onPrevBtnClick = ({ day }) => {
-    if (day) {
-      this.setState(({ activeDate }) => {
-        let prevDay = activeDate.clone();
-        prevDay.add(-1, 'd');
-        return { activeDate: prevDay };
-      });
-    } else {
-      this.setState(({ activeMonth }) => {
-        let prevMonth = activeMonth.clone();
-        prevMonth.add(-1, 'M');
-        return { activeMonth: prevMonth };
-      });
-    }
+  showPrevMonth = () => {
+    this.setState(({ dateToShow }) => {
+      let prevMonth = dateToShow.clone();
+      prevMonth.add(-1, 'M');
+      return { dateToShow: prevMonth };
+    });
+  }
+
+  showNextYear = () => {
+    this.setState(({ dateToShow }) => {
+      let nextYear = dateToShow.clone();
+      nextYear.add(1, 'Y');
+      return { dateToShow: nextYear };
+    });
+  }
+
+  showPrevYear = () => {
+    this.setState(({ dateToShow }) => {
+      let prevYear = dateToShow.clone();
+      prevYear.add(-1, 'Y');
+      return { dateToShow: prevYear };
+    });
+  }
+
+  showNextDay = () => {
+    this.setState(({ activeDate }) => {
+      let nextDay = activeDate.clone();
+      nextDay.add(1, 'd');
+      this.props.onDateChange(null, {value: nextDay});
+      return { activeDate: nextDay };
+    });
+  }
+
+  showPrevDay = () => {
+    this.setState(({ activeDate }) => {
+      let prevDay = activeDate.clone();
+      prevDay.add(-1, 'd');
+      this.props.onDateChange(null, {value: prevDay});
+      return { activeDate: prevDay };
+    });
   }
 
   getActiveDate = () => {
     return this.state.activeDate || moment();
+  }
+
+  getDatePickerContent = () => {
+    const { startMode } = this.props;
+    const {
+      year,
+      month
+    } = this.state;
+    if (startMode === 'year' && !year) return this.yearModeContent();
+    if (startMode === 'year' && !month) return this.monthModeContent();
+    if (startMode === 'month' && !month) return this.monthModeContent();
+    return this.dayModeContent();
   }
 
   getDateTimePickerContent = () => {
@@ -97,30 +155,31 @@ class DateTimePicker extends React.Component {
       activeDate,
       activeHour,
       activeMinute,
-      activeMonth
+      dateToShow
     } = this.state;
     const headerWidth = activeHour? '3' : activeDate? '4' : '7';
     if (!activeDate) {
-      return (
-        <React.Fragment>
-          <PickerHeader
-            onNextBtnClick={this.onNextBtnClick}
-            onPrevBtnClick={this.onPrevBtnClick}
-            activeDate={activeMonth}
-            showWeeks
-            width="7" />
-          <DatePickerComponent
-            onDateClick={this.onDateClick}
-            activeDate={this.getActiveDate()}
-            showedMonth={activeMonth} />
-        </React.Fragment>
-      );
+      // return (
+      //   <React.Fragment>
+      //     <PickerHeader
+      //       onNextBtnClick={this.showNextMonth}
+      //       onPrevBtnClick={this.showPrevMonth}
+      //       activeDate={dateToShow}
+      //       showWeeks
+      //       width="7" />
+      //     <DatePickerComponent
+      //       onDateClick={this.onDateClick}
+      //       activeDate={this.getActiveDate()}
+      //       showedMonth={dateToShow} />
+      //   </React.Fragment>
+      // );
+      return this.getDatePickerContent();
     }
     return (
       <React.Fragment>
         <PickerHeader
-          onNextBtnClick={this.onNextBtnClick.bind(null, { day: true })}
-          onPrevBtnClick={this.onPrevBtnClick.bind(null, { day: true })}
+          onNextBtnClick={this.showNextDay}
+          onPrevBtnClick={this.showPrevDay}
           activeDate={activeDate}
           includeDay
           width={headerWidth} />
@@ -129,6 +188,44 @@ class DateTimePicker extends React.Component {
           activeMinute={activeMinute}
           onHourClick={this.onHourClick}
           onMinuteClick={this.onMinuteClick} />
+      </React.Fragment>
+    );
+  }
+
+  yearModeContent = () => {
+    return (
+      <YearPicker onYearChange={this.onYearChange} />
+    );
+  }
+
+  monthModeContent = () => {
+    return (
+      <React.Fragment>
+        <PickerHeader
+          onNextBtnClick={this.showNextYear}
+          onPrevBtnClick={this.showPrevYear}
+          activeYear={this.state.dateToShow.format('YYYY')}
+          width="3" />
+        <MonthPickerComponent
+          activeMonth={this.state.dateToShow.format('MMM')}
+          onMonthClick={this.onMonthChange} />
+      </React.Fragment>
+    );
+  }
+
+  dayModeContent = () => {
+    return (
+      <React.Fragment>
+        <PickerHeader
+          onNextBtnClick={this.showNextMonth}
+          onPrevBtnClick={this.showPrevMonth}
+          activeDate={this.state.dateToShow}
+          showWeeks
+          width="7" />
+        <DatePickerComponent
+          onDateClick={this.onDateClick}
+          activeDate={this.state.activeDate}
+          showedMonth={this.state.dateToShow} />
       </React.Fragment>
     );
   }
@@ -151,12 +248,14 @@ DateTimePicker.propTypes = {
   /** (event, data) => {} */
   onDateChange: PropTypes.func,
   /** (event, data) => {} */
-  onTimeChange: PropTypes.func
+  onTimeChange: PropTypes.func,
+  startMode: PropTypes.oneOf(['year', 'month', 'day'])
 };
 
 DateTimePicker.defaultProps = {
   onDateChange: emptyFunction,
-  onTimeChange: emptyFunction
+  onTimeChange: emptyFunction,
+  startMode: 'day'
 };
 
 export default DateTimePicker;

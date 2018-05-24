@@ -18,7 +18,7 @@ import moment from 'moment';
 
 moment.locale('en');
 
-function App(props) {
+function App() {
   return (
     <div className="example-calendar-container">
       <h2>As form inputs</h2>
