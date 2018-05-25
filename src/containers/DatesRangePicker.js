@@ -4,13 +4,15 @@ import { PickerHeader, DatePickerComponent } from '../components';
 import { getUnhandledProps, emptyFunction, cloneReplaceValue } from '../utils.js';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { BasePicker } from './BasePicker.js';
 
-class DatesRangePicker extends React.Component {
+class DatesRangePicker extends BasePicker {
   constructor(props) {
     super(props);
 
+    const initialDate = moment();
     this.state = {
-      activeMonth: moment(),
+      dateToShow: initialDate,
       datesRange: { start: null, end: null }
     };
   }
@@ -62,42 +64,6 @@ class DatesRangePicker extends React.Component {
     this.setDatesRange(event, data);
   }
 
-  onNextBtnClick = ({ day }) => {
-    if (day) {
-      this.setState(({ activeDate }) => {
-        let nextDay = activeDate.clone();
-        nextDay.add(1, 'd');
-        return { activeDate: nextDay };
-      });
-    } else {
-      this.setState(({ activeMonth }) => {
-        let nextMonth = activeMonth.clone();
-        nextMonth.add(1, 'M');
-        return { activeMonth: nextMonth };
-      });
-    }
-  }
-
-  onPrevBtnClick = ({ day }) => {
-    if (day) {
-      this.setState(({ activeDate }) => {
-        let prevDay = activeDate.clone();
-        prevDay.add(-1, 'd');
-        return { activeDate: prevDay };
-      });
-    } else {
-      this.setState(({ activeMonth }) => {
-        let prevMonth = activeMonth.clone();
-        prevMonth.add(-1, 'M');
-        return { activeMonth: prevMonth };
-      });
-    }
-  }
-
-  getActiveDate = () => {
-    return this.state.activeDate || moment();
-  }
-
   render() {
     const rest = getUnhandledProps(DatesRangePicker, this.props);
 
@@ -108,16 +74,16 @@ class DatesRangePicker extends React.Component {
         celled
         textAlign="center">
         <PickerHeader
-          onNextBtnClick={this.onNextBtnClick}
-          onPrevBtnClick={this.onPrevBtnClick}
-          activeDate={this.state.activeMonth}
+          onNextBtnClick={this.showNextMonth}
+          onPrevBtnClick={this.showPrevMonth}
+          activeDate={this.state.dateToShow}
           activeDatesRange={this.state.datesRange}
           showWeeks
           width="7" />
         <DatePickerComponent
           datesRange={this.state.datesRange}
           onDateClick={this.onDateClick}
-          showedMonth={this.state.activeMonth} />
+          showedMonth={this.state.dateToShow} />
       </Table>
     );
   }
