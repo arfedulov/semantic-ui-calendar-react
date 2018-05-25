@@ -82,7 +82,6 @@ class DateTimeForm extends React.Component {
     return (
       <Form>
         <DateInput
-          startMode="month"
           placeholder="Date"
           className="example-calendar-input"
           value={this.state.date}
@@ -97,7 +96,6 @@ class DateTimeForm extends React.Component {
           onChange={this.handleTimeChange} />
         <br />
         <DateTimeInput
-          startMode="year"
           placeholder="Date Time"
           className="example-calendar-input"
           value={this.state.dateTime}

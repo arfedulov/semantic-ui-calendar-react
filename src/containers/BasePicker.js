@@ -131,7 +131,9 @@ class BasePicker extends React.Component {
 
   yearModeContent = () => {
     return (
-      <YearPicker onYearChange={this.onYearChange} />
+      <YearPicker
+        standalone={false}
+        onYearChange={this.onYearChange} />
     );
   }
 

@@ -36,20 +36,14 @@ class YearPicker extends React.Component {
     });
   }
 
-  render() {
-    const rest = getUnhandledProps(YearPicker, this.props);
+  getContent = () => {
     const { yearsStart } = this.state;
     const yearsRange = {
       start: yearsStart,
       end: yearsStart + 11
     };
-
     return (
-      <Table
-        { ...rest }
-        unstackable
-        celled
-        textAlign="center">
+      <React.Fragment>
         <PickerHeader
           width="3"
           activeYears={yearsRange}
@@ -58,19 +52,38 @@ class YearPicker extends React.Component {
         <YearPickerComponent
           onYearClick={this.onYearClick}
           activeYear={this.getActiveYear()}
-          yearsStart={this.state.yearsStart} />
-      </Table>
+          yearsStart={yearsStart} />
+      </React.Fragment>
     );
+  }
+
+  render() {
+    const rest = getUnhandledProps(YearPicker, this.props);
+
+    if (this.props.standalone) {
+      return (
+        <Table
+          { ...rest }
+          unstackable
+          celled
+          textAlign="center">
+          { this.getContent() }
+        </Table>
+      );
+    }
+    return this.getContent();
   }
 }
 
 YearPicker.propTypes = {
   /** (event, data) => {} */
-  onYearChange: PropTypes.func
+  onYearChange: PropTypes.func,
+  standalone: PropTypes.bool
 };
 
 YearPicker.defaultProps = {
-  onYearChange: emptyFunction
+  onYearChange: emptyFunction,
+  standalone: true
 };
 
 export default YearPicker;
