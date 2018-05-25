@@ -7,7 +7,8 @@ import { getUnhandledProps } from '../utils.js';
 function YearInput(props) {
   const {
     onChange,
-    icon
+    icon,
+    popupPosition
   } = props;
   const rest = getUnhandledProps(YearInput, props);
 
@@ -20,6 +21,7 @@ function YearInput(props) {
   return (
     <Popup
       on="click"
+      position={popupPosition}
       className="suir-calendar popup"
       hoverable
       trigger={inputElement}>
@@ -36,7 +38,17 @@ YearInput.propTypes = {
   */
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
-  icon: PropTypes.any
+  icon: PropTypes.any,
+  popupPosition: PropTypes.oneOf([
+    'top left',
+    'top right',
+    'bottom left',
+    'bottom right',
+    'right center',
+    'left center',
+    'top center',
+    'bottom center'
+  ])
 };
 
 YearInput.defaultProps = {

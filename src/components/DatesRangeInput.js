@@ -9,7 +9,8 @@ function DatesRangeInput(props) {
     onChange,
     icon,
     dateFormat,
-    divider
+    divider,
+    popupPosition
   } = props;
   const rest = getUnhandledProps(DatesRangeInput, props);
   
@@ -26,6 +27,7 @@ function DatesRangeInput(props) {
       hoverable
       trigger={inputElement}>
       <DatesRangePicker
+        position={popupPosition}
         dateFormat={dateFormat}
         divider={divider}
         onDatesRangeChange={onChange} />
@@ -46,7 +48,17 @@ DatesRangeInput.propTypes = {
    */
   dateFormat: PropTypes.string,
   /** Character that used to divide dates in string. */
-  divider: PropTypes.string
+  divider: PropTypes.string,
+  popupPosition: PropTypes.oneOf([
+    'top left',
+    'top right',
+    'bottom left',
+    'bottom right',
+    'right center',
+    'left center',
+    'top center',
+    'bottom center'
+  ])
 };
 
 DatesRangeInput.defaultProps = {

@@ -43,7 +43,8 @@ class DateTimeInput extends React.Component {
     const {
       icon,
       onChange,
-      startMode
+      startMode,
+      popupPosition
     } = this.props;
     const rest = getUnhandledProps(DateTimeInput, this.props);
 
@@ -56,6 +57,7 @@ class DateTimeInput extends React.Component {
     return (
       <Popup
         on="click"
+        position={popupPosition}
         className="suir-calendar popup"
         hoverable
         trigger={inputElement}>
@@ -82,7 +84,17 @@ DateTimeInput.propTypes = {
   dateFormat: PropTypes.string,
   /** Characters that are used to divide date and time in string. */
   divider: PropTypes.string,
-  startMode: PropTypes.oneOf(['year', 'month', 'day'])
+  startMode: PropTypes.oneOf(['year', 'month', 'day']),
+  popupPosition: PropTypes.oneOf([
+    'top left',
+    'top right',
+    'bottom left',
+    'bottom right',
+    'right center',
+    'left center',
+    'top center',
+    'bottom center'
+  ])
 };
 
 DateTimeInput.defaultProps = {

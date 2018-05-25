@@ -9,7 +9,8 @@ function DateInput(props) {
     onChange,
     icon,
     dateFormat,
-    startMode
+    startMode,
+    popupPosition
   } = props;
   const onDateChange = (event, data) => {
     if (data.value.format) {
@@ -27,6 +28,7 @@ function DateInput(props) {
   return (
     <Popup
       on="click"
+      position={popupPosition}
       className="suir-calendar popup"
       hoverable
       trigger={inputElement}>
@@ -49,7 +51,17 @@ DateInput.propTypes = {
    * Anything that that can be passed to ``moment().format``
    */
   dateFormat: PropTypes.string,
-  startMode: PropTypes.oneOf(['year', 'month', 'day'])
+  startMode: PropTypes.oneOf(['year', 'month', 'day']),
+  popupPosition: PropTypes.oneOf([
+    'top left',
+    'top right',
+    'bottom left',
+    'bottom right',
+    'right center',
+    'left center',
+    'top center',
+    'bottom center'
+  ])
 };
 
 DateInput.defaultProps = {
