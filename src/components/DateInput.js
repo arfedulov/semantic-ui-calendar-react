@@ -8,7 +8,8 @@ function DateInput(props) {
   const {
     onChange,
     icon,
-    dateFormat
+    dateFormat,
+    startMode
   } = props;
   const onDateChange = (event, data) => {
     if (data.value.format) {
@@ -30,6 +31,7 @@ function DateInput(props) {
       hoverable
       trigger={inputElement}>
       <DatePicker
+        startMode={startMode}
         onDateChange={onDateChange} />
     </Popup>
   );
@@ -46,12 +48,14 @@ DateInput.propTypes = {
   /** Date formatting string.
    * Anything that that can be passed to ``moment().format``
    */
-  dateFormat: PropTypes.string
+  dateFormat: PropTypes.string,
+  startMode: PropTypes.oneOf(['year', 'month', 'day'])
 };
 
 DateInput.defaultProps = {
   icon: 'calendar',
-  dateFormat: 'DD-MM-YYYY'
+  dateFormat: 'DD-MM-YYYY',
+  startMode: 'day'
 };
 
 export default DateInput;

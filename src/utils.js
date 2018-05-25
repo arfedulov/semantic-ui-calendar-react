@@ -19,6 +19,7 @@ const getArrayOfWeeks = (referenceDate, weeks = 6 ) => {
 
 /** Compare two `moment`'s by date. */
 const compareDates = (oneDate, otherDate) => {
+  if (!oneDate.year || !otherDate.year) return false;
   return oneDate.year() === otherDate.year() && oneDate.month() === otherDate.month() && oneDate.date() === otherDate.date();
 };
 
@@ -28,6 +29,7 @@ const compareDates = (oneDate, otherDate) => {
  * @param {moment||{start: moment, end: moment}} active Eather date or date's interval as [start, end]
 */
 const isActiveDate = (checkedDate, active) => {
+  if (!checkedDate || !active) return false;
   if (active.hasOwnProperty('start') && active.hasOwnProperty('end')) {
     if (!active.start) {
       return;
@@ -102,6 +104,14 @@ const cloneReplaceValue = (data, newValue) => {
 
 const emptyFunction = () => {};
 
+const getMonths = () => {
+  return moment.monthsShort();
+};
+
+const monthIndex = (month) => {
+  return getMonths().indexOf(month);
+};
+
 export {
   getArrayOfWeeks,
   isActiveDate,
@@ -109,5 +119,7 @@ export {
   getWeekDays,
   getUnhandledProps,
   cloneReplaceValue,
-  emptyFunction
+  emptyFunction,
+  getMonths,
+  monthIndex
 };

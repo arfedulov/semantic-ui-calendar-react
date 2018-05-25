@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps, getMonths } from '../utils.js';
 import { Table } from 'semantic-ui-react';
-import moment from 'moment';
 import _ from 'lodash';
-
-const getMonths = () => {
-  return moment.monthsShort();
-};
 
 function MonthPickerCell(props) {
   const { 
