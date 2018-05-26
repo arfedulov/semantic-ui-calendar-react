@@ -10,7 +10,8 @@ function DatesRangeInput(props) {
     icon,
     dateFormat,
     divider,
-    popupPosition
+    popupPosition,
+    inline
   } = props;
   const rest = getUnhandledProps(DatesRangeInput, props);
   
@@ -20,6 +21,15 @@ function DatesRangeInput(props) {
       onChange={onChange}
       icon={icon} />
   );
+  if (inline) {
+    return (
+      <DatesRangePicker
+        position={popupPosition}
+        dateFormat={dateFormat}
+        divider={divider}
+        onDatesRangeChange={onChange} />
+    );
+  }
   return (
     <Popup
       on="click"
@@ -58,11 +68,13 @@ DatesRangeInput.propTypes = {
     'left center',
     'top center',
     'bottom center'
-  ])
+  ]),
+  inline: PropTypes.bool
 };
 
 DatesRangeInput.defaultProps = {
-  icon: 'calendar'
+  icon: 'calendar',
+  inline: false
 };
 
 export default DatesRangeInput;
