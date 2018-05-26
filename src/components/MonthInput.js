@@ -8,7 +8,8 @@ function MonthInput(props) {
   const {
     onChange,
     icon,
-    popupPosition
+    popupPosition,
+    inline
   } = props;
   const rest = getUnhandledProps(MonthInput, props);
 
@@ -18,6 +19,9 @@ function MonthInput(props) {
       icon={icon}
       onChange={onChange} />
   );
+  if (inline) {
+    return <MonthPicker onMonthChange={onChange} />;
+  }
   return (
     <Popup
       on="click"
@@ -48,11 +52,13 @@ MonthInput.propTypes = {
     'left center',
     'top center',
     'bottom center'
-  ])
+  ]),
+  inline: PropTypes.bool
 };
 
 MonthInput.defaultProps = {
-  icon: 'calendar'
+  icon: 'calendar',
+  inline: false
 };
 
 export default MonthInput;

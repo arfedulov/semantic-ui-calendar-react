@@ -44,16 +44,27 @@ class DateTimeInput extends React.Component {
       icon,
       onChange,
       startMode,
-      popupPosition
+      popupPosition,
+      inline,
+      value
     } = this.props;
     const rest = getUnhandledProps(DateTimeInput, this.props);
 
     const inputElement = (
       <Input
         { ...rest }
+        value={value}
         onChange={onChange}
         icon={icon} />
     );
+    if (inline) {
+      return (
+        <DateTimePicker
+          startMode={startMode}
+          onDateChange={this.onDateChange}
+          onTimeChange={this.onTimeChange} />
+      );
+    }
     return (
       <Popup
         on="click"
@@ -62,6 +73,7 @@ class DateTimeInput extends React.Component {
         hoverable
         trigger={inputElement}>
         <DateTimePicker
+          initialValue={value}
           startMode={startMode}
           onDateChange={this.onDateChange}
           onTimeChange={this.onTimeChange} />
@@ -94,14 +106,17 @@ DateTimeInput.propTypes = {
     'left center',
     'top center',
     'bottom center'
-  ])
+  ]),
+  inline: PropTypes.bool,
+  value: PropTypes.string
 };
 
 DateTimeInput.defaultProps = {
   icon: 'calendar',
   dateFormat: 'DD-MM-YYYY',
   divider: ' ',
-  startMode: 'day'
+  startMode: 'day',
+  inline: false
 };
 
 export default DateTimeInput;

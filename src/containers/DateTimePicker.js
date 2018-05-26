@@ -9,9 +9,13 @@ class DateTimePicker extends BasePicker {
   constructor(props) {
     super(props);
 
-    const initialDate = moment();
+    const {
+      initialValue,
+      dateFormat
+    } = props;
+    const initialDate = initialValue? moment(initialValue, dateFormat) : moment();
     this.state = {
-      activeDate: null,
+      activeDate: initialValue? initialDate : null,
       dateToShow: initialDate,
       year: this.props.startMode !== 'year'? initialDate.year().toString() : '',
       month: '',
@@ -39,13 +43,16 @@ DateTimePicker.propTypes = {
   onDateChange: PropTypes.func,
   /** (event, data) => {} */
   onTimeChange: PropTypes.func,
-  startMode: PropTypes.oneOf(['year', 'month', 'day'])
+  startMode: PropTypes.oneOf(['year', 'month', 'day']),
+  initialValue: PropTypes.string,
+  dateFormat: PropTypes.string
 };
 
 DateTimePicker.defaultProps = {
   onDateChange: emptyFunction,
   onTimeChange: emptyFunction,
-  startMode: 'day'
+  startMode: 'day',
+  dateFormat: 'DD-MM-YYYY'
 };
 
 export default DateTimePicker;

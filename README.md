@@ -81,7 +81,26 @@ class DateTimeForm extends React.Component {
   }
 }
 ```
-And you have a form with date/time inputs.
+
+Also you can build a form with inline pickers as inputs. Just set ``inline`` prop on input element and it will be rendered as inline picker:
+```javascript
+class DateTimeFormInline extends React.Component {
+  handleDateChange = (event, { value }) => {
+    this.setState({ date: value });
+  }
+
+  render() {
+    return (
+      <Form>
+        <DateInput
+          inline
+          value={this.state.date}
+          onChange={this.handleDateChange} />
+      </Form>
+    );
+  }
+}
+```
 
 # Supported elements
 
@@ -91,12 +110,17 @@ And you have a form with date/time inputs.
 | -----| ------------|
 | all that can be used with SUIR Input | |
 | ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``|
+| ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
+| ``inline`` | {bool} If ``true`` inline picker rendered. Default: ``false`` |
+| ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
 
 ### TimeInput
 
 | Prop | Description |
 | -----| ------------|
 | all that can be used with SUIR Input | |
+| ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
+| ``inline`` | {bool} If ``true`` inline picker rendered. Default: ``false`` |
 
 ### DateTimeInput
 
@@ -105,6 +129,9 @@ And you have a form with date/time inputs.
 | all that can be used with SUIR Input | |
 | ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``|
 | ``divider`` | {string} Date and time divider. Default: `` `` |
+| ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
+| ``inline`` | {bool} If ``true`` inline picker rendered. Default: ``false`` |
+| ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
 
 ### DatesRangeInput
 
@@ -113,3 +140,21 @@ And you have a form with date/time inputs.
 | all that can be used with SUIR Input | |
 | ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD.MM.YY``|
 | ``divider`` | {string} Dates divider. Default: `` - `` |
+| ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
+| ``inline`` | {bool} If ``true`` inline picker rendered. Default: ``false`` |
+
+### YearInput
+
+| Prop | Description |
+| -----| ------------|
+| all that can be used with SUIR Input | |
+| ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
+| ``inline`` | {bool} If ``true`` inline picker rendered. Default: ``false`` |
+
+### MonthInput
+
+| Prop | Description |
+| -----| ------------|
+| all that can be used with SUIR Input | |
+| ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
+| ``inline`` | {bool} If ``true`` inline picker rendered. Default: ``false`` |

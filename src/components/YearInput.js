@@ -8,7 +8,8 @@ function YearInput(props) {
   const {
     onChange,
     icon,
-    popupPosition
+    popupPosition,
+    inline
   } = props;
   const rest = getUnhandledProps(YearInput, props);
 
@@ -18,6 +19,9 @@ function YearInput(props) {
       icon={icon}
       onChange={onChange} />
   );
+  if (inline) {
+    return <YearPicker onYearChange={onChange} />;
+  }
   return (
     <Popup
       on="click"
@@ -48,11 +52,13 @@ YearInput.propTypes = {
     'left center',
     'top center',
     'bottom center'
-  ])
+  ]),
+  inline: PropTypes.bool
 };
 
 YearInput.defaultProps = {
-  icon: 'calendar'
+  icon: 'calendar',
+  inline: false
 };
 
 export default YearInput;

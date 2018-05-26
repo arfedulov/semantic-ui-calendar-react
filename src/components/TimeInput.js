@@ -8,7 +8,8 @@ function TimeInput(props) {
   const {
     onChange,
     icon,
-    popupPosition
+    popupPosition,
+    inline
   } = props;
   const rest = getUnhandledProps(TimeInput, props);
 
@@ -18,6 +19,9 @@ function TimeInput(props) {
       icon={icon}
       onChange={onChange} />
   );
+  if (inline) {
+    return <TimePicker onTimeChange={onChange} />;
+  }
   return (
     <Popup
       on="click"
@@ -48,11 +52,13 @@ TimeInput.propTypes = {
     'left center',
     'top center',
     'bottom center'
-  ])
+  ]),
+  inline: PropTypes.bool
 };
 
 TimeInput.defaultProps = {
-  icon: 'time'
+  icon: 'time',
+  inline: false
 };
 
 export default TimeInput;

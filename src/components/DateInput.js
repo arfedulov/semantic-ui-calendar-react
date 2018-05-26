@@ -10,7 +10,9 @@ function DateInput(props) {
     icon,
     dateFormat,
     startMode,
-    popupPosition
+    popupPosition,
+    inline,
+    value
   } = props;
   const onDateChange = (event, data) => {
     if (data.value.format) {
@@ -22,9 +24,19 @@ function DateInput(props) {
   const inputElement = (
     <Input
       { ...rest }
+      value={value}
       onChange={onDateChange}
       icon={icon} />
   );
+ 
+  if (inline) {
+    return (
+      <DatePicker
+        dateFormat={dateFormat}
+        startMode={startMode}
+        onDateChange={onDateChange} />
+    );
+  }
   return (
     <Popup
       on="click"
@@ -33,6 +45,7 @@ function DateInput(props) {
       hoverable
       trigger={inputElement}>
       <DatePicker
+        initialValue={value}
         startMode={startMode}
         onDateChange={onDateChange} />
     </Popup>
@@ -61,13 +74,16 @@ DateInput.propTypes = {
     'left center',
     'top center',
     'bottom center'
-  ])
+  ]),
+  inline: PropTypes.bool,
+  value: PropTypes.string
 };
 
 DateInput.defaultProps = {
   icon: 'calendar',
   dateFormat: 'DD-MM-YYYY',
-  startMode: 'day'
+  startMode: 'day',
+  inline: false
 };
 
 export default DateInput;
