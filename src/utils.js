@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 const _getCalendarStart = (referenceDate) => {
   return referenceDate.clone().startOf('month').startOf('week');
@@ -99,7 +100,7 @@ const getUnhandledProps = (Component, props) => {
 };
 
 const cloneReplaceValue = (data, newValue) => {
-  return Object.assign({}, data, { value: newValue });
+  return _.assign({}, data, { value: newValue });
 };
 
 const emptyFunction = () => {};

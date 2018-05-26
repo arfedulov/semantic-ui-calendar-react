@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../utils.js';
 import { Table } from 'semantic-ui-react';
-import moment from 'moment';
 import _ from 'lodash';
 
 /** Return array of 12 years as strings 'YYYY'.
  * @param {number} yearsStart */
 const getYears = (yearsStart) => {
-  return new Array(12).fill(yearsStart).map((year, i) => (year + i).toString());
+  const years = new Array(12);
+  return _.fill(years, yearsStart).map((year, i) => (year + i).toString());
 };
 
 function YearPickerCell(props) {
