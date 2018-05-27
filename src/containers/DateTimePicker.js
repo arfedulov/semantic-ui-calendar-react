@@ -20,8 +20,11 @@ class DateTimePicker extends BasePicker {
       year: this.props.startMode !== 'year'? initialDate.year().toString() : '',
       month: '',
       activeHour: '',
-      activeMinute: ''
+      activeMinute: '',
+      mode: this.props.startMode
     };
+
+    this.isDateTimePicker = true;
   }
 
   render() {

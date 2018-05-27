@@ -18,7 +18,8 @@ class DatePicker extends BasePicker {
       activeDate: initialValue? initialDate : null,
       dateToShow: initialDate,
       year: this.props.startMode !== 'year'? initialDate.year().toString() : '',
-      month: ''
+      month: '',
+      mode: this.props.startMode
     };
   }
 

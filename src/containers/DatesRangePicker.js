@@ -74,6 +74,7 @@ class DatesRangePicker extends BasePicker {
         celled
         textAlign="center">
         <PickerHeader
+          onDateClick={this.handleHeaderDateClick}
           onNextBtnClick={this.showNextMonth}
           onPrevBtnClick={this.showPrevMonth}
           activeDate={this.state.dateToShow}

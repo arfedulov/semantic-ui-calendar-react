@@ -11,10 +11,11 @@ function TimePickerComponent(props) {
     onHourClick,
     onMinuteClick,
     activeHour,
-    activeMinute
+    activeMinute,
+    mode
   } = props;
 
-  if (activeHour) {
+  if (mode === 'minute') {
     return (
       <React.Fragment>
         { selectedDate && (
@@ -60,7 +61,12 @@ TimePickerComponent.propTypes = {
   activeHour: PropTypes.string,
   activeMinute: PropTypes.string,
   onNextDayBtnClick: PropTypes.func,
-  onPrevDayBtnClick: PropTypes.func
+  onPrevDayBtnClick: PropTypes.func,
+  mode: PropTypes.string
+};
+
+TimePickerComponent.defaultProps = {
+  mode: 'hour'
 };
 
 export default TimePickerComponent;

@@ -45,6 +45,7 @@ class YearPicker extends React.Component {
     return (
       <React.Fragment>
         <PickerHeader
+          onDateClick={this.props.onHeaderDateClick}
           width="3"
           activeYears={yearsRange}
           onPrevBtnClick={this.onPrevBtnClick}
@@ -78,7 +79,8 @@ class YearPicker extends React.Component {
 YearPicker.propTypes = {
   /** (event, data) => {} */
   onYearChange: PropTypes.func,
-  standalone: PropTypes.bool
+  standalone: PropTypes.bool,
+  onHeaderDateClick: PropTypes.func
 };
 
 YearPicker.defaultProps = {

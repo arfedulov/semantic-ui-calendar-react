@@ -10,7 +10,8 @@ class TimePicker extends React.Component {
 
     this.state = {
       activeHour: '',
-      activeMinute: ''
+      activeMinute: '',
+      mode: 'hour'
     };
   }
 
@@ -22,7 +23,8 @@ class TimePicker extends React.Component {
       }));
       this.props.onTimeChange(event, newData);
       return {
-        activeHour: data.value
+        activeHour: data.value,
+        mode: 'minute'
       };
     });
   }
@@ -53,6 +55,7 @@ class TimePicker extends React.Component {
         celled
         textAlign="center">
         <TimePickerComponent
+          mode={this.state.mode}
           activeHour={this.state.activeHour}
           activeMinute={this.state.activeMinute}
           onHourClick={this.onHourClick}

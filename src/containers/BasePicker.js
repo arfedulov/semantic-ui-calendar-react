@@ -56,6 +56,7 @@ class BasePicker extends React.Component {
   }
 
   showNextDay = () => {
+    if (this.isDateTimePicker) this.resetMinutes();
     this.setState(({ activeDate }) => {
       let nextDay = activeDate.clone();
       nextDay.add(1, 'd');
@@ -65,6 +66,7 @@ class BasePicker extends React.Component {
   }
 
   showPrevDay = () => {
+    if (this.isDateTimePicker) this.resetMinutes();
     this.setState(({ activeDate }) => {
       let prevDay = activeDate.clone();
       prevDay.add(-1, 'd');
@@ -80,6 +82,7 @@ class BasePicker extends React.Component {
       activeDate: data.value
     });
     onDateChange(event, data);
+    this.switchToNextMode(this.isDateTimePicker? 'minute' : 'day');
   }
 
   onHourClick = (event, data) => {
@@ -93,6 +96,7 @@ class BasePicker extends React.Component {
         activeHour: data.value
       };
     });
+    this.switchToNextMode('minute');
   }
 
   onMinuteClick = (event, data) => {
@@ -106,6 +110,7 @@ class BasePicker extends React.Component {
         activeMinute: data.value
       };
     });
+    this.switchToNextMode('minute');
   }
 
   onYearChange = (event, data) => {
@@ -116,6 +121,7 @@ class BasePicker extends React.Component {
       dateToShow: moment(date),
       year: data.value
     });
+    this.switchToNextMode();
   }
 
   onMonthChange = (event, data) => {
@@ -127,11 +133,31 @@ class BasePicker extends React.Component {
       dateToShow: moment(date),
       month: data.value
     });
+    this.switchToNextMode();
+  }
+
+  handleHeaderDateClick = (event, data) => {
+    this.switchToPrevMode();
+  }
+
+  handleHeaderTimeClick = (event, data) => {
+    this.switchToPrevMode('minute');
+    this.resetMinutes();
+    this.resetHours();
+  }
+
+  resetMinutes = () => {
+    this.setState({ activeMinute: ''});
+  }
+
+  resetHours = () => {
+    this.setState({ activeHour: ''});
   }
 
   yearModeContent = () => {
     return (
       <YearPicker
+        onHeaderDateClick={this.handleHeaderDateClick}
         standalone={false}
         onYearChange={this.onYearChange} />
     );
@@ -141,6 +167,7 @@ class BasePicker extends React.Component {
     return (
       <React.Fragment>
         <PickerHeader
+          onDateClick={this.handleHeaderDateClick}
           onNextBtnClick={this.showNextYear}
           onPrevBtnClick={this.showPrevYear}
           activeYear={this.state.dateToShow.format('YYYY')}
@@ -156,6 +183,7 @@ class BasePicker extends React.Component {
     return (
       <React.Fragment>
         <PickerHeader
+          onDateClick={this.handleHeaderDateClick}
           onNextBtnClick={this.showNextMonth}
           onPrevBtnClick={this.showPrevMonth}
           activeDate={this.state.dateToShow}
@@ -170,36 +198,58 @@ class BasePicker extends React.Component {
   }
 
   getDatePickerContent = () => {
-    const { startMode } = this.props;
-    const {
-      year,
-      month
-    } = this.state;
-    if (startMode === 'year' && !year) return this.yearModeContent();
-    if (startMode === 'year' && !month) return this.monthModeContent();
-    if (startMode === 'month' && !month) return this.monthModeContent();
+    const { mode } = this.state;
+    if (mode === 'year') return this.yearModeContent();
+    if (mode === 'year') return this.monthModeContent();
+    if (mode === 'month') return this.monthModeContent();
     return this.dayModeContent();
+  }
+
+  switchToPrevMode = (lastMode = 'day') => {
+    const getNextMode = (mode) => {
+      if (mode === 'minute') return 'hour';
+      if (mode === 'hour') return 'day';
+      if (mode === 'day') return 'month';
+      if (mode === 'month') return 'year';
+      return lastMode;
+    };
+    this.setState({ mode: getNextMode(this.state.mode) });
+  }
+
+  switchToNextMode = (lastMode = 'day') => {
+    const getNextMode = (mode) => {
+      if (mode === lastMode) return lastMode;
+      if (mode === 'year') return 'month';
+      if (mode === 'month') return 'day';
+      if (mode === 'day') return 'hour';
+      if (mode === 'hour') return 'minute';
+      return lastMode;
+    };
+    this.setState({ mode: getNextMode(this.state.mode) });
   }
 
   getDateTimePickerContent = () => {
     const {
       activeDate,
       activeHour,
-      activeMinute
+      activeMinute,
+      mode
     } = this.state;
-    const headerWidth = activeHour? '3' : activeDate? '4' : '7';
-    if (!activeDate) {
+    const headerWidth = mode === 'minute'? '3' : mode === 'hour'? '4' : '7';
+    if (mode !== 'hour' && mode !== 'minute') {
       return this.getDatePickerContent();
     }
     return (
       <React.Fragment>
         <PickerHeader
+          onDateClick={this.handleHeaderTimeClick}
           onNextBtnClick={this.showNextDay}
           onPrevBtnClick={this.showPrevDay}
           activeDate={activeDate}
           includeDay
           width={headerWidth} />
         <TimePickerComponent
+          mode={mode}
           activeHour={activeHour}
           activeMinute={activeMinute}
           onHourClick={this.onHourClick}

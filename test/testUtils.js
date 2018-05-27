@@ -1,5 +1,5 @@
 import test from 'tape';
-import { getArrayOfWeeks, isActiveDate } from '../src/utils.js';
+import { getArrayOfWeeks, isActiveDate, Cycle } from '../src/utils.js';
 import moment from 'moment';
 import mockdate from 'mockdate';
 

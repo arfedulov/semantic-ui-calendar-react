@@ -15,7 +15,8 @@ function PickerHeader(props) {
     activeYear,
     includeDay,
     showWeeks,
-    width
+    width,
+    onDateClick
   } = props;
   const rest = getUnhandledProps(PickerHeader, props);
 
@@ -75,6 +76,8 @@ function PickerHeader(props) {
     }
   };
 
+  const headerCellStyle = { cursor: 'pointer '};
+
   return (
     <Table.Header { ...rest }>
       { activeDatesRange && getRangeRow() }
@@ -85,8 +88,11 @@ function PickerHeader(props) {
             onClick={onPrevBtnClick}
             name="chevron left" />
         </Table.HeaderCell>
-        <Table.HeaderCell className={cellClasses} colSpan={(parseInt(width) - 2).toString()}>
-          { getContent() }
+        <Table.HeaderCell
+          onClick={onDateClick}
+          className={cellClasses}
+          colSpan={(parseInt(width) - 2).toString()}>
+          <span style={headerCellStyle}>{ getContent() }</span>
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
@@ -118,7 +124,8 @@ PickerHeader.propTypes = {
   }),
   includeDay: PropTypes.bool,
   showWeeks: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
+  onDateClick: PropTypes.func
 };
 
 PickerHeader.defaultProps = {
