@@ -1,26 +1,98 @@
 import React from 'react';
-import { monthIndex, cloneReplaceValue } from '../utils.js';
+import { Table } from 'semantic-ui-react';
+import { monthIndex, cloneReplaceValue, emptyFunction, getUnhandledProps } from '../utils.js';
 import { PickerHeader, DatePickerComponent, MonthPickerComponent, TimePickerComponent } from '../components';
 import { YearPicker } from '.';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 
-/** Base class for DatePicker, DateTimePicker, DatesRangePicker.
- * Expects that inheritors have state with some of the following properties:
- * 
- *    activeDate:   {moment} This object is lifted up, it represents a Picker's selected value
- *    dateToShow:   {moment} This object determines what years are currently visible in YearPicker or
- *                           what month is currently viewed on calendar. In other words it determines
- *                           what is showed.
- *    year:         {string} Selected year. For example '2012'.
- *    month:        {string} Selected month. For example 'Jan'.
- *    activeHour:   {string} Selected hour. For example '05'.
- *    activeMinute: {string} Selected minute. For example '15'.
- *    datesRange:   {object} Selected dates range. For example {start: moment(2012-01-01), end: moment(2012-01-15)}.
- */
-class BasePicker extends React.Component {
+class Picker extends React.Component {
 
-  getTime = ({hour = '', minute = ''}) => {
-    return `${hour}:${minute}`;
+  constructor(props) {
+    super(props);
+
+    const {
+      initialValue,
+      dateFormat,
+      startMode
+    } = props;
+    const initialDate = initialValue? moment(initialValue, dateFormat) : moment();
+    this.state = {
+      activeDate: initialValue? initialDate : null,
+      dateToShow: initialDate,
+      year: startMode !== 'year'? initialDate.year().toString() : '',
+      month: '',
+      activeHour: '',
+      activeMinute: '',
+      mode: startMode,
+      datesRange: { start: null, end: null }
+    };
+  }
+
+  setDatesRange = (event, data) => {
+    const { onDatesRangeChange } = this.props;
+    this.setState(({ datesRange }) => {
+      let newState;
+      if (datesRange.start && datesRange.end) {
+        newState = {
+          datesRange: { start: null, end: null }
+        };
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
+      } else if (datesRange.start && datesRange.start.isAfter(data.value)) {
+        newState = {
+          datesRange: { start: null, end: null }
+        };
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
+      } else if (datesRange.start) {
+        newState = {
+          datesRange: { start: datesRange.start, end: data.value }
+        };
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
+          start: datesRange.start,
+          end: data.value
+        })));
+      } else {
+        newState = {
+          datesRange: { start: data.value, end: datesRange.end }
+        };
+        onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
+          start: data.value,
+          end: datesRange.end
+        })));
+      }
+      return newState;
+    });
+  }
+
+  getDatesRange = (range) => {
+    const { dateFormat, divider } = this.props;
+    const { start, end } = range? range : { start: null, end: null };
+    const startStr = start && start.format? start.format(dateFormat) : '. . .';
+    const endStr = end && end.format? end.format(dateFormat) : '. . .';
+    return `${startStr}${divider}${endStr}`;
+  }
+
+  switchToPrevMode = (lastMode = 'day') => {
+    const getNextMode = (mode) => {
+      if (mode === 'minute') return 'hour';
+      if (mode === 'hour') return 'day';
+      if (mode === 'day') return 'month';
+      if (mode === 'month') return 'year';
+      return lastMode;
+    };
+    this.setState({ mode: getNextMode(this.state.mode) });
+  }
+
+  switchToNextMode = (lastMode = 'day') => {
+    const getNextMode = (mode) => {
+      if (mode === lastMode) return lastMode;
+      if (mode === 'year') return 'month';
+      if (mode === 'month') return 'day';
+      if (mode === 'day') return 'hour';
+      if (mode === 'hour') return 'minute';
+      return lastMode;
+    };
+    this.setState({ mode: getNextMode(this.state.mode) });
   }
 
   showNextYear = () => {
@@ -56,7 +128,7 @@ class BasePicker extends React.Component {
   }
 
   showNextDay = () => {
-    if (this.isDateTimePicker) this.resetMinutes();
+    if (this.props.pickDateTime) this.resetMinutes();
     this.setState(({ activeDate }) => {
       let nextDay = activeDate.clone();
       nextDay.add(1, 'd');
@@ -66,7 +138,7 @@ class BasePicker extends React.Component {
   }
 
   showPrevDay = () => {
-    if (this.isDateTimePicker) this.resetMinutes();
+    if (this.props.pickDateTime) this.resetMinutes();
     this.setState(({ activeDate }) => {
       let prevDay = activeDate.clone();
       prevDay.add(-1, 'd');
@@ -82,7 +154,7 @@ class BasePicker extends React.Component {
       activeDate: data.value
     });
     onDateChange(event, data);
-    this.switchToNextMode(this.isDateTimePicker? 'minute' : 'day');
+    this.switchToNextMode(this.props.pickDateTime? 'minute' : 'day');
   }
 
   onHourClick = (event, data) => {
@@ -153,6 +225,10 @@ class BasePicker extends React.Component {
   resetHours = () => {
     this.setState({ activeHour: ''});
   }
+  
+  getTime = ({hour = '', minute = ''}) => {
+    return `${hour}:${minute}`;
+  }
 
   yearModeContent = () => {
     return (
@@ -205,29 +281,6 @@ class BasePicker extends React.Component {
     return this.dayModeContent();
   }
 
-  switchToPrevMode = (lastMode = 'day') => {
-    const getNextMode = (mode) => {
-      if (mode === 'minute') return 'hour';
-      if (mode === 'hour') return 'day';
-      if (mode === 'day') return 'month';
-      if (mode === 'month') return 'year';
-      return lastMode;
-    };
-    this.setState({ mode: getNextMode(this.state.mode) });
-  }
-
-  switchToNextMode = (lastMode = 'day') => {
-    const getNextMode = (mode) => {
-      if (mode === lastMode) return lastMode;
-      if (mode === 'year') return 'month';
-      if (mode === 'month') return 'day';
-      if (mode === 'day') return 'hour';
-      if (mode === 'hour') return 'minute';
-      return lastMode;
-    };
-    this.setState({ mode: getNextMode(this.state.mode) });
-  }
-
   getDateTimePickerContent = () => {
     const {
       activeDate,
@@ -257,9 +310,72 @@ class BasePicker extends React.Component {
       </React.Fragment>
     );
   }
+
+  render() {
+    const rest = getUnhandledProps(Picker, this.props);
+    const {
+      pickDate,
+      pickDatesRange
+    } = this.props;
+
+    if (pickDatesRange) {
+      return (
+        <Table
+          { ...rest }
+          unstackable
+          celled
+          textAlign="center">
+          <PickerHeader
+            onDateClick={this.handleHeaderDateClick}
+            onNextBtnClick={this.showNextMonth}
+            onPrevBtnClick={this.showPrevMonth}
+            activeDate={this.state.dateToShow}
+            activeDatesRange={this.state.datesRange}
+            showWeeks
+            width="7" />
+          <DatePickerComponent
+            datesRange={this.state.datesRange}
+            onDateClick={this.setDatesRange}
+            showedMonth={this.state.dateToShow} />
+        </Table>
+      );
+    }
+    return (
+      <Table
+        { ...rest }
+        unstackable
+        celled
+        textAlign="center">
+        { pickDate? this.getDatePickerContent() : this.getDateTimePickerContent() }
+      </Table>
+    );
+  }
 }
 
-export default BasePicker;
+Picker.propTypes = {
+  /** (event, data) => {} */
+  onDateChange: PropTypes.func,
+  /** (event, data) => {} */
+  onTimeChange: PropTypes.func,
+  onDatesRangeChange: PropTypes.func,
+  startMode: PropTypes.oneOf(['year', 'month', 'day']),
+  initialValue: PropTypes.string,
+  dateFormat: PropTypes.string,
+  pickDate: PropTypes.bool,
+  pickDateTime: PropTypes.bool,
+  pickDatesRange: PropTypes.bool,
+  divider: PropTypes.string
+};
+
+Picker.defaultProps = {
+  onDateChange: emptyFunction,
+  onTimeChange: emptyFunction,
+  startMode: 'day',
+  dateFormat: 'DD-MM-YYYY',
+  divider: ' - '
+};
+
+export default Picker;
 export {
-  BasePicker
+  Picker
 };

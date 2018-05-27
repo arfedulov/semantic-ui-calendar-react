@@ -1,17 +1,17 @@
 import React from 'react';
 import { Input } from 'semantic-ui-react';
-import { TimePicker, CustomPopup as Popup } from '../containers';
+import { YearPicker, CustomPopup as Popup } from '../../containers';
 import PropTypes from 'prop-types';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps } from '../../utils.js';
 
-function TimeInput(props) {
+function YearInput(props) {
   const {
     onChange,
     icon,
     popupPosition,
     inline
   } = props;
-  const rest = getUnhandledProps(TimeInput, props);
+  const rest = getUnhandledProps(YearInput, props);
 
   const inputElement = (
     <Input
@@ -20,7 +20,7 @@ function TimeInput(props) {
       onChange={onChange} />
   );
   if (inline) {
-    return <TimePicker onTimeChange={onChange} />;
+    return <YearPicker onYearChange={onChange} />;
   }
   return (
     <Popup
@@ -29,13 +29,13 @@ function TimeInput(props) {
       className="suir-calendar popup"
       hoverable
       trigger={inputElement}>
-      <TimePicker
-        onTimeChange={onChange} />
+      <YearPicker
+        onYearChange={onChange} />
     </Popup>
   );
 }
 
-TimeInput.propTypes = {
+YearInput.propTypes = {
   /** Called on change.
    * @param {SyntheticEvent} event React's original SyntheticEvent.
    * @param {object} data All props and proposed value.
@@ -56,12 +56,12 @@ TimeInput.propTypes = {
   inline: PropTypes.bool
 };
 
-TimeInput.defaultProps = {
-  icon: 'time',
+YearInput.defaultProps = {
+  icon: 'calendar',
   inline: false
 };
 
-export default TimeInput;
+export default YearInput;
 export {
-  TimeInput
+  YearInput
 };

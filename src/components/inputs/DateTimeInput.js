@@ -1,8 +1,8 @@
 import React from 'react';
 import { Input } from 'semantic-ui-react';
-import { DateTimePicker, CustomPopup as Popup } from '../containers';
+import { DateTimePicker, CustomPopup as Popup } from '../../containers';
 import PropTypes from 'prop-types';
-import { getUnhandledProps, cloneReplaceValue } from '../utils.js';
+import { getUnhandledProps, cloneReplaceValue } from '../../utils.js';
 
 class DateTimeInput extends React.Component {
   constructor(props) {

@@ -7,7 +7,8 @@ import {
   DateTimeInput,
   DatesRangeInput,
   YearInput,
-  MonthInput } from '../src';
+  MonthInput
+} from '../src';
 import moment from 'moment';
 
 moment.locale('en');

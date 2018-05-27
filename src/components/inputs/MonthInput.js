@@ -1,8 +1,8 @@
 import React from 'react';
 import { Input } from 'semantic-ui-react';
-import { MonthPicker, CustomPopup as Popup } from '../containers';
+import { MonthPicker, CustomPopup as Popup } from '../../containers';
 import PropTypes from 'prop-types';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps } from '../../utils.js';
 
 function MonthInput(props) {
   const {

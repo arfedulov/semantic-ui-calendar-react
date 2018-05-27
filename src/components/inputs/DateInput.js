@@ -1,51 +1,58 @@
 import React from 'react';
 import { Input } from 'semantic-ui-react';
-import { DatesRangePicker, CustomPopup as Popup } from '../containers';
+import { DatePicker, CustomPopup as Popup } from '../../containers';
 import PropTypes from 'prop-types';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps } from '../../utils.js';
 
-function DatesRangeInput(props) {
+function DateInput(props) {
   const {
     onChange,
     icon,
     dateFormat,
-    divider,
+    startMode,
     popupPosition,
-    inline
+    inline,
+    value
   } = props;
-  const rest = getUnhandledProps(DatesRangeInput, props);
-  
+  const onDateChange = (event, data) => {
+    if (data.value.format) {
+      data.value = data.value.format(dateFormat);
+    }
+    onChange(event, data);
+  };
+  const rest = getUnhandledProps(DateInput, props);
   const inputElement = (
     <Input
       { ...rest }
-      onChange={onChange}
+      value={value}
+      onChange={onDateChange}
       icon={icon} />
   );
+ 
   if (inline) {
     return (
-      <DatesRangePicker
-        position={popupPosition}
+      <DatePicker
         dateFormat={dateFormat}
-        divider={divider}
-        onDatesRangeChange={onChange} />
+        startMode={startMode}
+        onDateChange={onDateChange} />
     );
   }
   return (
     <Popup
       on="click"
+      position={popupPosition}
       className="suir-calendar popup"
       hoverable
       trigger={inputElement}>
-      <DatesRangePicker
-        position={popupPosition}
-        dateFormat={dateFormat}
-        divider={divider}
-        onDatesRangeChange={onChange} />
+      <DatePicker
+        initialValue={value}
+        startMode={startMode}
+        onDateChange={onDateChange} />
     </Popup>
   );
 }
 
-DatesRangeInput.propTypes = {
+DateInput.propTypes = {
   /** Called on change.
    * @param {SyntheticEvent} event React's original SyntheticEvent.
    * @param {object} data All props and proposed value.
@@ -54,11 +61,10 @@ DatesRangeInput.propTypes = {
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
   /** Date formatting string.
-   * Anything that that can be passed to ``moment().format``.
+   * Anything that that can be passed to ``moment().format``
    */
   dateFormat: PropTypes.string,
-  /** Character that used to divide dates in string. */
-  divider: PropTypes.string,
+  startMode: PropTypes.oneOf(['year', 'month', 'day']),
   popupPosition: PropTypes.oneOf([
     'top left',
     'top right',
@@ -69,15 +75,18 @@ DatesRangeInput.propTypes = {
     'top center',
     'bottom center'
   ]),
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
+  value: PropTypes.string
 };
 
-DatesRangeInput.defaultProps = {
+DateInput.defaultProps = {
   icon: 'calendar',
+  dateFormat: 'DD-MM-YYYY',
+  startMode: 'day',
   inline: false
 };
 
-export default DatesRangeInput;
+export default DateInput;
 export {
-  DatesRangeInput
+  DateInput
 };

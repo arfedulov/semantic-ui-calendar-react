@@ -5,4 +5,4 @@ export { DatesRangePicker } from './DatesRangePicker.js';
 export { CustomPopup } from './CustomPopup.js';
 export { YearPicker } from './YearPicker.js';
 export { MonthPicker } from './MonthPicker.js';
-export { BasePicker } from './BasePicker.js';
+export { Picker } from './Picker.js';
