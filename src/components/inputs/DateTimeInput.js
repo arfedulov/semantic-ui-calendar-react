@@ -60,6 +60,7 @@ class DateTimeInput extends React.Component {
     if (inline) {
       return (
         <DateTimePicker
+          dateFormat={this.props.dateFormat}
           startMode={startMode}
           onDateChange={this.onDateChange}
           onTimeChange={this.onTimeChange} />
@@ -74,6 +75,7 @@ class DateTimeInput extends React.Component {
         trigger={inputElement}>
         <DateTimePicker
           initialValue={value}
+          dateFormat={this.props.dateFormat}
           startMode={startMode}
           onDateChange={this.onDateChange}
           onTimeChange={this.onTimeChange} />
