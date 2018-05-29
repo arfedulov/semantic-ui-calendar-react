@@ -99,7 +99,10 @@ class Picker extends React.Component {
     this.setState(({ dateToShow }) => {
       let nextYear = dateToShow.clone();
       nextYear.add(1, 'Y');
-      return { dateToShow: nextYear };
+      return {
+        dateToShow: nextYear,
+        year: nextYear.format('YYYY')
+      };
     });
   }
 
@@ -107,7 +110,10 @@ class Picker extends React.Component {
     this.setState(({ dateToShow }) => {
       let prevYear = dateToShow.clone();
       prevYear.add(-1, 'Y');
-      return { dateToShow: prevYear };
+      return {
+        dateToShow: prevYear,
+        year: prevYear.format('YYYY')
+      };
     });
   }
 

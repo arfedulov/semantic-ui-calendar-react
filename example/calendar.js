@@ -101,6 +101,7 @@ class DateTimeForm extends React.Component {
           onChange={this.handleDateTimeChange} />
         <br />
         <DatesRangeInput
+          dateFormat="DD.MM.YY"
           placeholder="From - To"
           className="example-calendar-input"
           value={this.state.datesRange}
