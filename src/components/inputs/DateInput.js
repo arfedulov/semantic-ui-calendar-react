@@ -46,6 +46,7 @@ function DateInput(props) {
       trigger={inputElement}>
       <DatePicker
         initialValue={value}
+        dateFormat={dateFormat}
         startMode={startMode}
         onDateChange={onDateChange} />
     </Popup>
