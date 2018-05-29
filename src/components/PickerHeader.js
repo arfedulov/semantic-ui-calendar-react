@@ -84,6 +84,7 @@ function PickerHeader(props) {
       <Table.Row>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
+            fitted
             className={buttonClasses}
             onClick={onPrevBtnClick}
             name="chevron left" />
@@ -96,6 +97,7 @@ function PickerHeader(props) {
         </Table.HeaderCell>
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
+            fitted
             className={buttonClasses}
             onClick={onNextBtnClick}
             name="chevron right" />
