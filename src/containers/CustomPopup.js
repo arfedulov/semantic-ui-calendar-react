@@ -19,18 +19,19 @@ class CustomPopup extends React.Component {
   }
 
   handleClose = (e) => {
-    const clickCoords = { x: e.clientX, y: e.clientY};
-    if (this.shouldClosePopup(this.popupCoords, clickCoords) || keyboardKey.getCode(e) === keyboardKey.Escape) {
-      this.setState({ popupIsOpen: false});
-    }
+    if (this.shouldClosePopup(e)) this.setState({ popupIsOpen: false});
   }
 
-  shouldClosePopup = (popupCoords, clickCoords) => {
-    const { x, y, width, height } = popupCoords;
-    return clickCoords.x < x ||
-           clickCoords.y < y ||
-           clickCoords.x > x + width ||
-           clickCoords.y > y + height;
+  shouldClosePopup = (e) => {
+    const clickCoords = { x: e.clientX, y: e.clientY};
+    const { x, y, width, height } = this.popupCoords;
+    const esc = keyboardKey.getCode(e) === keyboardKey.Escape;
+    const clickOutsidePopup = clickCoords.x < x ||
+                             clickCoords.y < y ||
+                             clickCoords.x > x + width ||
+                             clickCoords.y > y + height;
+    const scroll = e.type === 'scroll';
+    return clickOutsidePopup || esc || scroll;
   }
 
   render() {
@@ -38,6 +39,10 @@ class CustomPopup extends React.Component {
       <Popup
         { ...this.props }
         id="suirCalendarPopup"
+        hideOnScroll
+        on="click"
+        className="suir-calendar popup"
+        hoverable
         onOpen={this.handleOpen}
         onClose={this.handleClose}
         open={this.state.popupIsOpen} />

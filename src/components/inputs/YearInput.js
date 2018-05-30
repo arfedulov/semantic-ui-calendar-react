@@ -24,10 +24,7 @@ function YearInput(props) {
   }
   return (
     <Popup
-      on="click"
       position={popupPosition}
-      className="suir-calendar popup"
-      hoverable
       trigger={inputElement}>
       <YearPicker
         onYearChange={onChange} />

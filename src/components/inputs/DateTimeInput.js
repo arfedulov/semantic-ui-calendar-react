@@ -68,10 +68,7 @@ class DateTimeInput extends React.Component {
     }
     return (
       <Popup
-        on="click"
         position={popupPosition}
-        className="suir-calendar popup"
-        hoverable
         trigger={inputElement}>
         <DateTimePicker
           initialValue={value}

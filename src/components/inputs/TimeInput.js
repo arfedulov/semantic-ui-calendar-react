@@ -24,10 +24,7 @@ function TimeInput(props) {
   }
   return (
     <Popup
-      on="click"
       position={popupPosition}
-      className="suir-calendar popup"
-      hoverable
       trigger={inputElement}>
       <TimePicker
         onTimeChange={onChange} />

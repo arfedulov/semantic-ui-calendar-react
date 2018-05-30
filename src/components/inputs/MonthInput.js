@@ -24,10 +24,7 @@ function MonthInput(props) {
   }
   return (
     <Popup
-      on="click"
       position={popupPosition}
-      className="suir-calendar popup"
-      hoverable
       trigger={inputElement}>
       <MonthPicker
         onMonthChange={onChange} />

@@ -24,7 +24,6 @@ function DatesRangeInput(props) {
   if (inline) {
     return (
       <DatesRangePicker
-        position={popupPosition}
         dateFormat={dateFormat}
         divider={divider}
         onDatesRangeChange={onChange} />
@@ -32,12 +31,9 @@ function DatesRangeInput(props) {
   }
   return (
     <Popup
-      on="click"
-      className="suir-calendar popup"
-      hoverable
+      position={popupPosition}
       trigger={inputElement}>
       <DatesRangePicker
-        position={popupPosition}
         dateFormat={dateFormat}
         divider={divider}
         onDatesRangeChange={onChange} />
