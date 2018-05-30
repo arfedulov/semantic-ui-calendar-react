@@ -24,12 +24,12 @@ class CustomPopup extends React.Component {
 
   shouldClosePopup = (e) => {
     const clickCoords = { x: e.clientX, y: e.clientY};
-    const { x, y, width, height } = this.popupCoords;
+    const { left, top, width, height } = this.popupCoords;
     const esc = keyboardKey.getCode(e) === keyboardKey.Escape;
-    const clickOutsidePopup = clickCoords.x < x ||
-                             clickCoords.y < y ||
-                             clickCoords.x > x + width ||
-                             clickCoords.y > y + height;
+    const clickOutsidePopup = clickCoords.x < left ||
+                             clickCoords.y < top ||
+                             clickCoords.x > left + width ||
+                             clickCoords.y > top + height;
     const scroll = e.type === 'scroll';
     return clickOutsidePopup || esc || scroll;
   }
