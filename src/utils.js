@@ -113,6 +113,20 @@ const monthIndex = (month) => {
   return getMonths().indexOf(month);
 };
 
+/** Set zero timeout.
+ * 
+ * Sometimes we need to delay rerendering components
+ * on one tick (if they are inside  `Popup` and rerendering could
+ * change `Popup`'s content sizes).
+ * Becouse it races with Popup's onclick handler.
+ * `Popup` relies on it's content sizes when computing
+ * should popup stay open or be closed. So we need
+ * to wait until `Popup`'s onclick handler done its job.
+ */
+const tick = (leadToRerendering) => {
+  setTimeout(leadToRerendering, 0);
+};
+
 export {
   getArrayOfWeeks,
   isActiveDate,
@@ -122,5 +136,6 @@ export {
   cloneReplaceValue,
   emptyFunction,
   getMonths,
-  monthIndex
+  monthIndex,
+  tick
 };

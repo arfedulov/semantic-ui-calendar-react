@@ -1,7 +1,12 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 import { TimePickerComponent } from '../components';
-import { getUnhandledProps, emptyFunction, cloneReplaceValue } from '../utils.js';
+import {
+  getUnhandledProps,
+  emptyFunction,
+  cloneReplaceValue,
+  tick
+} from '../utils.js';
 import PropTypes from 'prop-types';
 
 class TimePicker extends React.Component {
@@ -16,16 +21,18 @@ class TimePicker extends React.Component {
   }
 
   onHourClick = (event, data) => {
-    this.setState(prevState => {
-      const newData = cloneReplaceValue(data, this.getTime({
-        hour: data.value,
-        minute: ''
-      }));
-      this.props.onTimeChange(event, newData);
-      return {
-        activeHour: data.value,
-        mode: 'minute'
-      };
+    tick(() => {
+      this.setState(prevState => {
+        const newData = cloneReplaceValue(data, this.getTime({
+          hour: data.value,
+          minute: ''
+        }));
+        this.props.onTimeChange(event, newData);
+        return {
+          activeHour: data.value,
+          mode: 'minute'
+        };
+      });
     });
   }
 

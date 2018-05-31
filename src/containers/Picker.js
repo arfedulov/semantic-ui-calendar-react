@@ -1,6 +1,12 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
-import { monthIndex, cloneReplaceValue, emptyFunction, getUnhandledProps } from '../utils.js';
+import {
+  monthIndex,
+  cloneReplaceValue,
+  emptyFunction,
+  getUnhandledProps,
+  tick
+} from '../utils.js';
 import { PickerHeader, DatePickerComponent, MonthPickerComponent, TimePickerComponent } from '../components';
 import { YearPicker } from '.';
 import moment from 'moment';
@@ -154,27 +160,31 @@ class Picker extends React.Component {
   }
 
   onDateClick = (event, data) => {
-    const { onDateChange } = this.props;
+    tick(() => {
+      const { onDateChange } = this.props;
 
-    this.setState({
-      activeDate: data.value
+      this.setState({
+        activeDate: data.value
+      });
+      onDateChange(event, data);
+      this.switchToNextMode(this.props.pickDateTime? 'minute' : 'day');
     });
-    onDateChange(event, data);
-    this.switchToNextMode(this.props.pickDateTime? 'minute' : 'day');
   }
 
   onHourClick = (event, data) => {
-    this.setState(prevState => {
-      const newData = cloneReplaceValue(data, this.getTime({
-        hour: data.value,
-        minute: ''
-      }));
-      this.props.onTimeChange(event, newData);
-      return {
-        activeHour: data.value
-      };
+    tick(() => {
+      this.setState(prevState => {
+        const newData = cloneReplaceValue(data, this.getTime({
+          hour: data.value,
+          minute: ''
+        }));
+        this.props.onTimeChange(event, newData);
+        return {
+          activeHour: data.value
+        };
+      });
+      this.switchToNextMode('minute');
     });
-    this.switchToNextMode('minute');
   }
 
   onMinuteClick = (event, data) => {
