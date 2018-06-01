@@ -8,7 +8,7 @@
     "start": "npx webpack-dev-server",
     "prebuild": "npx rimraf dist/*",
     "build": "npx babel src -d dist",
-    "postbuild": "npx mkdirp dist/css && uglifycss src/css/calendar.css > dist/css/calendar.min.css"
+    "postbuild": "npx mkdirp dist/css && uglifycss src/css/calendar.css > dist/css/calendar.min.css && cpy **/*.d.ts ../dist/ --cwd=src --parents"
   },
   "keywords": [
     "semantic",
@@ -36,6 +36,7 @@
     "semantic-ui-react": "^0.80.0"
   },
   "devDependencies": {
+    "@types/react": "^16.3.16",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
