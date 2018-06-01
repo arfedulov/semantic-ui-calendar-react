@@ -11,6 +11,9 @@ function MonthInput(props) {
     popupPosition,
     inline
   } = props;
+  const onMonthChange = (event, data) => {
+    _.invoke(props, 'onChange', event, { ...props, value: data.value });
+  };
   const rest = getUnhandledProps(MonthInput, props);
 
   const inputElement = (
@@ -20,14 +23,14 @@ function MonthInput(props) {
       onChange={onChange} />
   );
   if (inline) {
-    return <MonthPicker onMonthChange={onChange} />;
+    return <MonthPicker onMonthChange={onMonthChange} />;
   }
   return (
     <Popup
       position={popupPosition}
       trigger={inputElement}>
       <MonthPicker
-        onMonthChange={onChange} />
+        onMonthChange={onMonthChange} />
     </Popup>
   );
 }

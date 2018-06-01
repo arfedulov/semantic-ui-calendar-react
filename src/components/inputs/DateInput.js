@@ -18,7 +18,7 @@ function DateInput(props) {
     if (data.value.format) {
       data.value = data.value.format(dateFormat);
     }
-    onChange(event, data);
+    _.invoke(props, 'onChange', event, { ...props, value: data.value });
   };
   const rest = getUnhandledProps(DateInput, props);
   const inputElement = (
@@ -28,7 +28,7 @@ function DateInput(props) {
       onChange={onDateChange}
       icon={icon} />
   );
- 
+
   if (inline) {
     return (
       <DatePicker

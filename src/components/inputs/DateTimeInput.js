@@ -22,7 +22,7 @@ class DateTimeInput extends React.Component {
     const { dateFormat } = this.props;
     this.setState(prevState => {
       const newData = cloneReplaceValue(data, this.getDateTime({ date: data.value.format(dateFormat) }));
-      this.props.onChange(event, newData);
+      _.invoke(this.props, 'onChange', event, { ...this.props, value: newData.value });
       return {
         selectedDate: data.value.format(dateFormat)
       };
@@ -32,7 +32,7 @@ class DateTimeInput extends React.Component {
   onTimeChange = (event, data) => {
     this.setState(prevState => {
       const newData = cloneReplaceValue(data, this.getDateTime({ date: prevState.selectedDate, time: data.value }));
-      this.props.onChange(event, newData);
+      _.invoke(this.props, 'onChange', event, { ...this.props, value: newData.value });
       return {
         selectedTime: data.value
       };
