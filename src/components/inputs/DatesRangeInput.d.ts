@@ -25,10 +25,14 @@ export interface DatesRangeInputProps {
 
     /** A dates range input can be formatted to appear inline in other content. */
     inline?: boolean;
+
+    /** Field's name by which `onChange` handler identifies the field. */
+    name?: string;
 }
 
 export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
     value: string;
+    name: string;
 }
 
 declare class DatesRangeInput extends React.Component<DatesRangeInputProps, {}> {

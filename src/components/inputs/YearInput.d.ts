@@ -19,10 +19,14 @@ export interface YearInputProps {
 
     /** A year input can be formatted to appear inline in other content. */
     inline?: boolean;
+
+    /** Field's name by which `onChange` handler identifies the field. */
+    name?: string;
 }
 
 export interface YearInputData extends YearInputProps {
     value: string;
+    name: string;
 }
 
 declare class YearInput extends React.Component<YearInputProps, {}> {

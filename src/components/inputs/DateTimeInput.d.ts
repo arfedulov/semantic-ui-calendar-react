@@ -31,10 +31,14 @@ export interface DateTimeInputProps {
 
     /** Current value. Creates a controlled component. */
     value?: string;
+
+    /** Field's name by which `onChange` handler identifies the field. */
+    name?: string;
 }
 
 export interface DateTimeInputData extends DateTimeInputProps {
     value: string;
+    name: string;
 }
 
 declare class DateTimeInput extends React.Component<DateTimeInputProps, {}> {
