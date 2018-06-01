@@ -11,6 +11,9 @@ function TimeInput(props) {
     popupPosition,
     inline
   } = props;
+  const onTimeChange = (event, data) => {
+    _.invoke(props, 'onChange', event, { ...props, value: data.value });
+  };
   const rest = getUnhandledProps(TimeInput, props);
 
   const inputElement = (
@@ -20,14 +23,14 @@ function TimeInput(props) {
       onChange={onChange} />
   );
   if (inline) {
-    return <TimePicker onTimeChange={onChange} />;
+    return <TimePicker onTimeChange={onTimeChange} />;
   }
   return (
     <Popup
       position={popupPosition}
       trigger={inputElement}>
       <TimePicker
-        onTimeChange={onChange} />
+        onTimeChange={onTimeChange} />
     </Popup>
   );
 }

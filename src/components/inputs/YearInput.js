@@ -11,6 +11,9 @@ function YearInput(props) {
     popupPosition,
     inline
   } = props;
+  const onYearChange = (event, data) => {
+    _.invoke(props, 'onChange', event, { ...props, value: data.value });
+  };
   const rest = getUnhandledProps(YearInput, props);
 
   const inputElement = (
@@ -20,14 +23,14 @@ function YearInput(props) {
       onChange={onChange} />
   );
   if (inline) {
-    return <YearPicker onYearChange={onChange} />;
+    return <YearPicker onYearChange={onYearChange} />;
   }
   return (
     <Popup
       position={popupPosition}
       trigger={inputElement}>
       <YearPicker
-        onYearChange={onChange} />
+        onYearChange={onYearChange} />
     </Popup>
   );
 }

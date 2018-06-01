@@ -13,8 +13,11 @@ function DatesRangeInput(props) {
     popupPosition,
     inline
   } = props;
+  const onDatesRangeChange = (event, data) => {
+    _.invoke(props, 'onChange', event, { ...props, value: data.value });
+  };
   const rest = getUnhandledProps(DatesRangeInput, props);
-  
+
   const inputElement = (
     <Input
       { ...rest }
@@ -26,7 +29,7 @@ function DatesRangeInput(props) {
       <DatesRangePicker
         dateFormat={dateFormat}
         divider={divider}
-        onDatesRangeChange={onChange} />
+        onDatesRangeChange={onDatesRangeChange} />
     );
   }
   return (
@@ -36,7 +39,7 @@ function DatesRangeInput(props) {
       <DatesRangePicker
         dateFormat={dateFormat}
         divider={divider}
-        onDatesRangeChange={onChange} />
+        onDatesRangeChange={onDatesRangeChange} />
     </Popup>
   );
 }
