@@ -37,45 +37,39 @@ class DateTimeForm extends React.Component {
     };
   }
 
-  handleDateChange = (event, { value }) => {
-    this.setState({ date: value });
-  }
-
-  handleTimeChange = (event, { value }) => {
-    this.setState({ time: value });
-  }
-
-  handleDateTimeChange = (event, { value }) => {
-    this.setState({ dateTime: value });
-  }
-
-  handleDatesRangeChange = (event, { value }) => {
-    this.setState({ datesRange: value });
+  handleChange = (event, {name, value}) => {
+    if (this.state.hasOwnProperty(name)) {
+      this.setState({ [name]: value });
+    }
   }
 
   render() {
     return (
       <Form>
         <DateInput
+          name="date"
           placeholder="Date"
           value={this.state.date}
           iconPosition="left"
-          onChange={this.handleDateChange} />
+          onChange={this.handleChange} />
         <TimeInput
+          name="time"
           placeholder="Time"
           value={this.state.time}
           iconPosition="left"
-          onChange={this.handleTimeChange} />
+          onChange={this.handleChange} />
         <DateTimeInput
+          name="dateTime"
           placeholder="Date Time"
           value={this.state.dateTime}
           iconPosition="left"
-          onChange={this.handleDateTimeChange} />
+          onChange={this.handleChange} />
         <DatesRangeInput
+          name="datesRange"
           placeholder="From - To"
           value={this.state.datesRange}
           iconPosition="left"
-          onChange={this.handleDatesRangeChange} />
+          onChange={this.handleChange} />
       </Form>
     );
   }
@@ -85,8 +79,10 @@ class DateTimeForm extends React.Component {
 Also you can build a form with inline pickers as inputs. Just set ``inline`` prop on input element and it will be displayed as inline picker:
 ```javascript
 class DateTimeFormInline extends React.Component {
-  handleDateChange = (event, { value }) => {
-    this.setState({ date: value });
+ handleChange = (event, {name, value}) => {
+    if (this.state.hasOwnProperty(name)) {
+      this.setState({ [name]: value });
+    }
   }
 
   render() {
@@ -94,6 +90,7 @@ class DateTimeFormInline extends React.Component {
       <Form>
         <DateInput
           inline
+          name="date"
           value={this.state.date}
           onChange={this.handleDateChange} />
       </Form>
