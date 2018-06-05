@@ -100,9 +100,10 @@ class Picker extends React.Component {
   getDatesRange = (range) => {
     const { dateFormat, divider } = this.props;
     const { start, end } = range? range : { start: null, end: null };
-    const startStr = start && start.format? start.format(dateFormat) : '. . .';
-    const endStr = end && end.format? end.format(dateFormat) : '. . .';
-    return `${startStr}${divider}${endStr}`;
+    const startStr = start && start.format? start.format(dateFormat) : '';
+    const endStr = end && end.format? end.format(dateFormat) : '';
+    if (startStr) return `${startStr}${divider}${endStr}`;
+    return '';
   }
 
   switchToPrevMode = (lastMode = 'day') => {
