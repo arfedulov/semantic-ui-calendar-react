@@ -35,6 +35,33 @@ class Picker extends React.Component {
     };
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const {
+      dateToShow,
+      activeDate,
+      year,
+      month,
+      activeHour,
+      activeMinute,
+      mode,
+      datesRange
+    } = this.state;
+    // for some reason when input value changes `Picker` updates twice (becouse of his parents updating)
+    // but the second update is unnecessery because in second update `Picker` receives
+    // `initialValue` the same as previous `initialValue`
+    // seems like it it happens because `onDateClick` uses 0 timeout when setting state
+    return nextProps.initialValue !== this.props.initialValue
+      || dateToShow !== nextState.dateToShow
+      || activeDate !== nextState.activeDate
+      || year !== nextState.year
+      || month !== nextState.month
+      || activeHour !== nextState.activeHour
+      || activeMinute !== nextState.activeMinute
+      || mode !== nextState.mode
+      || datesRange.start !== nextState.datesRange.start
+      || datesRange.end !== nextState.datesRange.end;
+  }
+
   setDatesRange = (event, data) => {
     const { onDatesRangeChange } = this.props;
     this.setState(({ datesRange }) => {

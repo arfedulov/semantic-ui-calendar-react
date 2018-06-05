@@ -3,51 +3,54 @@ import { Input } from 'semantic-ui-react';
 import { DatePicker, CustomPopup as Popup } from '../../containers';
 import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../../utils.js';
+import _ from 'lodash';
 
-function DateInput(props) {
-  const {
-    onChange,
-    icon,
-    dateFormat,
-    startMode,
-    popupPosition,
-    inline,
-    value
-  } = props;
-  const onDateChange = (event, data) => {
-    if (data.value.format) {
-      data.value = data.value.format(dateFormat);
+class DateInput extends React.Component {
+
+  render() {
+    const {
+      icon,
+      dateFormat,
+      startMode,
+      popupPosition,
+      inline,
+      value
+    } = this.props;
+    const onDateChange = (event, data) => {
+      if (data.value.format) {
+        data.value = data.value.format(dateFormat);
+      }
+      _.invoke(this.props, 'onChange', event, { ...this.props, value: data.value });
+    };
+    const rest = getUnhandledProps(DateInput, this.props);
+    const inputElement = (
+      <Input
+        { ...rest }
+        value={value}
+        onChange={onDateChange}
+        icon={icon} />
+    );
+  
+    if (inline) {
+      return (
+        <DatePicker
+          dateFormat={dateFormat}
+          startMode={startMode}
+          onDateChange={onDateChange} />
+      );
     }
-    _.invoke(props, 'onChange', event, { ...props, value: data.value });
-  };
-  const rest = getUnhandledProps(DateInput, props);
-  const inputElement = (
-    <Input
-      { ...rest }
-      value={value}
-      onChange={onDateChange}
-      icon={icon} />
-  );
-
-  if (inline) {
     return (
-      <DatePicker
-        dateFormat={dateFormat}
-        startMode={startMode}
-        onDateChange={onDateChange} />
+      <Popup
+        position={popupPosition}
+        trigger={inputElement}>
+        <DatePicker
+          initialValue={value}
+          dateFormat={dateFormat}
+          startMode={startMode}
+          onDateChange={onDateChange} />
+      </Popup>
     );
   }
-  return (
-    <Popup
-      position={popupPosition}
-      trigger={inputElement}>
-      <DatePicker
-        initialValue={value}
-        dateFormat={dateFormat}
-        startMode={startMode}
-        onDateChange={onDateChange} />
-    </Popup>
-  );
 }
 
 DateInput.propTypes = {

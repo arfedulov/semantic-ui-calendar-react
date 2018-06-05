@@ -22,7 +22,8 @@ const baseConfig = {
   devServer: {
     contentBase: path.resolve(__dirname, 'example'),
     port: 9000
-  }
+  },
+  devtool: 'source-map'
 };
 
 const config = Object.assign({
