@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getUnhandledProps, getMonths } from '../utils.js';
+import { getUnhandledProps, getMonths } from '../lib';
 import { Table } from 'semantic-ui-react';
 import _ from 'lodash';
 

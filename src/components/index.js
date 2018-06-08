@@ -5,4 +5,3 @@ export { MinutePicker } from './MinutePicker.js';
 export { YearPickerComponent } from './YearPickerComponent.js';
 export { MonthPickerComponent } from './MonthPickerComponent.js';
 export { PickerHeader } from './PickerHeader.js';
-export { inputs } from './inputs';

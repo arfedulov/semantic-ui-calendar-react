@@ -8,7 +8,7 @@ import {
   isDayInMonth,
   getArrayOfWeeks,
   getUnhandledProps
-} from '../utils.js';
+} from '../lib';
 
 function DatePickerComponent(props) {
   const {

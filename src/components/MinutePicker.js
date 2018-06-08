@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps } from '../lib';
 
 const MINUTES = [
   '00',

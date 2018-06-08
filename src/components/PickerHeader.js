@@ -3,7 +3,7 @@ import { Table, Icon } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { getWeekDays, getUnhandledProps } from '../utils.js';
+import { getWeekDays, getUnhandledProps } from '../lib';
 
 function PickerHeader(props) {
   const {

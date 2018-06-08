@@ -2,7 +2,7 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
-import { getUnhandledProps } from '../utils.js';
+import { getUnhandledProps } from '../lib';
 import moment from 'moment';
 
 function DatePickerCell(props) {

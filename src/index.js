@@ -5,4 +5,4 @@ export {
   DatesRangeInput,
   YearInput,
   MonthInput
-} from './components/inputs';
+} from './containers/inputs';
