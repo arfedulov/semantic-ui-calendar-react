@@ -136,7 +136,6 @@ class DateTimeFormInline extends React.Component {
 | -----| ------------|
 | all that can be used with SUIR Input | |
 | ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD.MM.YY``|
-| ``divider`` | {string} Dates divider. Default: `` - `` |
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 

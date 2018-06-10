@@ -2,7 +2,9 @@ let dateChangeEvent;
 
 if (typeof Event === 'function') {
   dateChangeEvent = new Event('dateChange', { bubbles: false });
-  window.dispatchEvent(dateChangeEvent);
+} else {
+  dateChangeEvent = document.createEvent('Event');
+  dateChangeEvent.initEvent('dateChange', false, false);
 }
 
 export const dispatchDateChange = () => {

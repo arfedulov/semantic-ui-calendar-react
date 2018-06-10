@@ -7,7 +7,7 @@ import { YEAR_INPUT } from '../../lib/COMPONENT_TYPES';
 import moment from 'moment';
 import _ from 'lodash';
 import { PickerHeader, YearPickerComponent } from '../../components';
-import { YearPickerMixin } from '../yearPickerMixin.js';
+import { YearPickerMixin } from '../';
 
 class YearInput extends YearPickerMixin {
   static META = {
