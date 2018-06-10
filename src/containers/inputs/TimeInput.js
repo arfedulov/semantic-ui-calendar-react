@@ -29,6 +29,10 @@ class TimeInput extends React.Component {
     };
   }
 
+  onPopupClose = () => {
+    this.setState({ mode: 'hour' });
+  }
+
   onTimeUpdate = (event, data) => {
     _.invoke(this.props, 'onChange', event, { ...this.props, value: data.value });
   };
@@ -51,7 +55,7 @@ class TimeInput extends React.Component {
     this.setState(() => {
       this.onTimeUpdate(event, { value: newValue });
       return {
-        mode: 'hour'
+        mode: 'minute'
       };
     });
   }
@@ -97,6 +101,7 @@ class TimeInput extends React.Component {
     }
     return (
       <Popup
+        onClose={this.onPopupClose}
         position={popupPosition}
         trigger={inputElement}>
         { this.getPicker() }
