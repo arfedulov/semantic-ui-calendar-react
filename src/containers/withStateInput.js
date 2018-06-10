@@ -47,6 +47,11 @@ const getTime = ({hour = '00', minute = '00'}) => {
   return `${hour}:${minute}`;
 };
 
+const parseDate = (value, format) => {
+  const date = moment(value, format);
+  return date.isValid()? date : moment();
+};
+
 function withStateInput(WrappedComponent) {
   return class WithStateInput extends React.Component {
 
@@ -106,7 +111,7 @@ function withStateInput(WrappedComponent) {
 
     updateDateToShow = () => {
       if (this.props.value) {
-        this.setState({ dateToShow: moment(this.props.value, this.props.dateFormat) });
+        this.setState({ dateToShow: parseDate(this.props.value, this.props.dateFormat) });
       }
     }
   
@@ -348,7 +353,7 @@ function withStateInput(WrappedComponent) {
     }
   
     render() {
-      const activeDate = moment(this.props.value, this.props.dateFormat);
+      const activeDate = parseDate(this.props.value, this.props.dateFormat);
       return (
         <WrappedComponent
           {  ...this.props }
