@@ -32,7 +32,6 @@ function MonthPickerComponent(props) {
     onMonthClick,
     activeMonth
   } = props;
-  const rest = getUnhandledProps(MonthPickerComponent, props);
 
   const cellStyle = {
     width: '33.333333%',
@@ -48,7 +47,7 @@ function MonthPickerComponent(props) {
   ));
   const rows = _.chunk(months, 3).map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
-    <Table.Body { ...rest }>
+    <Table.Body>
       { rows }
     </Table.Body>
   );

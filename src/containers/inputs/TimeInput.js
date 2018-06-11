@@ -1,14 +1,17 @@
 import React from 'react';
-import { Table, Input } from 'semantic-ui-react';
-import { CustomPopup as Popup } from '../';
 import PropTypes from 'prop-types';
-import { getUnhandledProps, tick } from '../../lib';
-import {
-  TIME_INPUT
-} from '../../lib/COMPONENT_TYPES.js';
-import { TimePickerComponent } from '../../components';
 import _ from 'lodash';
 import moment from 'moment';
+import { Table, Input } from 'semantic-ui-react';
+
+import { CustomPopup as Popup } from '..';
+import { tick, getUnhandledProps } from '../../lib';
+import {
+  TIME_INPUT
+} from '../../lib/COMPONENT_TYPES';
+import { TimePickerComponent } from '../../components';
+import { CustomPropTypes } from '../../lib/customPropTypes';
+
 
 const parseTime = (value, outFormat = 'HH:mm') => {
   if (value) return moment(value, 'HH:mm').format(outFormat);
@@ -62,10 +65,8 @@ class TimeInput extends React.Component {
 
   getPicker() {
     const [activeHour, activeMinute] = [parseTime(this.props.value, 'HH'), parseTime(this.props.value, 'mm')];
-    const rest = getUnhandledProps(TimeInput, this.props);
     return (
       <Table
-        { ...rest }
         unstackable
         celled
         textAlign="center">
@@ -118,22 +119,15 @@ TimeInput.propTypes = {
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
-  popupPosition: PropTypes.oneOf([
-    'top left',
-    'top right',
-    'bottom left',
-    'bottom right',
-    'right center',
-    'left center',
-    'top center',
-    'bottom center'
-  ]),
-  inline: PropTypes.bool
+  popupPosition: CustomPropTypes.popupPosition,
+  inline: PropTypes.bool,
+  value: PropTypes.string
 };
 
 TimeInput.defaultProps = {
   icon: 'time',
-  inline: false
+  inline: false,
+  value: ''
 };
 
 export default TimeInput;

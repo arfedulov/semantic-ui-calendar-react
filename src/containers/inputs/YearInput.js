@@ -1,13 +1,17 @@
 import React from 'react';
-import { Input, Table } from 'semantic-ui-react';
-import { CustomPopup as Popup } from '../';
 import PropTypes from 'prop-types';
-import { getUnhandledProps } from '../../lib';
-import { YEAR_INPUT } from '../../lib/COMPONENT_TYPES';
 import moment from 'moment';
 import _ from 'lodash';
+import { Input, Table } from 'semantic-ui-react';
+
+import {
+  CustomPopup as Popup,
+  YearPickerMixin
+} from '..';
+import { getUnhandledProps } from '../../lib';
+import { YEAR_INPUT } from '../../lib/COMPONENT_TYPES';
 import { PickerHeader, YearPickerComponent } from '../../components';
-import { YearPickerMixin } from '../';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 class YearInput extends YearPickerMixin {
   static META = {
@@ -30,10 +34,8 @@ class YearInput extends YearPickerMixin {
 
   getPicker() {
     const yearsRange = this.getYearsRange();
-    const rest = getUnhandledProps(YearInput, this.props);
     return (
       <Table
-        { ...rest }
         unstackable
         celled
         textAlign="center">
@@ -92,22 +94,15 @@ YearInput.propTypes = {
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
-  popupPosition: PropTypes.oneOf([
-    'top left',
-    'top right',
-    'bottom left',
-    'bottom right',
-    'right center',
-    'left center',
-    'top center',
-    'bottom center'
-  ]),
-  inline: PropTypes.bool
+  popupPosition: CustomPropTypes.popupPosition,
+  inline: PropTypes.bool,
+  value: PropTypes.string
 };
 
 YearInput.defaultProps = {
   icon: 'calendar',
-  inline: false
+  inline: false,
+  value: ''
 };
 
 export default YearInput;

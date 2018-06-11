@@ -1,4 +1,4 @@
-export { default as DateInput, DateInputProps, DateInputOnChangeData } from './DateInput';
+export { default as DateInput, DateInputProps } from './DateInput';
 export { default as DateTimeInput, DateTimeInputProps, DateTimeInputData } from './DateTimeInput';
 export { default as DatesRangeInput, DatesRangeInputProps, DatesRangeInputOnChangeData } from './DatesRangeInput';
 export { default as TimeInput, TimeInputProps, TimeInputData } from './TimeInput';

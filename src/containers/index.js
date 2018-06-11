@@ -1,4 +1,4 @@
-export { CustomPopup } from './CustomPopup.js';
-export { CustomInput } from './CustomInput.js';
-export { withStateInput } from './withStateInput.js';
-export { YearPickerMixin } from './YearPickerMixin.js';
+export { CustomPopup } from './CustomPopup';
+export { CustomInput } from './CustomInput';
+export { withStateInput } from './withStateInput';
+export { YearPickerMixin } from './YearPickerMixin';

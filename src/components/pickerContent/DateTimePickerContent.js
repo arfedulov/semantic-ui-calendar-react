@@ -1,6 +1,9 @@
 import React from 'react';
-import { PickerHeader, TimePickerComponent } from '../';
-import { DatePickerContent } from './DatePickerContent.js';
+import PropTypes from 'prop-types';
+
+import { PickerHeader, TimePickerComponent } from '..';
+import { DatePickerContent } from './DatePickerContent';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 function DateTimePickerContent(props) {
   const {
@@ -64,6 +67,30 @@ function DateTimePickerContent(props) {
     </React.Fragment>
   );
 }
+
+DateTimePickerContent.propTypes = {
+  activeDate: CustomPropTypes.activeDate,
+  activeHour: PropTypes.string,
+  activeMinute: PropTypes.string,
+  mode: PropTypes.string,
+  handleHeaderDateClick: PropTypes.func,
+  handleHeaderTimeClick: PropTypes.func,
+  onYearChange: PropTypes.func,
+  showNextMonth: PropTypes.func,
+  showPrevMonth: PropTypes.func,
+  showNextYear: PropTypes.func,
+  showPrevYear: PropTypes.func,
+  showNextDay: PropTypes.func,
+  showPrevDay: PropTypes.func,
+  dateToShow: CustomPropTypes.dateToShow,
+  onMonthChange: PropTypes.func,
+  onDateClick: PropTypes.func,
+  onHourClick: PropTypes.func,
+  onMinuteClick: PropTypes.func,
+  yearsRange: CustomPropTypes.yearsRange,
+  onPrevBtnClick: PropTypes.func,
+  onNextBtnClick: PropTypes.func
+};
 
 export default DateTimePickerContent;
 export {

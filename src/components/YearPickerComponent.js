@@ -40,7 +40,6 @@ function YearPickerComponent(props) {
     activeYear,
     yearsStart
   } = props;
-  const rest = getUnhandledProps(YearPickerComponent, props);
 
   const cellStyle = {
     width: '33.333333%',
@@ -56,7 +55,7 @@ function YearPickerComponent(props) {
   ));
   const rows = _.chunk(years, 3).map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
-    <Table.Body { ...rest }>
+    <Table.Body>
       { rows }
     </Table.Body>
   );

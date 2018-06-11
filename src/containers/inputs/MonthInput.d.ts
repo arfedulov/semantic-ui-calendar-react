@@ -20,13 +20,12 @@ export interface MonthInputProps {
     /** A month input can be formatted to appear inline in other content. */
     inline?: boolean;
 
-    /** Field's name by which `onChange` handler identifies the field. */
-    name?: string;
+    /** Current value. Creates a controlled component. */
+    value?: string;
 }
 
 export interface MonthInputData extends MonthInputProps {
     value: string;
-    name: string;
 }
 
 declare class MonthInput extends React.Component<MonthInputProps, {}> {

@@ -57,7 +57,6 @@ function HourPicker(props) {
     onHourClick,
     activeHour
   } = props;
-  const rest = getUnhandledProps(HourPicker, props);
 
   const hours = HOURS.map((hour) => (
     <HourPickerCell 
@@ -77,7 +76,7 @@ function HourPicker(props) {
     return rows;
   }().map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
-    <Table.Body { ...rest }>
+    <Table.Body>
       { rows }
     </Table.Body>
   );

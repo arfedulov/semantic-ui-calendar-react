@@ -1,30 +1,17 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
-import {
-  monthIndex,
-  cloneReplaceValue,
-  emptyFunction,
-  getUnhandledProps,
-  tick
-} from '../lib';
-import {
-  PickerHeader,
-  DatePickerComponent,
-  MonthPickerComponent,
-  TimePickerComponent
-} from '../components';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { DayMode } from '../components/pickerModes/DayMode.js';
-import { MonthMode } from '../components/pickerModes/MonthMode.js';
-import { DatePickerContent } from '../components/pickerContent/DatePickerContent.js';
-import { DateTimePickerContent } from '../components/pickerContent/DateTimePickerContent.js';
 import _ from 'lodash';
+
 import {
-  DATE_INPUT,
+  monthIndex,
+  tick,
+  getUnhandledProps
+} from '../lib';
+import {
   DATE_TIME_INPUT
-} from '../lib/COMPONENT_TYPES.js';
-import { EVENTS, dispatchDateChange } from '../lib/events.js';
+} from '../lib/COMPONENT_TYPES';
+import { EVENTS, dispatchDateChange } from '../lib/events';
 
 const getPrevMode = (mode, lastMode) => {
   if (mode === 'minute') return 'hour';
@@ -61,23 +48,24 @@ function withStateInput(WrappedComponent) {
     }
 
     static propTypes = {
-      /** (event, data) => {} */
-      onDateChange: PropTypes.func,
-      /** (event, data) => {} */
-      onTimeChange: PropTypes.func,
-      onDatesRangeChange: PropTypes.func,
+      /** Called on change.
+       * @param {SyntheticEvent} event React's original SyntheticEvent.
+       * @param {object} data All props and proposed value.
+      */
+      onChange: PropTypes.func,
+      /* Initial display mode for ``DatePicker`` and ``DateTimePicker``. */
       startMode: PropTypes.oneOf(['year', 'month', 'day']),
+      /* Selected value. */
       value: PropTypes.string,
+      /** Date formatting string.
+       * Anything that that can be passed to ``moment().format``.
+       */
       dateFormat: PropTypes.string,
-      pickDate: PropTypes.bool,
-      pickDateTime: PropTypes.bool,
-      pickDatesRange: PropTypes.bool,
+      /* Characters that separate date and time values. */
       divider: PropTypes.string
     }
 
     static defaultProps = {
-      onDateChange: emptyFunction,
-      onTimeChange: emptyFunction,
       startMode: 'day',
       dateFormat: 'DD-MM-YYYY',
       divider: ' '
@@ -93,11 +81,13 @@ function withStateInput(WrappedComponent) {
       } = props;
       const initialDate = value? moment(value, dateFormat) : moment().startOf('month');
       this.state = {
-        dateToShow: initialDate,
-        activeHour: '',
-        activeMinute: '',
-        mode: startMode,
-        datesRange: { start: null, end: null }
+        dateToShow: initialDate, // moment
+        month: '', // str
+        year: '', // str
+        activeHour: '', // str
+        activeMinute: '', // str
+        mode: startMode, // str
+        datesRange: { start: null, end: null } // { start: moment, end: moment }
       };
     }
 
@@ -125,7 +115,7 @@ function withStateInput(WrappedComponent) {
         mode,
         datesRange
       } = this.state;
-      // for some reason when input value changes `Picker` updates twice (becouse of his parents updating)
+      // for some reason when input value changes `Picker` updates twice (becouse of it's parents updating)
       // but the second update is unnecessery because in second update `Picker` receives
       // `value` the same as previous `value`
       // seems like it it happens because `onDateClick` uses 0 timeout when setting state
@@ -144,32 +134,38 @@ function withStateInput(WrappedComponent) {
       const { onDatesRangeChange } = this;
       this.setState(({ datesRange }) => {
         let newState;
+        // reset dates range if it's already selected
         if (datesRange.start && datesRange.end) {
           newState = {
             datesRange: { start: null, end: null }
           };
-          onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
+          onDatesRangeChange(event, { ...this.props, value: this.getDatesRange() });
         } else if (datesRange.start && datesRange.start.isAfter(data.value)) {
+          // reset dates range on invalid input
           newState = {
             datesRange: { start: null, end: null }
           };
-          onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange()));
+          onDatesRangeChange(event, { ...this.props, value: this.getDatesRange() });
         } else if (datesRange.start) {
+          // set dates range end
           newState = {
             datesRange: { start: datesRange.start, end: data.value }
           };
-          onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
+          const newRange = this.getDatesRange({
             start: datesRange.start,
             end: data.value
-          })));
+          });
+          onDatesRangeChange(event, { ...this.props, value: newRange });
         } else {
+          // set dates range start
           newState = {
             datesRange: { start: data.value, end: datesRange.end }
           };
-          onDatesRangeChange(event, cloneReplaceValue(data, this.getDatesRange({
+          const newRange = this.getDatesRange({
             start: data.value,
             end: datesRange.end
-          })));
+          });
+          onDatesRangeChange(event, { ...this.props, value: newRange });
         }
         return newState;
       });
@@ -231,7 +227,7 @@ function withStateInput(WrappedComponent) {
     }
   
     showNextDay = () => {
-      if (this.props.pickDateTime) this.resetMinutes();
+      if (WrappedComponent.META.type === DATE_TIME_INPUT) this.resetMinutes();
       this.setState(({ dateToShow }) => {
         let nextDay = dateToShow.clone();
         nextDay.add(1, 'd');
@@ -241,7 +237,7 @@ function withStateInput(WrappedComponent) {
     }
   
     showPrevDay = () => {
-      if (this.props.pickDateTime) this.resetMinutes();
+      if (WrappedComponent.META.type === DATE_TIME_INPUT) this.resetMinutes();
       this.setState(({ dateToShow }) => {
         let prevDay = dateToShow.clone();
         prevDay.add(-1, 'd');
@@ -260,11 +256,7 @@ function withStateInput(WrappedComponent) {
   
     onHourClick = (event, data) => {
       tick(() => {
-        this.setState(prevState => {
-          const newData = cloneReplaceValue(data, getTime({
-            hour: data.value,
-            minute: '00'
-          }));
+        this.setState(() => {
           return {
             activeHour: data.value
           };
@@ -275,11 +267,11 @@ function withStateInput(WrappedComponent) {
   
     onMinuteClick = (event, data) => {
       this.setState(prevState => {
-        const newData = cloneReplaceValue(data, getTime({
+        const newValue = getTime({
           hour: prevState.activeHour,
           minute: data.value
-        }));
-        this.onTimeChange(event, newData);
+        });
+        this.onTimeChange(event, { value: newValue });
         return {
           activeMinute: data.value
         };
@@ -287,11 +279,8 @@ function withStateInput(WrappedComponent) {
     }
   
     onYearChange = (event, data) => {
-      const date = {
-        year: data.value
-      };
       this.setState({
-        dateToShow: moment(date),
+        dateToShow: moment({ year: data.value }),
         year: data.value
       });
       this.switchToNextMode();
@@ -299,7 +288,7 @@ function withStateInput(WrappedComponent) {
   
     onMonthChange = (event, data) => {
       const date = {
-        year: this.state.year,
+        year: this.state.dateToShow.year(),
         month: monthIndex(data.value)
       };
       this.setState({
@@ -309,11 +298,11 @@ function withStateInput(WrappedComponent) {
       this.switchToNextMode();
     }
   
-    handleHeaderDateClick = (event, data) => {
+    handleHeaderDateClick = () => {
       this.switchToPrevMode();
     }
   
-    handleHeaderTimeClick = (event, data) => {
+    handleHeaderTimeClick = () => {
       this.switchToPrevMode('minute');
       this.resetMinutes();
       this.resetHours();
@@ -328,24 +317,17 @@ function withStateInput(WrappedComponent) {
     }
 
     onDateChange = (event, data) => {
-      if (WrappedComponent.META.type === DATE_INPUT) {
-        let newValue = data.value;
-        if (data.value.format) {
-          newValue = data.value.format(this.props.dateFormat);
-        }
-        _.invoke(this.props, 'onChange', event, { ...this.props, value: newValue });
-      } else if (WrappedComponent.META.type === DATE_TIME_INPUT) {
-        const newValue = data.value.format(this.props.dateFormat);
-        _.invoke(this.props, 'onChange', event, { ...this.props, value: newValue });
+      let newValue = data.value;
+      if (newValue.format) {
+        newValue = newValue.format(this.props.dateFormat);
       }
+      _.invoke(this.props, 'onChange', event, { ...this.props, value: newValue });
     };
   
     onTimeChange = (event, data) => {
-      if (WrappedComponent.META.type === DATE_TIME_INPUT) {
-        const { value, dateFormat, divider } = this.props;
-        const newValue = `${moment(value, dateFormat).format(dateFormat)}${divider}${data.value}`;
-        _.invoke(this.props, 'onChange', event, { ...this.props, value: newValue });
-      }
+      const { value, dateFormat, divider } = this.props;
+      const newValue = `${moment(value, dateFormat).format(dateFormat)}${divider}${data.value}`;
+      _.invoke(this.props, 'onChange', event, { ...this.props, value: newValue });
     }
 
     onDatesRangeChange = (event, data) => {
@@ -354,33 +336,37 @@ function withStateInput(WrappedComponent) {
   
     render() {
       const activeDate = parseDate(this.props.value, this.props.dateFormat);
+      const wrapperState = {
+        ...this.state,
+        activeDate: activeDate,
+        setDatesRange: this.setDatesRange,
+        getDatesRange: this.setDatesRange,
+        switchToPrevMode: this.switchToPrevMode,
+        switchToNextMode: this.switchToNextMode,
+        showNextYear: this.showNextYear,
+        showPrevYear: this.showPrevYear,
+        showNextMonth: this.showNextMonth,
+        showPrevMonth: this.showPrevMonth,
+        showNextDay: this.showNextDay,
+        showPrevDay: this.showPrevDay,
+        onDateClick: this.onDateClick,
+        onHourClick: this.onHourClick,
+        onMinuteClick: this.onMinuteClick,
+        onYearChange: this.onYearChange,
+        onMonthChange: this.onMonthChange,
+        handleHeaderDateClick: this.handleHeaderDateClick,
+        handleHeaderTimeClick: this.handleHeaderTimeClick,
+        onDateChange: this.onDateChange,
+        onTimeChange: this.onTimeChange,
+        onDatesRangeChange: this.onDatesRangeChange
+      };
+      const rest = getUnhandledProps(WithStateInput, this.props);
       return (
         <WrappedComponent
-          {  ...this.props }
-          { ...this.state }
-          activeDate={activeDate}
-          setDatesRange={this.setDatesRange}
-          getDatesRange={this.setDatesRange}
-          switchToPrevMode={this.switchToPrevMode}
-          switchToNextMode={this.switchToNextMode}
-          showNextYear={this.showNextYear}
-          showPrevYear={this.showPrevYear}
-          showNextMonth={this.showNextMonth}
-          showPrevMonth={this.showPrevMonth}
-          showNextDay={this.showNextDay}
-          showPrevDay={this.showPrevDay}
-          onDateClick={this.onDateClick}
-          onHourClick={this.onHourClick}
-          onMinuteClick={this.onMinuteClick}
-          onYearChange={this.onYearChange}
-          onMonthChange={this.onMonthChange}
-          handleHeaderDateClick={this.handleHeaderDateClick}
-          handleHeaderTimeClick={this.handleHeaderTimeClick}
-          resetMinutes={this.resetMinutes}
-          resetHours={this.resetHours}
-          onDateChange={this.onDateChange}
-          onTimeChange={this.onTimeChange}
-          onDatesRangeChange={this.onDatesRangeChange} />
+          {  ...rest }
+          onChange={ this.props.onChange }
+          value={ this.props.value }
+          wrapperState={ wrapperState } />
       );
     }
   };

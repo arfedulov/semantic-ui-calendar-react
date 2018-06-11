@@ -1,5 +1,4 @@
 import moment from 'moment';
-import _ from 'lodash';
 
 const _getCalendarStart = (referenceDate) => {
   return referenceDate.clone().startOf('month').startOf('week');
@@ -99,12 +98,6 @@ const getUnhandledProps = (Component, props) => {
   }, {});
 };
 
-const cloneReplaceValue = (data, newValue) => {
-  return _.assign({}, data, { value: newValue });
-};
-
-const emptyFunction = () => {};
-
 const getMonths = () => {
   return moment.monthsShort();
 };
@@ -133,8 +126,6 @@ export {
   isDayInMonth,
   getWeekDays,
   getUnhandledProps,
-  cloneReplaceValue,
-  emptyFunction,
   getMonths,
   monthIndex,
   tick

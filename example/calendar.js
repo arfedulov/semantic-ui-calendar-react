@@ -39,7 +39,7 @@ class DateTimeForm extends React.Component {
     };
   }
 
-  handleChange = (event, {name, value}) => {
+  handleChange = (event, {name = undefined, value}) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }

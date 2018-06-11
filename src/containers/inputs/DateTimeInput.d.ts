@@ -14,15 +14,6 @@ export interface DateTimeInputProps {
     /** Shorthand for Icon. */
     icon?: any;
 
-    /** Date formatting string. Anything that that can be passed to ``moment().format`` */
-    dateFormat?: string;
-
-    /** Characters that are used to divide date and time in string. */
-    divider?: string;
-
-    /** Display mode to start. */
-    startMode?: 'year' | 'month' | 'day';
-
     /** Position for the popup. */
     popupPosition?: 'top left' | 'top right' | 'bottom left' | 'bottom right' | 'right center' | 'left center' | 'top center' | 'bottom center';
 
@@ -31,14 +22,10 @@ export interface DateTimeInputProps {
 
     /** Current value. Creates a controlled component. */
     value?: string;
-
-    /** Field's name by which `onChange` handler identifies the field. */
-    name?: string;
 }
 
 export interface DateTimeInputData extends DateTimeInputProps {
     value: string;
-    name: string;
 }
 
 declare class DateTimeInput extends React.Component<DateTimeInputProps, {}> {

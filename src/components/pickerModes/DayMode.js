@@ -1,5 +1,8 @@
 import React from 'react';
-import { PickerHeader, DatePickerComponent } from '../';
+import PropTypes from 'prop-types';
+
+import { PickerHeader, DatePickerComponent } from '..';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 function DayMode(props) {
   const {
@@ -26,6 +29,15 @@ function DayMode(props) {
     </React.Fragment>
   );
 }
+
+DayMode.propTypes = {
+  handleHeaderDateClick: PropTypes.func,
+  showNextMonth: PropTypes.func,
+  showPrevMonth: PropTypes.func,
+  dateToShow: CustomPropTypes.dateToShow,
+  onDateClick: PropTypes.func,
+  activeDate: CustomPropTypes.activeDate
+};
 
 export default DayMode;
 export {

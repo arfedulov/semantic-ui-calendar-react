@@ -6,8 +6,7 @@ import moment from 'moment';
 import { 
   isActiveDate,
   isDayInMonth,
-  getArrayOfWeeks,
-  getUnhandledProps
+  getArrayOfWeeks
 } from '../lib';
 
 function DatePickerComponent(props) {
@@ -17,7 +16,6 @@ function DatePickerComponent(props) {
     showedMonth,
     datesRange
   } = props;
-  const rest = getUnhandledProps(DatePickerComponent, props);
   const data = getArrayOfWeeks(showedMonth);
   const _getRow = (week, key) => {
     const days = week.map((day) => {
@@ -44,7 +42,7 @@ function DatePickerComponent(props) {
   };
 
   return (
-    <Table.Body { ...rest }>
+    <Table.Body>
       { _getTableContent(data) }
     </Table.Body>
   );

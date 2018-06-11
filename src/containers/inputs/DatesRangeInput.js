@@ -1,14 +1,16 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
+
 import { getUnhandledProps } from '../../lib';
 import { DATES_RANGE_INPUT } from '../../lib/COMPONENT_TYPES';
-import { DatesRangePickerContent } from '../../components/pickerContent/DatesRangePickerContent.js';
+import { DatesRangePickerContent } from '../../components/pickerContent';
 import {
   CustomPopup as Popup,
   CustomInput as Input,
   withStateInput
 } from '../';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 class DatesRangeInput extends React.Component {
 
@@ -18,20 +20,26 @@ class DatesRangeInput extends React.Component {
   }
 
   getPicker() {
-    const rest = getUnhandledProps(DatesRangeInput, this.props);
+    const {
+      handleHeaderDateClick,
+      showNextMonth,
+      showPrevMonth,
+      dateToShow,
+      datesRange,
+      setDatesRange
+    } = this.props.wrapperState;
     return (
       <Table
-        { ...rest }
         unstackable
         celled
         textAlign="center">
         <DatesRangePickerContent
-          handleHeaderDateClick={this.props.handleHeaderDateClick}
-          showNextMonth={this.props.showNextMonth}
-          showPrevMonth={this.props.showPrevMonth}
-          dateToShow={this.props.dateToShow}
-          datesRange={this.props.datesRange}
-          setDatesRange={this.props.setDatesRange} />
+          handleHeaderDateClick={handleHeaderDateClick}
+          showNextMonth={showNextMonth}
+          showPrevMonth={showPrevMonth}
+          dateToShow={dateToShow}
+          datesRange={datesRange}
+          setDatesRange={setDatesRange} />
       </Table>
     );
   }
@@ -40,8 +48,6 @@ class DatesRangeInput extends React.Component {
     const {
       onChange,
       icon,
-      dateFormat,
-      divider,
       popupPosition,
       inline
     } = this.props;
@@ -76,23 +82,10 @@ DatesRangeInput.propTypes = {
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
-  /** Date formatting string.
-   * Anything that that can be passed to ``moment().format``.
-   */
-  dateFormat: PropTypes.string,
   /** Character that used to divide dates in string. */
-  divider: PropTypes.string,
-  popupPosition: PropTypes.oneOf([
-    'top left',
-    'top right',
-    'bottom left',
-    'bottom right',
-    'right center',
-    'left center',
-    'top center',
-    'bottom center'
-  ]),
-  inline: PropTypes.bool
+  popupPosition: CustomPropTypes.popupPosition,
+  inline: PropTypes.bool,
+  wrapperState: CustomPropTypes.wrapperState
 };
 
 DatesRangeInput.defaultProps = {

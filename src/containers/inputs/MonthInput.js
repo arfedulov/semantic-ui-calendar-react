@@ -1,13 +1,15 @@
 import React from 'react';
-import { Input, Table } from 'semantic-ui-react';
-import { CustomPopup as Popup } from '../';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { Input, Table } from 'semantic-ui-react';
+
+import { CustomPopup as Popup } from '..';
 import { getUnhandledProps } from '../../lib';
 import {
   MONTH_INPUT
 } from '../../lib/COMPONENT_TYPES.js';
-import _ from 'lodash';
 import { MonthPickerComponent } from '../../components';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 class MonthInput extends React.Component {
   static META = {
@@ -25,11 +27,8 @@ class MonthInput extends React.Component {
   };
 
   getPicker() {
-    const rest = getUnhandledProps(MonthInput, this.props);
-
     return (
       <Table
-        { ...rest }
         unstackable
         celled
         textAlign="center">
@@ -79,22 +78,15 @@ MonthInput.propTypes = {
   onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
-  popupPosition: PropTypes.oneOf([
-    'top left',
-    'top right',
-    'bottom left',
-    'bottom right',
-    'right center',
-    'left center',
-    'top center',
-    'bottom center'
-  ]),
-  inline: PropTypes.bool
+  popupPosition: CustomPropTypes.popupPosition,
+  inline: PropTypes.bool,
+  value: PropTypes.string
 };
 
 MonthInput.defaultProps = {
   icon: 'calendar',
-  inline: false
+  inline: false,
+  value: ''
 };
 
 export default MonthInput;

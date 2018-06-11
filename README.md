@@ -99,6 +99,19 @@ class DateTimeFormInline extends React.Component {
 }
 ```
 
+# Locales support
+
+Since ``semantic-ui-calendar-react`` uses moment.js it has complete locales support.
+To change locale you need to set ``moment``'s locale in a scope that contains ``semantic-ui-calendar-react`` components:
+
+```javascript
+
+moment.locale('ru')
+
+// code that uses ``semantic-ui-calendar-react`` components
+
+```
+
 # Supported elements
 
 ### DateInput

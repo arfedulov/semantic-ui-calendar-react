@@ -1,7 +1,12 @@
 import React from 'react';
-import { MonthMode } from '../pickerModes/MonthMode.js';
-import { DayMode } from '../pickerModes/DayMode.js';
-import { YearMode } from '../pickerModes/YearMode.js';
+import PropTypes from 'prop-types';
+
+import {
+  MonthMode,
+  DayMode,
+  YearMode
+} from '../pickerModes';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 function DatePickerContent(props) {
   const {
@@ -52,6 +57,23 @@ function DatePickerContent(props) {
       activeDate={activeDate} />
   );
 }
+
+DatePickerContent.propTypes = {
+  mode: PropTypes.string,
+  handleHeaderDateClick: PropTypes.func,
+  onYearChange: PropTypes.func,
+  showNextYear: PropTypes.func,
+  showPrevYear: PropTypes.func,
+  dateToShow: CustomPropTypes.dateToShow,
+  onMonthChange: PropTypes.func,
+  showNextMonth: PropTypes.func,
+  showPrevMonth: PropTypes.func,
+  onDateClick: PropTypes.func,
+  activeDate: CustomPropTypes.activeDate,
+  yearsRange: CustomPropTypes.yearsRange,
+  onPrevBtnClick: PropTypes.func,
+  onNextBtnClick: PropTypes.func
+};
 
 export default DatePickerContent;
 export {

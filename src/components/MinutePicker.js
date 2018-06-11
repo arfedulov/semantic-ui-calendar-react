@@ -47,7 +47,6 @@ function MinutePicker(props) {
     hour,
     activeMinute
   } = props;
-  const rest = getUnhandledProps(MinutePicker, props);
 
   const cellStyle = {
     width: '33.33333%',
@@ -73,7 +72,7 @@ function MinutePicker(props) {
     return rows;
   }().map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
-    <Table.Body { ...rest }>
+    <Table.Body>
       { rows }
     </Table.Body>
   );

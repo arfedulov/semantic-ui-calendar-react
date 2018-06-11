@@ -1,17 +1,19 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+
 import {
   CustomPopup as Popup,
   CustomInput as Input,
   withStateInput,
   YearPickerMixin
-} from '../';
-import PropTypes from 'prop-types';
+} from '..';
 import { getUnhandledProps } from '../../lib';
 import {
   DATE_INPUT
 } from '../../lib/COMPONENT_TYPES.js';
-import { DatePickerContent } from '../../components/pickerContent/DatePickerContent.js';
+import { DatePickerContent } from '../../components';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 class DateInput extends YearPickerMixin {
 
@@ -24,30 +26,41 @@ class DateInput extends YearPickerMixin {
     super(props);
 
     this.state = {
-      yearsStart: props.dateToShow.year() - 6
+      yearsStart: props.wrapperState.dateToShow.year() - 6 // int
     };
   }
 
   getPicker() {
-    const rest = getUnhandledProps(DateInput, this.props);
+    const {
+      mode,
+      handleHeaderDateClick,
+      onYearChange,
+      showNextYear,
+      showPrevYear,
+      dateToShow,
+      onMonthChange,
+      showNextMonth,
+      showPrevMonth,
+      onDateClick,
+      activeDate
+    } = this.props.wrapperState;
     return (
       <Table
-        { ...rest }
         unstackable
         celled
         textAlign="center">
         <DatePickerContent
-          mode={this.props.mode}
-          handleHeaderDateClick={this.props.handleHeaderDateClick}
-          onYearChange={this.props.onYearChange}
-          showNextYear={this.props.showNextYear}
-          showPrevYear={this.props.showPrevYear}
-          dateToShow={this.props.dateToShow}
-          onMonthChange={this.props.onMonthChange}
-          showNextMonth={this.props.showNextMonth}
-          showPrevMonth={this.props.showPrevMonth}
-          onDateClick={this.props.onDateClick}
-          activeDate={this.props.activeDate}
+          mode={mode}
+          handleHeaderDateClick={handleHeaderDateClick}
+          onYearChange={onYearChange}
+          showNextYear={showNextYear}
+          showPrevYear={showPrevYear}
+          dateToShow={dateToShow}
+          onMonthChange={onMonthChange}
+          showNextMonth={showNextMonth}
+          showPrevMonth={showPrevMonth}
+          onDateClick={onDateClick}
+          activeDate={activeDate}
           yearsRange={this.getYearsRange()}
           onPrevBtnClick={this.onPrevBtnClick}
           onNextBtnClick={this.onNextBtnClick} />
@@ -58,18 +71,17 @@ class DateInput extends YearPickerMixin {
   render() {
     const {
       icon,
-      dateFormat,
-      startMode,
       popupPosition,
       inline,
       value
     } = this.props;
     const rest = getUnhandledProps(DateInput, this.props);
+    
     const inputElement = (
       <Input
         { ...rest }
         value={value}
-        onChange={this.props.onDateChange}
+        onChange={this.props.wrapperState.onDateChange}
         icon={icon} />
     );
   
@@ -89,36 +101,16 @@ class DateInput extends YearPickerMixin {
 }
 
 DateInput.propTypes = {
-  /** Called on change.
-   * @param {SyntheticEvent} event React's original SyntheticEvent.
-   * @param {object} data All props and proposed value.
-  */
-  onChange: PropTypes.func,
   /** Same as semantic-ui-react Input's ``icon`` prop. */
   icon: PropTypes.any,
-  /** Date formatting string.
-   * Anything that that can be passed to ``moment().format``
-   */
-  dateFormat: PropTypes.string,
-  startMode: PropTypes.oneOf(['year', 'month', 'day']),
-  popupPosition: PropTypes.oneOf([
-    'top left',
-    'top right',
-    'bottom left',
-    'bottom right',
-    'right center',
-    'left center',
-    'top center',
-    'bottom center'
-  ]),
+  popupPosition: CustomPropTypes.popupPosition,
   inline: PropTypes.bool,
-  value: PropTypes.string
+  value: PropTypes.string,
+  wrapperState: CustomPropTypes.wrapperState
 };
 
 DateInput.defaultProps = {
   icon: 'calendar',
-  dateFormat: 'DD-MM-YYYY',
-  startMode: 'day',
   inline: false,
   value: ''
 };

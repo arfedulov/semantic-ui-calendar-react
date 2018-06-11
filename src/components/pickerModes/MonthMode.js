@@ -1,5 +1,8 @@
 import React from 'react';
-import { PickerHeader, MonthPickerComponent } from '../';
+import PropTypes from 'prop-types';
+
+import { PickerHeader, MonthPickerComponent } from '..';
+import { CustomPropTypes } from '../../lib/customPropTypes';
 
 function MonthMode(props) {
   const {
@@ -23,6 +26,14 @@ function MonthMode(props) {
     </React.Fragment>
   );
 }
+
+MonthMode.propTypes = {
+  handleHeaderDateClick: PropTypes.func,
+  showNextYear: PropTypes.func,
+  showPrevYear: PropTypes.func,
+  dateToShow: CustomPropTypes.dateToShow,
+  onMonthChange: PropTypes.func
+};
 
 export default MonthMode;
 export {
