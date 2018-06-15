@@ -65,7 +65,7 @@
     "rimraf": "^2.6.2",
     "semantic-ui-css": "^2.3.1",
     "semantic-ui-react": "^0.80.2",
-    "tap-spec": "^4.1.1",
+    "tap-spec": "^5.0.0",
     "tape": "^4.9.0",
     "uglifycss": "0.0.29",
     "webpack": "^4.9.1",

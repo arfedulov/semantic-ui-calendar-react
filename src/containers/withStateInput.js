@@ -40,7 +40,7 @@ const parseDate = (value, format) => {
 };
 
 function withStateInput(WrappedComponent) {
-  return class WithStateInput extends React.Component {
+  return class WithStateInput extends React.PureComponent {
 
     static get name() {
       const wrappedComponentName = WrappedComponent.META && WrappedComponent.META.name;
@@ -104,32 +104,7 @@ function withStateInput(WrappedComponent) {
         this.setState({ dateToShow: parseDate(this.props.value, this.props.dateFormat) });
       }
     }
-  
-    shouldComponentUpdate(nextProps, nextState) {
-      const {
-        dateToShow,
-        year,
-        month,
-        activeHour,
-        activeMinute,
-        mode,
-        datesRange
-      } = this.state;
-      // for some reason when input value changes `Picker` updates twice (becouse of it's parents updating)
-      // but the second update is unnecessery because in second update `Picker` receives
-      // `value` the same as previous `value`
-      // seems like it it happens because `onDateClick` uses 0 timeout when setting state
-      return nextProps.value !== this.props.value
-        || dateToShow !== nextState.dateToShow
-        || year !== nextState.year
-        || month !== nextState.month
-        || activeHour !== nextState.activeHour
-        || activeMinute !== nextState.activeMinute
-        || mode !== nextState.mode
-        || datesRange.start !== nextState.datesRange.start
-        || datesRange.end !== nextState.datesRange.end;
-    }
-  
+    
     setDatesRange = (event, data) => {
       const { onDatesRangeChange } = this;
       this.setState(({ datesRange }) => {
