@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import { Input, Table } from 'semantic-ui-react';
@@ -12,14 +13,24 @@ import { MonthPickerComponent } from '../../components';
 import { CustomPropTypes } from '../../lib/customPropTypes';
 
 class MonthInput extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   static META = {
     type: MONTH_INPUT,
     name: 'MonthInput'
   }
 
+  componentDidMount() {
+    this.inputNode = ReactDOM.findDOMNode(this).querySelector('input');
+  }
+
   onMonthClick = (event, data) => {
     this.setState({ activeMonth: data.value });
     this.onMonthUpdate(event, data);
+    // close popup if closable
+    if (this.props.closable) this.inputNode.click();
   }
 
   onMonthUpdate = (event, data) => {
@@ -80,13 +91,16 @@ MonthInput.propTypes = {
   icon: PropTypes.any,
   popupPosition: CustomPropTypes.popupPosition,
   inline: PropTypes.bool,
-  value: PropTypes.string
+  value: PropTypes.string,
+  /* If true, popup closes after selecting a date/time */
+  closable: PropTypes.bool
 };
 
 MonthInput.defaultProps = {
   icon: 'calendar',
   inline: false,
-  value: ''
+  value: '',
+  closable: false
 };
 
 export default MonthInput;

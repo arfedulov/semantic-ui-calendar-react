@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -9,7 +10,9 @@ import {
   getUnhandledProps
 } from '../lib';
 import {
-  DATE_TIME_INPUT
+  DATE_TIME_INPUT,
+  DATE_INPUT,
+  DATES_RANGE_INPUT
 } from '../lib/COMPONENT_TYPES';
 import { EVENTS, dispatchDateChange } from '../lib/events';
 
@@ -62,13 +65,16 @@ function withStateInput(WrappedComponent) {
        */
       dateFormat: PropTypes.string,
       /* Characters that separate date and time values. */
-      divider: PropTypes.string
+      divider: PropTypes.string,
+      /* If true, popup closes after selecting a date/time */
+      closable: PropTypes.bool
     }
 
     static defaultProps = {
       startMode: 'day',
       dateFormat: 'DD-MM-YYYY',
-      divider: ' '
+      divider: ' ',
+      closable: false
     }
 
     constructor(props) {
@@ -93,6 +99,7 @@ function withStateInput(WrappedComponent) {
 
     componentDidMount() {
       window.addEventListener(EVENTS.DATE_CHANGE, this.updateDateToShow);
+      this.inputNode = ReactDOM.findDOMNode(this).querySelector('input');
     }
 
     componentWillUnmount() {
@@ -103,6 +110,10 @@ function withStateInput(WrappedComponent) {
       if (this.props.value) {
         this.setState({ dateToShow: parseDate(this.props.value, this.props.dateFormat) });
       }
+    }
+
+    closePopup = () => {
+      this.inputNode.click();
     }
     
     setDatesRange = (event, data) => {
@@ -226,6 +237,7 @@ function withStateInput(WrappedComponent) {
         this.onDateChange(event, data);
         this.switchToNextMode(WrappedComponent.META.type === DATE_TIME_INPUT? 'minute' : 'day');
         if (WrappedComponent.META.type === DATE_TIME_INPUT) dispatchDateChange();
+        if (WrappedComponent.META.type === DATE_INPUT && this.props.closable) this.closePopup();
       });
     }
   
@@ -302,10 +314,15 @@ function withStateInput(WrappedComponent) {
     onTimeChange = (event, data) => {
       const { value, dateFormat, divider } = this.props;
       const newValue = `${moment(value, dateFormat).format(dateFormat)}${divider}${data.value}`;
+      if (WrappedComponent.META.type === DATE_TIME_INPUT && this.props.closable) this.closePopup();
       _.invoke(this.props, 'onChange', event, { ...this.props, value: newValue });
     }
 
     onDatesRangeChange = (event, data) => {
+      if (WrappedComponent.META.type === DATES_RANGE_INPUT
+        && this.state.datesRange.start
+        && !this.state.datesRange.end
+        && this.props.closable) this.closePopup();
       _.invoke(this.props, 'onChange', event, { ...this.props, value: data.value });
     }
   

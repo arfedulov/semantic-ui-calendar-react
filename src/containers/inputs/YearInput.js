@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import _ from 'lodash';
@@ -27,9 +28,15 @@ class YearInput extends YearPickerMixin {
     };
   }
 
+  componentDidMount() {
+    this.inputNode = ReactDOM.findDOMNode(this).querySelector('input');
+  }
+
   onYearClick = (event, data) => {
     this.setState({ activeYear: data.value });
     this.onYearChange(event, data);
+    // close popup if closable
+    if (this.props.closable) this.inputNode.click();
   }
 
   getPicker() {
@@ -96,13 +103,16 @@ YearInput.propTypes = {
   icon: PropTypes.any,
   popupPosition: CustomPropTypes.popupPosition,
   inline: PropTypes.bool,
-  value: PropTypes.string
+  value: PropTypes.string,
+  /* If true, popup closes after selecting a date/time */
+  closable: PropTypes.bool
 };
 
 YearInput.defaultProps = {
   icon: 'calendar',
   inline: false,
-  value: ''
+  value: '',
+  closable: false
 };
 
 export default YearInput;

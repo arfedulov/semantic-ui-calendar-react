@@ -6,7 +6,7 @@ function CustomPopup(props) {
     <Popup
       { ...props }
       flowing
-      id="suirCalendarPopup"
+      // id="suirCalendarPopup"
       hideOnScroll
       on="click"
       className="suir-calendar popup"

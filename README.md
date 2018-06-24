@@ -123,6 +123,7 @@ moment.locale('ru')
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
+| ``closable`` | {bool} If true, popup closes after selecting a date   |
 
 ### TimeInput
 
@@ -131,6 +132,7 @@ moment.locale('ru')
 | all that can be used with SUIR Input | |
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
+| ``closable`` | {bool} If true, popup closes after selecting a time   |
 
 ### DateTimeInput
 
@@ -142,6 +144,7 @@ moment.locale('ru')
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
+| ``closable`` | {bool} If true, popup closes after selecting a date-time   |
 
 ### DatesRangeInput
 
@@ -151,6 +154,7 @@ moment.locale('ru')
 | ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD.MM.YY``|
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
+| ``closable`` | {bool} If true, popup closes after selecting a dates range   |
 
 ### YearInput
 
@@ -159,6 +163,7 @@ moment.locale('ru')
 | all that can be used with SUIR Input | |
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
+| ``closable`` | {bool} If true, popup closes after selecting a year   |
 
 ### MonthInput
 
@@ -167,3 +172,4 @@ moment.locale('ru')
 | all that can be used with SUIR Input | |
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
+| ``closable`` | {bool} If true, popup closes after selecting a month   |

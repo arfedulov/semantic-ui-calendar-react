@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import moment from 'moment';
@@ -32,6 +33,10 @@ class TimeInput extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.inputNode = ReactDOM.findDOMNode(this).querySelector('input');
+  }
+
   onPopupClose = () => {
     this.setState({ mode: 'hour' });
   }
@@ -61,6 +66,8 @@ class TimeInput extends React.Component {
         mode: 'minute'
       };
     });
+    // close popup if closable
+    if (this.props.closable) this.inputNode.click();
   }
 
   getPicker() {
@@ -121,13 +128,16 @@ TimeInput.propTypes = {
   icon: PropTypes.any,
   popupPosition: CustomPropTypes.popupPosition,
   inline: PropTypes.bool,
-  value: PropTypes.string
+  value: PropTypes.string,
+  /* If true, popup closes after selecting a date/time */
+  closable: PropTypes.bool
 };
 
 TimeInput.defaultProps = {
   icon: 'time',
   inline: false,
-  value: ''
+  value: '',
+  closable: false
 };
 
 export default TimeInput;
