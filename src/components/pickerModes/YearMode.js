@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table } from 'semantic-ui-react';
 
 import { PickerHeader, YearPickerComponent } from '..';
 import { CustomPropTypes } from '../../lib/customPropTypes';
@@ -14,7 +15,10 @@ function YearMode(props) {
     value
   } = props;
   return (
-    <React.Fragment>
+    <Table
+      unstackable
+      celled
+      textAlign="center">
       <PickerHeader
         width="3"
         onDateClick={onHeaderDateClick}
@@ -25,7 +29,7 @@ function YearMode(props) {
         onYearClick={onYearClick}
         activeYear={value}
         yearsStart={yearsRange.start} />
-    </React.Fragment>
+    </Table>
   );
 }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 import {
@@ -45,26 +44,21 @@ class DateInput extends YearPickerMixin {
       activeDate
     } = this.props.wrapperState;
     return (
-      <Table
-        unstackable
-        celled
-        textAlign="center">
-        <DatePickerContent
-          mode={mode}
-          handleHeaderDateClick={handleHeaderDateClick}
-          onYearChange={onYearChange}
-          showNextYear={showNextYear}
-          showPrevYear={showPrevYear}
-          dateToShow={dateToShow}
-          onMonthChange={onMonthChange}
-          showNextMonth={showNextMonth}
-          showPrevMonth={showPrevMonth}
-          onDateClick={onDateClick}
-          activeDate={activeDate}
-          yearsRange={this.getYearsRange()}
-          onPrevBtnClick={this.onPrevBtnClick}
-          onNextBtnClick={this.onNextBtnClick} />
-      </Table>
+      <DatePickerContent
+        mode={mode}
+        handleHeaderDateClick={handleHeaderDateClick}
+        onYearChange={onYearChange}
+        showNextYear={showNextYear}
+        showPrevYear={showPrevYear}
+        dateToShow={dateToShow}
+        onMonthChange={onMonthChange}
+        showNextMonth={showNextMonth}
+        showPrevMonth={showPrevMonth}
+        onDateClick={onDateClick}
+        activeDate={activeDate}
+        yearsRange={this.getYearsRange()}
+        onPrevBtnClick={this.onPrevBtnClick}
+        onNextBtnClick={this.onNextBtnClick} />
     );
   }
 

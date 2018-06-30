@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table } from 'semantic-ui-react';
 
 import { PickerHeader, DatePickerComponent } from '..';
 import { CustomPropTypes } from '../../lib/customPropTypes';
@@ -14,7 +15,10 @@ function DayMode(props) {
     activeDate
   } = props;
   return (
-    <React.Fragment>
+    <Table
+      unstackable
+      celled
+      textAlign="center">
       <PickerHeader
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextMonth}
@@ -26,7 +30,7 @@ function DayMode(props) {
         onDateClick={onDateClick}
         activeDate={activeDate}
         showedMonth={dateToShow} />
-    </React.Fragment>
+    </Table>
   );
 }
 

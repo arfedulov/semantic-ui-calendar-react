@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { PickerHeader, TimePickerComponent } from '..';
+import { TimePickerComponent } from '..';
 import { DatePickerContent } from './DatePickerContent';
 import { CustomPropTypes } from '../../lib/customPropTypes';
 
@@ -29,7 +29,6 @@ function DateTimePickerContent(props) {
     onPrevBtnClick,
     onNextBtnClick
   } = props;
-  const headerWidth = mode === 'minute'? '3' : mode === 'hour'? '4' : '7';
   if (mode !== 'hour' && mode !== 'minute') {
     return (
       <DatePickerContent
@@ -50,21 +49,17 @@ function DateTimePickerContent(props) {
     );
   }
   return (
-    <React.Fragment>
-      <PickerHeader
-        onDateClick={handleHeaderTimeClick}
-        onNextBtnClick={showNextDay}
-        onPrevBtnClick={showPrevDay}
-        activeDate={activeDate}
-        includeDay
-        width={headerWidth} />
-      <TimePickerComponent
-        mode={mode}
-        activeHour={activeHour}
-        activeMinute={activeMinute}
-        onHourClick={onHourClick}
-        onMinuteClick={onMinuteClick} />
-    </React.Fragment>
+    <TimePickerComponent
+      mode={mode}
+      showDate
+      activeHour={activeHour}
+      activeMinute={activeMinute}
+      onHourClick={onHourClick}
+      onMinuteClick={onMinuteClick}
+      handleHeaderTimeClick={handleHeaderTimeClick}
+      activeDate={activeDate}
+      showNextDay={showNextDay}
+      showPrevDay={showPrevDay} />
   );
 }
 

@@ -2,12 +2,15 @@ import React from 'react';
 import { HourPicker, MinutePicker, PickerHeader } from '.';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { Table } from 'semantic-ui-react';
 
 function TimePickerComponent(props) {
   const {
-    selectedDate,
-    onNextDayBtnClick,
-    onPrevDayBtnClick,
+    activeDate,
+    showDate,
+    handleHeaderTimeClick,
+    showNextDay,
+    showPrevDay,
     onHourClick,
     onMinuteClick,
     activeHour,
@@ -15,38 +18,48 @@ function TimePickerComponent(props) {
     mode
   } = props;
 
+  const headerWidth = mode === 'minute'? '3' : mode === 'hour'? '4' : '7';
+
   if (mode === 'minute') {
     return (
-      <React.Fragment>
-        { selectedDate && (
+      <Table
+        unstackable
+        celled
+        textAlign="center">
+        { showDate && (
           <PickerHeader
-            width="3"
+            onDateClick={handleHeaderTimeClick}
+            onNextBtnClick={showNextDay}
+            onPrevBtnClick={showPrevDay}
+            activeDate={activeDate}
             includeDay
-            activeDate={selectedDate}
-            onNextBtnClick={onNextDayBtnClick}
-            onPrevBtnClick={onPrevDayBtnClick} />
+            width={headerWidth} />
         ) }
         <MinutePicker
           hour={activeHour}
           activeMinute={activeMinute}
           onMinuteClick={onMinuteClick} />
-      </React.Fragment>
+      </Table>
     );
   } else {
     return (
-      <React.Fragment>
-        { selectedDate && (
+      <Table
+        unstackable
+        celled
+        textAlign="center">
+        { showDate && (
           <PickerHeader
-            width="4"
+            onDateClick={handleHeaderTimeClick}
+            onNextBtnClick={showNextDay}
+            onPrevBtnClick={showPrevDay}
+            activeDate={activeDate}
             includeDay
-            activeDate={selectedDate}
-            onNextBtnClick={onNextDayBtnClick}
-            onPrevBtnClick={onPrevDayBtnClick} />
+            width={headerWidth} />
         ) }
         <HourPicker
           activeHour={activeHour}
           onHourClick={onHourClick} />
-      </React.Fragment>
+      </Table>
     );
   }
 }
@@ -56,8 +69,7 @@ TimePickerComponent.propTypes = {
   onHourClick: PropTypes.func.isRequired,
   /** (event, data) => {} */
   onMinuteClick: PropTypes.func.isRequired,
-  /** Show date in header if given */
-  selectedDate: PropTypes.instanceOf(moment),
+  showDate: PropTypes.bool,
   activeHour: PropTypes.string,
   activeMinute: PropTypes.string,
   onNextDayBtnClick: PropTypes.func,

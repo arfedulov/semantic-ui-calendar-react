@@ -29,18 +29,13 @@ class DatesRangeInput extends React.Component {
       setDatesRange
     } = this.props.wrapperState;
     return (
-      <Table
-        unstackable
-        celled
-        textAlign="center">
-        <DatesRangePickerContent
-          handleHeaderDateClick={handleHeaderDateClick}
-          showNextMonth={showNextMonth}
-          showPrevMonth={showPrevMonth}
-          dateToShow={dateToShow}
-          datesRange={datesRange}
-          setDatesRange={setDatesRange} />
-      </Table>
+      <DatesRangePickerContent
+        handleHeaderDateClick={handleHeaderDateClick}
+        showNextMonth={showNextMonth}
+        showPrevMonth={showPrevMonth}
+        dateToShow={dateToShow}
+        datesRange={datesRange}
+        setDatesRange={setDatesRange} />
     );
   }
 

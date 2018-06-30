@@ -73,17 +73,12 @@ class TimeInput extends React.Component {
   getPicker() {
     const [activeHour, activeMinute] = [parseTime(this.props.value, 'HH'), parseTime(this.props.value, 'mm')];
     return (
-      <Table
-        unstackable
-        celled
-        textAlign="center">
-        <TimePickerComponent
-          mode={this.state.mode}
-          activeHour={activeHour}
-          activeMinute={activeMinute}
-          onHourClick={this.onHourClick}
-          onMinuteClick={this.onMinuteClick} />
-      </Table>
+      <TimePickerComponent
+        mode={this.state.mode}
+        activeHour={activeHour}
+        activeMinute={activeMinute}
+        onHourClick={this.onHourClick}
+        onMinuteClick={this.onMinuteClick} />
     );
   }
 

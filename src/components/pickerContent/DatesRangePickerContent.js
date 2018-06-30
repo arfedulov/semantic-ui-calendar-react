@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table } from 'semantic-ui-react';
 
 import { PickerHeader, DatePickerComponent } from '..';
 import { CustomPropTypes } from '../../lib/customPropTypes';
@@ -14,7 +15,10 @@ function DatesRangePickerContent(props) {
     setDatesRange
   } = props;
   return (
-    <React.Fragment>
+    <Table
+      unstackable
+      celled
+      textAlign="center">
       <PickerHeader
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextMonth}
@@ -27,7 +31,7 @@ function DatesRangePickerContent(props) {
         datesRange={datesRange}
         onDateClick={setDatesRange}
         showedMonth={dateToShow} />
-    </React.Fragment>
+    </Table>
   );
 }
 

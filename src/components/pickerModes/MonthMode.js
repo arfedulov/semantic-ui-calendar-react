@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Table } from 'semantic-ui-react';
 
 import { PickerHeader, MonthPickerComponent } from '..';
 import { CustomPropTypes } from '../../lib/customPropTypes';
@@ -13,7 +14,10 @@ function MonthMode(props) {
     onMonthChange
   } = props;
   return (
-    <React.Fragment>
+    <Table
+      unstackable
+      celled
+      textAlign="center">
       <PickerHeader
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextYear}
@@ -23,7 +27,7 @@ function MonthMode(props) {
       <MonthPickerComponent
         activeMonth={dateToShow.format('MMM')}
         onMonthClick={onMonthChange} />
-    </React.Fragment>
+    </Table>
   );
 }
 

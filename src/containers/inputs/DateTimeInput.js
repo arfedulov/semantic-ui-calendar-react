@@ -52,33 +52,28 @@ class DateTimeInput extends YearPickerMixin {
       onMinuteClick
     } = this.props.wrapperState;
     return (
-      <Table
-        unstackable
-        celled
-        textAlign="center">
-        <DateTimePickerContent
-          activeDate={dateToShow}
-          activeHour={activeHour}
-          activeMinute={activeMinute}
-          mode={mode}
-          handleHeaderDateClick={handleHeaderDateClick}
-          handleHeaderTimeClick={handleHeaderTimeClick}
-          onYearChange={onYearChange}
-          showNextMonth={showNextMonth}
-          showPrevMonth={showPrevMonth}
-          showNextYear={showNextYear}
-          showPrevYear={showPrevYear}
-          showNextDay={showNextDay}
-          showPrevDay={showPrevDay}
-          dateToShow={dateToShow}
-          onMonthChange={onMonthChange}
-          onDateClick={onDateClick}
-          onHourClick={onHourClick}
-          onMinuteClick={onMinuteClick}
-          yearsRange={this.getYearsRange()}
-          onPrevBtnClick={this.onPrevBtnClick}
-          onNextBtnClick={this.onNextBtnClick} />
-      </Table>
+      <DateTimePickerContent
+        activeDate={dateToShow}
+        activeHour={activeHour}
+        activeMinute={activeMinute}
+        mode={mode}
+        handleHeaderDateClick={handleHeaderDateClick}
+        handleHeaderTimeClick={handleHeaderTimeClick}
+        onYearChange={onYearChange}
+        showNextMonth={showNextMonth}
+        showPrevMonth={showPrevMonth}
+        showNextYear={showNextYear}
+        showPrevYear={showPrevYear}
+        showNextDay={showNextDay}
+        showPrevDay={showPrevDay}
+        dateToShow={dateToShow}
+        onMonthChange={onMonthChange}
+        onDateClick={onDateClick}
+        onHourClick={onHourClick}
+        onMinuteClick={onMinuteClick}
+        yearsRange={this.getYearsRange()}
+        onPrevBtnClick={this.onPrevBtnClick}
+        onNextBtnClick={this.onNextBtnClick} />
     );
   }
 
