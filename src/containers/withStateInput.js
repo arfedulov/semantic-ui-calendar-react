@@ -37,9 +37,17 @@ const getTime = ({hour = '00', minute = '00'}) => {
   return `${hour}:${minute}`;
 };
 
-const parseDate = (value, format) => {
-  const date = moment(value, format);
-  return date.isValid()? date : moment();
+const parseDate = (value, format, defaultVal) => {
+  let date = moment(value, format);
+  if (date.isValid()) {
+    return date;
+  } else if (defaultVal) {
+    date = moment(defaultVal, format);
+    if (date.isValid()) {
+      return date;
+    }
+  }
+  return moment();
 };
 
 function withStateInput(WrappedComponent) {
@@ -67,7 +75,13 @@ function withStateInput(WrappedComponent) {
       /* Characters that separate date and time values. */
       divider: PropTypes.string,
       /* If true, popup closes after selecting a date/time */
-      closable: PropTypes.bool
+      closable: PropTypes.bool,
+      /* Date to display initially when no date is selected */
+      initialDate: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(moment),
+        PropTypes.instanceOf(Date)
+      ])
     }
 
     static defaultProps = {
@@ -83,11 +97,14 @@ function withStateInput(WrappedComponent) {
       const {
         value,
         dateFormat,
-        startMode
+        startMode,
+        initialDate,
       } = props;
-      const initialDate = value? moment(value, dateFormat) : moment().startOf('month');
+      const _initialDate = value?
+        moment(value, dateFormat) : initialDate?
+          moment(initialDate, dateFormat) : moment().startOf('month');
       this.state = {
-        dateToShow: initialDate, // moment
+        dateToShow: _initialDate, // moment
         month: '', // str
         year: '', // str
         activeHour: '', // str
@@ -327,7 +344,7 @@ function withStateInput(WrappedComponent) {
     }
   
     render() {
-      const activeDate = parseDate(this.props.value, this.props.dateFormat);
+      const activeDate = parseDate(this.props.value, this.props.dateFormat, this.props.initialDate);
       const wrapperState = {
         ...this.state,
         activeDate: activeDate,
