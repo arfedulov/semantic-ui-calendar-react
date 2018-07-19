@@ -12,7 +12,10 @@ function DatesRangePickerContent(props) {
     showPrevMonth,
     dateToShow,
     datesRange,
-    setDatesRange
+    setDatesRange,
+    isDateDisabled,
+    prevDisabled,
+    nextDisabled,
   } = props;
   return (
     <Table
@@ -20,6 +23,8 @@ function DatesRangePickerContent(props) {
       celled
       textAlign="center">
       <PickerHeader
+        prevDisabled={prevDisabled.bind(null, 'day')}
+        nextDisabled={nextDisabled.bind(null, 'day')}
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextMonth}
         onPrevBtnClick={showPrevMonth}
@@ -28,6 +33,7 @@ function DatesRangePickerContent(props) {
         showWeeks
         width="7" />
       <DatePickerComponent
+        isDateDisabled={isDateDisabled}
         datesRange={datesRange}
         onDateClick={setDatesRange}
         showedMonth={dateToShow} />

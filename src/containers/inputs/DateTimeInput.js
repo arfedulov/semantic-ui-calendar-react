@@ -49,10 +49,16 @@ class DateTimeInput extends YearPickerMixin {
       onMonthChange,
       onDateClick,
       onHourClick,
-      onMinuteClick
+      onMinuteClick,
+      isDateDisabled,
+      prevDisabled,
+      nextDisabled,
     } = this.props.wrapperState;
     return (
       <DateTimePickerContent
+        prevDisabled={prevDisabled}
+        nextDisabled={nextDisabled}
+        isDateDisabled={isDateDisabled}
         activeDate={dateToShow}
         activeHour={activeHour}
         activeMinute={activeMinute}
@@ -77,10 +83,17 @@ class DateTimeInput extends YearPickerMixin {
     );
   }
 
+  handleChange = (e, { value }) => {
+    if (!this.props.wrapperState.isDateDisabled(value)) {
+      this.props.onChange(e, { ...this.props, value });
+    } else {
+      this.props.onChange(e, { ...this.props, value: '' });
+    }
+  }
+
   render() {
     const {
       icon,
-      onChange,
       popupPosition,
       inline,
       value
@@ -91,7 +104,7 @@ class DateTimeInput extends YearPickerMixin {
       <Input
         { ...rest }
         value={value}
-        onChange={onChange}
+        onChange={this.handleChange}
         icon={icon} />
     );
     if (inline) {

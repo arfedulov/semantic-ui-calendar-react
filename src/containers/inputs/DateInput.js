@@ -13,6 +13,7 @@ import {
 } from '../../lib/COMPONENT_TYPES.js';
 import { DatePickerContent } from '../../components';
 import { CustomPropTypes } from '../../lib/customPropTypes';
+import { isMoment } from '../../../node_modules/moment';
 
 class DateInput extends YearPickerMixin {
 
@@ -41,10 +42,16 @@ class DateInput extends YearPickerMixin {
       showNextMonth,
       showPrevMonth,
       onDateClick,
-      activeDate
+      activeDate,
+      isDateDisabled,
+      nextDisabled,
+      prevDisabled,
     } = this.props.wrapperState;
     return (
       <DatePickerContent
+        prevDisabled={prevDisabled}
+        nextDisabled={nextDisabled}
+        isDateDisabled={isDateDisabled}
         mode={mode}
         handleHeaderDateClick={handleHeaderDateClick}
         onYearChange={onYearChange}
@@ -62,6 +69,15 @@ class DateInput extends YearPickerMixin {
     );
   }
 
+  handleDateChange = (e, { value }) => {
+    const valid = !this.props.wrapperState.isDateDisabled(value);
+    if (valid) {
+      this.props.wrapperState.onDateChange(e, { value });
+    } else {
+      this.props.wrapperState.onDateChange(e, { value: '' });
+    }
+  }
+
   render() {
     const {
       icon,
@@ -75,7 +91,7 @@ class DateInput extends YearPickerMixin {
       <Input
         { ...rest }
         value={value}
-        onChange={this.props.wrapperState.onDateChange}
+        onChange={this.handleDateChange}
         icon={icon} />
     );
   

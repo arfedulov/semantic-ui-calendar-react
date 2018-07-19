@@ -26,10 +26,16 @@ class DatesRangeInput extends React.Component {
       showPrevMonth,
       dateToShow,
       datesRange,
-      setDatesRange
+      setDatesRange,
+      isDateDisabled,
+      prevDisabled,
+      nextDisabled,
     } = this.props.wrapperState;
     return (
       <DatesRangePickerContent
+        prevDisabled={prevDisabled}
+        nextDisabled={nextDisabled}
+        isDateDisabled={isDateDisabled}
         handleHeaderDateClick={handleHeaderDateClick}
         showNextMonth={showNextMonth}
         showPrevMonth={showPrevMonth}

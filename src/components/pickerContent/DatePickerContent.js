@@ -23,12 +23,18 @@ function DatePickerContent(props) {
     activeDate,
     yearsRange,
     onPrevBtnClick,
-    onNextBtnClick
+    onNextBtnClick,
+    isDateDisabled,
+    nextDisabled,
+    prevDisabled,
   } = props;
   if (mode === 'year') {
     const value = activeDate && activeDate.isValid()? activeDate.format('YYYY') : '';
     return (
       <YearMode
+        prevDisabled={prevDisabled}
+        nextDisabled={nextDisabled}
+        isDateDisabled={isDateDisabled}
         onHeaderDateClick={handleHeaderDateClick}
         yearsRange={yearsRange}
         onPrevBtnClick={onPrevBtnClick}
@@ -40,6 +46,9 @@ function DatePickerContent(props) {
   if (mode === 'month') {
     return (
       <MonthMode
+        prevDisabled={prevDisabled}
+        nextDisabled={nextDisabled}
+        isDateDisabled={isDateDisabled}
         handleHeaderDateClick={handleHeaderDateClick}
         showNextYear={showNextYear}
         showPrevYear={showPrevYear}
@@ -49,6 +58,9 @@ function DatePickerContent(props) {
   }
   return (
     <DayMode
+      prevDisabled={prevDisabled}
+      nextDisabled={nextDisabled}
+      isDateDisabled={isDateDisabled}
       handleHeaderDateClick={handleHeaderDateClick}
       showNextMonth={showNextMonth}
       showPrevMonth={showPrevMonth}

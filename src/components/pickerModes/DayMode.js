@@ -12,7 +12,10 @@ function DayMode(props) {
     showPrevMonth,
     dateToShow,
     onDateClick,
-    activeDate
+    activeDate,
+    isDateDisabled,
+    nextDisabled,
+    prevDisabled,
   } = props;
   return (
     <Table
@@ -20,6 +23,8 @@ function DayMode(props) {
       celled
       textAlign="center">
       <PickerHeader
+        prevDisabled={prevDisabled.bind(null, 'day')}
+        nextDisabled={nextDisabled.bind(null, 'day')}
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextMonth}
         onPrevBtnClick={showPrevMonth}
@@ -27,6 +32,7 @@ function DayMode(props) {
         showWeeks
         width="7" />
       <DatePickerComponent
+        isDateDisabled={isDateDisabled}
         onDateClick={onDateClick}
         activeDate={activeDate}
         showedMonth={dateToShow} />

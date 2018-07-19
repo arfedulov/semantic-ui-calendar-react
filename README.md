@@ -6,10 +6,14 @@ My intention was to create something that looks like this https://github.com/mde
 Here you can find a live example https://arfedulov.ru/examples/semantic-ui-calendar-react.
 
 # installation
-``npm i semantic-ui-calendar-react``
+```
+npm i semantic-ui-calendar-react
+```
 
 Also you need to add css in your html:
-``<link rel="stylesheet" type="text/css" href="node_modules/semantic-ui-calendar-react/dist/css/calendar.min.css">``
+```html
+<link rel="stylesheet" type="text/css" href="node_modules/semantic-ui-calendar-react/dist/css/calendar.min.css">
+```
 
 # usage
 Let's create a form that needs date-related input fields.
@@ -124,7 +128,10 @@ moment.locale('ru')
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
 | ``closable`` | {bool} If true, popup closes after selecting a date   |
-| ``initialDate`` | {string|moment|Date} Date to display initially when no date is selected |
+| ``initialDate`` | {string`|`moment`|`Date} Date to display initially when no date is selected |
+| ``disable`` | {string`|`moment`|`string[]`|`moment[]} Date or list of dates that are displayed as disabled |
+| ``maxDate`` | {string`|`moment} Maximum date that can be selected |
+| ``minDate`` | {string`|`moment} Minimum date that can be selected |
 
 ### TimeInput
 
@@ -146,7 +153,10 @@ moment.locale('ru')
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
 | ``closable`` | {bool} If true, popup closes after selecting a date-time   |
-| ``initialDate`` | {string|moment|Date} Date to display initially when no date is selected |
+| ``initialDate`` | {string`|`moment`|`Date} Date to display initially when no date is selected |
+| ``disable`` | {string`|`moment`|`string[]`|`moment[]} Date or list of dates that are displayed as disabled |
+| ``maxDate`` | {string`|`moment} Maximum date that can be selected |
+| ``minDate`` | {string`|`moment} Minimum date that can be selected |
 
 ### DatesRangeInput
 
@@ -157,7 +167,9 @@ moment.locale('ru')
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``closable`` | {bool} If true, popup closes after selecting a dates range   |
-| ``initialDate`` | {string|moment|Date} Open a calendar on this date |
+| ``initialDate`` | {string`|`moment`|`Date} Open a calendar on this date |
+| ``maxDate`` | {string`|`moment} Maximum date that can be selected |
+| ``minDate`` | {string`|`moment} Minimum date that can be selected |
 
 ### YearInput
 

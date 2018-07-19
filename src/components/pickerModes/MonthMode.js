@@ -11,7 +11,10 @@ function MonthMode(props) {
     showNextYear,
     showPrevYear,
     dateToShow,
-    onMonthChange
+    onMonthChange,
+    prevDisabled,
+    nextDisabled,
+    isDateDisabled,
   } = props;
   return (
     <Table
@@ -19,12 +22,15 @@ function MonthMode(props) {
       celled
       textAlign="center">
       <PickerHeader
+        prevDisabled={prevDisabled.bind(null, 'month')}
+        nextDisabled={nextDisabled.bind(null, 'month')}
         onDateClick={handleHeaderDateClick}
         onNextBtnClick={showNextYear}
         onPrevBtnClick={showPrevYear}
         activeYear={dateToShow.format('YYYY')}
         width="3" />
       <MonthPickerComponent
+        isDateDisabled={isDateDisabled}
         activeMonth={dateToShow.format('MMM')}
         onMonthClick={onMonthChange} />
     </Table>

@@ -27,11 +27,17 @@ function DateTimePickerContent(props) {
     onMinuteClick,
     yearsRange,
     onPrevBtnClick,
-    onNextBtnClick
+    onNextBtnClick,
+    isDateDisabled,
+    prevDisabled,
+    nextDisabled,
   } = props;
   if (mode !== 'hour' && mode !== 'minute') {
     return (
       <DatePickerContent
+        prevDisabled={prevDisabled}
+        nextDisabled={nextDisabled}
+        isDateDisabled={isDateDisabled}
         mode={mode}
         handleHeaderDateClick={handleHeaderDateClick}
         onYearChange={onYearChange}

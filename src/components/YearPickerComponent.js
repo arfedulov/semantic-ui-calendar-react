@@ -38,21 +38,26 @@ function YearPickerComponent(props) {
   const { 
     onYearClick,
     activeYear,
-    yearsStart
+    yearsStart,
+    isDateDisabled,
   } = props;
 
   const cellStyle = {
     width: '33.333333%',
     minWidth: '7em'
   };
-  const years = getYears(yearsStart).map((year) => (
-    <YearPickerCell
-      style={cellStyle}
-      onClick={onYearClick}
-      active={year === activeYear.toString()}
-      year={year}
-      key={year} />
-  ));
+  const years = getYears(yearsStart).map((year) => {
+    const yearDisabled = _.isFunction(isDateDisabled) && isDateDisabled({ year: parseInt(year) });
+    return (
+      <YearPickerCell
+        disabled={yearDisabled}
+        style={cellStyle}
+        onClick={onYearClick}
+        active={!yearDisabled && year === activeYear.toString()}
+        year={year}
+        key={year} />
+    );
+  });
   const rows = _.chunk(years, 3).map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
     <Table.Body>
@@ -71,7 +76,8 @@ YearPickerComponent.propTypes = {
   /** (event, data) => {} */
   onYearClick: PropTypes.func.isRequired,
   activeYear: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  yearsStart: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  yearsStart: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  isDateDisabled: PropTypes.func,
 };
 
 export default YearPickerComponent;

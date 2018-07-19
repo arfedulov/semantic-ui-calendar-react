@@ -12,7 +12,10 @@ function YearMode(props) {
     onPrevBtnClick,
     onNextBtnClick,
     onYearClick,
-    value
+    value,
+    prevDisabled,
+    nextDisabled,
+    isDateDisabled,
   } = props;
   return (
     <Table
@@ -20,12 +23,15 @@ function YearMode(props) {
       celled
       textAlign="center">
       <PickerHeader
+        prevDisabled={prevDisabled.bind(null, 'year', yearsRange.start)}
+        nextDisabled={nextDisabled.bind(null, 'year', yearsRange.start)}
         width="3"
         onDateClick={onHeaderDateClick}
         activeYears={yearsRange}
         onPrevBtnClick={onPrevBtnClick}
         onNextBtnClick={onNextBtnClick} />
       <YearPickerComponent
+        isDateDisabled={isDateDisabled}
         onYearClick={onYearClick}
         activeYear={value}
         yearsStart={yearsRange.start} />

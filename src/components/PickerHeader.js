@@ -3,6 +3,8 @@ import { Table, Icon } from 'semantic-ui-react';
 import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import _ from 'lodash';
+
 import { getWeekDays, getUnhandledProps } from '../lib';
 
 function PickerHeader(props) {
@@ -16,7 +18,9 @@ function PickerHeader(props) {
     includeDay,
     showWeeks,
     width,
-    onDateClick
+    onDateClick,
+    nextDisabled,
+    prevDisabled,
   } = props;
   const rest = getUnhandledProps(PickerHeader, props);
 
@@ -77,6 +81,14 @@ function PickerHeader(props) {
   };
 
   const headerCellStyle = { cursor: 'pointer '};
+  const nextBtnDisabled = _.isFunction(nextDisabled) && nextDisabled();
+  const prevBtnDisabled = _.isFunction(prevDisabled) && prevDisabled();
+  const cursorStylePrev = {
+    cursor: prevBtnDisabled? 'auto' : 'pointer',
+  };
+  const cursorStyleNext = {
+    cursor: nextBtnDisabled? 'auto' : 'pointer',
+  };
 
   return (
     <Table.Header { ...rest }>
@@ -85,8 +97,10 @@ function PickerHeader(props) {
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
             fitted
+            style={cursorStylePrev}
+            disabled={prevBtnDisabled}
             className={buttonClasses}
-            onClick={onPrevBtnClick}
+            onClick={!prevBtnDisabled && onPrevBtnClick}
             name="chevron left" />
         </Table.HeaderCell>
         <Table.HeaderCell
@@ -98,8 +112,10 @@ function PickerHeader(props) {
         <Table.HeaderCell className={cellClasses} colSpan="1">
           <Icon
             fitted
+            style={cursorStyleNext}
+            disabled={nextBtnDisabled}
             className={buttonClasses}
-            onClick={onNextBtnClick}
+            onClick={!nextBtnDisabled && onNextBtnClick}
             name="chevron right" />
         </Table.HeaderCell>
       </Table.Row>
@@ -127,7 +143,9 @@ PickerHeader.propTypes = {
   includeDay: PropTypes.bool,
   showWeeks: PropTypes.bool,
   className: PropTypes.string,
-  onDateClick: PropTypes.func
+  onDateClick: PropTypes.func,
+  nextDisabled: PropTypes.func,
+  prevDisabled: PropTypes.func,
 };
 
 PickerHeader.defaultProps = {

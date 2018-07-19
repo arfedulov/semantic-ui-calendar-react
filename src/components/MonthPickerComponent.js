@@ -30,21 +30,26 @@ function MonthPickerCell(props) {
 function MonthPickerComponent(props) {
   const { 
     onMonthClick,
-    activeMonth
+    activeMonth,
+    isDateDisabled,
   } = props;
 
   const cellStyle = {
     width: '33.333333%',
     minWidth: '7em'
   };
-  const months = getMonths().map((month) => (
-    <MonthPickerCell
-      style={cellStyle}
-      onClick={onMonthClick}
-      active={month === activeMonth.toString()}
-      month={month}
-      key={month} />
-  ));
+  const months = getMonths().map((month, monthIndex) => {
+    const monthDisabled = _.isFunction(isDateDisabled) && isDateDisabled({ month: monthIndex });
+    return (
+      <MonthPickerCell
+        disabled={monthDisabled}
+        style={cellStyle}
+        onClick={onMonthClick}
+        active={!monthDisabled && month === activeMonth.toString()}
+        month={month}
+        key={month} />
+    );
+  });
   const rows = _.chunk(months, 3).map((row, i) => <Table.Row key={i}>{ row }</Table.Row>);
   return (
     <Table.Body>
@@ -62,7 +67,8 @@ MonthPickerCell.propTypes = {
 MonthPickerComponent.propTypes = {
   /** (event, data) => {} */
   onMonthClick: PropTypes.func.isRequired,
-  activeMonth: PropTypes.string
+  activeMonth: PropTypes.string,
+  isDateDisabled: PropTypes.func,
 };
 
 export default MonthPickerComponent;

@@ -14,13 +14,14 @@ function DatePickerComponent(props) {
     onDateClick,
     activeDate,
     showedMonth,
-    datesRange
+    datesRange,
+    isDateDisabled,
   } = props;
   const data = getArrayOfWeeks(showedMonth);
   const _getRow = (week, key) => {
     const days = week.map((day) => {
       const active = isActiveDate(day, activeDate || datesRange);
-      const disabled = !isDayInMonth(day, showedMonth);
+      const disabled = !isDayInMonth(day, showedMonth) || isDateDisabled(day);
       return (
         <Cell
           onClick={onDateClick}
@@ -58,8 +59,9 @@ DatePickerComponent.propTypes = {
   /** Dates range */
   datesRange: PropTypes.shape({
     start: PropTypes.instanceOf(moment),
-    end: PropTypes.instanceOf(moment)
-  })
+    end: PropTypes.instanceOf(moment),
+  }),
+  isDateDisabled: PropTypes.func,
 };
 
 export default DatePickerComponent;

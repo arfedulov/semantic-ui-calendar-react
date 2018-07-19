@@ -16,6 +16,66 @@ import {
 } from '../lib/COMPONENT_TYPES';
 import { EVENTS, dispatchDateChange } from '../lib/events';
 
+const disableDateValidators = {
+  disable: (disable /* moment|moment[] */, date, dateFormat) => {
+    if (!disable) return false;
+    if (_.isString(date)) {
+      if (date.length !== dateFormat.length) return false;
+      date = moment(date, dateFormat);
+    }
+    if (_.isArray(disable)) {
+      return _.some(disable, disabledDate => disabledDate.isSame(date));
+    }
+    return disable.isSame(date);
+  },
+  minDate: (minDate /* moment */, date, dateFormat) => {
+    if (!minDate) return false;
+    if (_.isString(date)) {
+      if (date.length !== dateFormat.length) return false;
+      date = moment(date, dateFormat);
+    }
+    return minDate.isAfter(date);
+  },
+  maxDate: (maxDate /* moment */, date, dateFormat) => {
+    if (!maxDate) return false;
+    if (_.isString(date)) {
+      if (date.length !== dateFormat.length) return false;
+      date = moment(date, dateFormat);
+    }
+    return maxDate.isBefore(date);
+  },
+};
+
+const disableMonthValidators = {
+  minDate: (minDate, curDate, month /* number */) => {
+    if (!minDate) return false;
+    if (curDate.year() < minDate.year()) return true;
+    if (curDate.year() === minDate.year()) {
+      return month < minDate.month();
+    }
+    return false;
+  },
+  maxDate: (maxDate, curDate, month /* number */) => {
+    if (!maxDate) return false;
+    if (curDate.year() > maxDate.year()) return true;
+    if (curDate.year() === maxDate.year()) {
+      return month > maxDate.month();
+    }
+    return false;
+  },
+};
+
+const disableYearValidators = {
+  minDate: (minDate, year /* number */) => {
+    if (!minDate) return false;
+    return year < minDate.year();
+  },
+  maxDate: (maxDate, year /* number */) => {
+    if (!maxDate) return false;
+    return year > maxDate.year();
+  },
+};
+
 const getPrevMode = (mode, lastMode) => {
   if (mode === 'minute') return 'hour';
   if (mode === 'hour') return 'day';
@@ -50,6 +110,15 @@ const parseDate = (value, format, defaultVal) => {
   return moment();
 };
 
+const propToMoment = (val, dateFormat) => {
+  if (!val) return;
+  if (_.isArray(val)) {
+    return val.map(disabledDate => moment(disabledDate, dateFormat));
+  }
+  if (!moment.isMoment(val)) return moment(val, dateFormat);
+  return val;
+};
+
 function withStateInput(WrappedComponent) {
   return class WithStateInput extends React.PureComponent {
 
@@ -81,7 +150,26 @@ function withStateInput(WrappedComponent) {
         PropTypes.string,
         PropTypes.instanceOf(moment),
         PropTypes.instanceOf(Date)
-      ])
+      ]),
+      /* Minimum date that can be selected */
+      minDate: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(moment)
+      ]),
+      /* Maximum date that can be selected */
+      maxDate: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(moment)
+      ]),
+      /* Date or list of dates that are displayed as disabled */
+      disable: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(moment),
+        PropTypes.arrayOf(PropTypes.oneOfType([
+          PropTypes.string,
+          PropTypes.instanceOf(moment),
+        ])),
+      ]),
     }
 
     static defaultProps = {
@@ -99,6 +187,9 @@ function withStateInput(WrappedComponent) {
         dateFormat,
         startMode,
         initialDate,
+        minDate,
+        maxDate,
+        disable,
       } = props;
       const _initialDate = value?
         moment(value, dateFormat) : initialDate?
@@ -112,6 +203,9 @@ function withStateInput(WrappedComponent) {
         mode: startMode, // str
         datesRange: { start: null, end: null } // { start: moment, end: moment }
       };
+      this.minDate = propToMoment(minDate, dateFormat);
+      this.maxDate = propToMoment(maxDate, dateFormat);
+      this.disable = propToMoment(disable, dateFormat);
     }
 
     componentDidMount() {
@@ -342,6 +436,76 @@ function withStateInput(WrappedComponent) {
         && this.props.closable) this.closePopup();
       _.invoke(this.props, 'onChange', event, { ...this.props, value: data.value });
     }
+
+    isDateDisabled = (date/* moment|string|number */) => {
+      const { dateFormat } = this.props;
+
+      /* handle 'day' mode and text input */
+      if (moment.isMoment(date) || _.isString(date)) {
+        return _.some([
+          disableDateValidators.disable(this.disable, date, dateFormat),
+          disableDateValidators.minDate(this.minDate, date, dateFormat),
+          disableDateValidators.maxDate(this.maxDate, date, dateFormat),
+        ]);
+      }
+      /* handle 'month' mode */
+      if (!_.isNil(date) && _.isNumber(date.month)) {
+        const { dateToShow } = this.state;
+        return _.some([
+          disableMonthValidators.minDate(this.minDate, dateToShow, date.month),
+          disableMonthValidators.maxDate(this.maxDate, dateToShow, date.month),
+        ]);
+      }
+      /* handle 'year' mode */
+      if (!_.isNil(date) && _.isNumber(date.year)) {
+        return _.some([
+          disableYearValidators.minDate(this.minDate, date.year),
+          disableYearValidators.maxDate(this.maxDate, date.year),
+        ]);
+      }
+    }
+
+    nextDisabled = (mode/* 'year'|'month'|'day' */, yearsStart) => {
+      const { dateFormat } = this.props;
+      if (mode === 'day') {
+        const nextMonth = this.state.dateToShow.clone();
+        nextMonth.add(1, 'M').startOf('month');
+        return disableDateValidators.maxDate(this.maxDate, nextMonth, dateFormat);
+      }
+      if (mode === 'month') {
+        const nextYear = this.state.dateToShow.clone();
+        nextYear.add(1, 'y').startOf('year');
+        return disableDateValidators.maxDate(this.maxDate, nextYear, dateFormat);
+      }
+      if (mode === 'year' && yearsStart) {
+        const yearsOffset = 12 - (this.state.dateToShow.year() - yearsStart);
+        const next12Years = this.state.dateToShow.clone();
+        next12Years.add(yearsOffset, 'y').startOf('year');
+        return this.isDateDisabled(next12Years);
+      }
+      return false;
+    }
+
+    prevDisabled = (mode/* 'year'|'month'|'day' */, yearsStart) => {
+      const { dateFormat } = this.props;
+      if (mode === 'day') {
+        const prevMonth = this.state.dateToShow.clone();
+        prevMonth.add(-1, 'M').endOf('month');
+        return disableDateValidators.minDate(this.minDate, prevMonth, dateFormat);
+      }
+      if (mode === 'month') {
+        const prevYear = this.state.dateToShow.clone();
+        prevYear.add(-1, 'y').endOf('year');
+        return disableDateValidators.minDate(this.minDate, prevYear, dateFormat);
+      }
+      if (mode === 'year') {
+        const yearsOffset = -(this.state.dateToShow.year() - yearsStart);
+        const prev12Years = this.state.dateToShow.clone();
+        prev12Years.add(yearsOffset, 'y').startOf('year');
+        return this.isDateDisabled(prev12Years);
+      }
+      return false;
+    }
   
     render() {
       const activeDate = parseDate(this.props.value, this.props.dateFormat, this.props.initialDate);
@@ -367,7 +531,10 @@ function withStateInput(WrappedComponent) {
         handleHeaderTimeClick: this.handleHeaderTimeClick,
         onDateChange: this.onDateChange,
         onTimeChange: this.onTimeChange,
-        onDatesRangeChange: this.onDatesRangeChange
+        onDatesRangeChange: this.onDatesRangeChange,
+        isDateDisabled: this.isDateDisabled,
+        nextDisabled: this.nextDisabled,
+        prevDisabled: this.prevDisabled,
       };
       const rest = getUnhandledProps(WithStateInput, this.props);
       return (

@@ -153,6 +153,7 @@ class DateTimeFormInline extends React.Component {
     return (
       <Form>
         <DateInput
+          disable={['17-05-2018', '21-05-2018']}
           inline
           className="example-calendar-input"
           value={this.state.date}
