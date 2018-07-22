@@ -1,4 +1,7 @@
 {
   "presets": ["env", "stage-0", "react"],
-  "plugins": ["transform-react-handled-props"]
+  "plugins": [
+    "transform-react-handled-props",
+    "transform-react-remove-prop-types"
+  ]
 }
