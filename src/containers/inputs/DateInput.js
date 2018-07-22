@@ -13,7 +13,6 @@ import {
 } from '../../lib/COMPONENT_TYPES.js';
 import { DatePickerContent } from '../../components';
 import { CustomPropTypes } from '../../lib/customPropTypes';
-import { isMoment } from '../../../node_modules/moment';
 
 class DateInput extends YearPickerMixin {
 
