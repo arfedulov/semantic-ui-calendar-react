@@ -13,6 +13,12 @@
     "build:example:css": "npx cpy src/css/calendar.css example",
     "postbuild": "npm run build:css && npm run build:ts && npm run build:example:css"
   },
+  "auto-changelog": {
+    "output": "CHANGELOG.md",
+    "template": "keepachangelog",
+    "unreleased": true,
+    "commitLimit": false
+  },
   "keywords": [
     "semantic",
     "react",
@@ -40,6 +46,7 @@
   },
   "devDependencies": {
     "@types/react": "^16.3.16",
+    "auto-changelog": "^1.7.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
