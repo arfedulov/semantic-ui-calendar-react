@@ -221,6 +221,13 @@ function withStateInput(WrappedComponent) {
       if (this.props.value) {
         this.setState({ dateToShow: parseDate(this.props.value, this.props.dateFormat) });
       }
+      if (_.get(WrappedComponent, 'META.name') === DATES_RANGE_INPUT) {
+        if (!this.props.value) {
+          this.setState({
+            datesRange: { start: null, end: null }
+          });
+        }
+      }
     }
 
     closePopup = () => {
