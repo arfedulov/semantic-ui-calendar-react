@@ -5,6 +5,8 @@ My intention was to create something that looks like this https://github.com/mde
 
 Here you can find a live example https://arfedulov.ru/examples/semantic-ui-calendar-react.
 
+> Warning: shows inconsistent behaviour when used with ``semantic-ui-react`` version >= 0.81.0
+
 # installation
 ```
 npm i semantic-ui-calendar-react
