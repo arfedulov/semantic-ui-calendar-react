@@ -100,7 +100,7 @@ function PickerHeader(props) {
             style={cursorStylePrev}
             disabled={prevBtnDisabled}
             className={buttonClasses}
-            onClick={!prevBtnDisabled && onPrevBtnClick}
+            onClick={prevBtnDisabled ? undefined : onPrevBtnClick}
             name="chevron left" />
         </Table.HeaderCell>
         <Table.HeaderCell
@@ -115,7 +115,7 @@ function PickerHeader(props) {
             style={cursorStyleNext}
             disabled={nextBtnDisabled}
             className={buttonClasses}
-            onClick={!nextBtnDisabled && onNextBtnClick}
+            onClick={nextBtnDisabled ? undefined : onNextBtnClick}
             name="chevron right" />
         </Table.HeaderCell>
       </Table.Row>
