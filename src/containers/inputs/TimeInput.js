@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import moment from 'moment';
-import { Table, Input } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 
-import { CustomPopup as Popup } from '..';
+import {
+  CustomPopup as Popup,
+  CustomInput as Input,
+} from '..';
 import { tick, getUnhandledProps } from '../../lib';
 import {
   TIME_INPUT

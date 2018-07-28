@@ -2,9 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
-import { Input, Table } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 
-import { CustomPopup as Popup } from '..';
+import {
+  CustomPopup as Popup,
+  CustomInput as Input
+} from '..';
 import { getUnhandledProps } from '../../lib';
 import {
   MONTH_INPUT

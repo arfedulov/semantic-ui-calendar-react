@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import _ from 'lodash';
-import { Input, Table } from 'semantic-ui-react';
+import { Table } from 'semantic-ui-react';
 
 import {
   CustomPopup as Popup,
+  CustomInput as Input,
   YearPickerMixin
 } from '..';
 import { getUnhandledProps } from '../../lib';
