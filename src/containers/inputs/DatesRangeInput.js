@@ -50,7 +50,8 @@ class DatesRangeInput extends React.Component {
       onChange,
       icon,
       popupPosition,
-      inline
+      inline,
+      hoverable
     } = this.props;
     
     const rest = getUnhandledProps(DatesRangeInput, this.props);
@@ -68,7 +69,8 @@ class DatesRangeInput extends React.Component {
     return (
       <Popup
         position={popupPosition}
-        trigger={inputElement}>
+        trigger={inputElement}
+        hoverable={hoverable}>
         { this.getPicker() }
       </Popup>
     );
@@ -86,12 +88,14 @@ DatesRangeInput.propTypes = {
   /** Character that used to divide dates in string. */
   popupPosition: CustomPropTypes.popupPosition,
   inline: PropTypes.bool,
-  wrapperState: CustomPropTypes.wrapperState
+  wrapperState: CustomPropTypes.wrapperState,
+  hoverable: PropTypes.bool
 };
 
 DatesRangeInput.defaultProps = {
   icon: 'calendar',
-  inline: false
+  inline: false,
+  hoverable: true
 };
 
 const WrappedDatesRangeInput = withStateInput(DatesRangeInput);

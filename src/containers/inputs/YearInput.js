@@ -70,7 +70,8 @@ class YearInput extends YearPickerMixin {
       icon,
       popupPosition,
       inline,
-      value
+      value,
+      hoverable
     } = this.props;
     const rest = getUnhandledProps(YearInput, this.props);
   
@@ -87,7 +88,8 @@ class YearInput extends YearPickerMixin {
     return (
       <Popup
         position={popupPosition}
-        trigger={inputElement}>
+        trigger={inputElement}
+        hoverable={hoverable}>
         { this.getPicker() }
       </Popup>
     );
@@ -106,14 +108,16 @@ YearInput.propTypes = {
   inline: PropTypes.bool,
   value: PropTypes.string,
   /* If true, popup closes after selecting a date/time */
-  closable: PropTypes.bool
+  closable: PropTypes.bool,
+  hoverable: PropTypes.bool
 };
 
 YearInput.defaultProps = {
   icon: 'calendar',
   inline: false,
   value: '',
-  closable: false
+  closable: false,
+  hoverable: true
 };
 
 export default YearInput;

@@ -9,6 +9,9 @@ export interface DateInputProps {
     /** Position for the popup. */
     popupPosition?: 'top left' | 'top right' | 'bottom left' | 'bottom right' | 'right center' | 'left center' | 'top center' | 'bottom center';
 
+    /** Is hoverable */
+    hoverable?: boolean;
+
     /** A date input can be formatted to appear inline in other content. */
     inline?: boolean;
 
