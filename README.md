@@ -135,6 +135,7 @@ moment.locale('ru')
 | ``maxDate`` | {string\|moment} Maximum date that can be selected |
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
+| ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 
 ### TimeInput
 
@@ -145,6 +146,7 @@ moment.locale('ru')
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``closable`` | {bool} If true, popup closes after selecting a time   |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
+| ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 
 ### DateTimeInput
 
@@ -162,6 +164,7 @@ moment.locale('ru')
 | ``maxDate`` | {string\|moment} Maximum date that can be selected |
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
+| ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 
 ### DatesRangeInput
 
@@ -176,6 +179,7 @@ moment.locale('ru')
 | ``maxDate`` | {string\|moment} Maximum date that can be selected |
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
+| ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 
 ### YearInput
 
@@ -186,6 +190,7 @@ moment.locale('ru')
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``closable`` | {bool} If true, popup closes after selecting a year   |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
+| ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 
 ### MonthInput
 
@@ -196,3 +201,4 @@ moment.locale('ru')
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``closable`` | {bool} If true, popup closes after selecting a month   |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
+| ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
