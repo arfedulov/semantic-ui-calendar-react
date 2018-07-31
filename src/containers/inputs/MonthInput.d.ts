@@ -25,6 +25,12 @@ export interface MonthInputProps {
 
     /** Current value. Creates a controlled component. */
     value?: string;
+
+    /** Should popup close after date selection. */
+    closable?: boolean;
+
+    /** A field can have its label next to instead of above it. */
+    inlineLabel?: boolean;
 }
 
 export interface MonthInputData extends MonthInputProps {

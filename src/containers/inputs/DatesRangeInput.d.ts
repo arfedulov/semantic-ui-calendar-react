@@ -22,6 +22,24 @@ export interface DatesRangeInputProps {
     
     /** A dates range input can be formatted to appear inline in other content. */
     inline?: boolean;
+
+    /** Date formatting string. */
+    dateFormat?: string;
+
+    /** Should popup close after date selection. */
+    closable?: boolean;
+
+    /** Open a calendar on this date. */
+    initialDate?: string | Date | Moment;
+
+    /** Maximum date that can be selected. */
+    maxDate?: string | Moment;
+
+    /** Minimum date that can be selected. */
+    minDate?: string | Moment;
+
+    /** A field can have its label next to instead of above it. */
+    inlineLabel?: boolean;
 }
 
 export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {

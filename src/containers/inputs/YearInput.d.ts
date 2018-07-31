@@ -25,6 +25,12 @@ export interface YearInputProps {
 
     /** Current value. Creates a controlled component. */
     value?: string;
+
+    /** Should popup close after date selection. */
+    closable?: boolean;
+
+    /** A field can have its label next to instead of above it. */
+    inlineLabel?: boolean;
 }
 
 export interface YearInputData extends YearInputProps {

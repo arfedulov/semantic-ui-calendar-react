@@ -25,6 +25,33 @@ export interface DateTimeInputProps {
 
     /** Current value. Creates a controlled component. */
     value?: string;
+
+    /** Date formatting string. */
+    dateFormat?: string;
+
+    /** Date and time divider. */
+    divider?: string;
+
+    /** Display mode to start. */
+    startMode?: 'year' | 'month' | 'day';
+
+    /** Should popup close after date selection. */
+    closable?: boolean;
+
+    /** Date to display initially when no date is selected. */
+    initialDate?: string | Date | Moment;
+
+    /** Date or list of dates that are displayed as disabled. */
+    disable?: string | Moment | string[] | Moment[];
+
+    /** Maximum date that can be selected. */
+    maxDate?: string | Moment;
+
+    /** Minimum date that can be selected. */
+    minDate?: string | Moment;
+
+    /** A field can have its label next to instead of above it. */
+    inlineLabel?: boolean;
 }
 
 export interface DateTimeInputData extends DateTimeInputProps {
