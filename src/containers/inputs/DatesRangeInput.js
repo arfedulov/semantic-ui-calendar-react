@@ -51,7 +51,7 @@ class DatesRangeInput extends React.Component {
       icon,
       popupPosition,
       inline,
-      hoverable
+      closeOnMouseLeave
     } = this.props;
     
     const rest = getUnhandledProps(DatesRangeInput, this.props);
@@ -70,7 +70,7 @@ class DatesRangeInput extends React.Component {
       <Popup
         position={popupPosition}
         trigger={inputElement}
-        hoverable={hoverable}>
+        hoverable={closeOnMouseLeave}>
         { this.getPicker() }
       </Popup>
     );
@@ -89,13 +89,13 @@ DatesRangeInput.propTypes = {
   popupPosition: CustomPropTypes.popupPosition,
   inline: PropTypes.bool,
   wrapperState: CustomPropTypes.wrapperState,
-  hoverable: PropTypes.bool
+  closeOnMouseLeave: PropTypes.bool
 };
 
 DatesRangeInput.defaultProps = {
   icon: 'calendar',
   inline: false,
-  hoverable: true
+  closeOnMouseLeave: true
 };
 
 const WrappedDatesRangeInput = withStateInput(DatesRangeInput);

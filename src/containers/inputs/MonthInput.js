@@ -60,7 +60,7 @@ class MonthInput extends React.Component {
       popupPosition,
       inline,
       value,
-      hoverable
+      closeOnMouseLeave
     } = this.props;
     
     const rest = getUnhandledProps(MonthInput, this.props);
@@ -79,7 +79,7 @@ class MonthInput extends React.Component {
       <Popup
         position={popupPosition}
         trigger={inputElement}
-        hoverable={hoverable}>
+        hoverable={closeOnMouseLeave}>
         { this.getPicker() }
       </Popup>
     );
@@ -99,7 +99,7 @@ MonthInput.propTypes = {
   value: PropTypes.string,
   /* If true, popup closes after selecting a date/time */
   closable: PropTypes.bool,
-  hoverable: PropTypes.bool
+  closeOnMouseLeave: PropTypes.bool
 };
 
 MonthInput.defaultProps = {
@@ -107,7 +107,7 @@ MonthInput.defaultProps = {
   inline: false,
   value: '',
   closable: false,
-  hoverable: true
+  closeOnMouseLeave: true
 };
 
 export default MonthInput;

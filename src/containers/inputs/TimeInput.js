@@ -92,7 +92,7 @@ class TimeInput extends React.Component {
       popupPosition,
       inline,
       value,
-      hoverable
+      closeOnMouseLeave
     } = this.props;
     const rest = getUnhandledProps(TimeInput, this.props);
   
@@ -111,7 +111,7 @@ class TimeInput extends React.Component {
         onClose={this.onPopupClose}
         position={popupPosition}
         trigger={inputElement}
-        hoverable={hoverable}>
+        hoverable={closeOnMouseLeave}>
         { this.getPicker() }
       </Popup>
     );
@@ -131,7 +131,7 @@ TimeInput.propTypes = {
   value: PropTypes.string,
   /* If true, popup closes after selecting a date/time */
   closable: PropTypes.bool,
-  hoverable: PropTypes.bool
+  closeOnMouseLeave: PropTypes.bool
 };
 
 TimeInput.defaultProps = {
@@ -139,7 +139,7 @@ TimeInput.defaultProps = {
   inline: false,
   value: '',
   closable: false,
-  hoverable: true
+  closeOnMouseLeave: true
 };
 
 export default TimeInput;

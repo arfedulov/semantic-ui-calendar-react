@@ -97,7 +97,7 @@ class DateTimeInput extends YearPickerMixin {
       popupPosition,
       inline,
       value,
-      hoverable
+      closeOnMouseLeave
     } = this.props;
     const rest = getUnhandledProps(DateTimeInput, this.props);
 
@@ -117,7 +117,7 @@ class DateTimeInput extends YearPickerMixin {
       <Popup
         position={popupPosition}
         trigger={inputElement}
-        hoverable={hoverable}>
+        hoverable={closeOnMouseLeave}>
         { this.getPicker() }
       </Popup>
     );
@@ -136,14 +136,14 @@ DateTimeInput.propTypes = {
   inline: PropTypes.bool,
   value: PropTypes.string,
   wrapperState: CustomPropTypes.wrapperState,
-  hoverable: PropTypes.bool
+  closeOnMouseLeave: PropTypes.bool
 };
 
 DateTimeInput.defaultProps = {
   icon: 'calendar',
   inline: false,
   value: '',
-  hoverable: true
+  closeOnMouseLeave: true
 };
 
 const WrappedDateTimeInput = withStateInput(DateTimeInput);
