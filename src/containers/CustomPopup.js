@@ -1,15 +1,18 @@
 import React from 'react';
 import { Popup } from 'semantic-ui-react';
 
+const popupStyle = {
+  padding: '0',
+};
+
 function CustomPopup(props) {
   return (
     <Popup
       { ...props }
       flowing
-      // id="suirCalendarPopup"
+      style={popupStyle}
       hideOnScroll
-      on="click"
-      className="suir-calendar popup"/>
+      on="click" />
   );
 }
 

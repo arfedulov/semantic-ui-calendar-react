@@ -3,6 +3,11 @@ import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../lib';
 import { Table } from 'semantic-ui-react';
 
+const hoverCellStyles = {
+  outline: '1px solid #85b7d9',
+  cursor: 'pointer',
+};
+
 const HOURS = [
   '00',
   '01',
@@ -30,26 +35,47 @@ const HOURS = [
   '23'
 ];
 
-function HourPickerCell(props) {
-  const { 
-    onClick,
-    hour
-  } = props;
-  const rest = getUnhandledProps(HourPickerCell, props);
+class HourPickerCell extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hoverCell: false,
+    };
+  }
 
-  const onHourClick = (event) => {
+  toggleHoverCell = () => {
+    this.setState((prevState) => {
+      return { hoverCell: !prevState.hoverCell };
+    });
+  }
+
+  onHourClick = (event) => {
+    const { 
+      onClick,
+      hour
+    } = this.props;
     event.stopPropagation();
-    onClick(event, { ...props, value: hour});
-  };
-  return (
-    <Table.Cell
-      { ...rest }
-      onClick={onHourClick}
-      className="suir-calendar time"
-      textAlign="center">
-      { hour + ':00' }
-    </Table.Cell>
-  );
+    onClick(event, { ...this.props, value: hour});
+  }
+
+  render() {
+    const {
+      hour
+    } = this.props;
+    const rest = getUnhandledProps(HourPickerCell, this.props);
+  
+    return (
+      <Table.Cell
+        { ...rest }
+        onClick={this.onHourClick}
+        style={this.state.hoverCell? hoverCellStyles : undefined}
+        onMouseOver={this.toggleHoverCell}
+        onMouseLeave={this.toggleHoverCell}
+        textAlign="center">
+        { hour + ':00' }
+      </Table.Cell>
+    );
+  }
 }
 
 function HourPicker(props) {

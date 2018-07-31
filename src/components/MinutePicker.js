@@ -3,6 +3,18 @@ import PropTypes from 'prop-types';
 import { Table } from 'semantic-ui-react';
 import { getUnhandledProps } from '../lib';
 
+const cellStyle = {
+  width: '33.33333%',
+  minWidth: '8em'
+};
+
+const hoverCellStyles = {
+  width: '33.33333%',
+  minWidth: '8em',
+  outline: '1px solid #85b7d9',
+  cursor: 'pointer',
+};
+
 const MINUTES = [
   '00',
   '05',
@@ -18,27 +30,48 @@ const MINUTES = [
   '55'
 ];
 
-function MinutePickerCell(props) {
-  const { 
-    onClick,
-    hour,
-    minute
-  } = props;
-  const rest = getUnhandledProps(MinutePickerCell, props);
+class MinutePickerCell extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hoverCell: false,
+    };
+  }
 
-  const onMinuteClick = (event) => {
+  toggleHoverCell = () => {
+    this.setState((prevState) => {
+      return { hoverCell: !prevState.hoverCell };
+    });
+  }
+
+  onMinuteClick = (event) => {
+    const { 
+      onClick,
+      minute
+    } = this.props;
     event.stopPropagation();
-    onClick(event, { ...props, value: minute});
-  };
-  return (
-    <Table.Cell
-      { ...rest }
-      onClick={onMinuteClick}
-      className="suir-calendar time"
-      textAlign="center">
-      { hour + ':' + minute }
-    </Table.Cell>
-  );
+    onClick(event, { ...this.props, value: minute});
+  }
+
+  render() {
+    const {
+      hour,
+      minute
+    } = this.props;
+    const rest = getUnhandledProps(MinutePickerCell, this.props);
+  
+    return (
+      <Table.Cell
+        { ...rest }
+        onClick={this.onMinuteClick}
+        style={this.state.hoverCell? hoverCellStyles : cellStyle}
+        onMouseOver={this.toggleHoverCell}
+        onMouseLeave={this.toggleHoverCell}
+        textAlign="center">
+        { hour + ':' + minute }
+      </Table.Cell>
+    );
+  }
 }
 
 function MinutePicker(props) {
@@ -48,13 +81,8 @@ function MinutePicker(props) {
     activeMinute
   } = props;
 
-  const cellStyle = {
-    width: '33.33333%',
-    minWidth: '8em'
-  };
   const minutes = MINUTES.map((minute) => (
     <MinutePickerCell
-      style={cellStyle}
       onClick={onMinuteClick}
       active={minute === activeMinute}
       hour={hour}

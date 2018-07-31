@@ -7,6 +7,11 @@ import _ from 'lodash';
 
 import { getWeekDays, getUnhandledProps } from '../lib';
 
+const cellStyles = bottomBorder => ({
+  border: 'none',
+  borderBottom: bottomBorder? '1px solid rgba(34,36,38,.1)' : 'none',
+});
+
 function PickerHeader(props) {
   const {
     onNextBtnClick,
@@ -28,23 +33,12 @@ function PickerHeader(props) {
     return getWeekDays().map((weekDay) => (
       <Table.HeaderCell
         key={weekDay}
-        className="suir-calendar week-day"
+        style={cellStyles(true)}
         colSpan="1">
         {weekDay}
       </Table.HeaderCell>
     ));
   };
-
-  const cellClasses = ClassNames(
-    'suir-calendar',
-    'cell',
-    showWeeks? '' : 'time-picker-header'
-  );
-  
-  const buttonClasses = ClassNames(
-    'suir-calendar',
-    'button'
-  );
 
   const getRangeRow = () => {
     const getContent = () => {
@@ -59,7 +53,7 @@ function PickerHeader(props) {
     };
     return (
       <Table.Row>
-        <Table.HeaderCell className="suir-calendar cell" colSpan="7">
+        <Table.HeaderCell style={cellStyles()} colSpan="7">
           { getContent() }
         </Table.HeaderCell>
       </Table.Row>
@@ -94,27 +88,25 @@ function PickerHeader(props) {
     <Table.Header { ...rest }>
       { activeDatesRange && getRangeRow() }
       <Table.Row>
-        <Table.HeaderCell className={cellClasses} colSpan="1">
+        <Table.HeaderCell style={cellStyles(!showWeeks)} colSpan="1">
           <Icon
             fitted
             style={cursorStylePrev}
             disabled={prevBtnDisabled}
-            className={buttonClasses}
             onClick={prevBtnDisabled ? undefined : onPrevBtnClick}
             name="chevron left" />
         </Table.HeaderCell>
         <Table.HeaderCell
           onClick={onDateClick}
-          className={cellClasses}
+          style={cellStyles(!showWeeks)}
           colSpan={(parseInt(width) - 2).toString()}>
           <span style={headerCellStyle}>{ getContent() }</span>
         </Table.HeaderCell>
-        <Table.HeaderCell className={cellClasses} colSpan="1">
+        <Table.HeaderCell style={cellStyles(!showWeeks)} colSpan="1">
           <Icon
             fitted
             style={cursorStyleNext}
             disabled={nextBtnDisabled}
-            className={buttonClasses}
             onClick={nextBtnDisabled ? undefined : onNextBtnClick}
             name="chevron right" />
         </Table.HeaderCell>

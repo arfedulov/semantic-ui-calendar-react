@@ -4,6 +4,18 @@ import { getUnhandledProps } from '../lib';
 import { Table } from 'semantic-ui-react';
 import _ from 'lodash';
 
+const cellStyle = {
+  width: '33.333333%',
+  minWidth: '7em'
+};
+
+const hoverCellStyles = {
+  width: '33.333333%',
+  minWidth: '7em',
+  outline: '1px solid #85b7d9',
+  cursor: 'pointer',
+};
+
 /** Return array of 12 years as strings 'YYYY'.
  * @param {number} yearsStart */
 const getYears = (yearsStart) => {
@@ -11,27 +23,44 @@ const getYears = (yearsStart) => {
   return _.fill(years, yearsStart).map((year, i) => (year + i).toString());
 };
 
-function YearPickerCell(props) {
-  const { 
-    onClick,
-    year
-  } = props;
-  const rest = getUnhandledProps(YearPickerCell, props);
+class YearPickerCell extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hoverCell: false,
+    };
+  }
 
-  const onYearClick = (event) => {
+  toggleHoverCell = () => {
+    this.setState((prevState) => {
+      return { hoverCell: !prevState.hoverCell };
+    });
+  }
+
+  onYearClick = (event) => {
+    const { 
+      onClick,
+      year,
+    } = this.props;
     event.stopPropagation();
-    onClick(event, { ...props, value: year});
-  };
-   
-  return (
-    <Table.Cell
-      { ...rest }
-      onClick={onYearClick}
-      className="suir-calendar date"
-      textAlign="center">
-      { year }
-    </Table.Cell>
-  );
+    onClick(event, { ...this.props, value: year});
+  }
+
+  render() {
+    const rest = getUnhandledProps(YearPickerCell, this.props);
+     
+    return (
+      <Table.Cell
+        { ...rest }
+        onClick={this.onYearClick}
+        style={this.state.hoverCell? hoverCellStyles : cellStyle}
+        onMouseOver={this.toggleHoverCell}
+        onMouseLeave={this.toggleHoverCell}
+        textAlign="center">
+        { this.props.year }
+      </Table.Cell>
+    );
+  }
 }
 
 function YearPickerComponent(props) {
@@ -42,16 +71,11 @@ function YearPickerComponent(props) {
     isDateDisabled,
   } = props;
 
-  const cellStyle = {
-    width: '33.333333%',
-    minWidth: '7em'
-  };
   const years = getYears(yearsStart).map((year) => {
     const yearDisabled = _.isFunction(isDateDisabled) && isDateDisabled({ year: parseInt(year) });
     return (
       <YearPickerCell
         disabled={yearDisabled}
-        style={cellStyle}
         onClick={onYearClick}
         active={!yearDisabled && year === activeYear.toString()}
         year={year}

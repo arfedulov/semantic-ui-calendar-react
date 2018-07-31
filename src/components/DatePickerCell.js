@@ -1,34 +1,50 @@
 import React from 'react';
 import { Table } from 'semantic-ui-react';
-import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import { getUnhandledProps } from '../lib';
 import moment from 'moment';
 
-function DatePickerCell(props) {
-  const {
-    className,
-    onClick,
-    data
-  } = props;
-  const classes = ClassNames(
-    className,
-    'suir-calendar',
-    'date'
-  );
-  const rest = getUnhandledProps(DatePickerCell, props);
-  const onCellClick = (event) => {
+const hoverCellStyles = {
+  outline: '1px solid #85b7d9',
+  cursor: 'pointer',
+};
+
+class DatePickerCell extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hoverCell: false,
+    };
+  }
+
+  toggleHoverCell = () => {
+    this.setState((prevState) => {
+      return { hoverCell: !prevState.hoverCell };
+    });
+  }
+
+  onCellClick = (event) => {
+    const {
+      onClick,
+      data
+    } = this.props;
     event.stopPropagation();
-    onClick(event, { ...props, value: data});
-  };
-  return (
-    <Table.Cell
-      { ...rest }
-      onClick={onCellClick}
-      className={classes}>
-      { data.format('D') }
-    </Table.Cell>
-  );
+    onClick(event, { ...this.props, value: data});
+  }
+
+  render() {
+    const rest = getUnhandledProps(DatePickerCell, this.props);
+    return (
+      <Table.Cell
+        { ...rest }
+        style={this.state.hoverCell? hoverCellStyles : {}}
+        onMouseOver={this.toggleHoverCell}
+        onMouseLeave={this.toggleHoverCell}
+        onClick={this.onCellClick}>
+        { this.props.data.format('D') }
+      </Table.Cell>
+    );
+  }
 }
 
 DatePickerCell.propTypes = {

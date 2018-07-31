@@ -4,27 +4,58 @@ import { getUnhandledProps, getMonths } from '../lib';
 import { Table } from 'semantic-ui-react';
 import _ from 'lodash';
 
-function MonthPickerCell(props) {
-  const { 
-    onClick,
-    month
-  } = props;
-  const rest = getUnhandledProps(MonthPickerCell, props);
+const cellStyle = {
+  width: '33.333333%',
+  minWidth: '7em'
+};
 
-  const onMonthClick = (event) => {
+const hoverCellStyles = {
+  width: '33.333333%',
+  minWidth: '7em',
+  outline: '1px solid #85b7d9',
+  cursor: 'pointer',
+};
+
+class MonthPickerCell extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      hoverCell: false,
+    };
+  }
+  onMonthClick = (event) => {
+    const { 
+      onClick,
+      month
+    } = this.props;
     event.stopPropagation();
-    onClick(event, { ...props, value: month});
-  };
-   
-  return (
-    <Table.Cell
-      { ...rest }
-      onClick={onMonthClick}
-      className="suir-calendar date"
-      textAlign="center">
-      { month }
-    </Table.Cell>
-  );
+    onClick(event, { ...this.props, value: month});
+  }
+
+  toggleHoverCell = () => {
+    this.setState((prevState) => {
+      return { hoverCell: !prevState.hoverCell };
+    });
+  }
+
+  render() {
+    const { 
+      hoverCell,
+    } = this.state;
+    const rest = getUnhandledProps(MonthPickerCell, this.props);
+     
+    return (
+      <Table.Cell
+        { ...rest }
+        onClick={this.onMonthClick}
+        style={hoverCell? hoverCellStyles : cellStyle}
+        onMouseOver={this.toggleHoverCell}
+        onMouseLeave={this.toggleHoverCell}
+        textAlign="center">
+        { this.props.month }
+      </Table.Cell>
+    );
+  }
 }
 
 function MonthPickerComponent(props) {
@@ -34,16 +65,11 @@ function MonthPickerComponent(props) {
     isDateDisabled,
   } = props;
 
-  const cellStyle = {
-    width: '33.333333%',
-    minWidth: '7em'
-  };
   const months = getMonths().map((month, monthIndex) => {
     const monthDisabled = _.isFunction(isDateDisabled) && isDateDisabled({ month: monthIndex });
     return (
       <MonthPickerCell
         disabled={monthDisabled}
-        style={cellStyle}
         onClick={onMonthClick}
         active={!monthDisabled && month === activeMonth.toString()}
         month={month}
@@ -61,7 +87,7 @@ function MonthPickerComponent(props) {
 MonthPickerCell.propTypes = {
   /** (event, data) => {} */
   onClick: PropTypes.func.isRequired,
-  month: PropTypes.string.isRequired
+  month: PropTypes.string.isRequired,
 };
 
 MonthPickerComponent.propTypes = {
