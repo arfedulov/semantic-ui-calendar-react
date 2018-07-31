@@ -17,6 +17,9 @@ export interface DateTimeInputProps {
     /** Position for the popup. */
     popupPosition?: 'top left' | 'top right' | 'bottom left' | 'bottom right' | 'right center' | 'left center' | 'top center' | 'bottom center';
 
+    /** Should close when cursor leaves calendar popup */
+    closeOnMouseLeave?: boolean;
+    
     /** A date time input can be formatted to appear inline in other content. */
     inline?: boolean;
 

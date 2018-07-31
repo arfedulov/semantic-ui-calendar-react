@@ -9,8 +9,7 @@ function CustomPopup(props) {
       // id="suirCalendarPopup"
       hideOnScroll
       on="click"
-      className="suir-calendar popup"
-      hoverable />
+      className="suir-calendar popup"/>
   );
 }
 
