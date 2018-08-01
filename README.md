@@ -14,6 +14,12 @@ Here you can find a live example https://arfedulov.ru/examples/semantic-ui-calen
 npm i semantic-ui-calendar-react
 ```
 
+:warning: With version < 0.8.0 you also need to to add css in your html:
+
+```html
+<link rel="stylesheet" type="text/css" href="node_modules/semantic-ui-calendar-react/dist/css/calendar.min.css">
+```
+
 # usage
 Let's create a form that needs date-related input fields.
 
