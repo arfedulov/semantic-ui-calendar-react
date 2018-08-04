@@ -1,5 +1,7 @@
 :tada: Starting with version 0.8.0 it's css free.
 
+:warning: not fully compatible with ``semantic-ui-react`` version >= 0.81.0
+
 # semantic-ui-calendar-react
 Datepicker react component based on semantic-ui-react components
 
@@ -7,17 +9,9 @@ My intention was to create something that looks like this https://github.com/mde
 
 Here you can find a live example https://arfedulov.ru/examples/semantic-ui-calendar-react.
 
-> Warning: shows inconsistent behaviour when used with ``semantic-ui-react`` version >= 0.81.0
-
 # installation
 ```
 npm i semantic-ui-calendar-react
-```
-
-:warning: With version < 0.8.0 you also need to to add css in your html:
-
-```html
-<link rel="stylesheet" type="text/css" href="node_modules/semantic-ui-calendar-react/dist/css/calendar.min.css">
 ```
 
 # usage

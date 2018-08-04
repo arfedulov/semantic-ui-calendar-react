@@ -1,6 +1,5 @@
 import React from 'react';
 import { Table, Icon } from 'semantic-ui-react';
-import ClassNames from 'classnames';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import _ from 'lodash';
