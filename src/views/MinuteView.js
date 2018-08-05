@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { Table } from 'semantic-ui-react';
 
-import Calendar from './Calendar';
+import Header from './CalendarHeader/Header';
+import Body from './CalendarBody/Body';
 
 function MinuteView(props) {
-  return <Calendar />;
+  return (
+    <Table
+      unstackable
+      celled
+      textAlign="center">
+      <Header />
+      <Body />
+    </Table>
+  );
 }
 
 /** One of 12 five-minutes intervals. */

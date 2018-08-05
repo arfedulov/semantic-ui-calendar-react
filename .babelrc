@@ -1,7 +1,17 @@
 {
-  "presets": ["env", "stage-0", "react"],
-  "plugins": [
-    "transform-react-handled-props",
-    "transform-react-remove-prop-types"
-  ]
+  "env": {
+    "production": {
+      "presets": ["env", "stage-0", "react"],
+      "plugins": [
+        "transform-react-handled-props",
+        "transform-react-remove-prop-types"
+      ]
+    },
+    "development": {
+      "presets": ["env", "stage-0", "react"],
+      "plugins": [
+        "transform-react-handled-props"
+      ]
+    }
+  }
 }

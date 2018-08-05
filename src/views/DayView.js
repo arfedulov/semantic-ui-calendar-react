@@ -1,11 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import { Table } from 'semantic-ui-react';
 
-import Calendar from './Calendar';
+import Header from './CalendarHeader/Header';
+import Body from './CalendarBody/Body';
 
 function DayView(props) {
-  return <Calendar />;
+  return (
+    <Table
+      unstackable
+      celled
+      textAlign="center">
+      <Header />
+      <Body />
+    </Table>
+  );
 }
 
 export const DayPositionType = PropTypes.oneOf(
