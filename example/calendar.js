@@ -1,15 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
-import {
-  DateInput,
-  TimeInput,
-  DateTimeInput,
-  DatesRangeInput,
-  YearInput,
-  MonthInput
-} from '../src';
 import moment from 'moment';
+
+import YearInput from '../src/inputs/YearInput';
+import MonthInput from '../src/inputs/MonthInput';
+import DateInput from '../src/inputs/DateInput';
+import DateTimeInput from '../src/inputs/DateTimeInput';
+import DatesRangeInput from '../src/inputs/DatesRangeInput';
+import TimeInput from '../src/inputs/TimeInput';
 
 moment.locale('en');
 

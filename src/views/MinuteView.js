@@ -1,32 +1,50 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
-import { Table } from 'semantic-ui-react';
 
+import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
 
+const MINUTE_CALENDAR_ROW_WIDTH = '3';
+
 function MinuteView(props) {
+  const {
+    minutes,
+    hasHeader,
+    onMinuteClick,
+    onNextPageBtnClick,
+    onPrevPageBtnClick,
+    hasNextPage,
+    hasPrevPage,
+    onHeaderClick,
+    active,
+    currentDate,
+  } = props;
+  const headerProps = {
+    onHeaderClick,
+    onNextPageBtnClick,
+    onPrevPageBtnClick,
+    hasNextPage,
+    hasPrevPage,
+    title: currentDate,
+    width: MINUTE_CALENDAR_ROW_WIDTH,
+    displayWeeks: false,
+  };
   return (
-    <Table
-      unstackable
-      celled
-      textAlign="center">
-      <Header />
-      <Body />
-    </Table>
+    <Calendar>
+      { hasHeader && <Header { ...headerProps } /> }
+      <Body
+        width={MINUTE_CALENDAR_ROW_WIDTH}
+        data={minutes}
+        onCellClick={onMinuteClick}
+        active={active} />
+    </Calendar>
   );
 }
 
-/** One of 12 five-minutes intervals. */
-const MinutesIntervalType = PropTypes.oneOf(
-  [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-    10, 11,
-  ]
-);
-
 MinuteView.propTypes = {
+  /** Array of minutes to fill a calendar with. */
+  minutes: PropTypes.arrayOf(PropTypes.string).isRequired,
   /** Wether to display header or not. */
   hasHeader: PropTypes.bool.isRequired,
   /** Called after click on minute. */
@@ -41,10 +59,10 @@ MinuteView.propTypes = {
   hasNextPage: PropTypes.bool,
   /** Called after click on calendar header. */
   onHeaderClick: PropTypes.func,
-  /** Minutes interval to display as active. */
-  active: MinutesIntervalType,
-  /** A Moment that is used to display date in calendar header. */
-  currentDate: PropTypes.instanceOf(moment),
+  /** Minute index to display as active. */
+  active: PropTypes.number,
+  /** A date that is displayed in calendar header. */
+  currentDate: PropTypes.string,
 };
 
 export default MinuteView;

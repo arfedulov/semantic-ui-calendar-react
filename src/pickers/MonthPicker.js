@@ -1,0 +1,163 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import moment from 'moment';
+import _ from 'lodash';
+
+import MonthView from '../views/MonthView';
+import { getUnhandledProps } from '../lib';
+
+const MONTHS_IN_YEAR = 12;
+
+class MonthPicker extends React.Component {
+  /*
+    Note:
+      use it like this <MonthPicker key={someInputValue} />
+      to make react create new instance when input value changes
+  */
+  constructor(props) {
+    super(props);
+    this.state = {
+      /* moment instance */
+      date: props.initializeWith.clone(),
+    };
+  }
+
+  buildMonths() {
+    /*
+      Return array of months (strings) like ['Aug', 'Sep', ...]
+      that used to populate calendar's page.
+    */
+    return moment.monthsShort();
+  }
+
+  getActiveMonthPosition() {
+    /*
+      Return position of a month that should be displayed as active
+      (position in array returned by `this.buildMonths`).
+    */
+    if (!_.isNil(this.props.value)) {
+      if (this.props.value.year() === this.state.date.year()) {
+        return this.props.value.month();
+      }
+    }
+  }
+
+  getDisabledMonthsPositions() {
+    /*
+      Return position numbers of months that should be displayed as disabled
+      (position in array returned by `this.buildMonths`).
+    */
+    let disabled = [];
+    if (_.isArray(this.props.disable)) {
+      disabled = disabled.concat(
+        this.props.disable
+          .filter(monthMoment => monthMoment.year() === this.state.date.year())
+          .map(monthMoment => monthMoment.month())
+      );
+    }
+    if (!_.isNil(this.props.maxDate)) {
+      if (this.props.maxDate.year() === this.state.date.year()) {
+        disabled = disabled.concat(
+          _.range(this.props.maxDate.month() + 1, MONTHS_IN_YEAR)
+        );
+      }
+      if (this.props.maxDate.year() < this.state.date.year()) {
+        disabled = _.range(0, MONTHS_IN_YEAR);
+      }
+    }
+    if (!_.isNil(this.props.minDate)) {
+      if (this.props.minDate.year() === this.state.date.year()) {
+        disabled = disabled.concat(
+          _.range(0, this.props.minDate.month())
+        );
+      }
+      if (this.props.minDate.year() > this.state.date.year()) {
+        disabled = _.range(0, MONTHS_IN_YEAR);
+      }
+    }
+    if (disabled.length > 0) {
+      return _.uniq(disabled);
+    }
+  }
+
+  isNextPageAvailable() {
+    const {
+      maxDate,
+    } = this.props;
+    if (_.isNil(maxDate)) return true;
+    if (this.state.date.year() >= maxDate.year()) return false;
+    return true;
+  }
+
+  isPrevPageAvailable() {
+    const {
+      minDate,
+    } = this.props;
+    if (_.isNil(minDate)) return true;
+    if (this.state.date.year() <= minDate.year()) return false;
+    return true;
+  }
+
+  getCurrentYear() {
+    /* Return current year(string) to display in calendar header. */
+    return this.state.date.year().toString();
+  }
+
+  handleChange = (e, { value }) => {
+    const year = parseInt(this.getCurrentYear());
+    const month = this.buildMonths().indexOf(value);
+    _.invoke(this.props, 'onChange', e, { ...this.props, value: { year, month } });
+  }
+
+  switchToNextPage = () => {
+    this.setState(({ date }) => {
+      const nextDate = date.clone();
+      nextDate.add(1, 'year');
+      return { date: nextDate };
+    });
+  }
+
+  switchToPrevPage = () => {
+    this.setState(({ date }) => {
+      const prevDate = date.clone();
+      prevDate.subtract(1, 'year');
+      return { date: prevDate };
+    });
+  }
+
+  render() {
+    const rest = getUnhandledProps(MonthPicker, this.props);
+    return (
+      <MonthView
+        { ...rest }
+        months={this.buildMonths()}
+        onMonthClick={this.handleChange}
+        onNextPageBtnClick={this.switchToNextPage}
+        onPrevPageBtnClick={this.switchToPrevPage}
+        hasPrevPage={this.isPrevPageAvailable()}
+        hasNextPage={this.isNextPageAvailable()}
+        disabled={this.getDisabledMonthsPositions()}
+        active={this.getActiveMonthPosition()}
+        currentYear={this.getCurrentYear()} />
+    );
+  }
+}
+
+MonthPicker.propTypes = {
+  /** Called after month is selected. */
+  onChange: PropTypes.func.isRequired,
+  /** A value for initializing month picker's state. */
+  initializeWith: PropTypes.instanceOf(moment).isRequired,
+  /** Currently selected month. */
+  value: PropTypes.instanceOf(moment),
+  /** Array of disabled months. */
+  disable: PropTypes.arrayOf(
+    PropTypes.instanceOf(moment)
+  ),
+  /** Minimal month that could be selected. */
+  minDate: PropTypes.instanceOf(moment),
+  /** Maximal month that could be selected. */
+  maxDate: PropTypes.instanceOf(moment),
+};
+
+export default MonthPicker;

@@ -1,27 +1,52 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table } from 'semantic-ui-react';
 
+import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
 
+const MONTH_CALENDAR_ROW_WIDTH = '3';
+
 function MonthView(props) {
+  const {
+    months,
+    hasHeader,
+    onMonthClick,
+    onNextPageBtnClick,
+    onPrevPageBtnClick,
+    hasPrevPage,
+    hasNextPage,
+    onHeaderClick,
+    disabled,
+    active,
+    currentYear,
+  } = props;
+  const headerProps = {
+    onNextPageBtnClick,
+    onPrevPageBtnClick,
+    hasPrevPage,
+    hasNextPage,
+    onHeaderClick,
+    title: currentYear,
+    displayWeeks: false,
+    width: MONTH_CALENDAR_ROW_WIDTH,
+  };
   return (
-    <Table
-      unstackable
-      celled
-      textAlign="center">
-      <Header />
-      <Body />
-    </Table>
+    <Calendar>
+      { hasHeader && <Header { ...headerProps } /> }
+      <Body
+        width={MONTH_CALENDAR_ROW_WIDTH}
+        data={months}
+        onCellClick={onMonthClick}
+        active={active}
+        disabled={disabled} />
+    </Calendar>
   );
 }
 
-const MonthType = PropTypes.oneOf(
-  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-);
-
 MonthView.propTypes = {
+  /** Array of months to fill a calendar with. */
+  months: PropTypes.arrayOf(PropTypes.string).isRequired,
   /** Wether to display header or not. */
   hasHeader: PropTypes.bool.isRequired,
   /** Called after click on month. */
@@ -36,12 +61,12 @@ MonthView.propTypes = {
   hasNextPage: PropTypes.bool,
   /** Called after click on calendar header. */
   onHeaderClick: PropTypes.func,
-  /** An array of months to display as disabled. */
-  disabled: PropTypes.arrayOf(MonthType),
-  /** A month to display as active. */
-  active: MonthType,
+  /** An array of month indexes to display as disabled. */
+  disabled: PropTypes.arrayOf(PropTypes.number),
+  /** Index of a month that should be displayed as active. */
+  active: PropTypes.number,
   /** A year to display in header. */
-  currentYear: PropTypes.number,
+  currentYear: PropTypes.string,
 };
 
 export default MonthView;

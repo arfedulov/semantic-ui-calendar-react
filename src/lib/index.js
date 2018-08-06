@@ -1,1 +1,1 @@
-export * from './utils.js';
+export { default as getUnhandledProps } from './getUnhandledProps';
