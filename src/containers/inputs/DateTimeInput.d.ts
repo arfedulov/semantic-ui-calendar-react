@@ -1,64 +1,75 @@
 import * as React from 'react';
+import { Moment } from 'moment';
 
 export interface DateTimeInputProps {
-    [key: string]: any;
+  [key: string]: any;
 
-    /**
-     * Called when the user attempts to change the value.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
-    onChange: (event: React.SyntheticEvent<HTMLInputElement>, data: DateTimeInputData) => void;
+  /**
+   * Called when the user attempts to change the value.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onChange: (
+    event: React.SyntheticEvent<HTMLInputElement>,
+    data: DateTimeInputOnChangeData
+  ) => void;
 
-    /** Shorthand for Icon. */
-    icon?: any;
+  /** Shorthand for Icon. */
+  icon?: any;
 
-    /** Position for the popup. */
-    popupPosition?: 'top left' | 'top right' | 'bottom left' | 'bottom right' | 'right center' | 'left center' | 'top center' | 'bottom center';
+  /** Position for the popup. */
+  popupPosition?:
+    | 'top left'
+    | 'top right'
+    | 'bottom left'
+    | 'bottom right'
+    | 'right center'
+    | 'left center'
+    | 'top center'
+    | 'bottom center';
 
-    /** Should close when cursor leaves calendar popup */
-    closeOnMouseLeave?: boolean;
-    
-    /** A date time input can be formatted to appear inline in other content. */
-    inline?: boolean;
+  /** Should close when cursor leaves calendar popup */
+  closeOnMouseLeave?: boolean;
 
-    /** Current value. Creates a controlled component. */
-    value?: string;
+  /** A date time input can be formatted to appear inline in other content. */
+  inline?: boolean;
 
-    /** Date formatting string. */
-    dateFormat?: string;
+  /** Current value. Creates a controlled component. */
+  value?: string;
 
-    /** Date and time divider. */
-    divider?: string;
+  /** Date formatting string. */
+  dateFormat?: string;
 
-    /** Display mode to start. */
-    startMode?: 'year' | 'month' | 'day';
+  /** Date and time divider. */
+  divider?: string;
 
-    /** Should popup close after date selection. */
-    closable?: boolean;
+  /** Display mode to start. */
+  startMode?: 'year' | 'month' | 'day';
 
-    /** Date to display initially when no date is selected. */
-    initialDate?: string | Date | Moment;
+  /** Should popup close after date selection. */
+  closable?: boolean;
 
-    /** Date or list of dates that are displayed as disabled. */
-    disable?: string | Moment | string[] | Moment[];
+  /** Date to display initially when no date is selected. */
+  initialDate?: string | Date | Moment;
 
-    /** Maximum date that can be selected. */
-    maxDate?: string | Moment;
+  /** Date or list of dates that are displayed as disabled. */
+  disable?: string | Moment | string[] | Moment[];
 
-    /** Minimum date that can be selected. */
-    minDate?: string | Moment;
+  /** Maximum date that can be selected. */
+  maxDate?: string | Moment;
 
-    /** A field can have its label next to instead of above it. */
-    inlineLabel?: boolean;
+  /** Minimum date that can be selected. */
+  minDate?: string | Moment;
+
+  /** A field can have its label next to instead of above it. */
+  inlineLabel?: boolean;
 }
 
-export interface DateTimeInputData extends DateTimeInputProps {
-    value: string;
+export interface DateTimeInputOnChangeData extends DateTimeInputProps {
+  value: string;
 }
 
-declare class DateTimeInput extends React.Component<DateTimeInputProps, {}> {
-}
+declare class DateTimeInput extends React.Component<DateTimeInputProps, {}> {}
 
 export default DateTimeInput;
