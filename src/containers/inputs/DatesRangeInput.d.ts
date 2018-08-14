@@ -1,52 +1,66 @@
 import * as React from 'react';
+import { Moment } from 'moment';
 
 export interface DatesRangeInputProps {
-    [key: string]: any;
+  [key: string]: any;
 
-    /**
-     * Called when the user attempts to change the value.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
-    onChange: (event: React.SyntheticEvent<HTMLInputElement>, data: DatesRangeInputOnChangeData) => void;
+  /**
+   * Called when the user attempts to change the value.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onChange: (
+    event: React.SyntheticEvent<HTMLInputElement>,
+    data: DatesRangeInputOnChangeData
+  ) => void;
 
-    /** Shorthand for Icon. */
-    icon?: any;
+  /** Shorthand for Icon. */
+  icon?: any;
 
-    /** Position for the popup. */
-    popupPosition?: 'top left' | 'top right' | 'bottom left' | 'bottom right' | 'right center' | 'left center' | 'top center' | 'bottom center';
+  /** Position for the popup. */
+  popupPosition?:
+    | 'top left'
+    | 'top right'
+    | 'bottom left'
+    | 'bottom right'
+    | 'right center'
+    | 'left center'
+    | 'top center'
+    | 'bottom center';
 
-    /** Should close when cursor leaves calendar popup */
-    closeOnMouseLeave?: boolean;
-    
-    /** A dates range input can be formatted to appear inline in other content. */
-    inline?: boolean;
+  /** Should close when cursor leaves calendar popup */
+  closeOnMouseLeave?: boolean;
 
-    /** Date formatting string. */
-    dateFormat?: string;
+  /** A dates range input can be formatted to appear inline in other content. */
+  inline?: boolean;
 
-    /** Should popup close after date selection. */
-    closable?: boolean;
+  /** Date formatting string. */
+  dateFormat?: string;
 
-    /** Open a calendar on this date. */
-    initialDate?: string | Date | Moment;
+  /** Should popup close after date selection. */
+  closable?: boolean;
 
-    /** Maximum date that can be selected. */
-    maxDate?: string | Moment;
+  /** Open a calendar on this date. */
+  initialDate?: string | Date | Moment;
 
-    /** Minimum date that can be selected. */
-    minDate?: string | Moment;
+  /** Maximum date that can be selected. */
+  maxDate?: string | Moment;
 
-    /** A field can have its label next to instead of above it. */
-    inlineLabel?: boolean;
+  /** Minimum date that can be selected. */
+  minDate?: string | Moment;
+
+  /** A field can have its label next to instead of above it. */
+  inlineLabel?: boolean;
 }
 
 export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
-    value: string;
+  value: string;
 }
 
-declare class DatesRangeInput extends React.Component<DatesRangeInputProps, {}> {
-}
+declare class DatesRangeInput extends React.Component<
+  DatesRangeInputProps,
+  {}
+> {}
 
 export default DatesRangeInput;
