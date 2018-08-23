@@ -44,7 +44,7 @@ export interface YearInputProps {
   inlineLabel?: boolean;
 }
 
-export interface YearInpuOnChangeData extends YearInputProps {
+export interface YearInputOnChangeData extends YearInputProps {
   value: string;
 }
 
