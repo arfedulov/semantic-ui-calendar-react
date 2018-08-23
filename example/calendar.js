@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
 import moment from 'moment';
 
-import YearInput from '../src/inputs/YearInput';
-import MonthInput from '../src/inputs/MonthInput';
-import DateInput from '../src/inputs/DateInput';
-import DateTimeInput from '../src/inputs/DateTimeInput';
-import DatesRangeInput from '../src/inputs/DatesRangeInput';
-import TimeInput from '../src/inputs/TimeInput';
+import {
+  YearInput,
+  MonthInput,
+  DateInput,
+  DatesRangeInput,
+  TimeInput,
+  DateTimeInput,
+} from '../src';
 
 moment.locale('en');
 
@@ -49,6 +51,7 @@ class DateTimeForm extends React.Component {
       <Form>
         <DateInput
           placeholder="Date"
+          popupPosition="bottom right"
           className="example-calendar-input"
           name="date"
           value={this.state.date}
@@ -57,7 +60,7 @@ class DateTimeForm extends React.Component {
         <br />
         <DateInput
           startMode="year"
-          popupPosition="bottom left"
+          popupPosition="bottom right"
           placeholder="Date startMode year"
           className="example-calendar-input"
           name="dateStartYear"
@@ -67,6 +70,7 @@ class DateTimeForm extends React.Component {
         <br />
         <TimeInput
           placeholder="Time"
+          popupPosition="bottom right"
           className="example-calendar-input"
           name="time"
           value={this.state.time}
@@ -76,6 +80,7 @@ class DateTimeForm extends React.Component {
         <DateTimeInput
           placeholder="Date Time"
           className="example-calendar-input"
+          popupPosition="bottom right"
           name="dateTime"
           value={this.state.dateTime}
           iconPosition="left"
@@ -84,6 +89,7 @@ class DateTimeForm extends React.Component {
         <DatesRangeInput
           dateFormat="DD.MM.YY"
           placeholder="From - To"
+          popupPosition="bottom right"
           className="example-calendar-input"
           name="datesRange"
           value={this.state.datesRange}
@@ -94,6 +100,7 @@ class DateTimeForm extends React.Component {
           placeholder="Year"
           className="example-calendar-input"
           name="year"
+          popupPosition="bottom right"
           value={this.state.year}
           iconPosition="left"
           onChange={this.handleChange} />
@@ -102,6 +109,7 @@ class DateTimeForm extends React.Component {
           placeholder="Month"
           className="example-calendar-input"
           name="month"
+          popupPosition="bottom right"
           value={this.state.month}
           iconPosition="left"
           onChange={this.handleChange} />

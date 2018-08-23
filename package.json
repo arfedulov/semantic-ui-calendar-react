@@ -1,6 +1,6 @@
 {
   "name": "semantic-ui-calendar-react",
-  "version": "0.8.0",
+  "version": "0.9.0-alpha",
   "description": "date/time picker built from semantic-ui elements",
   "main": "dist/index.js",
   "scripts": {
@@ -72,7 +72,7 @@
     "react-dom": "^16.4.2",
     "rimraf": "^2.6.2",
     "semantic-ui-css": "^2.3.3",
-    "semantic-ui-react": "^0.80.2",
+    "semantic-ui-react": "<=0.80.2",
     "sinon": "^6.1.4",
     "uglifycss": "0.0.29",
     "webpack": "^4.16.4",

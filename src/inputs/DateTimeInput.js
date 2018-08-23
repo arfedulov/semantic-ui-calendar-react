@@ -212,7 +212,7 @@ DateTimeInput.propTypes = {
 };
 
 DateTimeInput.defaultProps = {
-  dateFormat: 'YYYY-MM-DD',
+  dateFormat: 'DD-MM-YYYY',
   timeFormat: '24',
   startMode: 'day',
   divider: ' ',

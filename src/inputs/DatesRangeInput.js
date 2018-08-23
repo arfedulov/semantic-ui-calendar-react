@@ -137,7 +137,7 @@ DatesRangeInput.propTypes = {
 };
 
 DatesRangeInput.defaultProps = {
-  dateFormat: 'YYYY-MM-DD',
+  dateFormat: 'DD-MM-YYYY',
 };
 
 export default DatesRangeInput;
