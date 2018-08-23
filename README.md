@@ -144,6 +144,7 @@ moment.locale('ru')
 | ``closable`` | {bool} If true, popup closes after selecting a time   |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
+| ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 
 ### DateTimeInput
 
@@ -162,6 +163,7 @@ moment.locale('ru')
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
+| ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 
 ### DatesRangeInput
 
@@ -199,3 +201,7 @@ moment.locale('ru')
 | ``closable`` | {bool} If true, popup closes after selecting a month   |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
+| ``dateFormat`` | {string} Moment date formatting string. Default: ``"MMM"`` |
+| ``disable`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Date or list of dates that are displayed as disabled. |
+| ``maxDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Maximum date that can be selected. |
+| ``minDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Minimum date that can be selected. |
