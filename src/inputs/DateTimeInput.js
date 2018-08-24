@@ -16,7 +16,7 @@ import {
   getInitializer,
   TIME_FORMAT,
 } from './parse';
-import { getUnhandledProps } from '../lib';
+import { getUnhandledProps, tick } from '../lib';
 
 function getNextMode(currentMode) {
   if (currentMode === 'year') return 'month';
@@ -130,6 +130,10 @@ class DateTimeInput extends BaseInput {
   }
 
   handleSelect = (e, { value }) => {
+    tick(this.handleSelectUndelayed, e, { value });
+  }
+
+  handleSelectUndelayed = (e, { value }) => {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
     }
