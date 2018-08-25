@@ -214,6 +214,102 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
     assert(_.isUndefined(wrapper.instance().getDisabledYearsPositions()), 'method returns undefined');
   });
+
+  describe('maxDate and minDate are in current year', () => {
+    const YEARS_ON_PAGE = 12;
+    it('return all positions except one', () => {
+      const date = moment('2015-05-01');
+      const maxDate = moment('2015-05-01');
+      const minDate = moment('2015-02-01');
+      /*
+      [
+        '2015', '2016', '2017',
+        '2018', '2019', '2020',
+        '2021', '2022', '2023',
+        '2024', '2025', '2026',
+      ]
+      */
+      const wrapper = shallow(<YearPicker
+        initializeWith={date}
+        maxDate={maxDate}
+        minDate={minDate} />);
+
+      const shouldReturn = _.range(1, YEARS_ON_PAGE);
+      assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
+      assert.equal(wrapper.instance().getDisabledYearsPositions().length, 11, 'method returns an array of length 11');
+      _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+        assert(_.isNumber(disabledIndex), 'contains numbers only');
+      });
+      const producesValues = wrapper.instance().getDisabledYearsPositions();
+      shouldReturn.forEach((yearPosition) => {
+        assert(_.includes(producesValues, yearPosition), 'produce correct values');
+      });
+    });
+  });
+
+  describe('maxDate and minDate are on previous page', () => {
+    const YEARS_ON_PAGE = 12;
+    it('return all positions', () => {
+      const date = moment('2015-05-01');
+      const maxDate = moment('2013-05-01');
+      const minDate = moment('2014-02-01');
+      /*
+      [
+        '2015', '2016', '2017',
+        '2018', '2019', '2020',
+        '2021', '2022', '2023',
+        '2024', '2025', '2026',
+      ]
+      */
+      const wrapper = shallow(<YearPicker
+        initializeWith={date}
+        maxDate={maxDate}
+        minDate={minDate} />);
+
+      const shouldReturn = _.range(0, YEARS_ON_PAGE);
+      assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
+      assert.equal(wrapper.instance().getDisabledYearsPositions().length, 12, 'method returns an array of length 12');
+      _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+        assert(_.isNumber(disabledIndex), 'contains numbers only');
+      });
+      const producesValues = wrapper.instance().getDisabledYearsPositions();
+      shouldReturn.forEach((yearPosition) => {
+        assert(_.includes(producesValues, yearPosition), 'produce correct values');
+      });
+    });
+  });
+
+  describe('maxDate and minDate are on next page', () => {
+    const YEARS_ON_PAGE = 12;
+    it('return all positions', () => {
+      const date = moment('2015-05-01');
+      const maxDate = moment('2029-05-01');
+      const minDate = moment('2027-02-01');
+      /*
+      [
+        '2015', '2016', '2017',
+        '2018', '2019', '2020',
+        '2021', '2022', '2023',
+        '2024', '2025', '2026',
+      ]
+      */
+      const wrapper = shallow(<YearPicker
+        initializeWith={date}
+        maxDate={maxDate}
+        minDate={minDate} />);
+
+      const shouldReturn = _.range(0, YEARS_ON_PAGE);
+      assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
+      assert.equal(wrapper.instance().getDisabledYearsPositions().length, 12, 'method returns an array of length 12');
+      _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+        assert(_.isNumber(disabledIndex), 'contains numbers only');
+      });
+      const producesValues = wrapper.instance().getDisabledYearsPositions();
+      shouldReturn.forEach((yearPosition) => {
+        assert(_.includes(producesValues, yearPosition), 'produce correct values');
+      });
+    });
+  });
 });
 
 describe('<YearPicker />: isNextPageAvailable', function() {

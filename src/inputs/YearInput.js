@@ -57,8 +57,8 @@ class YearInput extends BaseInput {
           initializeWith={getInitializer({ initialDate, dateFormat })}
           value={parseValue(value, dateFormat)}
           disable={parseArrayOrValue(disable, dateFormat)}
-          maxDate={parseArrayOrValue(maxDate, dateFormat)}
-          minDate={parseArrayOrValue(minDate, dateFormat)} />
+          maxDate={parseValue(maxDate, dateFormat)}
+          minDate={parseValue(minDate, dateFormat)} />
       </InputView>
     );
   }

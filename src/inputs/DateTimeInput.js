@@ -97,8 +97,8 @@ class DateTimeInput extends BaseInput {
       initializeWith: getInitializer({ initialDate, dateFormat: dateTimeFormat, dateParams: this.getDateParams() }),
       value: parseValue(value, dateTimeFormat),
       disable: parseArrayOrValue(disable),
-      minDate: parseArrayOrValue(minDate),
-      maxDate: parseArrayOrValue(maxDate),
+      minDate: parseValue(minDate, dateFormat),
+      maxDate: parseValue(maxDate, dateFormat),
       // key: value, // seems like it works without reinstantiating picker every time value changes
     };
     const { mode } = this.state;

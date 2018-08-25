@@ -59,7 +59,10 @@ export function getDisabledDays(disable, maxDate, minDate, date, daysOnPage) {
     );
   }
   if (!_.isNil(maxDate)) {
-    if (maxDate.year() === date.year() && maxDate.month() === date.month()) {
+    if (maxDate.isBefore(date, 'month')) {
+      disabledDays = dayPositions;
+    }
+    if (maxDate.isSame(date, 'month')) {
       disabledDays = _.concat(
         disabledDays,
         _.range(1, daysInCurrentMonthPositions.length + 1).filter(date => date > maxDate.date())
@@ -68,7 +71,10 @@ export function getDisabledDays(disable, maxDate, minDate, date, daysOnPage) {
     }
   }
   if (!_.isNil(minDate)) {
-    if (minDate.year() === date.year() && minDate.month() === date.month()) {
+    if (minDate.isAfter(date, 'month')) {
+      disabledDays = dayPositions;
+    }
+    if (minDate.isSame(date, 'month')) {
       disabledDays = _.concat(
         disabledDays,
         _.range(1, daysInCurrentMonthPositions.length + 1).filter(date => date < minDate.date())
@@ -81,17 +87,13 @@ export function getDisabledDays(disable, maxDate, minDate, date, daysOnPage) {
 
 export function isNextPageAvailable(date, maxDate) {
   if (_.isNil(maxDate)) return true;
-  const lastDayInMonth = date.clone();
-  lastDayInMonth.endOf('month');
-  if (lastDayInMonth.isSameOrAfter(maxDate, 'date')) return false;
+  if (date.isSameOrAfter(maxDate, 'month')) return false;
   return true;
 }
 
 export function isPrevPageAvailable(date, minDate) {
   if (_.isNil(minDate)) return true;
-  const firstDayInMonth = date.clone();
-  firstDayInMonth.startOf('month');
-  if (firstDayInMonth.isSameOrBefore(minDate, 'date')) return false;
+  if (date.isSameOrBefore(minDate, 'month')) return false;
   return true;
 }
 

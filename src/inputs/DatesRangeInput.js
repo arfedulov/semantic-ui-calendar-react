@@ -6,6 +6,7 @@ import _ from 'lodash';
 import InputView from '../views/InputView';
 import {
   getInitializer,
+  parseValue,
 } from './parse';
 import { getUnhandledProps } from '../lib';
 import DatesRangePicker from '../pickers/dayPicker/DatesRangePicker';
@@ -102,8 +103,8 @@ class DatesRangeInput extends BaseInput {
           initializeWith={getInitializer({ initialDate, dateFormat })}
           start={start}
           end={end}
-          minDate={minDate}
-          maxDate={maxDate} />
+          minDate={parseValue(minDate, dateFormat)}
+          maxDate={parseValue(maxDate, dateFormat)} />
       </InputView>
     );
   }
