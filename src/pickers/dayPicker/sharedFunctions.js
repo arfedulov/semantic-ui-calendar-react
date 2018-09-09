@@ -45,24 +45,34 @@ export function getDefaultEnabledDayPositions(allDays/*string[]*/, date/*moment*
 }
 
 /** Return day positions that shoud be displayed as disabled. */
-export function getDisabledDays(disable, maxDate, minDate, date, daysOnPage) {
+export function getDisabledDays(disable, maxDate, minDate, currentDate, daysOnPage, enable) {
   const dayPositions = _.range(daysOnPage);
-  const daysInCurrentMonthPositions = getDefaultEnabledDayPositions(buildDays(date, daysOnPage), date);
+  const daysInCurrentMonthPositions = getDefaultEnabledDayPositions(buildDays(currentDate, daysOnPage), currentDate);
   let disabledDays = dayPositions.filter((dayPosition) => !_.includes(daysInCurrentMonthPositions, dayPosition));
+  if (_.isArray(enable)) {
+    const enabledDaysPositions = enable
+      .filter(date => date.isSame(currentDate, 'month'))
+      .map(date => date.date())
+      .map(date => daysInCurrentMonthPositions[date - 1]);
+    disabledDays = _.concat(
+      disabledDays,
+      dayPositions.filter((position) => !_.includes(enabledDaysPositions, position))
+    );
+  }
   if (_.isArray(disable)) {
     disabledDays = _.concat(
       disabledDays,
       disable
-        .filter(date => date.year() === date.year() && date.month() === date.month())
+        .filter(date => date.isSame(currentDate, 'month'))
         .map(date => date.date())
         .map(date => daysInCurrentMonthPositions[date - 1])
     );
   }
   if (!_.isNil(maxDate)) {
-    if (maxDate.isBefore(date, 'month')) {
+    if (maxDate.isBefore(currentDate, 'month')) {
       disabledDays = dayPositions;
     }
-    if (maxDate.isSame(date, 'month')) {
+    if (maxDate.isSame(currentDate, 'month')) {
       disabledDays = _.concat(
         disabledDays,
         _.range(1, daysInCurrentMonthPositions.length + 1).filter(date => date > maxDate.date())
@@ -71,10 +81,10 @@ export function getDisabledDays(disable, maxDate, minDate, date, daysOnPage) {
     }
   }
   if (!_.isNil(minDate)) {
-    if (minDate.isAfter(date, 'month')) {
+    if (minDate.isAfter(currentDate, 'month')) {
       disabledDays = dayPositions;
     }
-    if (minDate.isSame(date, 'month')) {
+    if (minDate.isSame(currentDate, 'month')) {
       disabledDays = _.concat(
         disabledDays,
         _.range(1, daysInCurrentMonthPositions.length + 1).filter(date => date < minDate.date())

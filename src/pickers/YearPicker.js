@@ -56,6 +56,15 @@ class YearPicker extends React.Component {
     */
     let disabled = [];
     const years = this.buildYears();
+    if (_.isArray(this.props.enable)) {
+      const enabledYears = this.props.enable.map(yearMoment => yearMoment.year().toString());
+      disabled = _.concat(
+        disabled,
+        years
+          .filter(year => !_.includes(enabledYears, year))
+          .map(year => years.indexOf(year))
+      );
+    }
     if (_.isArray(this.props.disable)) {
       disabled = _.concat(
         disabled,
@@ -92,9 +101,13 @@ class YearPicker extends React.Component {
   isNextPageAvailable() {
     const {
       maxDate,
+      enable,
     } = this.props;
     const lastOnPage = parseInt(_.last(this.buildYears()));
 
+    if (_.isArray(enable)) {
+      return _.some(enable, enabledYear => enabledYear.year() > lastOnPage);
+    }
     if (_.isNil(maxDate)) return true;
     return lastOnPage < maxDate.year();
   }
@@ -102,9 +115,13 @@ class YearPicker extends React.Component {
   isPrevPageAvailable() {
     const {
       minDate,
+      enable,
     } = this.props;
     const firstOnPage = parseInt(_.first(this.buildYears()));
 
+    if (_.isArray(enable)) {
+      return _.some(enable, enabledYear => enabledYear.year() < firstOnPage);
+    }
     if (_.isNil(minDate)) return true;
     return firstOnPage > minDate.year();
   }
@@ -156,6 +173,10 @@ YearPicker.propTypes = {
   value: PropTypes.instanceOf(moment),
   /** Array of disabled years. */
   disable: PropTypes.arrayOf(
+    PropTypes.instanceOf(moment)
+  ),
+  /** Array of enabled years. */
+  enable: PropTypes.arrayOf(
     PropTypes.instanceOf(moment)
   ),
   /** Minimal year that could be selected. */

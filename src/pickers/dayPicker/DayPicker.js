@@ -57,21 +57,30 @@ class DayPicker extends React.Component {
       disable,
       maxDate,
       minDate,
+      enable,
     } = this.props;
-    return getDisabledDays(disable, maxDate, minDate, this.state.date, DAYS_ON_PAGE);
+    return getDisabledDays(disable, maxDate, minDate, this.state.date, DAYS_ON_PAGE, enable);
   }
 
   isNextPageAvailable() {
     const {
       maxDate,
+      enable,
     } = this.props;
+    if (_.isArray(enable)) {
+      return _.some(enable, enabledDate => enabledDate.isAfter(this.state.date, 'month'));
+    }
     return isNextPageAvailable(this.state.date, maxDate);
   }
 
   isPrevPageAvailable() {
     const {
       minDate,
+      enable,
     } = this.props;
+    if (_.isArray(enable)) {
+      return _.some(enable, enabledDate => enabledDate.isBefore(this.state.date, 'month'));
+    }
     return isPrevPageAvailable(this.state.date, minDate);
   }
 
@@ -134,6 +143,10 @@ DayPicker.propTypes = {
   value: PropTypes.instanceOf(moment),
   /** Array of disabled days. */
   disable: PropTypes.arrayOf(
+    PropTypes.instanceOf(moment)
+  ),
+  /** Array of enabled days. */
+  enable: PropTypes.arrayOf(
     PropTypes.instanceOf(moment)
   ),
   /** Minimal date that could be selected. */

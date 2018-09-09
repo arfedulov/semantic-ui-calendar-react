@@ -128,7 +128,8 @@ moment.locale('ru')
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
 | ``closable`` | {bool} If true, popup closes after selecting a date   |
 | ``initialDate`` | {string\|moment\|Date} Date to display initially when no date is selected |
-| ``disable`` | {string\|moment\|string[]\|moment[]} Date or list of dates that are displayed as disabled |
+| ``disable`` | {string\|moment\|Date\|string[]\|moment[]\|Date[]} Date or list of dates that are displayed as disabled |
+| ``enable`` | {string[]\|moment[]\|Date[]} Date or list of dates that are enabled (the rest are disabled) |
 | ``maxDate`` | {string\|moment} Maximum date that can be selected |
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |

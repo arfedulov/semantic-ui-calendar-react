@@ -142,6 +142,36 @@ describe('getDisabledDays', () => {
     });
   });
 
+  describe('`enable` is defined', () => {
+    const enable = [
+      moment('2018-08-09'), moment('2018-08-12'), moment('2018-08-16'),
+    ];
+    it('return all days positions except those that are in `enable` param', () => {
+      
+      /*
+      [
+        '29', '30', '31', '1', '2', '3', '4',
+        '5', '6', '7', '8', '9', '10', '11',
+        '12', '13', '14', '15', '16', '17', '18',
+        '19', '20', '21', '22', '23', '24', '25',
+        '26', '27', '28', '29', '30', '31', '1',
+        '2', '3', '4', '5', '6', '7', '8',
+      ]
+      */
+      
+      const shouldReturn = _.range(0, 41).filter(position => !_.includes([11, 14, 18], position));
+      assert(_.isArray(getDisabledDays(undefined, undefined, undefined, date, DAYS_ON_PAGE, enable)), 'return array');
+      assert.equal(getDisabledDays(undefined, undefined, undefined, date, DAYS_ON_PAGE, enable).length, 39, 'return array of length 39');
+      getDisabledDays(undefined, undefined, undefined, date, DAYS_ON_PAGE, enable).forEach((day) => {
+        assert(_.isNumber(day), 'contains numbers');
+      });
+      const producedDays = getDisabledDays(undefined, undefined, undefined, date, DAYS_ON_PAGE, enable);
+      shouldReturn.forEach((expectedDay) => {
+        assert(_.includes(producedDays, expectedDay), 'contains correct position numbers');
+      });
+    });
+  });
+
   describe('`disable` is defined', () => {
     const disable = [
       moment('2018-08-09'), moment('2018-08-12'), moment('2018-08-16'),

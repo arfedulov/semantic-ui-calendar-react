@@ -74,6 +74,7 @@ class DateInput extends BaseInput {
       disable,
       minDate,
       maxDate,
+      enable,
     } = this.props;
     const pickerProps = {
       hasHeader: true,
@@ -82,6 +83,7 @@ class DateInput extends BaseInput {
       initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams() }),
       value: parseValue(chooseValue(value, initialDate), dateFormat),
       disable: parseArrayOrValue(disable, dateFormat),
+      enable: parseArrayOrValue(enable, dateFormat),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
       // key: value, // seems like it works without reinstantiating picker every time value changes
@@ -165,6 +167,12 @@ DateInput.propTypes = {
     PropTypes.instanceOf(moment),
     PropTypes.arrayOf(PropTypes.instanceOf(moment)),
     PropTypes.instanceOf(Date),
+    PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  ]),
+  /** Date or list of dates that are enabled (the rest are disabled). */
+  enable: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.string),
+    PropTypes.arrayOf(PropTypes.instanceOf(moment)),
     PropTypes.arrayOf(PropTypes.instanceOf(Date)),
   ]),
   /** Maximum date that can be selected. */

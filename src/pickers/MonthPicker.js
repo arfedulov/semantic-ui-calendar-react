@@ -48,6 +48,15 @@ class MonthPicker extends React.Component {
       (position in array returned by `this.buildMonths`).
     */
     let disabled = [];
+    if (_.isArray(this.props.enable)) {
+      const enabledMonthPositions = this.props.enable
+        .filter(monthMoment => monthMoment.isSame(this.state.date, 'year'))
+        .map(monthMoment => monthMoment.month());
+      disabled = disabled.concat(
+        _.range(0, MONTHS_IN_YEAR)
+          .filter(monthPosition => !_.includes(enabledMonthPositions, monthPosition))
+      );
+    }
     if (_.isArray(this.props.disable)) {
       disabled = disabled.concat(
         this.props.disable
@@ -83,7 +92,11 @@ class MonthPicker extends React.Component {
   isNextPageAvailable() {
     const {
       maxDate,
+      enable,
     } = this.props;
+    if (_.isArray(enable)) {
+      return _.some(enable, enabledMonth => enabledMonth.isAfter(this.state.date, 'year'));
+    }
     if (_.isNil(maxDate)) return true;
     if (this.state.date.year() >= maxDate.year()) return false;
     return true;
@@ -92,7 +105,11 @@ class MonthPicker extends React.Component {
   isPrevPageAvailable() {
     const {
       minDate,
+      enable,
     } = this.props;
+    if (_.isArray(enable)) {
+      return _.some(enable, enabledMonth => enabledMonth.isBefore(this.state.date, 'year'));
+    }
     if (_.isNil(minDate)) return true;
     if (this.state.date.year() <= minDate.year()) return false;
     return true;
@@ -152,6 +169,10 @@ MonthPicker.propTypes = {
   value: PropTypes.instanceOf(moment),
   /** Array of disabled months. */
   disable: PropTypes.arrayOf(
+    PropTypes.instanceOf(moment)
+  ),
+  /** Array of enabled months. */
+  enable: PropTypes.arrayOf(
     PropTypes.instanceOf(moment)
   ),
   /** Minimal month that could be selected. */
