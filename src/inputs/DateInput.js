@@ -12,6 +12,8 @@ import {
   parseArrayOrValue,
   getInitializer,
   parseValue,
+  initialDateToString,
+  chooseValue,
 } from './parse';
 import { getUnhandledProps } from '../lib';
 
@@ -78,7 +80,7 @@ class DateInput extends BaseInput {
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
       initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams() }),
-      value: parseValue(value, dateFormat),
+      value: parseValue(chooseValue(value, initialDate), dateFormat),
       disable: parseArrayOrValue(disable, dateFormat),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
@@ -128,6 +130,8 @@ class DateInput extends BaseInput {
   render() {
     const {
       value,
+      dateFormat,
+      initialDate,
     } = this.props;
     const rest = getUnhandledProps(DateInput, this.props);
     return (
@@ -136,7 +140,7 @@ class DateInput extends BaseInput {
         onPopupUnmount={this.onPopupClose}
         icon="calendar"
         { ...rest }
-        value={value}>
+        value={chooseValue(value, initialDateToString(initialDate, dateFormat))}>
         { this.getPicker() }
       </InputView>
     );

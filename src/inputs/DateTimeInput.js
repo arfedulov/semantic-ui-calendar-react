@@ -15,6 +15,8 @@ import {
   parseArrayOrValue,
   getInitializer,
   TIME_FORMAT,
+  initialDateToString,
+  chooseValue,
 } from './parse';
 import { getUnhandledProps, tick } from '../lib';
 
@@ -77,6 +79,15 @@ class DateTimeInput extends BaseInput {
     }
   }
 
+  getDateTimeFormat() {
+    const {
+      dateFormat,
+      divider,
+      timeFormat,
+    } = this.props;
+    return `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
+  }
+
   getPicker() {
     const {
       value,
@@ -85,17 +96,15 @@ class DateTimeInput extends BaseInput {
       disable,
       minDate,
       maxDate,
-      timeFormat,
-      divider,
     } = this.props;
-    const dateTimeFormat = `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
+    const dateTimeFormat = this.getDateTimeFormat();
     const pickerProps = {
       displayWeeks: true,
       hasHeader: true,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
       initializeWith: getInitializer({ initialDate, dateFormat: dateTimeFormat, dateParams: this.getDateParams() }),
-      value: parseValue(value, dateTimeFormat),
+      value: parseValue(chooseValue(value, initialDate), dateTimeFormat),
       disable: parseArrayOrValue(disable),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
@@ -145,8 +154,7 @@ class DateTimeInput extends BaseInput {
       if (mode !== 'minute') {
         nextMode = getNextMode(mode);
       } else {
-        const timeFormatStr = TIME_FORMAT[this.props.timeFormat];
-        const outValue = moment(value).format(`${this.props.dateFormat}${this.props.divider}${timeFormatStr}`);
+        const outValue = moment(value).format(this.getDateTimeFormat());
         _.invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
       return { mode: nextMode, ...value };
@@ -156,6 +164,7 @@ class DateTimeInput extends BaseInput {
   render() {
     const {
       value,
+      initialDate,
     } = this.props;
     const rest = getUnhandledProps(DateTimeInput, this.props);
     return (
@@ -164,7 +173,7 @@ class DateTimeInput extends BaseInput {
         onPopupUnmount={this.onPopupClose}
         icon="calendar"
         { ...rest }
-        value={value}>
+        value={chooseValue(value, initialDateToString(initialDate, this.getDateTimeFormat()))}>
         { this.getPicker() }
       </InputView>
     );

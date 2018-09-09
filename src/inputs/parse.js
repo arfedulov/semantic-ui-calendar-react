@@ -58,3 +58,20 @@ export function getInitializer(context/*value, initialDate, dateFormat, datePara
   }
   return moment();
 }
+
+/** Convert value to date string with given date format. */
+export function initialDateToString(initialDate/* date | Moment | string */, dateFormat) {
+  const date = moment(initialDate, dateFormat);
+  if (date.isValid()) {
+    return date.format(dateFormat);
+  }
+  return '';
+}
+
+/** Return initial date if `value` is empty and if `initialDate` provided. */
+export function chooseValue(value, initialDate) {
+  if (value === '' && initialDate) {
+    return initialDate;
+  }
+  return value;
+}
