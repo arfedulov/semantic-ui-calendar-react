@@ -6,11 +6,11 @@ import moment from 'moment';
  * 
  * getWeekDays() --> ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Su']
  */
-const getWeekDays = (long = false) => {
+const getWeekDays = (moment) => {
   const weekDays = [];
   let day = moment().startOf('week');
   for (let i = 0; i < 7; i++) {
-    weekDays[i] = day.format(long? 'dddd' : 'dd');
+    weekDays[i] = day.format('dd');
     day.add(1, 'd');
   }
   return weekDays;
@@ -21,7 +21,7 @@ const cellStyle = {
   borderBottom: '1px solid rgba(34,36,38,.1)'
 };
 
-const weekDayCells = getWeekDays().map((weekDay) => (
+const getWeekDayCells = (moment) => getWeekDays(moment).map((weekDay) => (
   <Table.HeaderCell
     key={weekDay}
     style={cellStyle}
@@ -33,7 +33,7 @@ const weekDayCells = getWeekDays().map((weekDay) => (
 function HeaderWeeks() {
   return (
     <Table.Row>
-      { weekDayCells }
+      { getWeekDayCells(moment) }
     </Table.Row>
   );
 }
