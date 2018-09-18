@@ -152,21 +152,27 @@ describe('<DateInput />: handleSelect', () => {
 });
 
 describe('<DateInput />: switchToPrevMode', () => {
-  it('switch to previous mode', () => {
-    const wrapper = shallow(<DateInput />);
+  const wrapper = shallow(<DateInput />);
 
+  it('not yet switched to previous mode', () => {
     assert.equal(wrapper.state('mode'), 'day', 'mode is not changed yet');
     wrapper.instance().switchToPrevMode();
-    assert.equal(wrapper.state('mode'), 'month', 'mode changed to previous');
   });
+
+  it('switched to prev mode', () => {
+    assert.equal(wrapper.state('mode'), 'month', 'mode changed to previous');
+  }).timeout(0);
 });
 
 describe('<DateInput />: switchToNextMode', () => {
-  it('switch to next mode', () => {
-    const wrapper = shallow(<DateInput />);
+  const wrapper = shallow(<DateInput />);
 
+  it('not yet switched to next mode', () => {
     assert.equal(wrapper.state('mode'), 'day', 'mode is not changed yet');
     wrapper.instance().switchToNextMode();
-    assert.equal(wrapper.state('mode'), 'year', 'mode changed to next');
   });
+
+  it('switched to next mode', () => {
+    assert.equal(wrapper.state('mode'), 'year', 'mode changed to next');
+  }).timeout(0);
 });

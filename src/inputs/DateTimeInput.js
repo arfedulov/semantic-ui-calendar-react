@@ -126,23 +126,31 @@ class DateTimeInput extends BaseInput {
     return <MinutePicker timeFormat={ this.props.timeFormat } { ...pickerProps } />;
   }
 
-  switchToNextMode = () => {
+  _switchToNextModeUndelayed = () => {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
     });
   }
 
-  switchToPrevMode = () => {
+  switchToNextMode = () => {
+    tick(this._switchToNextModeUndelayed);
+  }
+
+  _switchToPrevModeUndelayed = () => {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
     });
   }
 
-  handleSelect = (e, { value }) => {
-    tick(this.handleSelectUndelayed, e, { value });
+  switchToPrevMode = () => {
+    tick(this._switchToPrevModeUndelayed);
   }
 
-  handleSelectUndelayed = (e, { value }) => {
+  handleSelect = (e, { value }) => {
+    tick(this._handleSelectUndelayed, e, { value });
+  }
+
+  _handleSelectUndelayed = (e, { value }) => {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
     }

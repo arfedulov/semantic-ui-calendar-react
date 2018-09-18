@@ -15,7 +15,10 @@ import {
   initialDateToString,
   chooseValue,
 } from './parse';
-import { getUnhandledProps } from '../lib';
+import {
+  getUnhandledProps,
+  tick,
+} from '../lib';
 
 function getNextMode(currentMode) {
   if (currentMode === 'year') return 'month';
@@ -98,16 +101,24 @@ class DateInput extends BaseInput {
     return <DayPicker { ...pickerProps } />;
   }
 
-  switchToNextMode = () => {
+  _switchToNextModeUndelayed = () => {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
     });
   }
 
-  switchToPrevMode = () => {
+  switchToNextMode = () => {
+    tick(this._switchToNextModeUndelayed);
+  }
+
+  _switchToPrevModeUndelayed = () => {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
     });
+  }
+
+  switchToPrevMode = () => {
+    tick(this._switchToPrevModeUndelayed);
   }
 
   handleSelect = (e, { value }) => {
