@@ -208,7 +208,7 @@ DateInput.propTypes = {
 
 DateInput.defaultProps = {
   dateFormat: 'DD-MM-YYYY',
-  startMode: 'day',
+  startMode: 'day'
 };
 
 export default DateInput;

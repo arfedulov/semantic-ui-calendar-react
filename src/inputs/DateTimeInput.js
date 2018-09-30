@@ -106,7 +106,6 @@ class DateTimeInput extends BaseInput {
       initializeWith: getInitializer({ initialDate, dateFormat: dateTimeFormat, dateParams: this.getDateParams() }),
       value: parseValue(chooseValue(value, initialDate), dateTimeFormat),
       disable: parseArrayOrValue(disable),
-      preserveViewMode: true,
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
       // key: value, // seems like it works without reinstantiating picker every time value changes
@@ -247,6 +246,7 @@ DateTimeInput.defaultProps = {
   timeFormat: '24',
   startMode: 'day',
   divider: ' ',
+  preserveViewMode: true
 };
 
 export default DateTimeInput;

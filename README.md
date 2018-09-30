@@ -64,7 +64,8 @@ class DateTimeForm extends React.Component {
           placeholder="Date Time"
           value={this.state.dateTime}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange} 
+          preserveViewMode={true} />
         <DatesRangeInput
           name="datesRange"
           placeholder="From - To"
@@ -164,6 +165,7 @@ moment.locale('ru');
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
+| ``preserveViewMode`` | {bool} Preserve last mode (`day`, `hour`, `minute`) each time user opens dialog. Default ``true`` |
 
 ### DatesRangeInput
 
