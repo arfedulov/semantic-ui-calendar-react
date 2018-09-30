@@ -121,6 +121,12 @@ class DateInput extends BaseInput {
     tick(this._switchToPrevModeUndelayed);
   }
 
+  _onFocus = () => {
+    if (!this.props.preserveViewMode) {
+      this.setState({ mode: this.props.startMode });
+    }
+  }
+
   handleSelect = (e, { value }) => {
     if (this.state.mode === 'day' && this.props.closable) {
       this.closePopup();
@@ -152,6 +158,7 @@ class DateInput extends BaseInput {
         popupIsClosed={this.state.popupIsClosed}
         onPopupUnmount={this.onPopupClose}
         icon="calendar"
+        onFocus={this._onFocus}
         { ...rest }
         value={chooseValue(value, initialDateToString(initialDate, dateFormat))}>
         { this.getPicker() }
@@ -208,7 +215,8 @@ DateInput.propTypes = {
 
 DateInput.defaultProps = {
   dateFormat: 'DD-MM-YYYY',
-  startMode: 'day'
+  startMode: 'day',
+  preserveViewMode: true
 };
 
 export default DateInput;
