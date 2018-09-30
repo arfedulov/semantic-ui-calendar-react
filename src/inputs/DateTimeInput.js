@@ -150,6 +150,12 @@ class DateTimeInput extends BaseInput {
     tick(this._handleSelectUndelayed, e, { value });
   }
 
+  _onFocus = () => {
+    if (!this.props.preserveViewMode) {
+      this.setState({ mode: this.props.startMode });
+    }
+  }
+
   _handleSelectUndelayed = (e, { value }) => {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
@@ -180,6 +186,7 @@ class DateTimeInput extends BaseInput {
         popupIsClosed={this.state.popupIsClosed}
         onPopupUnmount={this.onPopupClose}
         icon="calendar"
+        onFocus={this._onFocus}
         { ...rest }
         value={chooseValue(value, initialDateToString(initialDate, this.getDateTimeFormat()))}>
         { this.getPicker() }
@@ -222,6 +229,8 @@ DateTimeInput.propTypes = {
     PropTypes.instanceOf(moment),
     PropTypes.instanceOf(Date),
   ]),
+  /** Preserve viewmode on focus? */
+  preserveViewMode: PropTypes.bool,
   /** Display mode to start. */
   startMode: PropTypes.oneOf([
     'year', 'month', 'day',
@@ -237,6 +246,7 @@ DateTimeInput.defaultProps = {
   timeFormat: '24',
   startMode: 'day',
   divider: ' ',
+  preserveViewMode: true
 };
 
 export default DateTimeInput;
