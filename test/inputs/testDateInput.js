@@ -160,7 +160,7 @@ describe('<DateInput />: switchToPrevMode', () => {
   });
 
   it('switched to prev mode', () => {
-    assert.equal(wrapper.state('mode'), 'day', 'mode changed to previous');
+    assert.equal(wrapper.state('mode'), 'month', 'mode changed to previous');
   }).timeout(0);
 });
 
@@ -173,6 +173,6 @@ describe('<DateInput />: switchToNextMode', () => {
   });
 
   it('switched to next mode', () => {
-    assert.equal(wrapper.state('mode'), 'day', 'mode changed to next');
+    assert.equal(wrapper.state('mode'), 'year', 'mode changed to next');
   }).timeout(0);
 });
