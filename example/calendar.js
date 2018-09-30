@@ -84,6 +84,8 @@ class DateTimeForm extends React.Component {
           name="dateTime"
           value={this.state.dateTime}
           iconPosition="left"
+          preserveViewMode={false}
+          startMode='day'
           onChange={this.handleChange} />
         <br />
         <DatesRangeInput
