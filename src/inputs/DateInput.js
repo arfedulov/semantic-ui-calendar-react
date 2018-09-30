@@ -205,6 +205,8 @@ DateInput.propTypes = {
     PropTypes.instanceOf(moment),
     PropTypes.instanceOf(Date),
   ]),
+  /** Preserve viewmode on focus? */
+  preserveViewMode: PropTypes.bool,
   /** Display mode to start. */
   startMode: PropTypes.oneOf([
     'year', 'month', 'day',

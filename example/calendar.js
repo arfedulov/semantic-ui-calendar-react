@@ -56,6 +56,8 @@ class DateTimeForm extends React.Component {
           name="date"
           value={this.state.date}
           iconPosition="left"
+          preserveViewMode={false}
+          autoComplete="off"
           onChange={this.handleChange} />
         <br />
         <DateInput
@@ -66,6 +68,8 @@ class DateTimeForm extends React.Component {
           name="dateStartYear"
           value={this.state.dateStartYear}
           iconPosition="left"
+          autoComplete="off"
+          preserveViewMode={false}
           onChange={this.handleChange} />
         <br />
         <TimeInput
@@ -73,6 +77,7 @@ class DateTimeForm extends React.Component {
           popupPosition="bottom right"
           className="example-calendar-input"
           name="time"
+          autoComplete="off"
           value={this.state.time}
           iconPosition="left"
           onChange={this.handleChange} />
@@ -85,7 +90,7 @@ class DateTimeForm extends React.Component {
           value={this.state.dateTime}
           iconPosition="left"
           preserveViewMode={false}
-          startMode='day'
+          autoComplete="off"
           onChange={this.handleChange} />
         <br />
         <DatesRangeInput
@@ -96,6 +101,7 @@ class DateTimeForm extends React.Component {
           name="datesRange"
           value={this.state.datesRange}
           iconPosition="left"
+          autoComplete="off"
           onChange={this.handleChange} />
         <br />
         <YearInput
@@ -105,6 +111,7 @@ class DateTimeForm extends React.Component {
           popupPosition="bottom right"
           value={this.state.year}
           iconPosition="left"
+          autoComplete="off"
           onChange={this.handleChange} />
         <br />
         <MonthInput
@@ -114,6 +121,7 @@ class DateTimeForm extends React.Component {
           popupPosition="bottom right"
           value={this.state.month}
           iconPosition="left"
+          autoComplete="off"
           onChange={this.handleChange} />
       </Form>
     );
