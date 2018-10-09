@@ -18,9 +18,10 @@ function InputView(props) {
     inlineLabel,
     popupIsClosed,
     onPopupUnmount,
+    mountNode,
   } = props;
   const rest = getUnhandledProps(InputView, props);
-  
+
   const inputElement = (
     <Form.Input
       { ...rest }
@@ -37,10 +38,12 @@ function InputView(props) {
       trigger={inputElement}
       hoverable={closeOnMouseLeave}
       flowing
+      mountNode={mountNode}
       onUnmount={onPopupUnmount}
       style={popupStyle}
       hideOnScroll
-      on="click">
+      on="click"
+    >
       { props.children }
     </Popup>
   );
@@ -65,6 +68,8 @@ InputView.propTypes = {
   popupIsClosed: PropTypes.bool,
   /** Called when popup is forsed to close. */
   onPopupUnmount: PropTypes.func,
+  /** The node where the picker should mount. */
+  mountNode: PropTypes.any,
 };
 
 InputView.defaultProps = {
