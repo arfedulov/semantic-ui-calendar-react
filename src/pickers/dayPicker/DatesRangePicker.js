@@ -74,7 +74,9 @@ function buildMoment(date/*Moment*/, firstOnPage/*number*/, dateToBuildPosition/
     result = moment({ year: date.year(), month: date.month(), date: firstOnPage });
   } else {
     /* page starts from day in previous month */
-    result = moment({ year: date.year(), month: date.month() - 1, date: firstOnPage});
+    result = moment({ year: date.month() ? date.year() : date.year() - 1, 
+                     month: (date.month() + 11) % 12, 
+                     date: firstOnPage});
   }
   result.add(dateToBuildPosition, 'day');
   return result;
