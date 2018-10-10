@@ -134,6 +134,7 @@ moment.locale('ru');
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``preserveViewMode`` | {bool} Preserve last mode (`day`, `hour`, `minute`) each time user opens dialog. Default ``true`` |
+| ``mountNode`` | {any} The node where the picker should mount. |
 
 ### TimeInput
 
@@ -146,6 +147,7 @@ moment.locale('ru');
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
+| ``mountNode`` | {any} The node where the picker should mount. |
 
 ### DateTimeInput
 
@@ -166,6 +168,7 @@ moment.locale('ru');
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 | ``preserveViewMode`` | {bool} Preserve last mode (`day`, `hour`, `minute`) each time user opens dialog. Default ``true`` |
+| ``mountNode`` | {any} The node where the picker should mount. |
 
 ### DatesRangeInput
 
@@ -181,6 +184,7 @@ moment.locale('ru');
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
+| ``mountNode`` | {any} The node where the picker should mount. |
 
 ### YearInput
 
@@ -192,6 +196,7 @@ moment.locale('ru');
 | ``closable`` | {bool} If true, popup closes after selecting a year   |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
+| ``mountNode`` | {any} The node where the picker should mount. |
 
 ### MonthInput
 
@@ -207,3 +212,4 @@ moment.locale('ru');
 | ``disable`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Date or list of dates that are displayed as disabled. |
 | ``maxDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Maximum date that can be selected. |
 | ``minDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Minimum date that can be selected. |
+| ``mountNode`` | {any} The node where the picker should mount. |
