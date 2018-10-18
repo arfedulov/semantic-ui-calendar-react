@@ -154,6 +154,10 @@ describe('<DateInput />: handleSelect', () => {
 describe('<DateInput />: switchToPrevMode', () => {
   const wrapper = shallow(<DateInput />);
 
+  beforeEach(function(done) {
+    setTimeout(done);
+  }, 0);
+
   it('not yet switched to previous mode', () => {
     assert.equal(wrapper.state('mode'), 'day', 'mode is not changed yet');
     wrapper.instance().switchToPrevMode();
@@ -166,6 +170,10 @@ describe('<DateInput />: switchToPrevMode', () => {
 
 describe('<DateInput />: switchToNextMode', () => {
   const wrapper = shallow(<DateInput />);
+
+  beforeEach(function(done) {
+    setTimeout(done);
+  }, 0);
 
   it('not yet switched to next mode', () => {
     assert.equal(wrapper.state('mode'), 'day', 'mode is not changed yet');
