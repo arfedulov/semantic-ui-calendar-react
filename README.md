@@ -154,7 +154,9 @@ moment.locale('ru');
 | Prop | Description |
 | -----| ------------|
 | all that can be used with SUIR Form.Input | |
-| ``dateFormat``| {string} Date formatting string. You can use here anything that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``|
+| ``dateTimeFormat`` | {string} Datetime formatting string. You can use any string here that can be passed to ``moment().format``. If provided, it overrides ``dateFormat``, ``divider``, and ``timeFormat``. Default: ``null`` |
+| ``dateFormat``| {string} Date formatting string. You can use any string here that can be passed to ``moment().format``. Default: ``DD-MM-YYYY``. This formats only the date component of the datetime. |
+| ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 | ``divider`` | {string} Date and time divider. Default: `` `` |
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
