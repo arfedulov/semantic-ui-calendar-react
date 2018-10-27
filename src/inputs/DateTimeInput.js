@@ -84,8 +84,9 @@ class DateTimeInput extends BaseInput {
       dateFormat,
       divider,
       timeFormat,
+      dateTimeFormat
     } = this.props;
-    return `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
+    return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
   }
 
   getPicker() {
@@ -198,6 +199,8 @@ class DateTimeInput extends BaseInput {
 DateTimeInput.propTypes = {
   /** Currently selected value. */
   value: PropTypes.string,
+  /** Moment datetime formatting string */
+  dateTimeFormat: PropTypes.string,
   /** Moment date formatting string. */
   dateFormat: PropTypes.string,
   /** Time format ["AMPM", "ampm", "24"] */

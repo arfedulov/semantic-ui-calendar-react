@@ -38,6 +38,9 @@ export interface DateTimeInputProps {
   /** Current value. Creates a controlled component. */
   value?: string;
 
+  /** Datetime formatting string. */
+  dateTimeFormat?: string;
+
   /** Date formatting string. */
   dateFormat?: string;
 
