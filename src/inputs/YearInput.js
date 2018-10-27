@@ -45,6 +45,11 @@ class YearInput extends BaseInput {
       dateFormat,
     } = this.props;
     const rest = getUnhandledProps(YearInput, this.props);
+    const initializeWith = getInitializer({
+      dateParams: { year: parseInt(value) },
+      initialDate,
+      dateFormat,
+    });
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
@@ -54,7 +59,7 @@ class YearInput extends BaseInput {
         value={value}>
         <YearPicker
           onChange={this.handleSelect}
-          initializeWith={getInitializer({ initialDate, dateFormat })}
+          initializeWith={initializeWith}
           value={parseValue(value, dateFormat)}
           disable={parseArrayOrValue(disable, dateFormat)}
           maxDate={parseValue(maxDate, dateFormat)}

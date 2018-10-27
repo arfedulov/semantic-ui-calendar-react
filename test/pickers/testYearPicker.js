@@ -57,10 +57,10 @@ describe('<YearPicker />: buildYears', function() {
   it('has `buildYears` method that works properly', () => {
     const date = moment('2015-05-01');
     const shouldBuildYears = [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ];
     const wrapper = shallow(<YearPicker initializeWith={date} />);
     assert(_.isFunction(wrapper.instance().buildYears), 'has the method');
@@ -80,18 +80,18 @@ describe('<YearPicker />: getActiveYearPosition', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
       initializeWith={date}
-      value={moment('2016-01-01')} />);
+      value={moment('2012-01-01')} />);
     assert(_.isFunction(wrapper.instance().getActiveYearPosition), 'has the method');
     assert(_.isNumber(wrapper.instance().getActiveYearPosition()), 'method returns number');
-    assert.equal(wrapper.instance().getActiveYearPosition(), 1, 'method returns active year index');
+    assert.equal(wrapper.instance().getActiveYearPosition(), 8, 'method returns active year index');
   });
 
   it('works properly when `value` prop is undefined', () => {
@@ -107,14 +107,14 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      disable={[moment('2017-01-01'), moment('2019-01-01')]}
+      disable={[moment('2006-01-01'), moment('2008-01-01')]}
       initializeWith={date} />);
     assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
     assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
@@ -130,14 +130,14 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      maxDate={moment('2022-01-01')}
+      maxDate={moment('2011-01-01')}
       initializeWith={date} />);
     assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
     assert.equal(wrapper.instance().getDisabledYearsPositions().length, 4, 'method returns an array of length 4');
@@ -154,14 +154,14 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      minDate={moment('2017-01-01')}
+      minDate={moment('2006-01-01')}
       initializeWith={date} />);
     assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
     assert.equal(wrapper.instance().getDisabledYearsPositions().length, 2, 'method returns an array of length 2');
@@ -176,16 +176,16 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      minDate={moment('2017-01-01')}
-      maxDate={moment('2025-01-01')}
-      disable={[moment('2019-01-01')]}
+      minDate={moment('2006-01-01')}
+      maxDate={moment('2014-01-01')}
+      disable={[moment('2008-01-01')]}
       initializeWith={date} />);
     /* disabled indexes: 0, 1, 4, 11 */
     assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
@@ -203,10 +203,10 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
@@ -223,10 +223,10 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
       const minDate = moment('2015-02-01');
       /*
       [
-        '2015', '2016', '2017',
-        '2018', '2019', '2020',
-        '2021', '2022', '2023',
-        '2024', '2025', '2026',
+        '2004', '2005', '2006',
+        '2007', '2008', '2009',
+        '2010', '2011', '2012',
+        '2013', '2014', '2015',
       ]
       */
       const wrapper = shallow(<YearPicker
@@ -234,7 +234,7 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
         maxDate={maxDate}
         minDate={minDate} />);
 
-      const shouldReturn = _.range(1, YEARS_ON_PAGE);
+      const shouldReturn = _.range(0, YEARS_ON_PAGE - 1);
       assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
       assert.equal(wrapper.instance().getDisabledYearsPositions().length, 11, 'method returns an array of length 11');
       _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
@@ -251,14 +251,14 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const YEARS_ON_PAGE = 12;
     it('return all positions', () => {
       const date = moment('2015-05-01');
-      const maxDate = moment('2013-05-01');
-      const minDate = moment('2014-02-01');
+      const maxDate = moment('1999-05-01');
+      const minDate = moment('1995-02-01');
       /*
       [
-        '2015', '2016', '2017',
-        '2018', '2019', '2020',
-        '2021', '2022', '2023',
-        '2024', '2025', '2026',
+        '2004', '2005', '2006',
+        '2007', '2008', '2009',
+        '2010', '2011', '2012',
+        '2013', '2014', '2015',
       ]
       */
       const wrapper = shallow(<YearPicker
@@ -283,14 +283,14 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const YEARS_ON_PAGE = 12;
     it('return all positions', () => {
       const date = moment('2015-05-01');
-      const maxDate = moment('2029-05-01');
-      const minDate = moment('2027-02-01');
+      const maxDate = moment('2020-05-01');
+      const minDate = moment('2018-02-01');
       /*
       [
-        '2015', '2016', '2017',
-        '2018', '2019', '2020',
-        '2021', '2022', '2023',
-        '2024', '2025', '2026',
+        '2004', '2005', '2006',
+        '2007', '2008', '2009',
+        '2010', '2011', '2012',
+        '2013', '2014', '2015',
       ]
       */
       const wrapper = shallow(<YearPicker
@@ -317,10 +317,10 @@ describe('<YearPicker />: isNextPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
@@ -336,14 +336,14 @@ describe('<YearPicker />: isNextPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      maxDate={moment('2025-01-01')}
+      maxDate={moment('2014-01-01')}
       initializeWith={date} />);
 
     it('returns false', () => {
@@ -355,14 +355,14 @@ describe('<YearPicker />: isNextPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      maxDate={moment('2026-01-01')}
+      maxDate={moment('2015-01-01')}
       initializeWith={date} />);
 
     it('returns false', () => {
@@ -374,14 +374,14 @@ describe('<YearPicker />: isNextPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      maxDate={moment('2027-01-01')}
+      maxDate={moment('2018-01-01')}
       initializeWith={date} />);
 
     it('returns true', () => {
@@ -395,10 +395,10 @@ describe('<YearPicker />: isPrevPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
@@ -414,14 +414,14 @@ describe('<YearPicker />: isPrevPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      minDate={moment('2025-01-01')}
+      minDate={moment('2014-01-01')}
       initializeWith={date} />);
 
     it('returns false', () => {
@@ -433,14 +433,14 @@ describe('<YearPicker />: isPrevPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      minDate={moment('2015-01-01')}
+      minDate={moment('2004-01-01')}
       initializeWith={date} />);
 
     it('returns false', () => {
@@ -452,14 +452,14 @@ describe('<YearPicker />: isPrevPageAvailable', function() {
     const date = moment('2015-05-01');
     /*
     [
-      '2015', '2016', '2017',
-      '2018', '2019', '2020',
-      '2021', '2022', '2023',
-      '2024', '2025', '2026',
+      '2004', '2005', '2006',
+      '2007', '2008', '2009',
+      '2010', '2011', '2012',
+      '2013', '2014', '2015',
     ]
     */
     const wrapper = shallow(<YearPicker
-      minDate={moment('2014-01-01')}
+      minDate={moment('2003-01-01')}
       initializeWith={date} />);
 
     it('returns true', () => {

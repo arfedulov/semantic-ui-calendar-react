@@ -28,7 +28,9 @@ class YearPicker extends React.Component {
       that used to populate calendar's page.
     */
     const years = [];
-    const first = this.state.date.year();
+    const date = this.state.date;
+    const padd = date.year() % YEARS_ON_PAGE;
+    const first = date.year() - padd;
     for (let i = 0; i < YEARS_ON_PAGE; i++) {
       years[i] = (first + i).toString();
     }
