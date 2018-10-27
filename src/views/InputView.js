@@ -6,6 +6,7 @@ import { getUnhandledProps } from '../lib';
 
 const popupStyle = {
   padding: '0',
+  filter: 'none', // prevents bluring popup when used inside Modal with dimmer="bluring" #28 #26
 };
 
 function InputView(props) {
