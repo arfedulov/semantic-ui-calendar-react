@@ -86,8 +86,7 @@ class DateTimeInput extends BaseInput {
       timeFormat,
       dateTimeFormat
     } = this.props;
-    if (dateTimeFormat) return dateTimeFormat;
-    return `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
+    return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
   }
 
   getPicker() {
