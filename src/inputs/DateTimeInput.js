@@ -15,7 +15,6 @@ import {
   parseArrayOrValue,
   getInitializer,
   TIME_FORMAT,
-  initialDateToString,
   chooseValue,
 } from './parse';
 import { getUnhandledProps, tick } from '../lib';
@@ -179,7 +178,6 @@ class DateTimeInput extends BaseInput {
   render() {
     const {
       value,
-      initialDate,
     } = this.props;
     const rest = getUnhandledProps(DateTimeInput, this.props);
     return (
@@ -189,7 +187,7 @@ class DateTimeInput extends BaseInput {
         icon="calendar"
         onFocus={this._onFocus}
         { ...rest }
-        value={chooseValue(value, initialDateToString(initialDate, this.getDateTimeFormat()))}>
+        value={value}>
         { this.getPicker() }
       </InputView>
     );
