@@ -10,7 +10,7 @@
     "build": "npx babel src -d dist",
     "build:ts": "npx cpy **/*.d.ts ../dist/ --cwd=src --parents",
     "postbuild": "npm run build:ts",
-    "publish": "npm run test && npm run build && npm publish"
+    "publish-npm": "npm run test && npm run build && npm publish"
   },
   "keywords": [
     "semantic",

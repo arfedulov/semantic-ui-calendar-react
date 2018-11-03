@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.11.0 2018-11-03
+
+- feat: add dateTimeFormat prop to DateTimePicker (#42) [`#42`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/42)
+
+- fix(yearPicker): initialize page with selected value [`6c639aa`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/6c639aa70b53a8c7a56e83c24fdcab8c4aec2aff)
+
+- fix: #28 popup blured when inside Modal [`036a95f`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/036a95f052aefacfaf97afa66cdf09a8598c969a)
+
+- fix: initialDate prevent clearing input field [`8c51722`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/8c51722c670bf0b2a8beedb68550a2ec9b797e2d)
+
 ## v0.10.0 2018-10-18
 
 - feat: allow passthrough of mountNode to InputView Popup (#38) [`#38`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/38)
