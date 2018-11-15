@@ -45,6 +45,7 @@ class TimeInput extends BaseInput {
     } = value;
     const {
       timeFormat,
+      hideMinutes
     } = this.props;
     let outputTimeString = '';
     if (this.state.mode === 'hour' && !_.isNil(hour)) {
@@ -56,15 +57,16 @@ class TimeInput extends BaseInput {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
     }
-    this.setState((prevState) => {
-      return { mode: getNextMode(prevState.mode) };
-    });
+    if(!hideMinutes)
+      this.setState((prevState) => {
+        return { mode: getNextMode(prevState.mode) };
+      });
   }
 
   getPicker() {
     const {
       value,
-      timeFormat,
+      timeFormat
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat]);
     const pickerProps = {
@@ -108,10 +110,13 @@ TimeInput.propTypes = {
   ]),
   /** If true, popup closes after selecting a date-time. */
   closable: PropTypes.bool,
+  /** If true, minutes picker won't be shown after picking the hour. */
+  hideMinutes: PropTypes.bool
 };
 
 TimeInput.defaultProps = {
   timeFormat: '24',
+  hideMinutes: false
 };
 
 export default TimeInput;
