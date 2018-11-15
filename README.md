@@ -147,6 +147,7 @@ moment.locale('ru');
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
+| ``hideMinutes`` | {bool} If ``true``, minutes picker won't be shown after picking the hour. Default: ``false`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
 
 ### DateTimeInput
