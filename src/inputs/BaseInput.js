@@ -6,6 +6,10 @@ class BaseInput extends React.Component {
   }
 
   onPopupClose = () => {
+    // When `closable` prop is true on *Input element
+    // `this.closePopup` is invoked after selection complete.
+    // To allow popup to be opened again we need to set
+    // `popupIsClosed` to false
     this.setState({
       popupIsClosed: false,
     });

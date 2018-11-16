@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 const baseConfig = {
   module: {
@@ -14,9 +15,13 @@ const baseConfig = {
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'example'),
-    port: 9000
+    port: 9000,
+    hot: true,
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+  ]
 };
 
 const config = Object.assign({

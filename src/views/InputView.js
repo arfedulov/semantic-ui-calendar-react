@@ -43,7 +43,7 @@ function InputView(props) {
       onUnmount={onPopupUnmount}
       style={popupStyle}
       hideOnScroll
-      on="click"
+      on="focus"
     >
       { props.children }
     </Popup>
