@@ -110,7 +110,7 @@ describe('<MinutePicker />: buildMinutes', () => {
   });
 });
 
-describe('<MinutePicker />: getActiveMinutePosition', () => {
+describe('<MinutePicker />: getActiveCellPosition', () => {
   const date = moment('2018-08-12 10:00');
 
   it('return active minute position when value is not multiple of 5', () => {
@@ -123,8 +123,8 @@ describe('<MinutePicker />: getActiveMinutePosition', () => {
         '10:30', '10:35', '10:40', '10:45', '10:50', '10:55',
       ]
     */
-    assert(_.isNumber(wrapper.instance().getActiveMinutePosition()), 'return number');
-    assert.equal(wrapper.instance().getActiveMinutePosition(), 3, 'return active minute position number');
+    assert(_.isNumber(wrapper.instance().getActiveCellPosition()), 'return number');
+    assert.equal(wrapper.instance().getActiveCellPosition(), 3, 'return active minute position number');
   });
 
   it('return active minute position when value is multiple of 5', () => {
@@ -137,8 +137,8 @@ describe('<MinutePicker />: getActiveMinutePosition', () => {
         '10:30', '10:35', '10:40', '10:45', '10:50', '10:55',
       ]
     */
-    assert(_.isNumber(wrapper.instance().getActiveMinutePosition()), 'return number');
-    assert.equal(wrapper.instance().getActiveMinutePosition(), 4, 'return active minute position number');
+    assert(_.isNumber(wrapper.instance().getActiveCellPosition()), 'return number');
+    assert.equal(wrapper.instance().getActiveCellPosition(), 4, 'return active minute position number');
   });
 
   it('return active minute position when value is 59', () => {
@@ -151,14 +151,14 @@ describe('<MinutePicker />: getActiveMinutePosition', () => {
         '10:30', '10:35', '10:40', '10:45', '10:50', '10:55',
       ]
     */
-    assert(_.isNumber(wrapper.instance().getActiveMinutePosition()), 'return number');
-    assert.equal(wrapper.instance().getActiveMinutePosition(), 11, 'return active minute position number');
+    assert(_.isNumber(wrapper.instance().getActiveCellPosition()), 'return number');
+    assert.equal(wrapper.instance().getActiveCellPosition(), 11, 'return active minute position number');
   });
 
   it('return undefined when value is not provided', () => {
     const wrapper = shallow(<MinutePicker
       initializeWith={date} />);
-    assert(_.isUndefined(wrapper.instance().getActiveMinutePosition()), 'return undefined');
+    assert(_.isUndefined(wrapper.instance().getActiveCellPosition()), 'return undefined');
   });
 });
 

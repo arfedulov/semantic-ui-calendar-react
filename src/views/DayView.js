@@ -20,6 +20,8 @@ function DayView(props) {
     onHeaderClick,
     disabled,
     active,
+    hovered,
+    onCellHover,
   } = props;
   return (
     <Calendar>
@@ -35,6 +37,8 @@ function DayView(props) {
       <Body
         width={DAY_CALENDAR_ROW_WIDTH}
         data={days}
+        hovered={hovered}
+        onCellHover={onCellHover}
         onCellClick={onDayClick}
         active={active}
         disabled={disabled} />
@@ -57,6 +61,10 @@ DayView.propTypes = {
   hasNextPage: PropTypes.bool.isRequired,
   /** A date that is displayed in calendar header. */
   currentDate: PropTypes.string.isRequired,
+  /** Called on calendar cell hover. */
+  onCellHover: PropTypes.func,
+  /** Index of a cell that should be displayed as hovered. */
+  hovered: PropTypes.number,
   /** Called after click on calendar header. */
   onHeaderClick: PropTypes.func,
   /** An array of day positions to display as disabled. */

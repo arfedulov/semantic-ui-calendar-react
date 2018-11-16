@@ -147,7 +147,7 @@ describe('<DayPicker />: buildDays', () => {
   });
 });
 
-describe('<DayPicker />: getActiveDayPosition', () => {
+describe('<DayPicker />: getActiveCellPosition', () => {
   const date = moment('2018-08-12');
 
   it('return active day', () => {
@@ -164,8 +164,8 @@ describe('<DayPicker />: getActiveDayPosition', () => {
       '2', '3', '4', '5', '6', '7', '8',
     ]
     */
-    assert(_.isNumber(wrapper.instance().getActiveDayPosition()), 'return number');
-    assert.equal(wrapper.instance().getActiveDayPosition(), 24, 'return active day position number');
+    assert(_.isNumber(wrapper.instance().getActiveCellPosition()), 'return number');
+    assert.equal(wrapper.instance().getActiveCellPosition(), 24, 'return active day position number');
   });
 });
 

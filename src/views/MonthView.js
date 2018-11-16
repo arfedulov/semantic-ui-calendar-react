@@ -20,6 +20,8 @@ function MonthView(props) {
     disabled,
     active,
     currentYear,
+    onCellHover,
+    hovered,
   } = props;
   const headerProps = {
     onNextPageBtnClick,
@@ -38,7 +40,9 @@ function MonthView(props) {
         width={MONTH_CALENDAR_ROW_WIDTH}
         data={months}
         onCellClick={onMonthClick}
+        onCellHover={onCellHover}
         active={active}
+        hovered={hovered}
         disabled={disabled} />
     </Calendar>
   );
@@ -51,6 +55,10 @@ MonthView.propTypes = {
   hasHeader: PropTypes.bool.isRequired,
   /** Called after click on month. */
   onMonthClick: PropTypes.func.isRequired,
+  /** Called on calendar cell hover. */
+  onCellHover: PropTypes.func,
+  /** Index of a month that should be displayed as hovered. */
+  hovered: PropTypes.number,
   /** Called after click on next page button. */
   onNextPageBtnClick: PropTypes.func,
   /** Called after click on previous page button. */

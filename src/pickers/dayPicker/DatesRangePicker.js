@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment, { Moment } from 'moment';
+import moment from 'moment';
 import _ from 'lodash';
 
 import DatesRangeView from '../../views/DatesRangeView';
@@ -13,6 +13,7 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
+import BasePicker from '../BasePicker';
 
 /** Return position of a given date on the page.
  * 
@@ -75,14 +76,14 @@ function buildMoment(date/*Moment*/, firstOnPage/*number*/, dateToBuildPosition/
   } else {
     /* page starts from day in previous month */
     result = moment({ year: date.month() ? date.year() : date.year() - 1, 
-                     month: (date.month() + 11) % 12, 
-                     date: firstOnPage});
+      month: (date.month() + 11) % 12, 
+      date: firstOnPage});
   }
   result.add(dateToBuildPosition, 'day');
   return result;
 }
 
-class DatesRangePicker extends React.Component {
+class DatesRangePicker extends BasePicker {
   constructor(props) {
     super(props);
     this.state = {
@@ -99,8 +100,12 @@ class DatesRangePicker extends React.Component {
     return buildDays(this.state.date, DAYS_ON_PAGE);
   }
 
+  getInitialDatePosition = () => {
+    return this.buildDays().indexOf(this.state.date.date().toString());
+  }
+
   // TODO: too complicated method
-  getActiveDaysPositions() {
+  getActiveCellsPositions() {
     /*
       Return starting and ending positions of dates range that should be displayed as active
       { start: number, end: number }
@@ -255,12 +260,14 @@ class DatesRangePicker extends React.Component {
         days={this.buildDays()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
+        onCellHover={this.onHoveredCellPositionChange}
+        hovered={this.state.hoveredCellPosition}
         onDayClick={this.handleChange}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         currentDate={this.getCurrentDate()}
         selectedRange={this.getSelectedRange()}
-        active={this.getActiveDaysPositions()}
+        active={this.getActiveCellsPositions()}
         disabled={this.getDisabledDaysPositions()} />
     );
   }

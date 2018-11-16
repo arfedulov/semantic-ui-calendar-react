@@ -35,6 +35,8 @@ function DatesRangeView(props) {
     active,
     disabled,
     selectedRange,
+    hovered,
+    onCellHover,
   } = props;
   const {
     start,
@@ -56,6 +58,8 @@ function DatesRangeView(props) {
         width={DAY_CALENDAR_ROW_WIDTH}
         data={days}
         onCellClick={onDayClick}
+        onCellHover={onCellHover}
+        hovered={hovered}
         active={getActive(start, end)}
         disabled={disabled} />
     </Calendar>
@@ -86,6 +90,10 @@ DatesRangeView.propTypes = {
       end: PropTypes.number,
     }
   ).isRequired,
+  /** Called on calendar cell hover. */
+  onCellHover: PropTypes.func,
+  /** Index of a month that should be displayed as hovered. */
+  hovered: PropTypes.number,
   /** Called after click on calendar header. */
   onHeaderClick: PropTypes.func,
   /** An array of day positions to display as disabled. */

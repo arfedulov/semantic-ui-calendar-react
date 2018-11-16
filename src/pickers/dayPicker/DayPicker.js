@@ -12,10 +12,11 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
+import BasePicker from '../BasePicker';
 
 export const DAYS_ON_PAGE = WEEKS_TO_DISPLAY * 7;
 
-class DayPicker extends React.Component {
+class DayPicker extends BasePicker {
   constructor(props) {
     super(props);
     this.state = {
@@ -32,7 +33,11 @@ class DayPicker extends React.Component {
     return buildDays(this.state.date, DAYS_ON_PAGE);
   }
 
-  getActiveDayPosition() {
+  getInitialDatePosition = () => {
+    return this.buildDays().indexOf(this.state.date.date().toString());
+  }
+
+  getActiveCellPosition() {
     /*
       Return position of a date that should be displayed as active
       (position in array returned by `this.buildDays`).
@@ -127,9 +132,11 @@ class DayPicker extends React.Component {
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onDayClick={this.handleChange}
+        hovered={this.state.hoveredCellPosition}
+        onCellHover={this.onHoveredCellPositionChange}
         currentDate={this.getCurrentDate()}
         disabled={this.getDisabledDaysPositions()}
-        active={this.getActiveDayPosition()} />
+        active={this.getActiveCellPosition()} />
     );
   }
 }

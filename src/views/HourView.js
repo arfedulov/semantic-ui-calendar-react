@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 
 import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';
@@ -21,6 +20,8 @@ function HourView(props) {
     disabled,
     active,
     currentDate,
+    hovered,
+    onCellHover,
   } = props;
   const headerProps = {
     onNextPageBtnClick,
@@ -39,6 +40,8 @@ function HourView(props) {
         data={hours}
         width={HOUR_CALENDAR_ROW_WIDTH}
         onCellClick={onHourClick}
+        hovered={hovered}
+        onCellHover={onCellHover}
         active={active}
         disabled={disabled} />
     </Calendar>
@@ -52,6 +55,10 @@ HourView.propTypes = {
   hasHeader: PropTypes.bool.isRequired,
   /** Called after click on hour. */
   onHourClick: PropTypes.func.isRequired,
+  /** Called on calendar cell hover. */
+  onCellHover: PropTypes.func,
+  /** Index of a cell that should be displayed as hovered. */
+  hovered: PropTypes.number,
   /** Called after click on next page button. */
   onNextPageBtnClick: PropTypes.func,
   /** Called after click on previous page button. */

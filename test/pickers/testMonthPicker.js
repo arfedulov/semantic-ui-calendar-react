@@ -66,28 +66,28 @@ describe('<MonthPicker />: buildMonths', () => {
   });
 });
 
-describe('<MonthPicker />: getActiveMonthPosition', () => {
+describe('<MonthPicker />: getActiveCellPosition', () => {
   const date = moment('2015-05-01');
   /* current year 2015 */
   it('return index of active month', () => {
     const wrapper = shallow(<MonthPicker
       value={moment('2015-02-18')}
       initializeWith={date} />);
-    assert(_.isNumber(wrapper.instance().getActiveMonthPosition()), 'return number');
-    assert.equal(wrapper.instance().getActiveMonthPosition(), 1, 'return index 1 (means February)');
+    assert(_.isNumber(wrapper.instance().getActiveCellPosition()), 'return number');
+    assert.equal(wrapper.instance().getActiveCellPosition(), 1, 'return index 1 (means February)');
   });
 
   it('return undefined if year of `value` does not equal to year of `date`', () => {
     const wrapper = shallow(<MonthPicker
       value={moment('2020-02-18')}
       initializeWith={date} />);
-    assert(_.isUndefined(wrapper.instance().getActiveMonthPosition()), 'return undefined');
+    assert(_.isUndefined(wrapper.instance().getActiveCellPosition()), 'return undefined');
   });
 
   it('return undefined `value` is not provided', () => {
     const wrapper = shallow(<MonthPicker
       initializeWith={date} />);
-    assert(_.isUndefined(wrapper.instance().getActiveMonthPosition()), 'return undefined');
+    assert(_.isUndefined(wrapper.instance().getActiveCellPosition()), 'return undefined');
   });
 });
 

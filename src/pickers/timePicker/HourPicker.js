@@ -11,8 +11,9 @@ import {
   isPrevPageAvailable,
   getCurrentDate,
 } from './sharedFunctions';
+import BasePicker from '../BasePicker';
 
-class HourPicker extends React.Component {
+class HourPicker extends BasePicker {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,7 +32,11 @@ class HourPicker extends React.Component {
     }).map(hour => buildTimeStringWithSuffix(hour, '00', this.props.timeFormat));
   }
 
-  getActiveHourPosition() {
+  getInitialDatePosition = () => {
+    return 0;
+  }
+
+  getActiveCellPosition() {
     /*
       Return position of an hour that should be displayed as active
       (position in array returned by `this.buildHours`).
@@ -137,8 +142,10 @@ class HourPicker extends React.Component {
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         onHourClick={this.handleChange}
+        hovered={this.state.hoveredCellPosition}
+        onCellHover={this.onHoveredCellPositionChange}
         disabled={this.getDisabledHoursPositions()}
-        active={this.getActiveHourPosition()}
+        active={this.getActiveCellPosition()}
         currentDate={this.getCurrentDate()} />
     );
   }

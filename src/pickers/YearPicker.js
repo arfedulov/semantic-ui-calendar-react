@@ -5,10 +5,11 @@ import _ from 'lodash';
 
 import YearView from '../views/YearView';
 import { getUnhandledProps } from '../lib';
+import BasePicker from './BasePicker';
 
 const YEARS_ON_PAGE = 3 * 4;
 
-class YearPicker extends React.Component {
+class YearPicker extends BasePicker {
   /*
     Note:
       use it like this <YearPicker key={someInputValue} />
@@ -37,7 +38,11 @@ class YearPicker extends React.Component {
     return years;
   }
 
-  getActiveYearPosition() {
+  getInitialDatePosition = () => {
+    return this.buildYears().indexOf(this.state.date.year().toString());
+  }
+
+  getActiveCellPosition() {
     /*
       Return position of a year that should be displayed as active
       (position in array returned by `this.buildYears`).
@@ -158,10 +163,12 @@ class YearPicker extends React.Component {
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onYearClick={this.handleChange}
+        hovered={this.state.hoveredCellPosition}
+        onCellHover={this.onHoveredCellPositionChange}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         disabled={this.getDisabledYearsPositions()}
-        active={this.getActiveYearPosition()} />
+        active={this.getActiveCellPosition()} />
     );
   }
 }

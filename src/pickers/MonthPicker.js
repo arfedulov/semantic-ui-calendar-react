@@ -5,10 +5,11 @@ import _ from 'lodash';
 
 import MonthView from '../views/MonthView';
 import { getUnhandledProps } from '../lib';
+import BasePicker from './BasePicker';
 
 const MONTHS_IN_YEAR = 12;
 
-class MonthPicker extends React.Component {
+class MonthPicker extends BasePicker {
   /*
     Note:
       use it like this <MonthPicker key={someInputValue} />
@@ -30,7 +31,11 @@ class MonthPicker extends React.Component {
     return moment.monthsShort();
   }
 
-  getActiveMonthPosition() {
+  getInitialDatePosition() {
+    return this.state.date.month();
+  }
+
+  getActiveCellPosition() {
     /*
       Return position of a month that should be displayed as active
       (position in array returned by `this.buildMonths`).
@@ -149,12 +154,14 @@ class MonthPicker extends React.Component {
         { ...rest }
         months={this.buildMonths()}
         onMonthClick={this.handleChange}
+        onCellHover={this.onHoveredCellPositionChange}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         disabled={this.getDisabledMonthsPositions()}
-        active={this.getActiveMonthPosition()}
+        active={this.getActiveCellPosition()}
+        hovered={this.state.hoveredCellPosition}
         currentYear={this.getCurrentYear()} />
     );
   }

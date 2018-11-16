@@ -75,7 +75,7 @@ describe('<YearPicker />: buildYears', function() {
   });
 });
 
-describe('<YearPicker />: getActiveYearPosition', function() {
+describe('<YearPicker />: getActiveCellPosition', function() {
   it('works properly when`value` prop provided', () => {
     const date = moment('2015-05-01');
     /*
@@ -89,16 +89,16 @@ describe('<YearPicker />: getActiveYearPosition', function() {
     const wrapper = shallow(<YearPicker
       initializeWith={date}
       value={moment('2012-01-01')} />);
-    assert(_.isFunction(wrapper.instance().getActiveYearPosition), 'has the method');
-    assert(_.isNumber(wrapper.instance().getActiveYearPosition()), 'method returns number');
-    assert.equal(wrapper.instance().getActiveYearPosition(), 8, 'method returns active year index');
+    assert(_.isFunction(wrapper.instance().getActiveCellPosition), 'has the method');
+    assert(_.isNumber(wrapper.instance().getActiveCellPosition()), 'method returns number');
+    assert.equal(wrapper.instance().getActiveCellPosition(), 8, 'method returns active year index');
   });
 
   it('works properly when `value` prop is undefined', () => {
     const date = moment('2015-05-01');
     const wrapper = shallow(<YearPicker
       initializeWith={date} />);
-    assert(_.isUndefined(wrapper.instance().getActiveYearPosition()), 'method returns undefined if `value` prop is undefined');
+    assert(_.isUndefined(wrapper.instance().getActiveCellPosition()), 'method returns undefined if `value` prop is undefined');
   });
 });
 

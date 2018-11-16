@@ -151,7 +151,7 @@ describe('<DatesRangePicker />: buildDays', () => {
   
 });
 
-describe('<DatesRangePicker />: getActiveDaysPositions', () => {
+describe('<DatesRangePicker />: getActiveCellsPositions', () => {
   const date = moment('2018-08-12');
 
   it('return empty range when `start` and `end` props are undefined', () => {
@@ -167,9 +167,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
       '2', '3', '4', '5', '6', '7', '8',
     ]
     */
-    assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-    assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().start), 'return { start: undefined, ... }');
-    assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().end), 'return { end: undefined, ... }');
+    assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+    assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().start), 'return { start: undefined, ... }');
+    assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().end), 'return { end: undefined, ... }');
   });
 
   it('return half-filled range when `start` prop has value and `end` prop is undefined', () => {
@@ -186,9 +186,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
       '2', '3', '4', '5', '6', '7', '8',
     ]
     */
-    assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-    assert.equal(wrapper.instance().getActiveDaysPositions().start, 8, 'return { start: 8, ... }');
-    assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().end), 'return { end: undefined, ... }');
+    assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+    assert.equal(wrapper.instance().getActiveCellsPositions().start, 8, 'return { start: 8, ... }');
+    assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().end), 'return { end: undefined, ... }');
   });
 
   it('return full range when `start` prop has value and `end` prop has value', () => {
@@ -206,9 +206,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
       '2', '3', '4', '5', '6', '7', '8',
     ]
     */
-    assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-    assert.equal(wrapper.instance().getActiveDaysPositions().start, 8, 'return { start: 8, ... }');
-    assert.equal(wrapper.instance().getActiveDaysPositions().end, 14, 'return { end: 14, ... }');
+    assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+    assert.equal(wrapper.instance().getActiveCellsPositions().start, 8, 'return { start: 8, ... }');
+    assert.equal(wrapper.instance().getActiveCellsPositions().end, 14, 'return { end: 14, ... }');
   });
 
   describe('`start` is in previous month and is not currently displayed, `end` is undefined', () => {
@@ -226,9 +226,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().start), 'return { start: undefined, ... }');
-      assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().end), 'return { end: undefined, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().start), 'return { start: undefined, ... }');
+      assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().end), 'return { end: undefined, ... }');
     });
   });
 
@@ -247,9 +247,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert.equal(wrapper.instance().getActiveDaysPositions().start, 1, 'return { start: 1, ... }');
-      assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().end), 'return { end: undefined, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert.equal(wrapper.instance().getActiveCellsPositions().start, 1, 'return { start: 1, ... }');
+      assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().end), 'return { end: undefined, ... }');
     });
   });
 
@@ -269,9 +269,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert.equal(wrapper.instance().getActiveDaysPositions().start, 0, 'return { start: 0, ... }');
-      assert.equal(wrapper.instance().getActiveDaysPositions().end, 6, 'return { end: 6, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert.equal(wrapper.instance().getActiveCellsPositions().start, 0, 'return { start: 0, ... }');
+      assert.equal(wrapper.instance().getActiveCellsPositions().end, 6, 'return { end: 6, ... }');
     });
   });
 
@@ -291,9 +291,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert.equal(wrapper.instance().getActiveDaysPositions().start, 1, 'return { start: 1, ... }');
-      assert.equal(wrapper.instance().getActiveDaysPositions().end, 6, 'return { end: 6, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert.equal(wrapper.instance().getActiveCellsPositions().start, 1, 'return { start: 1, ... }');
+      assert.equal(wrapper.instance().getActiveCellsPositions().end, 6, 'return { end: 6, ... }');
     });
   });
 
@@ -313,9 +313,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert.equal(wrapper.instance().getActiveDaysPositions().start, 32, 'return { start: 32, ... }');
-      assert.equal(wrapper.instance().getActiveDaysPositions().end, 41, 'return { end: 41, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert.equal(wrapper.instance().getActiveCellsPositions().start, 32, 'return { start: 32, ... }');
+      assert.equal(wrapper.instance().getActiveCellsPositions().end, 41, 'return { end: 41, ... }');
     });
   });
 
@@ -335,9 +335,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert.equal(wrapper.instance().getActiveDaysPositions().start, 32, 'return { start: 32, ... }');
-      assert.equal(wrapper.instance().getActiveDaysPositions().end, 35, 'return { end: 35, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert.equal(wrapper.instance().getActiveCellsPositions().start, 32, 'return { start: 32, ... }');
+      assert.equal(wrapper.instance().getActiveCellsPositions().end, 35, 'return { end: 35, ... }');
     });
   });
 
@@ -357,9 +357,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().start), 'return { start: undefined, ... }');
-      assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().end), 'return { end: undefined, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().start), 'return { start: undefined, ... }');
+      assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().end), 'return { end: undefined, ... }');
     });
   });
 
@@ -379,9 +379,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().start), 'return { start: undefined, ... }');
-      assert(_.isUndefined(wrapper.instance().getActiveDaysPositions().end), 'return { end: undefined, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().start), 'return { start: undefined, ... }');
+      assert(_.isUndefined(wrapper.instance().getActiveCellsPositions().end), 'return { end: undefined, ... }');
     });
   });
 
@@ -401,9 +401,9 @@ describe('<DatesRangePicker />: getActiveDaysPositions', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      assert(_.isObject(wrapper.instance().getActiveDaysPositions()), 'return object');
-      assert.equal(wrapper.instance().getActiveDaysPositions().start, 0, 'return { start: 0, ... }');
-      assert.equal(wrapper.instance().getActiveDaysPositions().end, 41, 'return { end: 41, ... }');
+      assert(_.isObject(wrapper.instance().getActiveCellsPositions()), 'return object');
+      assert.equal(wrapper.instance().getActiveCellsPositions().start, 0, 'return { start: 0, ... }');
+      assert.equal(wrapper.instance().getActiveCellsPositions().end, 41, 'return { end: 41, ... }');
     });
   });
 });

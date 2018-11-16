@@ -119,7 +119,7 @@ describe('<HourPicker />: buildHours', () => {
   
 });
 
-describe('<HourPicker />: getActiveHourPosition', () => {
+describe('<HourPicker />: getActiveCellPosition', () => {
   const date = moment('2018-08-12');
 
   it('return active hour', () => {
@@ -134,8 +134,8 @@ describe('<HourPicker />: getActiveHourPosition', () => {
         '18:00', '19:00', '20:00', '21:00', '22:00', '23:00',
       ]
     */
-    assert(_.isNumber(wrapper.instance().getActiveHourPosition()), 'return number');
-    assert.equal(wrapper.instance().getActiveHourPosition(), 15, 'return active hour position number');
+    assert(_.isNumber(wrapper.instance().getActiveCellPosition()), 'return number');
+    assert.equal(wrapper.instance().getActiveCellPosition(), 15, 'return active hour position number');
   });
 });
 

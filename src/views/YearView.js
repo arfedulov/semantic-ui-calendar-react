@@ -19,6 +19,8 @@ function YearView(props) {
     onHeaderClick,
     disabled,
     active,
+    hovered,
+    onCellHover,
   } = props;
   const headerTitle = `${_.first(years)} - ${_.last(years)}`;
   return (
@@ -35,6 +37,8 @@ function YearView(props) {
       <Body
         width={YEAR_CALENDAR_ROW_WIDTH}
         data={years}
+        hovered={hovered}
+        onCellHover={onCellHover}
         onCellClick={onYearClick}
         active={active}
         disabled={disabled} />
@@ -55,6 +59,10 @@ YearView.propTypes = {
   hasPrevPage: PropTypes.bool.isRequired,
   /** Whether to display next page button as active or disabled. */
   hasNextPage: PropTypes.bool.isRequired,
+  /** Called on calendar cell hover. */
+  onCellHover: PropTypes.func,
+  /** Index of a cell that should be displayed as hovered. */
+  hovered: PropTypes.number,
   /** Called after click on calendar header. */
   onHeaderClick: PropTypes.func,
   /** An array of numbers that represent indexes of years in `years` array that should be displayed as disabled. */

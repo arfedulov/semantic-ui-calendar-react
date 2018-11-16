@@ -19,6 +19,8 @@ function MinuteView(props) {
     onHeaderClick,
     active,
     currentDate,
+    hovered,
+    onCellHover,
   } = props;
   const headerProps = {
     onHeaderClick,
@@ -36,6 +38,8 @@ function MinuteView(props) {
       <Body
         width={MINUTE_CALENDAR_ROW_WIDTH}
         data={minutes}
+        hovered={hovered}
+        onCellHover={onCellHover}
         onCellClick={onMinuteClick}
         active={active} />
     </Calendar>
@@ -49,6 +53,10 @@ MinuteView.propTypes = {
   hasHeader: PropTypes.bool.isRequired,
   /** Called after click on minute. */
   onMinuteClick: PropTypes.func.isRequired,
+  /** Called on calendar cell hover. */
+  onCellHover: PropTypes.func,
+  /** Index of a cell that should be displayed as hovered. */
+  hovered: PropTypes.number,
   /** Called after click on next page button. */
   onNextPageBtnClick: PropTypes.func,
   /** Called after click on previous page button. */

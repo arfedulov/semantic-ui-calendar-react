@@ -11,10 +11,11 @@ import {
   isPrevPageAvailable,
   getCurrentDate,
 } from './sharedFunctions';
+import BasePicker from '../BasePicker';
 
 const MINUTES_STEP = 5;
 
-class MinutePicker extends React.Component {
+class MinutePicker extends BasePicker {
   constructor(props) {
     super(props);
     this.state = {
@@ -34,7 +35,11 @@ class MinutePicker extends React.Component {
       .map(minute => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat));
   }
 
-  getActiveMinutePosition() {
+  getInitialDatePosition = () => {
+    return 0;
+  }
+
+  getActiveCellPosition() {
     /*
       Return position of a minute that should be displayed as active
       (position in array returned by `this.buildMinutes`).
@@ -94,10 +99,12 @@ class MinutePicker extends React.Component {
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onMinuteClick={this.handleChange}
+        hovered={this.state.hoveredCellPosition}
+        onCellHover={this.onHoveredCellPositionChange}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}
         currentDate={this.getCurrentDate()}
-        active={this.getActiveMinutePosition()} />
+        active={this.getActiveCellPosition()} />
     );
   }
 }

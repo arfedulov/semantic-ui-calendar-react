@@ -11,12 +11,6 @@ const hoverCellStyles = {
 };
 
 class Cell extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hoverCell: false,
-    };
-  }
 
   toggleHoverCell = () => {
     this.setState((prevState) => {
@@ -28,18 +22,21 @@ class Cell extends React.Component {
     _.invoke(this.props, 'onClick', event, { ...this.props, value: this.props.content });
   }
 
+  onCellHover = (event) => {
+    _.invoke(this.props, 'onHover', event, { ...this.props });
+  }
+
   render() {
     const rest = getUnhandledProps(Cell, this.props);
     const style = { 
       ...this.props.style,
-      ...(this.state.hoverCell? hoverCellStyles : undefined),
+      ...(this.props.hovered? hoverCellStyles : undefined),
     };
     return (
       <Table.Cell
         { ...rest }
         style={style}
-        onMouseOver={this.toggleHoverCell}
-        onMouseLeave={this.toggleHoverCell}
+        onMouseOver={this.onCellHover}
         onClick={this.onCellClick}>
         { this.props.content }
       </Table.Cell>
@@ -59,6 +56,8 @@ Cell.propTypes = {
   ).isRequired,
   /** Called after click on a cell. */
   onClick: PropTypes.func,
+  onHover: PropTypes.func,
+  hovered: PropTypes.bool,
   style: PropTypes.object,
 };
 

@@ -37,6 +37,11 @@ function isActive(rowIndex, rowWidth, colIndex, active) {
   return rowIndex * rowWidth + colIndex === active;
 }
 
+function isHovered(rowIndex, rowWidth, colIndex, hovered) {
+  if (_.isNil(hovered)) return false;
+  return rowIndex * rowWidth + colIndex === hovered;
+}
+
 function isDisabled(rowIndex, rowWidth, colIndex, disabledIndexes) {
   if (_.isNil(disabledIndexes) || disabledIndexes.length === 0) return false;
   for (let i = 0; i < disabledIndexes.length; i++) {
@@ -65,6 +70,8 @@ function Body(props) {
     onCellClick,
     active,
     disabled,
+    hovered,
+    onCellHover,
   } = props;
   const content = buildRows(data, parseInt(width)).map((row, rowIndex) => (
     <Table.Row key={`${rowIndex}${row[0]}`}>
@@ -72,10 +79,12 @@ function Body(props) {
         <Cell
           style={getCellStyle(width)}
           active={isActive(rowIndex, parseInt(width), itemIndex, active)}
+          hovered={isHovered(rowIndex, parseInt(width), itemIndex, hovered)}
           disabled={isDisabled(rowIndex, parseInt(width), itemIndex, disabled)}
           key={`${rowIndex * width + itemIndex}`}
           itemPosition={rowIndex * width + itemIndex}
           content={item}
+          onHover={onCellHover}
           onClick={onCellClick} />
       )) }
     </Table.Row>
@@ -101,6 +110,9 @@ Body.propTypes = {
   ).isRequired,
   /** Called after a click on calendar's cell. */
   onCellClick: PropTypes.func,
+  onCellHover: PropTypes.func,
+  /** Index of an element in `data` array that should be displayed as hovered. */
+  hovered: PropTypes.number,
   /** Index of an element (or array of indexes) in `data` array that should be displayed as active. */
   active: PropTypes.oneOfType(
     [
