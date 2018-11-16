@@ -1,4 +1,5 @@
 :tada: Starting with version 0.8.0 it's css free.
+:warning: Uncompatible with *semantic-ui-react* version 0.83.0
 
 # semantic-ui-calendar-react
 Datepicker react component based on semantic-ui-react components
