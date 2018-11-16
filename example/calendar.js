@@ -80,6 +80,7 @@ class DateTimeForm extends React.Component {
           autoComplete="off"
           value={this.state.time}
           iconPosition="left"
+          disableMinute={false}
           onChange={this.handleChange} />
         <br />
         <DateTimeInput
