@@ -39,6 +39,7 @@ function InputView(props) {
       trigger={inputElement}
       hoverable={closeOnMouseLeave}
       flowing
+      tabIndex={1}
       mountNode={mountNode}
       onUnmount={onPopupUnmount}
       style={popupStyle}
