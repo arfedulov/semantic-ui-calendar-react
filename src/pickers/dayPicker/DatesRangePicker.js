@@ -15,6 +15,8 @@ import {
 } from './sharedFunctions';
 import BasePicker from '../BasePicker';
 
+const PAGE_WIDTH = 7;
+
 /** Return position of a given date on the page.
  * 
  * Page consists of some dates from previous month, dates from current month
@@ -90,9 +92,10 @@ class DatesRangePicker extends BasePicker {
       /* moment instance */
       date: props.initializeWith.clone(),
     };
+    this.PAGE_WIDTH = PAGE_WIDTH;
   }
 
-  buildDays() {
+  buildCalendarValues() {
     /*
       Return array of dates (strings) like ['31', '1', ...]
       that used to populate calendar's page.
@@ -100,8 +103,15 @@ class DatesRangePicker extends BasePicker {
     return buildDays(this.state.date, DAYS_ON_PAGE);
   }
 
+  getSelectableCellPositions = () => {
+    return _.filter(
+      _.range(0, DAYS_ON_PAGE),
+      d => !_.includes(this.getDisabledDaysPositions(), d),
+    );
+  }
+
   getInitialDatePosition = () => {
-    return this.buildDays().indexOf(this.state.date.date().toString());
+    return this.buildCalendarValues().indexOf(this.state.date.date().toString());
   }
 
   // TODO: too complicated method
@@ -109,14 +119,14 @@ class DatesRangePicker extends BasePicker {
     /*
       Return starting and ending positions of dates range that should be displayed as active
       { start: number, end: number }
-      (position in array returned by `this.buildDays`).
+      (position in array returned by `this.buildCalendarValues`).
     */
     const { date } = this.state;
     const {
       start,
       end,
     } = this.props;
-    const allDays = this.buildDays();
+    const allDays = this.buildCalendarValues();
     const fromCurrentMonthDayPositions = getDefaultEnabledDayPositions(allDays, date);
 
     const fromPrevMonthDates = getDatesFromPrevMonth(date, allDays, fromCurrentMonthDayPositions[0]);
@@ -176,7 +186,7 @@ class DatesRangePicker extends BasePicker {
   getDisabledDaysPositions() {
     /*
       Return position numbers of dates that should be displayed as disabled
-      (position in array returned by `this.buildDays`).
+      (position in array returned by `this.buildCalendarValues`).
     */
     const {
       maxDate,
@@ -214,7 +224,7 @@ class DatesRangePicker extends BasePicker {
       start,
       end,
     } = this.props;
-    const firstOnPage = parseInt(this.buildDays()[0]);
+    const firstOnPage = parseInt(this.buildCalendarValues()[0]);
     if (_.isNil(start) && _.isNil(end)) {
       const range = {
         start: buildMoment(this.state.date, firstOnPage, itemPosition),
@@ -257,7 +267,7 @@ class DatesRangePicker extends BasePicker {
     return (
       <DatesRangeView
         { ...rest }
-        days={this.buildDays()}
+        days={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onCellHover={this.onHoveredCellPositionChange}
@@ -265,6 +275,8 @@ class DatesRangePicker extends BasePicker {
         onDayClick={this.handleChange}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
+        onBlur={this.handleBlur}
+        onMount={this.props.onViewMount}
         currentDate={this.getCurrentDate()}
         selectedRange={this.getSelectedRange()}
         active={this.getActiveCellsPositions()}
@@ -288,6 +300,10 @@ DatesRangePicker.propTypes = {
   minDate: PropTypes.instanceOf(moment),
   /** Maximal date that could be selected. */
   maxDate: PropTypes.instanceOf(moment),
+  isPickerInFocus: PropTypes.func,
+  onViewMount: PropTypes.func,
+  /** Force popup to close. */
+  closePopup: PropTypes.func,
 };
 
 export default DatesRangePicker;

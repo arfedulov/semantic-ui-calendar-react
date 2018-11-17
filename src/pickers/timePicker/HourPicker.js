@@ -13,6 +13,9 @@ import {
 } from './sharedFunctions';
 import BasePicker from '../BasePicker';
 
+const HOURS_ON_PAGE = 24;
+const PAGE_WIDTH = 4;
+
 class HourPicker extends BasePicker {
   constructor(props) {
     super(props);
@@ -20,9 +23,10 @@ class HourPicker extends BasePicker {
       /* moment instance */
       date: props.initializeWith.clone(),
     };
+    this.PAGE_WIDTH = PAGE_WIDTH;
   }
 
-  buildHours() {
+  buildCalendarValues() {
     /*
       Return array of hours (strings) like ['16:00', '17:00', ...]
       that used to populate calendar's page.
@@ -32,6 +36,13 @@ class HourPicker extends BasePicker {
     }).map(hour => buildTimeStringWithSuffix(hour, '00', this.props.timeFormat));
   }
 
+  getSelectableCellPositions = () => {
+    return _.filter(
+      _.range(0, HOURS_ON_PAGE),
+      h => !_.includes(this.getDisabledHoursPositions(), h),
+    );
+  }
+
   getInitialDatePosition = () => {
     return 0;
   }
@@ -39,7 +50,7 @@ class HourPicker extends BasePicker {
   getActiveCellPosition() {
     /*
       Return position of an hour that should be displayed as active
-      (position in array returned by `this.buildHours`).
+      (position in array returned by `this.buildCalendarValues`).
     */
     const { value } = this.props;
     if (value && value.isSame(this.state.date, 'date')) {
@@ -58,7 +69,7 @@ class HourPicker extends BasePicker {
   getDisabledHoursPositions() {
     /*
       Return position numbers of hours that should be displayed as disabled
-      (position in array returned by `this.buildHours`).
+      (position in array returned by `this.buildCalendarValues`).
     */
     const {
       disable,
@@ -110,7 +121,7 @@ class HourPicker extends BasePicker {
       year: this.state.date.year(),
       month: this.state.date.month(),
       date: this.state.date.date(),
-      hour: this.buildHours().indexOf(value),
+      hour: this.buildCalendarValues().indexOf(value),
     };
     _.invoke(this.props, 'onChange', e, { ...this.props, value: data });
   }
@@ -136,12 +147,14 @@ class HourPicker extends BasePicker {
     return (
       <HourView
         { ...rest }
-        hours={this.buildHours()}
+        hours={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         onHourClick={this.handleChange}
+        onBlur={this.handleBlur}
+        onMount={this.props.onViewMount}
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         disabled={this.getDisabledHoursPositions()}
@@ -170,6 +183,10 @@ HourPicker.propTypes = {
   timeFormat: PropTypes.oneOf([
     'ampm', 'AMPM', '24',
   ]),
+  isPickerInFocus: PropTypes.func,
+  onViewMount: PropTypes.func,
+  /** Force popup to close. */
+  closePopup: PropTypes.func,
 };
 
 HourPicker.defaultProps = {

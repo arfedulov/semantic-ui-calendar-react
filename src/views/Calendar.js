@@ -2,15 +2,22 @@ import React from 'react';
 import { Table } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
-function Calendar(props) {
-  return (
-    <Table
-      unstackable
-      celled
-      textAlign="center">
-      { props.children }
-    </Table>
-  );
+class Calendar extends React.Component {
+  render() {
+    const {
+      children,
+      ...rest
+    } = this.props;
+    return (
+      <Table
+        unstackable
+        celled
+        {...rest}
+        textAlign="center">
+        { children }
+      </Table>
+    );
+  }
 }
 
 Calendar.propTypes = {

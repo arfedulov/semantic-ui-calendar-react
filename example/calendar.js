@@ -58,6 +58,7 @@ class DateTimeForm extends React.Component {
           iconPosition="left"
           preserveViewMode={false}
           autoComplete="off"
+          tabIndex="0"
           onChange={this.handleChange} />
         <br />
         <DateInput
@@ -69,6 +70,7 @@ class DateTimeForm extends React.Component {
           value={this.state.dateStartYear}
           iconPosition="left"
           autoComplete="off"
+          tabIndex="1"
           preserveViewMode={false}
           onChange={this.handleChange} />
         <br />
@@ -78,6 +80,7 @@ class DateTimeForm extends React.Component {
           className="example-calendar-input"
           name="time"
           autoComplete="off"
+          tabIndex="2"
           value={this.state.time}
           iconPosition="left"
           disableMinute={false}
@@ -92,6 +95,7 @@ class DateTimeForm extends React.Component {
           iconPosition="left"
           preserveViewMode={false}
           autoComplete="off"
+          tabIndex="3"
           onChange={this.handleChange} />
         <br />
         <DatesRangeInput
@@ -103,6 +107,7 @@ class DateTimeForm extends React.Component {
           value={this.state.datesRange}
           iconPosition="left"
           autoComplete="off"
+          tabIndex="4"
           onChange={this.handleChange} />
         <br />
         <YearInput
@@ -113,6 +118,7 @@ class DateTimeForm extends React.Component {
           value={this.state.year}
           iconPosition="left"
           autoComplete="off"
+          tabIndex="5"
           onChange={this.handleChange} />
         <br />
         <MonthInput
@@ -123,6 +129,7 @@ class DateTimeForm extends React.Component {
           value={this.state.month}
           iconPosition="left"
           autoComplete="off"
+          tabIndex="6"
           onChange={this.handleChange} />
       </Form>
     );

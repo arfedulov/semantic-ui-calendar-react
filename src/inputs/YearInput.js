@@ -53,18 +53,26 @@ class YearInput extends BaseInput {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        onPopupUnmount={this.onPopupClose}
         icon="calendar"
         { ...rest }
-        value={value}>
-        <YearPicker
-          onChange={this.handleSelect}
-          initializeWith={initializeWith}
-          value={parseValue(value, dateFormat)}
-          disable={parseArrayOrValue(disable, dateFormat)}
-          maxDate={parseValue(maxDate, dateFormat)}
-          minDate={parseValue(minDate, dateFormat)} />
-      </InputView>
+        value={value}
+        render={
+          (pickerProps) => (
+            <YearPicker
+              {...pickerProps}
+              isPickerInFocus={this.isPickerInFocus}
+              onViewMount={this.onViewMount}
+              closePopup={this.closePopup}
+              onChange={this.handleSelect}
+              initializeWith={initializeWith}
+              value={parseValue(value, dateFormat)}
+              disable={parseArrayOrValue(disable, dateFormat)}
+              maxDate={parseValue(maxDate, dateFormat)}
+              minDate={parseValue(minDate, dateFormat)}
+            />
+          )
+        }
+      />
     );
   }
 }

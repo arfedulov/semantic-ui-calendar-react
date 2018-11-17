@@ -14,6 +14,8 @@ import {
 import BasePicker from '../BasePicker';
 
 const MINUTES_STEP = 5;
+const MINUTES_ON_PAGE = 12;
+const PAGE_WIDTH = 3;
 
 class MinutePicker extends BasePicker {
   constructor(props) {
@@ -22,9 +24,10 @@ class MinutePicker extends BasePicker {
       /* moment instance */
       date: props.initializeWith.clone(),
     };
+    this.PAGE_WIDTH = PAGE_WIDTH;
   }
 
-  buildMinutes() {
+  buildCalendarValues() {
     /*
       Return array of minutes (strings) like ['16:15', '16:20', ...]
       that used to populate calendar's page.
@@ -35,6 +38,10 @@ class MinutePicker extends BasePicker {
       .map(minute => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat));
   }
 
+  getSelectableCellPositions = () => {
+    return _.range(0, MINUTES_ON_PAGE);
+  }
+
   getInitialDatePosition = () => {
     return 0;
   }
@@ -42,7 +49,7 @@ class MinutePicker extends BasePicker {
   getActiveCellPosition() {
     /*
       Return position of a minute that should be displayed as active
-      (position in array returned by `this.buildMinutes`).
+      (position in array returned by `this.buildCalendarValues`).
     */
     const { value } = this.props;
     if (value && value.isSame(this.state.date, 'date')) {
@@ -69,7 +76,7 @@ class MinutePicker extends BasePicker {
       month: this.state.date.month(),
       date: this.state.date.date(),
       hour: this.state.date.hour(),
-      minute: this.buildMinutes().indexOf(value) * MINUTES_STEP,
+      minute: this.buildCalendarValues().indexOf(value) * MINUTES_STEP,
     };
     _.invoke(this.props, 'onChange', e, { ...this.props, value: data });
   }
@@ -95,12 +102,14 @@ class MinutePicker extends BasePicker {
     return (
       <MinuteView
         { ...rest }
-        minutes={this.buildMinutes()}
+        minutes={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onMinuteClick={this.handleChange}
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
+        onBlur={this.handleBlur}
+        onMount={this.props.onViewMount}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}
         currentDate={this.getCurrentDate()}
@@ -128,6 +137,10 @@ MinutePicker.propTypes = {
   timeFormat: PropTypes.oneOf([
     'ampm', 'AMPM', '24',
   ]),
+  isPickerInFocus: PropTypes.func,
+  onViewMount: PropTypes.func,
+  /** Force popup to close. */
+  closePopup: PropTypes.func,
 };
 
 MinutePicker.defaultProps = {

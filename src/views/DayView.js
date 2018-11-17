@@ -1,49 +1,56 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
+import BaseView from './BaseView';
 
 export const DAY_CALENDAR_ROW_WIDTH = '7';
 export const WEEKS_TO_DISPLAY = 6;
 
-function DayView(props) {
-  const {
-    days,
-    onNextPageBtnClick,
-    onPrevPageBtnClick,
-    onDayClick,
-    hasNextPage,
-    hasPrevPage,
-    currentDate,
-    onHeaderClick,
-    disabled,
-    active,
-    hovered,
-    onCellHover,
-  } = props;
-  return (
-    <Calendar>
-      <Header
-        width={DAY_CALENDAR_ROW_WIDTH}
-        displayWeeks={true}
-        onNextPageBtnClick={onNextPageBtnClick}
-        onPrevPageBtnClick={onPrevPageBtnClick}
-        hasNextPage={hasNextPage}
-        hasPrevPage={hasPrevPage}
-        title={currentDate}
-        onHeaderClick={onHeaderClick} />
-      <Body
-        width={DAY_CALENDAR_ROW_WIDTH}
-        data={days}
-        hovered={hovered}
-        onCellHover={onCellHover}
-        onCellClick={onDayClick}
-        active={active}
-        disabled={disabled} />
-    </Calendar>
-  );
+class DayView extends BaseView {
+  render() {
+    const {
+      days,
+      onNextPageBtnClick,
+      onPrevPageBtnClick,
+      onDayClick,
+      hasNextPage,
+      hasPrevPage,
+      currentDate,
+      onHeaderClick,
+      disabled,
+      active,
+      hovered,
+      onCellHover,
+      hasHeader,
+      onMount,
+      ...rest
+    } = this.props;
+    return (
+      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} {...rest}>
+        <Header
+          width={DAY_CALENDAR_ROW_WIDTH}
+          displayWeeks={true}
+          onNextPageBtnClick={onNextPageBtnClick}
+          onPrevPageBtnClick={onPrevPageBtnClick}
+          hasNextPage={hasNextPage}
+          hasPrevPage={hasPrevPage}
+          title={currentDate}
+          onHeaderClick={onHeaderClick} />
+        <Body
+          width={DAY_CALENDAR_ROW_WIDTH}
+          data={days}
+          hovered={hovered}
+          onCellHover={onCellHover}
+          onCellClick={onDayClick}
+          active={active}
+          disabled={disabled} />
+      </Calendar>
+    );
+  }
 }
 
 DayView.propTypes = {
@@ -71,6 +78,7 @@ DayView.propTypes = {
   disabled: PropTypes.arrayOf(PropTypes.number),
   /** Position of a day to display as active. */
   active: PropTypes.number,
+  onMount: PropTypes.func,
 };
 
 export default DayView;

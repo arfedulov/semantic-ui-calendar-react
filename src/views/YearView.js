@@ -1,49 +1,55 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
+import BaseView from './BaseView';
 
 const YEAR_CALENDAR_ROW_WIDTH = '3';
 
-function YearView(props) {
-  const {
-    years,
-    onNextPageBtnClick,
-    onPrevPageBtnClick,
-    onYearClick,
-    hasNextPage,
-    hasPrevPage,
-    onHeaderClick,
-    disabled,
-    active,
-    hovered,
-    onCellHover,
-  } = props;
-  const headerTitle = `${_.first(years)} - ${_.last(years)}`;
-  return (
-    <Calendar>
-      <Header
-        title={headerTitle}
-        onNextPageBtnClick={onNextPageBtnClick}
-        onPrevPageBtnClick={onPrevPageBtnClick}
-        hasNextPage={hasNextPage}
-        hasPrevPage={hasPrevPage}
-        onHeaderClick={onHeaderClick}
-        width={YEAR_CALENDAR_ROW_WIDTH}
-        displayWeeks={false} />
-      <Body
-        width={YEAR_CALENDAR_ROW_WIDTH}
-        data={years}
-        hovered={hovered}
-        onCellHover={onCellHover}
-        onCellClick={onYearClick}
-        active={active}
-        disabled={disabled} />
-    </Calendar>
-  );
+class YearView extends BaseView {
+  render() {
+    const {
+      years,
+      onNextPageBtnClick,
+      onPrevPageBtnClick,
+      onYearClick,
+      hasNextPage,
+      hasPrevPage,
+      onHeaderClick,
+      disabled,
+      active,
+      hovered,
+      onCellHover,
+      onMount,
+      ...rest
+    } = this.props;
+    const headerTitle = `${_.first(years)} - ${_.last(years)}`;
+    return (
+      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} {...rest}>
+        <Header
+          title={headerTitle}
+          onNextPageBtnClick={onNextPageBtnClick}
+          onPrevPageBtnClick={onPrevPageBtnClick}
+          hasNextPage={hasNextPage}
+          hasPrevPage={hasPrevPage}
+          onHeaderClick={onHeaderClick}
+          width={YEAR_CALENDAR_ROW_WIDTH}
+          displayWeeks={false} />
+        <Body
+          width={YEAR_CALENDAR_ROW_WIDTH}
+          data={years}
+          hovered={hovered}
+          onCellHover={onCellHover}
+          onCellClick={onYearClick}
+          active={active}
+          disabled={disabled} />
+      </Calendar>
+    );
+  }
 }
 
 YearView.propTypes = {
@@ -69,6 +75,7 @@ YearView.propTypes = {
   disabled: PropTypes.arrayOf(PropTypes.number),
   /** Index of a year in `years` array that should be displayed as active. */
   active: PropTypes.number,
+  onMount: PropTypes.func,
 };
 
 export default YearView;

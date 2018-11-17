@@ -1,49 +1,55 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
+import BaseView from './BaseView';
 
 const MINUTE_CALENDAR_ROW_WIDTH = '3';
 
-function MinuteView(props) {
-  const {
-    minutes,
-    hasHeader,
-    onMinuteClick,
-    onNextPageBtnClick,
-    onPrevPageBtnClick,
-    hasNextPage,
-    hasPrevPage,
-    onHeaderClick,
-    active,
-    currentDate,
-    hovered,
-    onCellHover,
-  } = props;
-  const headerProps = {
-    onHeaderClick,
-    onNextPageBtnClick,
-    onPrevPageBtnClick,
-    hasNextPage,
-    hasPrevPage,
-    title: currentDate,
-    width: MINUTE_CALENDAR_ROW_WIDTH,
-    displayWeeks: false,
-  };
-  return (
-    <Calendar>
-      { hasHeader && <Header { ...headerProps } /> }
-      <Body
-        width={MINUTE_CALENDAR_ROW_WIDTH}
-        data={minutes}
-        hovered={hovered}
-        onCellHover={onCellHover}
-        onCellClick={onMinuteClick}
-        active={active} />
-    </Calendar>
-  );
+class MinuteView extends BaseView {
+  render() {
+    const {
+      minutes,
+      hasHeader,
+      onMinuteClick,
+      onNextPageBtnClick,
+      onPrevPageBtnClick,
+      hasNextPage,
+      hasPrevPage,
+      onHeaderClick,
+      active,
+      currentDate,
+      hovered,
+      onCellHover,
+      onMount,
+      ...rest
+    } = this.props;
+    const headerProps = {
+      onHeaderClick,
+      onNextPageBtnClick,
+      onPrevPageBtnClick,
+      hasNextPage,
+      hasPrevPage,
+      title: currentDate,
+      width: MINUTE_CALENDAR_ROW_WIDTH,
+      displayWeeks: false,
+    };
+    return (
+      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} {...rest}>
+        { hasHeader && <Header { ...headerProps } /> }
+        <Body
+          width={MINUTE_CALENDAR_ROW_WIDTH}
+          data={minutes}
+          hovered={hovered}
+          onCellHover={onCellHover}
+          onCellClick={onMinuteClick}
+          active={active} />
+      </Calendar>
+    );
+  }
 }
 
 MinuteView.propTypes = {
@@ -71,6 +77,7 @@ MinuteView.propTypes = {
   active: PropTypes.number,
   /** A date that is displayed in calendar header. */
   currentDate: PropTypes.string,
+  onMount: PropTypes.func,
 };
 
 export default MinuteView;

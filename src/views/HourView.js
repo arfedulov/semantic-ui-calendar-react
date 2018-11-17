@@ -1,51 +1,57 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 
 import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
+import BaseView from './BaseView';
 
 const HOUR_CALENDAR_ROW_WIDTH = '4';
 
-function HourView(props) {
-  const {
-    hours,
-    hasHeader,
-    onHourClick,
-    onNextPageBtnClick,
-    onPrevPageBtnClick,
-    hasPrevPage,
-    hasNextPage,
-    onHeaderClick,
-    disabled,
-    active,
-    currentDate,
-    hovered,
-    onCellHover,
-  } = props;
-  const headerProps = {
-    onNextPageBtnClick,
-    onPrevPageBtnClick,
-    hasPrevPage,
-    hasNextPage,
-    onHeaderClick,
-    title: currentDate,
-    width: HOUR_CALENDAR_ROW_WIDTH,
-    displayWeeks: false,
-  };
-  return (
-    <Calendar>
-      { hasHeader && <Header { ...headerProps } /> }
-      <Body
-        data={hours}
-        width={HOUR_CALENDAR_ROW_WIDTH}
-        onCellClick={onHourClick}
-        hovered={hovered}
-        onCellHover={onCellHover}
-        active={active}
-        disabled={disabled} />
-    </Calendar>
-  );
+class HourView extends BaseView {
+  render() {
+    const {
+      hours,
+      hasHeader,
+      onHourClick,
+      onNextPageBtnClick,
+      onPrevPageBtnClick,
+      hasPrevPage,
+      hasNextPage,
+      onHeaderClick,
+      disabled,
+      active,
+      currentDate,
+      hovered,
+      onCellHover,
+      onMount,
+      ...rest
+    } = this.props;
+    const headerProps = {
+      onNextPageBtnClick,
+      onPrevPageBtnClick,
+      hasPrevPage,
+      hasNextPage,
+      onHeaderClick,
+      title: currentDate,
+      width: HOUR_CALENDAR_ROW_WIDTH,
+      displayWeeks: false,
+    };
+    return (
+      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} {...rest}>
+        { hasHeader && <Header { ...headerProps } /> }
+        <Body
+          data={hours}
+          width={HOUR_CALENDAR_ROW_WIDTH}
+          onCellClick={onHourClick}
+          hovered={hovered}
+          onCellHover={onCellHover}
+          active={active}
+          disabled={disabled} />
+      </Calendar>
+    );
+  }
 }
 
 HourView.propTypes = {
@@ -75,6 +81,7 @@ HourView.propTypes = {
   active: PropTypes.number,
   /** Date that is displayed in calendar header. */
   currentDate: PropTypes.string,
+  onMount: PropTypes.func,
 };
 
 export default HourView;

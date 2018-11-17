@@ -68,7 +68,7 @@ class DateInput extends BaseInput {
     }
   }
 
-  getPicker() {
+  getPicker({ tabIndex }) {
     const {
       value,
       initialDate,
@@ -79,6 +79,10 @@ class DateInput extends BaseInput {
       enable,
     } = this.props;
     const pickerProps = {
+      isPickerInFocus: this.isPickerInFocus,
+      onViewMount: this.onViewMount,
+      closePopup: this.closePopup,
+      tabIndex,
       hasHeader: true,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
@@ -103,7 +107,7 @@ class DateInput extends BaseInput {
   _switchToNextModeUndelayed = () => {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
-    });
+    }, this.onModeSwitch);
   }
 
   switchToNextMode = () => {
@@ -113,7 +117,7 @@ class DateInput extends BaseInput {
   _switchToPrevModeUndelayed = () => {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
-    });
+    }, this.onModeSwitch);
   }
 
   switchToPrevMode = () => {
@@ -134,15 +138,12 @@ class DateInput extends BaseInput {
       const {
         mode,
       } = prevState;
-      let nextMode = mode;
-      if (mode !== 'day') {
-        nextMode = getNextMode(mode);
-      } else {
+      if (mode === 'day') {
         const outValue = moment(value).format(this.props.dateFormat);
         _.invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
-      return { mode: nextMode, ...value };
-    });
+      return { ...value };
+    }, () => this.state.mode !== 'day' && this.switchToNextMode());
   }
 
   render() {
@@ -153,13 +154,12 @@ class DateInput extends BaseInput {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        onPopupUnmount={this.onPopupClose}
         icon="calendar"
         onFocus={this._onFocus}
         { ...rest }
-        value={chooseValue(value, undefined)}>
-        { this.getPicker() }
-      </InputView>
+        render={(props) => this.getPicker(props)}
+        value={chooseValue(value, undefined)}
+      />
     );
   }
 }

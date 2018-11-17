@@ -58,23 +58,31 @@ class TimeInput extends BaseInput {
       this.closePopup();
     }
     if(!disableMinute)
-      this.setState((prevState) => {
-        return { mode: getNextMode(prevState.mode) };
-      });
+      this.switchToNextMode();
   }
 
-  getPicker() {
+  switchToNextMode = () => {
+    this.setState(({ mode }) => {
+      return { mode: getNextMode(mode) };
+    }, this.onModeSwitch);
+  }
+
+  getPicker({ tabIndex }) {
     const {
       value,
       timeFormat
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat]);
     const pickerProps = {
+      onViewMount: this.onViewMount,
+      isPickerInFocus: this.isPickerInFocus,
       hasHeader: false,
+      closePopup: this.closePopup,
       initializeWith: getInitializer({ initialDate: currentValue, dateFormat: TIME_FORMAT[timeFormat] }),
       value: currentValue,
       onChange: this.handleSelect,
       timeFormat,
+      tabIndex,
       // key: value, // seems like it works without reinstantiating picker every time value changes
     };
     if (this.state.mode === 'hour') {
@@ -91,12 +99,11 @@ class TimeInput extends BaseInput {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        onPopupUnmount={this.onPopupClose}
         icon="time"
         { ...rest }
-        value={value}>
-        { this.getPicker() }
-      </InputView>
+        value={value}
+        render={pickerProps => this.getPicker(pickerProps)}
+      />
     );
   }
 }

@@ -48,19 +48,24 @@ class MonthInput extends BaseInput {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        onPopupUnmount={this.onPopupClose}
         icon="calendar"
         { ...rest }
-        value={value}>
-        <MonthPicker
-          hasHeader={false}
-          onChange={this.handleSelect}
-          initializeWith={getInitializer({ initialDate, dateFormat })}
-          value={parseValue(value, dateFormat)}
-          disable={parseArrayOrValue(disable, dateFormat)}
-          maxDate={parseValue(maxDate, dateFormat)}
-          minDate={parseValue(minDate, dateFormat)} />
-      </InputView>
+        value={value}
+        render={(pickerProps) => (
+          <MonthPicker
+            {...pickerProps}
+            isPickerInFocus={this.isPickerInFocus}
+            onViewMount={this.onViewMount}
+            closePopup={this.closePopup}
+            hasHeader={false}
+            onChange={this.handleSelect}
+            initializeWith={getInitializer({ initialDate, dateFormat })}
+            value={parseValue(value, dateFormat)}
+            disable={parseArrayOrValue(disable, dateFormat)}
+            maxDate={parseValue(maxDate, dateFormat)}
+            minDate={parseValue(minDate, dateFormat)} />
+        )}
+      />
     );
   }
 }

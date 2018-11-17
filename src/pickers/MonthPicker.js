@@ -8,6 +8,7 @@ import { getUnhandledProps } from '../lib';
 import BasePicker from './BasePicker';
 
 const MONTHS_IN_YEAR = 12;
+const PAGE_WIDTH = 3;
 
 class MonthPicker extends BasePicker {
   /*
@@ -21,14 +22,22 @@ class MonthPicker extends BasePicker {
       /* moment instance */
       date: props.initializeWith.clone(),
     };
+    this.PAGE_WIDTH = PAGE_WIDTH;
   }
 
-  buildMonths() {
+  buildCalendarValues() {
     /*
       Return array of months (strings) like ['Aug', 'Sep', ...]
       that used to populate calendar's page.
     */
     return moment.monthsShort();
+  }
+
+  getSelectableCellPositions = () => {
+    return _.filter(
+      _.range(0, MONTHS_IN_YEAR),
+      m => !_.includes(this.getDisabledMonthsPositions(), m),
+    );
   }
 
   getInitialDatePosition() {
@@ -38,7 +47,7 @@ class MonthPicker extends BasePicker {
   getActiveCellPosition() {
     /*
       Return position of a month that should be displayed as active
-      (position in array returned by `this.buildMonths`).
+      (position in array returned by `this.buildCalendarValues`).
     */
     if (!_.isNil(this.props.value)) {
       if (this.props.value.year() === this.state.date.year()) {
@@ -50,7 +59,7 @@ class MonthPicker extends BasePicker {
   getDisabledMonthsPositions() {
     /*
       Return position numbers of months that should be displayed as disabled
-      (position in array returned by `this.buildMonths`).
+      (position in array returned by `this.buildCalendarValues`).
     */
     let disabled = [];
     if (_.isArray(this.props.enable)) {
@@ -127,7 +136,7 @@ class MonthPicker extends BasePicker {
 
   handleChange = (e, { value }) => {
     const year = parseInt(this.getCurrentYear());
-    const month = this.buildMonths().indexOf(value);
+    const month = this.buildCalendarValues().indexOf(value);
     _.invoke(this.props, 'onChange', e, { ...this.props, value: { year, month } });
   }
 
@@ -152,13 +161,15 @@ class MonthPicker extends BasePicker {
     return (
       <MonthView
         { ...rest }
-        months={this.buildMonths()}
+        months={this.buildCalendarValues()}
         onMonthClick={this.handleChange}
         onCellHover={this.onHoveredCellPositionChange}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
+        onBlur={this.handleBlur}
+        onMount={this.props.onViewMount}
         disabled={this.getDisabledMonthsPositions()}
         active={this.getActiveCellPosition()}
         hovered={this.state.hoveredCellPosition}
@@ -186,6 +197,10 @@ MonthPicker.propTypes = {
   minDate: PropTypes.instanceOf(moment),
   /** Maximal month that could be selected. */
   maxDate: PropTypes.instanceOf(moment),
+  /** Force popup to close. */
+  closePopup: PropTypes.func,
+  isPickerInFocus: PropTypes.func,
+  onViewMount: PropTypes.func,
 };
 
 export default MonthPicker;
