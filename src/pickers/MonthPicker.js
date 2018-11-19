@@ -169,6 +169,7 @@ class MonthPicker extends BasePicker {
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         onBlur={this.handleBlur}
+        inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
         disabled={this.getDisabledMonthsPositions()}
         active={this.getActiveCellPosition()}

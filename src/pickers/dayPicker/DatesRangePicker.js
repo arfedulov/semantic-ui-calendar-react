@@ -273,6 +273,7 @@ class DatesRangePicker extends BasePicker {
         onCellHover={this.onHoveredCellPositionChange}
         hovered={this.state.hoveredCellPosition}
         onDayClick={this.handleChange}
+        inline={this.props.inline}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         onBlur={this.handleBlur}

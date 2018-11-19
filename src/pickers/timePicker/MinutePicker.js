@@ -109,6 +109,7 @@ class MinutePicker extends BasePicker {
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         onBlur={this.handleBlur}
+        inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}

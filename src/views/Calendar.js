@@ -6,10 +6,17 @@ class Calendar extends React.Component {
   render() {
     const {
       children,
+      inline,
       ...rest
     } = this.props;
+    const style = {
+      // Prevent poped up picker from beeing outlined on focus.
+      // Inline picker should be outlined when in focus.
+      outline: inline ? undefined : 'none',
+    };
     return (
       <Table
+        style={style}
         unstackable
         celled
         {...rest}

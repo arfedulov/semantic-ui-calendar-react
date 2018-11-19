@@ -174,6 +174,7 @@ class YearPicker extends BasePicker {
         onPrevPageBtnClick={this.switchToPrevPage}
         onYearClick={this.handleChange}
         onBlur={this.handleBlur}
+        inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
