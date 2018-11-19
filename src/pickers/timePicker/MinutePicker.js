@@ -109,7 +109,7 @@ class MinutePicker extends BasePicker {
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         onBlur={this.handleBlur}
-        onMount={this.props.onViewMount}
+        onMount={this.props.onCalendarViewMount}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}
         currentDate={this.getCurrentDate()}
@@ -138,9 +138,11 @@ MinutePicker.propTypes = {
     'ampm', 'AMPM', '24',
   ]),
   isPickerInFocus: PropTypes.func,
-  onViewMount: PropTypes.func,
+  isTriggerInFocus: PropTypes.func,
+  onCalendarViewMount: PropTypes.func,
   /** Force popup to close. */
   closePopup: PropTypes.func,
+  inline: PropTypes.bool,
 };
 
 MinutePicker.defaultProps = {

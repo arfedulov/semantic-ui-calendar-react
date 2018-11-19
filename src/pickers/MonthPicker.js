@@ -169,7 +169,7 @@ class MonthPicker extends BasePicker {
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         onBlur={this.handleBlur}
-        onMount={this.props.onViewMount}
+        onMount={this.props.onCalendarViewMount}
         disabled={this.getDisabledMonthsPositions()}
         active={this.getActiveCellPosition()}
         hovered={this.state.hoveredCellPosition}
@@ -200,7 +200,9 @@ MonthPicker.propTypes = {
   /** Force popup to close. */
   closePopup: PropTypes.func,
   isPickerInFocus: PropTypes.func,
-  onViewMount: PropTypes.func,
+  isTriggerInFocus: PropTypes.func,
+  onCalendarViewMount: PropTypes.func,
+  inline: PropTypes.bool,
 };
 
 export default MonthPicker;

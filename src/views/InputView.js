@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Popup, Form } from 'semantic-ui-react';
 
@@ -9,7 +10,18 @@ const popupStyle = {
   filter: 'none', // prevents bluring popup when used inside Modal with dimmer="bluring" #28 #26
 };
 
+class FormInputWithRef extends React.Component {
+  render() {
+    return (
+      <Form.Input { ...this.props }/>
+    );
+  }
+}
+
 class InputView extends React.Component {
+  componentDidMount() {
+    this.props.onMount && this.props.onMount(this.inputNode);
+  }
 
   render() {
     const {
@@ -26,10 +38,14 @@ class InputView extends React.Component {
     const rest = getUnhandledProps(InputView, this.props);
   
     const inputElement = (
-      <Form.Input
+      <FormInputWithRef
         { ...rest }
+        ref={e => {
+          const node = ReactDOM.findDOMNode(e);
+          this.inputNode = node && node.querySelector('input');
+        }}
         value={value}
-        tabIndex={parseInt(tabIndex) + 1} // +1 makes possible to focus calendar inside a popup via Tab
+        tabIndex={tabIndex}
         inline={inlineLabel}
         onChange={onChange} />
     );
@@ -51,7 +67,7 @@ class InputView extends React.Component {
       >
         {
           this.props.render({
-            tabIndex: parseInt(tabIndex) + 1, // +1 makes possible to focus calendar inside a popup via Tab
+            tabIndex: -1,
           })
         }
       </Popup>
@@ -83,6 +99,7 @@ InputView.propTypes = {
     PropTypes.string,
     PropTypes.number,
   ]),
+  onMount: PropTypes.func,
 };
 
 InputView.defaultProps = {

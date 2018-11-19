@@ -174,7 +174,7 @@ class YearPicker extends BasePicker {
         onPrevPageBtnClick={this.switchToPrevPage}
         onYearClick={this.handleChange}
         onBlur={this.handleBlur}
-        onMount={this.props.onViewMount}
+        onMount={this.props.onCalendarViewMount}
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         hasPrevPage={this.isPrevPageAvailable()}
@@ -208,7 +208,9 @@ YearPicker.propTypes = {
   /** Force popup to close. */
   closePopup: PropTypes.func,
   isPickerInFocus: PropTypes.func,
-  onViewMount: PropTypes.func,
+  isTriggerInFocus: PropTypes.func,
+  onCalendarViewMount: PropTypes.func,
+  inline: PropTypes.bool,
 };
 
 export default YearPicker;

@@ -276,7 +276,7 @@ class DatesRangePicker extends BasePicker {
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         onBlur={this.handleBlur}
-        onMount={this.props.onViewMount}
+        onMount={this.props.onCalendarViewMount}
         currentDate={this.getCurrentDate()}
         selectedRange={this.getSelectedRange()}
         active={this.getActiveCellsPositions()}
@@ -301,9 +301,11 @@ DatesRangePicker.propTypes = {
   /** Maximal date that could be selected. */
   maxDate: PropTypes.instanceOf(moment),
   isPickerInFocus: PropTypes.func,
-  onViewMount: PropTypes.func,
+  isTriggerInFocus: PropTypes.func,
+  onCalendarViewMount: PropTypes.func,
   /** Force popup to close. */
   closePopup: PropTypes.func,
+  inline: PropTypes.bool,
 };
 
 export default DatesRangePicker;

@@ -56,12 +56,15 @@ class YearInput extends BaseInput {
         icon="calendar"
         { ...rest }
         value={value}
+        onMount={this.onInputViewMount}
         render={
           (pickerProps) => (
             <YearPicker
               {...pickerProps}
               isPickerInFocus={this.isPickerInFocus}
-              onViewMount={this.onViewMount}
+              isTriggerInFocus={this.isTriggerInFocus}
+              inline={this.props.inline}
+              onCalendarViewMount={this.onCalendarViewMount}
               closePopup={this.closePopup}
               onChange={this.handleSelect}
               initializeWith={initializeWith}

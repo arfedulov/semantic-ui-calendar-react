@@ -70,12 +70,15 @@ class TimeInput extends BaseInput {
   getPicker({ tabIndex }) {
     const {
       value,
-      timeFormat
+      timeFormat,
+      inline,
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat]);
     const pickerProps = {
-      onViewMount: this.onViewMount,
+      inline: inline,
+      onCalendarViewMount: this.onCalendarViewMount,
       isPickerInFocus: this.isPickerInFocus,
+      isTriggerInFocus: this.isTriggerInFocus,
       hasHeader: false,
       closePopup: this.closePopup,
       initializeWith: getInitializer({ initialDate: currentValue, dateFormat: TIME_FORMAT[timeFormat] }),
@@ -100,6 +103,7 @@ class TimeInput extends BaseInput {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         icon="time"
+        onMount={this.onInputViewMount}
         { ...rest }
         value={value}
         render={pickerProps => this.getPicker(pickerProps)}

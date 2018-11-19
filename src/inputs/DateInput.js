@@ -77,10 +77,13 @@ class DateInput extends BaseInput {
       minDate,
       maxDate,
       enable,
+      inline,
     } = this.props;
     const pickerProps = {
       isPickerInFocus: this.isPickerInFocus,
-      onViewMount: this.onViewMount,
+      isTriggerInFocus: this.isTriggerInFocus,
+      inline: inline,
+      onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
       tabIndex,
       hasHeader: true,
@@ -154,6 +157,7 @@ class DateInput extends BaseInput {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
+        onMount={this.onInputViewMount}
         icon="calendar"
         onFocus={this._onFocus}
         { ...rest }

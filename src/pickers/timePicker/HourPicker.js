@@ -154,7 +154,7 @@ class HourPicker extends BasePicker {
         hasNextPage={this.isNextPageAvailable()}
         onHourClick={this.handleChange}
         onBlur={this.handleBlur}
-        onMount={this.props.onViewMount}
+        onMount={this.props.onCalendarViewMount}
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         disabled={this.getDisabledHoursPositions()}
@@ -184,9 +184,11 @@ HourPicker.propTypes = {
     'ampm', 'AMPM', '24',
   ]),
   isPickerInFocus: PropTypes.func,
-  onViewMount: PropTypes.func,
+  isTriggerInFocus: PropTypes.func,
+  onCalendarViewMount: PropTypes.func,
   /** Force popup to close. */
   closePopup: PropTypes.func,
+  inline: PropTypes.bool,
 };
 
 HourPicker.defaultProps = {

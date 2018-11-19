@@ -21,20 +21,28 @@ class BaseInput extends React.Component {
     return document.activeElement === this.calendarNode;
   }
 
+  isTriggerInFocus = () => {
+    return document.activeElement === this.inputNode;
+  }
+
   onModeSwitch = () => {
-    // when using keyboard for selecting values on calendar
+    // when using keyboard for selecting values on inline calendar
     // and when mode switches, picker looses focus.
     // In order to preserve focus on active picker
     // we call focus() on `calendarNode`.
     // `calendarNode` goes from *View component via
-    // `this.onViewMount` callback
-    if (!this.isPickerInFocus()) {
+    // `this.onCalendarViewMount` callback
+    if (this.props.inline && !this.isPickerInFocus()) {
       this.calendarNode && this.calendarNode.focus();
     }
   }
 
-  onViewMount = (calendarNode) => {
+  onCalendarViewMount = (calendarNode) => {
     this.calendarNode = calendarNode;
+  }
+
+  onInputViewMount = (inputNode) => {
+    this.inputNode = inputNode;
   }
 }
 

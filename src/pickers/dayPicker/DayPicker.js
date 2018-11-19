@@ -142,7 +142,7 @@ class DayPicker extends BasePicker {
         onPrevPageBtnClick={this.switchToPrevPage}
         onDayClick={this.handleChange}
         onBlur={this.handleBlur}
-        onMount={this.props.onViewMount}
+        onMount={this.props.onCalendarViewMount}
         hovered={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         currentDate={this.getCurrentDate()}
@@ -175,7 +175,9 @@ DayPicker.propTypes = {
   /** Force popup to close. */
   closePopup: PropTypes.func,
   isPickerInFocus: PropTypes.func,
-  onViewMount: PropTypes.func,
+  isTriggerInFocus: PropTypes.func,
+  onCalendarViewMount: PropTypes.func,
+  inline: PropTypes.bool,
 };
 
 export default DayPicker;
