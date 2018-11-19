@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.12.0 2018-11-19
+
+- feat: add disableMinute prop to TimeInput (#49) [`#49`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/49)
+
+- feat: keyboard shortcuts support [`0033d62`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/0033d62a8061c3cd1d2d9ff0fad7b0e17b0167a2)
+
+- fix: popup closes on selection [`e3d1807`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/e3d1807d810c06ff32936ab5c4f3ea4aedf12f53)
+
+- fix: extra Tab needed to navigate inside calendar [`5acc549`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/5acc5491de046b80fb3b444b3a664f327a1e15f2)
+
+- fix: remove on focus outline from poped up picker [`550f1a4`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/550f1a494b904811707459932314ad864dd815e8)
+
 ## v0.11.0 2018-11-03
 
 - feat: add dateTimeFormat prop to DateTimePicker (#42) [`#42`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/42)
