@@ -4,7 +4,7 @@
   "description": "date/time picker built from semantic-ui elements",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npx mocha -r @babel/register ./test/**/*.js",
+    "test": "npx mocha -r @babel/register ./test/setup.js ./test/**/*.js",
     "start": "npx webpack-dev-server",
     "prebuild": "npx rimraf dist/*",
     "build": "npx babel src -d dist",

@@ -2,7 +2,7 @@ import { assert } from 'chai';
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import {
-  shallow,
+  mount,
 } from 'enzyme';
 import sinon from 'sinon';
 import React from 'react';
@@ -10,14 +10,13 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import HourPicker from '../../../src/pickers/timePicker/HourPicker';
-import HourView from '../../../src/views/HourView';
 
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('<HourPicker />', () => {
   it('initialized with moment', () => {
     const date = moment('2015-05-01');
-    const wrapper = shallow(<HourPicker initializeWith={date} />);
+    const wrapper = mount(<HourPicker initializeWith={date} />);
     assert(
       moment.isMoment(wrapper.state('date')),
       'has moment instance in `date` state field');
@@ -25,54 +24,23 @@ describe('<HourPicker />', () => {
       wrapper.state('date').isSame(date),
       'initialize `date` state field with moment provided in `initializeWith` prop');
   });
-
-  it('render <HourPicker /> properly', () => {
-    const date = moment('2015-05-01');
-    const wrapper = shallow(<HourPicker
-      initializeWith={date} />);
-    assert(wrapper.is(HourView), 'renders <HourView />');
-    assert(_.isArray(wrapper.prop('hours')), 'provide array to `hours` prop on HourView');
-    assert.equal(wrapper.prop('hours').length, 24, 'provide array of length 24 to `hours` prop on HourView');
-    wrapper.prop('hours').forEach((hour) => {
-      assert(_.isString(hour), 'contains strings');
-    });
-    assert(_.isFunction(wrapper.prop('onNextPageBtnClick')), 'provide function for `onNextPageBtnClick` prop on HourView');
-    assert(_.isFunction(wrapper.prop('onPrevPageBtnClick')), 'provide function for `onPrevPageBtnClick` prop on HourView');
-    assert(_.isFunction(wrapper.prop('onHourClick')), 'provide function for `onHourClick` prop on HourView');
-    assert(_.isBoolean(wrapper.prop('hasPrevPage')), 'provide boolean for `hasPrevPage` prop on HourView');
-    assert(_.isBoolean(wrapper.prop('hasNextPage')), 'provide boolean for `hasNextPage` prop on HourView');
-    assert(_.isString(wrapper.prop('currentDate')), 'provide string for `currentDate` prop on HourView');
-    assert(_.has(wrapper.props(), 'active'), 'provide `active` prop to HourView');
-    assert(_.has(wrapper.props(), 'disabled'), 'provide `disabled` prop to HourView');
-  });
-
-  it('pass unhandled props to <HourView />', () => {
-    const date = moment('2015-05-01');
-    const wrapper = shallow(<HourPicker
-      a="prop a"
-      b="prop b"
-      initializeWith={date} />);
-    assert(wrapper.is(HourView), 'renders <HourView />');
-    assert.equal(wrapper.prop('a'), 'prop a', 'provide unhandled prop `a` to HourView');
-    assert.equal(wrapper.prop('b'), 'prop b', 'provide unhandled prop `b` to HourView');
-  });
 });
 
-describe('<HourPicker />: buildHours', () => {
+describe('<HourPicker />: buildCalendarValues', () => {
   const date = moment('2018-08-12');
 
   describe('`timeFormat` not provided', () => {
     it('return array of strings', () => {
-      const wrapper = shallow(<HourPicker initializeWith={date} />);
+      const wrapper = mount(<HourPicker initializeWith={date} />);
       const shouldReturn = [
         '00:00', '01:00', '02:00', '03:00', '04:00', '05:00',
         '06:00', '07:00', '08:00', '09:00', '10:00', '11:00',
         '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
         '18:00', '19:00', '20:00', '21:00', '22:00', '23:00',
       ];
-      assert(_.isArray(wrapper.instance().buildHours()), 'return array');
-      assert.equal(wrapper.instance().buildHours().length, 24, 'return array of length 24');
-      wrapper.instance().buildHours().forEach((hour, i) => {
+      assert(_.isArray(wrapper.instance().buildCalendarValues()), 'return array');
+      assert.equal(wrapper.instance().buildCalendarValues().length, 24, 'return array of length 24');
+      wrapper.instance().buildCalendarValues().forEach((hour, i) => {
         assert.equal(hour, shouldReturn[i], 'contains corect hours');
       });
     });
@@ -80,7 +48,7 @@ describe('<HourPicker />: buildHours', () => {
 
   describe('`timeFormat` is ampm', () => {
     it('return array of strings', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         timeFormat="ampm"
         initializeWith={date} />);
       const shouldReturn = [
@@ -89,9 +57,9 @@ describe('<HourPicker />: buildHours', () => {
         '12:00 pm', '01:00 pm', '02:00 pm', '03:00 pm', '04:00 pm', '05:00 pm',
         '06:00 pm', '07:00 pm', '08:00 pm', '09:00 pm', '10:00 pm', '11:00 pm',
       ];
-      assert(_.isArray(wrapper.instance().buildHours()), 'return array');
-      assert.equal(wrapper.instance().buildHours().length, 24, 'return array of length 24');
-      wrapper.instance().buildHours().forEach((hour, i) => {
+      assert(_.isArray(wrapper.instance().buildCalendarValues()), 'return array');
+      assert.equal(wrapper.instance().buildCalendarValues().length, 24, 'return array of length 24');
+      wrapper.instance().buildCalendarValues().forEach((hour, i) => {
         assert.equal(hour, shouldReturn[i], 'contains corect hours');
       });
     });
@@ -99,7 +67,7 @@ describe('<HourPicker />: buildHours', () => {
 
   describe('`timeFormat` is AMPM', () => {
     it('return array of strings', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         timeFormat="AMPM"
         initializeWith={date} />);
       const shouldReturn = [
@@ -108,9 +76,9 @@ describe('<HourPicker />: buildHours', () => {
         '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM', '05:00 PM',
         '06:00 PM', '07:00 PM', '08:00 PM', '09:00 PM', '10:00 PM', '11:00 PM',
       ];
-      assert(_.isArray(wrapper.instance().buildHours()), 'return array');
-      assert.equal(wrapper.instance().buildHours().length, 24, 'return array of length 24');
-      wrapper.instance().buildHours().forEach((hour, i) => {
+      assert(_.isArray(wrapper.instance().buildCalendarValues()), 'return array');
+      assert.equal(wrapper.instance().buildCalendarValues().length, 24, 'return array of length 24');
+      wrapper.instance().buildCalendarValues().forEach((hour, i) => {
         assert.equal(hour, shouldReturn[i], 'contains corect hours');
       });
     });
@@ -123,7 +91,7 @@ describe('<HourPicker />: getActiveCellPosition', () => {
   const date = moment('2018-08-12');
 
   it('return active hour', () => {
-    const wrapper = shallow(<HourPicker
+    const wrapper = mount(<HourPicker
       value={moment('2018-08-12 15:00')}
       initializeWith={date} />);
     /*
@@ -144,7 +112,7 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
 
   describe('return disabled hour positions based on `disable` prop', () => {
     it('return disabled hour positions position numbers', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         disable={[moment('2018-08-12 12:00'), moment('2018-08-12 14:00')]}
         initializeWith={date} />);
       
@@ -160,7 +128,7 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
 
   describe('return disabled hour positions based on `maxDate` prop', () => {
     it('return disabled hour positions position numbers', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         maxDate={moment('2018-08-12 15:00')}
         initializeWith={date} />);
       const shouldReturn = [
@@ -180,7 +148,7 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
 
   describe('return disabled hour positions based on `minDate` prop', () => {
     it('return disabled hour positions position numbers', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         minDate={moment('2018-08-12 03:00')}
         initializeWith={date} />);
       
@@ -201,7 +169,7 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
 
   describe('return disabled hour positions based on `minDate`, `maxDate`, `disable` props', () => {
     it('return disabled hour positions position numbers', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         minDate={moment('2018-08-12 03:00')}
         maxDate={moment('2018-08-12 19:00')}
         disable={[moment('2018-08-12 12:00'), moment('2018-08-12 14:00')]}
@@ -225,7 +193,7 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
 
   describe('return disabled hour positions when none of `minDate`, `maxDate`, `disable` props provided', () => {
     it('return disabled hour positions position numbers', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         initializeWith={date} />);
       
       assert(_.isUndefined(wrapper.instance().getDisabledHoursPositions()), 'return undefined');
@@ -238,7 +206,7 @@ describe('<HourPicker />: isNextPageAvailable', () => {
 
   describe('is not available by maxDate', () => {
     it('return false', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         maxDate={moment('2018-08-12')}
         initializeWith={date} />);
       
@@ -249,7 +217,7 @@ describe('<HourPicker />: isNextPageAvailable', () => {
 
   describe('available by maxDate', () => {
     it('return true', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         maxDate={moment('2018-08-13')}
         initializeWith={date} />);
       
@@ -264,7 +232,7 @@ describe('<HourPicker />: isPrevPageAvailable', () => {
 
   describe('is not available by minDate', () => {
     it('return false', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         minDate={moment('2018-08-12')}
         initializeWith={date} />);
       
@@ -275,7 +243,7 @@ describe('<HourPicker />: isPrevPageAvailable', () => {
 
   describe('available by minDate', () => {
     it('return true', () => {
-      const wrapper = shallow(<HourPicker
+      const wrapper = mount(<HourPicker
         minDate={moment('2018-07-11')}
         initializeWith={date} />);
       
@@ -289,7 +257,7 @@ describe('<HourPicker />: getCurrentDate', () => {
   const date = moment('2018-08-12');
 
   it('return string in format `MMMM DD, YYYY`', () => {
-    const wrapper = shallow(<HourPicker
+    const wrapper = mount(<HourPicker
       initializeWith={date} />);
     
     assert(_.isString(wrapper.instance().getCurrentDate()), 'return string');
@@ -302,10 +270,10 @@ describe('<HourPicker />: handleChange', () => {
 
   it('call onChangeFake with { year: number, month: number, date: number, hour: number }', () => {
     const onChangeFake = sinon.fake();
-    const wrapper = shallow(<HourPicker
+    const wrapper = mount(<HourPicker
       onChange={onChangeFake}
       initializeWith={date} />);
-    const possibleValues = wrapper.instance().buildHours();
+    const possibleValues = wrapper.instance().buildCalendarValues();
     wrapper.instance().handleChange('click', { value: possibleValues[15]});
     const calledWithArgs = onChangeFake.args[0];
 
@@ -322,7 +290,7 @@ describe('<HourPicker />: switchToNextPage', () => {
   const date = moment('2018-08-12');
 
   it('shift `date` state field one day forward', () => {
-    const wrapper = shallow(<HourPicker
+    const wrapper = mount(<HourPicker
       initializeWith={date} />);
     
     assert.equal(wrapper.state('date').date(), 12, 'date not changed yet');
@@ -335,7 +303,7 @@ describe('<HourPicker />: switchToPrevPage', () => {
   const date = moment('2018-08-12');
 
   it('shift `date` state field one day backward', () => {
-    const wrapper = shallow(<HourPicker
+    const wrapper = mount(<HourPicker
       initializeWith={date} />);
     
     assert.equal(wrapper.state('date').date(), 12, 'date not changed yet');
