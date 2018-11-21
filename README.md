@@ -6,7 +6,7 @@ Datepicker react component based on semantic-ui-react components
 
 My intention was to create something that looks like this https://github.com/mdehoog/Semantic-UI-Calendar.
 
-Here you can find a live example https://arfedulov.ru/examples/semantic-ui-calendar-react.
+Here you can find a live example https://arfedulov.github.io/semantic-ui-calendar-react
 
 # installation
 ```
