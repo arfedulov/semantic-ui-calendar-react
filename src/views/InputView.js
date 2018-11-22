@@ -21,6 +21,24 @@ class FormInputWithRef extends React.Component {
 class InputView extends React.Component {
   componentDidMount() {
     this.props.onMount && this.props.onMount(this.inputNode);
+    this.initialInputNode = this.inputNode;
+  }
+
+  componentDidUpdate() {
+    // TODO: find actual root of the problem.
+    // Sometimes input node reference passed
+    // to this.props.onMount stales.
+    // this.inputNode referes to 
+    // different DOM object than it was after first
+    // component render.
+    // InputView component doesn't unmount it just
+    // gets different underlying input node.
+    // In order to keep input node reference fresh
+    // we make this check.
+    if (this.inputNode !== this.initialInputNode) {
+      this.initialInputNode = this.inputNode;
+      this.props.onMount(this.inputNode);
+    }
   }
 
   render() {
