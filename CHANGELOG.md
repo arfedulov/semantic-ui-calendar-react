@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.12.1 2018-11-24
+
+- fix: stale input node reference [`32b56c3`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/32b56c381891bd716efb3a93e1ef8ef1ac0400a6)
+
+- fix: jump over disabled cell when keyboard navigating [`9c15bb1`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/9c15bb17505ea536c71df8d351a9c01441c635c6)
+
+- fix: if date in month/year disabled the whole month/year disabled [`ee9b673`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/ee9b673a981c436550f7fd3216d7129f2b9fd707)
+
+- fix: string value in `disable` prop doesn't work [`7ce6c73`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/7ce6c73b017fddd35534c2cb4b3b8433895074ec)
+
 ## v0.12.0 2018-11-19
 
 - feat: add disableMinute prop to TimeInput (#49) [`#49`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/49)
