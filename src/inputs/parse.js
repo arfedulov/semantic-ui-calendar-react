@@ -22,7 +22,7 @@ export function parseValue(value, dateFormat) {
 
 /** Parse string, moment, Date, string[], moment[], Date[].
  * 
- * Return array of moments or moment. Returned value contains only valid moments.
+ * Return array of moments. Returned value contains only valid moments.
  * Return undefined if none of the input values are valid.
  */
 export function parseArrayOrValue(data, dateFormat) {
@@ -32,7 +32,8 @@ export function parseArrayOrValue(data, dateFormat) {
       return parsed;
     }
   }
-  return parseValue(data, dateFormat);
+  const parsedValue = parseValue(data, dateFormat);
+  return parsedValue && [parsedValue];
 }
 
 /** Create moment.
