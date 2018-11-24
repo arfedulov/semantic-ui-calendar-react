@@ -66,11 +66,13 @@ class BasePicker extends React.Component {
     }
     const key = keyboardKey.getKey(event);
     const selectableCells = this.getSelectableCellPositions();
+    const nextSelectableCellPositionLeft = selectableCells.slice(0, selectableCells.indexOf(this.state.hoveredCellPosition)).pop();
+    const nextSelectableCellPositionRight = selectableCells.slice(selectableCells.indexOf(this.state.hoveredCellPosition) + 1)[0];
     switch(key) {
     case 'ArrowLeft':
       event.preventDefault();
-      if (_.includes(selectableCells, this.state.hoveredCellPosition - 1)) {
-        this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition - 1 });
+      if (nextSelectableCellPositionLeft) {
+        this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionLeft });
       } else {
         this.isPrevPageAvailable() && this.switchToPrevPage(null, null, () => {
           const selectableCells = this.getSelectableCellPositions();
@@ -80,8 +82,8 @@ class BasePicker extends React.Component {
       break;
     case 'ArrowRight':
       event.preventDefault();
-      if (_.includes(selectableCells, this.state.hoveredCellPosition + 1)) {
-        this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition + 1 });
+      if (nextSelectableCellPositionRight) {
+        this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionRight });
       } else {
         this.isNextPageAvailable() && this.switchToNextPage(null, null, () => {
           const selectableCells = this.getSelectableCellPositions();
