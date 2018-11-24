@@ -32,6 +32,9 @@ export interface DateInputProps {
   /** Should close when cursor leaves calendar popup. */
   closeOnMouseLeave?: boolean;
 
+  /** Date or list of dates that are enabled (the rest are disabled). */
+  enable?: string[] | Moment | Date;
+
   /** A date input can be formatted to appear inline in other content. */
   inline?: boolean;
 
@@ -58,6 +61,12 @@ export interface DateInputProps {
 
   /** Minimum date that can be selected. */
   minDate?: string | Moment;
+  
+  /** The node where the picker should mount. */
+  mountNode?: any;
+  
+  /** Preserve last mode (day, hour, minute) each time user opens dialog. */
+  preserveViewMode?: boolean;
 
   /** A field can have its label next to instead of above it. */
   inlineLabel?: boolean;

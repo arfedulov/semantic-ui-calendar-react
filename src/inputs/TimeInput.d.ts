@@ -31,6 +31,9 @@ export interface TimeInputProps {
   /** Should close when cursor leaves calendar popup */
   closeOnMouseLeave?: boolean;
 
+  /** If true, minutes picker won't be shown after picking the hour. */
+  disableMinute?: boolean;
+
   /** A time input can be formatted to appear inline in other content. */
   inline?: boolean;
 
@@ -39,6 +42,9 @@ export interface TimeInputProps {
 
   /** Should popup close after date selection. */
   closable?: boolean;
+
+  /** The node where the picker should mount. */
+  mountNode?: any;
 
   /** A field can have its label next to instead of above it. */
   inlineLabel?: boolean;

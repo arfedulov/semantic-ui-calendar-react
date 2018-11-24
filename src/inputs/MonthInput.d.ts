@@ -55,6 +55,9 @@ export interface MonthInputProps {
 
   /** Minimum date that can be selected. */
   minDate?: string | Moment | Date | string[] | Moment[] | Date[];
+
+  /** The node where the picker should mount. */
+  mountNode?: any;
 }
 
 export interface MonthInputOnChangeData extends MonthInputProps {

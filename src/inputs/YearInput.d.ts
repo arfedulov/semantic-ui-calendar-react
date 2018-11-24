@@ -42,6 +42,9 @@ export interface YearInputProps {
 
   /** A field can have its label next to instead of above it. */
   inlineLabel?: boolean;
+
+  /** The node where the picker should mount. */
+  mountNode?: any;
 }
 
 export interface YearInputOnChangeData extends YearInputProps {

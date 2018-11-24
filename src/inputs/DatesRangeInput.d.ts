@@ -50,6 +50,9 @@ export interface DatesRangeInputProps {
   /** Minimum date that can be selected. */
   minDate?: string | Moment;
 
+  /** The node where the picker should mount. */
+  mountNode?: any;
+
   /** A field can have its label next to instead of above it. */
   inlineLabel?: boolean;
 }
