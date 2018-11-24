@@ -18,6 +18,9 @@ import {
   getUnhandledProps,
   tick,
 } from '../lib';
+import {
+  getDisabledMonths, getDisabledYears,
+} from './shared';
 
 function getNextMode(currentMode) {
   if (currentMode === 'year') return 'month';
@@ -91,20 +94,20 @@ class DateInput extends BaseInput {
       onHeaderClick: this.switchToPrevMode,
       initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams() }),
       value: parseValue(chooseValue(value, initialDate), dateFormat),
-      disable: parseArrayOrValue(disable, dateFormat),
       enable: parseArrayOrValue(enable, dateFormat),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
       // key: value, // seems like it works without reinstantiating picker every time value changes
     };
+    const disableParsed = parseArrayOrValue(disable, dateFormat);
     const { mode } = this.state;
     if (mode === 'year') {
-      return <YearPicker { ...pickerProps } />;
+      return <YearPicker { ...pickerProps } disable={getDisabledYears(disableParsed)} />;
     }
     if (mode === 'month') {
-      return <MonthPicker { ...pickerProps } />;
+      return <MonthPicker { ...pickerProps } disable={getDisabledMonths(disableParsed)} />;
     }
-    return <DayPicker { ...pickerProps } />;
+    return <DayPicker { ...pickerProps } disable={disableParsed} />;
   }
 
   _switchToNextModeUndelayed = () => {

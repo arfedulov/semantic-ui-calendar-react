@@ -18,6 +18,10 @@ import {
   chooseValue,
 } from './parse';
 import { getUnhandledProps, tick } from '../lib';
+import {
+  getDisabledMonths,
+  getDisabledYears,
+} from './shared';
 
 function getNextMode(currentMode) {
   if (currentMode === 'year') return 'month';
@@ -112,25 +116,25 @@ class DateTimeInput extends BaseInput {
       onHeaderClick: this.switchToPrevMode,
       initializeWith: getInitializer({ initialDate, dateFormat: dateTimeFormat, dateParams: this.getDateParams() }),
       value: parseValue(chooseValue(value, initialDate), dateTimeFormat),
-      disable: parseArrayOrValue(disable),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
       // key: value, // seems like it works without reinstantiating picker every time value changes
     };
+    const disableParsed = parseArrayOrValue(disable, dateFormat);
     const { mode } = this.state;
     if (mode === 'year') {
-      return <YearPicker { ...pickerProps } />;
+      return <YearPicker { ...pickerProps } disable={getDisabledYears(disableParsed)} />;
     }
     if (mode === 'month') {
-      return <MonthPicker { ...pickerProps } />;
+      return <MonthPicker { ...pickerProps } disable={getDisabledMonths(disableParsed)} />;
     }
     if (mode === 'day') {
-      return <DayPicker { ...pickerProps } />;
+      return <DayPicker { ...pickerProps } disable={disableParsed} />;
     }
     if (mode === 'hour') {
-      return <HourPicker timeFormat={ this.props.timeFormat } { ...pickerProps } />;
+      return <HourPicker timeFormat={ this.props.timeFormat } { ...pickerProps } disable={disableParsed} />;
     }
-    return <MinutePicker timeFormat={ this.props.timeFormat } { ...pickerProps } />;
+    return <MinutePicker timeFormat={ this.props.timeFormat } { ...pickerProps } disable={disableParsed} />;
   }
 
   _switchToNextModeUndelayed = () => {
