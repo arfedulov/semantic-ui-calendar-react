@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
-import moment from 'moment';
+import * as moment from 'moment';
 
 import {
   YearInput,
@@ -11,6 +11,7 @@ import {
   TimeInput,
   DateTimeInput,
 } from '../src';
+import { any } from 'prop-types';
 
 moment.locale('en');
 
@@ -25,7 +26,7 @@ function App() {
   );
 }
 
-class DateTimeForm extends React.Component {
+class DateTimeForm extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
@@ -128,7 +129,7 @@ class DateTimeForm extends React.Component {
   }
 }
 
-class DateTimeFormInline extends React.Component {
+class DateTimeFormInline extends React.Component<any, any> {
   constructor(props) {
     super(props);
 
