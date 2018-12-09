@@ -41,6 +41,7 @@ class DatesRangeView extends BaseView {
       hovered,
       onCellHover,
       onMount,
+      inline,
       ...rest
     } = this.props;
     const {
@@ -48,7 +49,7 @@ class DatesRangeView extends BaseView {
       end,
     } = active;
     return (
-      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} {...rest}>
+      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
           displayWeeks
@@ -91,7 +92,7 @@ DatesRangeView.propTypes = {
   selectedRange: PropTypes.string.isRequired,
   /** Start and end of a range of day positions to display as active. */
   active: PropTypes.shape(
-    { 
+    {
       start: PropTypes.number,
       end: PropTypes.number,
     }

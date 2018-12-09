@@ -3,8 +3,6 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
 
-import { SyntheticEvent } from 'react';
-
 import {
   DateInput,
   DateInputOnChangeData,
@@ -136,7 +134,7 @@ class DateTimeForm extends React.Component<any, any> {
     );
   }
 
-  private handleChange = (event: SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
+  private handleChange = (event: React.SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }
@@ -205,7 +203,7 @@ class DateTimeFormInline extends React.Component<any, any> {
     );
   }
 
-  private handleChange = (event: SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
+  private handleChange = (event: React.SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }

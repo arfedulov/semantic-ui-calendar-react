@@ -7,7 +7,7 @@ import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
 import BaseView from './BaseView';
 
-export const DAY_CALENDAR_ROW_WIDTH = '7';
+export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
 
 class DayView extends BaseView {
@@ -27,10 +27,11 @@ class DayView extends BaseView {
       onCellHover,
       hasHeader,
       onMount,
+      inline,
       ...rest
     } = this.props;
     return (
-      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} {...rest}>
+      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
           displayWeeks={true}

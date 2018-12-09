@@ -7,7 +7,7 @@ import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
 import BaseView from './BaseView';
 
-const MONTH_CALENDAR_ROW_WIDTH = '3';
+const MONTH_CALENDAR_ROW_WIDTH = 3;
 
 class MonthView extends BaseView {
   render() {
@@ -26,6 +26,7 @@ class MonthView extends BaseView {
       onCellHover,
       hovered,
       onMount,
+      inline,
       ...rest
     } = this.props;
     const headerProps = {
@@ -39,7 +40,7 @@ class MonthView extends BaseView {
       width: MONTH_CALENDAR_ROW_WIDTH,
     };
     return (
-      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} {...rest}>
+      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} outlineOnFocus={inline} {...rest}>
         { hasHeader && <Header { ...headerProps } /> }
         <Body
           width={MONTH_CALENDAR_ROW_WIDTH}

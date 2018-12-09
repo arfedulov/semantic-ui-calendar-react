@@ -30,7 +30,8 @@
         "singleline": "never",
         "esSpecCompliant": true
       }
-    ]
+    ],
+    "interface-name": [true, "never-prefix"]
   },
   "rulesDirectory": []
 }
