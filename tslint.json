@@ -7,14 +7,30 @@
     "indent": [true, "spaces", 2],
     "newline-before-return": true,
     "quotemark": [true, "single"],
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never",
+        "esSpecCompliant": true
+      }
+    ]
   },
   "rules": {
     "indent": [true, "spaces", 2],
     "newline-before-return": true,
     "quotemark": [true, "single"],
     "object-literal-sort-keys": false,
-    "max-classes-per-file": false
+    "max-classes-per-file": false,
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never",
+        "esSpecCompliant": true
+      }
+    ]
   },
   "rulesDirectory": []
 }
