@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import BaseView from './BaseView';
@@ -8,7 +7,7 @@ import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
 
-import findHTMLElement from '../lib/findHTMLElement';
+import { findHTMLElement } from '../lib';
 
 const YEAR_CALENDAR_ROW_WIDTH = 3;
 
@@ -38,8 +37,6 @@ interface YearViewProps extends BaseViewProps {
 }
 
 class YearView extends BaseView<YearViewProps, any> {
-  public static propTypes: object;
-
   public render() {
     const {
       years,
@@ -82,33 +79,5 @@ class YearView extends BaseView<YearViewProps, any> {
     );
   }
 }
-
-YearView.propTypes = {
-  /** An array of years to fill a calendar with. */
-  years: PropTypes.arrayOf(PropTypes.string).isRequired,
-  /** Called after click on next page button. */
-  onNextPageBtnClick: PropTypes.func.isRequired,
-  /** Called after click on previous page button. */
-  onPrevPageBtnClick: PropTypes.func.isRequired,
-  /** Called after click on year. */
-  onYearClick: PropTypes.func.isRequired,
-  /** Whether to display previous page button as active or disabled. */
-  hasPrevPage: PropTypes.bool.isRequired,
-  /** Whether to display next page button as active or disabled. */
-  hasNextPage: PropTypes.bool.isRequired,
-  /** Called on calendar cell hover. */
-  onCellHover: PropTypes.func,
-  /** Index of a cell that should be displayed as hovered. */
-  hovered: PropTypes.number,
-  /** Called after click on calendar header. */
-  onHeaderClick: PropTypes.func,
-  /** An array of numbers that represent indexes of years in `years` array that should be displayed as disabled. */
-  disabled: PropTypes.arrayOf(PropTypes.number),
-  /** Index of a year in `years` array that should be displayed as active. */
-  active: PropTypes.number,
-  onMount: PropTypes.func,
-  /** Whether a calendar is inside a popup or inline. */
-  inline: PropTypes.bool,
-};
 
 export default YearView;

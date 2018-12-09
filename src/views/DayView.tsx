@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import BaseView, { BaseViewProps } from './BaseView';
@@ -39,8 +38,6 @@ interface DayViewProps extends BaseViewProps {
 }
 
 class DayView extends BaseView<DayViewProps, any> {
-  public static propTypes: object;
-
   public render() {
     const {
       days,
@@ -84,33 +81,5 @@ class DayView extends BaseView<DayViewProps, any> {
     );
   }
 }
-
-DayView.propTypes = {
-  /** An array of dates to fill a calendar with. */
-  days: PropTypes.arrayOf(PropTypes.string).isRequired,
-  /** Called after click on next page button. */
-  onNextPageBtnClick: PropTypes.func.isRequired,
-  /** Called after click on previous page button. */
-  onPrevPageBtnClick: PropTypes.func.isRequired,
-  /** Called after click on day. */
-  onDayClick: PropTypes.func.isRequired,
-  /** Whether to display previous page button as active or disabled. */
-  hasPrevPage: PropTypes.bool.isRequired,
-  /** Whether to display next page button as active or disabled. */
-  hasNextPage: PropTypes.bool.isRequired,
-  /** A date that is displayed in calendar header. */
-  currentDate: PropTypes.string.isRequired,
-  /** Called on calendar cell hover. */
-  onCellHover: PropTypes.func,
-  /** Index of a cell that should be displayed as hovered. */
-  hovered: PropTypes.number,
-  /** Called after click on calendar header. */
-  onHeaderClick: PropTypes.func,
-  /** An array of day positions to display as disabled. */
-  disabled: PropTypes.arrayOf(PropTypes.number),
-  /** Position of a day to display as active. */
-  active: PropTypes.number,
-  onMount: PropTypes.func,
-};
 
 export default DayView;

@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
@@ -46,8 +45,6 @@ interface CellProps {
 }
 
 class Cell extends React.Component<CellProps, any> {
-  public static propTypes: object;
-
   public render() {
     const {
       content,
@@ -89,24 +86,5 @@ class Cell extends React.Component<CellProps, any> {
     _.invoke(this.props, 'onHover', event, { ...this.props, itemPosition });
   }
 }
-
-Cell.propTypes = {
-  /** Position of a cell on the page. */
-  itemPosition: PropTypes.number.isRequired,
-  /** Cell's content. */
-  content: PropTypes.string.isRequired,
-  /** Styles for cell width. */
-  style: PropTypes.object.isRequired,
-  /** Called after click on a cell. */
-  onClick: PropTypes.func,
-  /** Called on cell hover. */
-  onHover: PropTypes.func,
-  /** Is cell is hovered. */
-  hovered: PropTypes.bool,
-  /** Is cell active. */
-  active: PropTypes.bool,
-  /** Is cell disabled. */
-  disabled: PropTypes.bool,
-};
 
 export default Cell;

@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
@@ -24,10 +23,5 @@ function HeaderRange(props: HeaderRangeProps) {
     </Table.Row>
   );
 }
-
-HeaderRange.propTypes = {
-  /** Selected dates range. */
-  content: PropTypes.string.isRequired,
-};
 
 export default HeaderRange;

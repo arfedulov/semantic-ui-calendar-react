@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import {
   Icon,
@@ -91,26 +90,5 @@ function Header(props: HeaderProps) {
     </Table.Header>
   );
 }
-
-Header.propTypes = {
-  /** Header text content. */
-  title: PropTypes.string.isRequired,
-  /** Called after click on next page button. */
-  onNextPageBtnClick: PropTypes.func.isRequired,
-  /** Called after click on previous page button. */
-  onPrevPageBtnClick: PropTypes.func.isRequired,
-  /** Whether to display previous page button as active or disabled. */
-  hasPrevPage: PropTypes.bool.isRequired,
-  /** Whether to display next page button as active or disabled. */
-  hasNextPage: PropTypes.bool.isRequired,
-  /** Whether to display weeks row or not. */
-  displayWeeks: PropTypes.bool.isRequired,
-  /** Header width. */
-  width: PropTypes.oneOf([3, 4, 7]).isRequired,
-  /** Text content to display in dates-range row. */
-  rangeRowContent: PropTypes.string,
-  /** Called after click on calendar header. */
-  onHeaderClick: PropTypes.func,
-};
 
 export default Header;
