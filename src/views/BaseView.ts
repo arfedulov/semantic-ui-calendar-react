@@ -6,7 +6,7 @@ export interface BaseViewProps {
   /** Whether a calendar is inside a popup or inline. */
   inline: boolean;
   /** Whether a calendar has header. */
-  hasHeader?: boolean;
+  hasHeader: boolean;
 }
 
 /** Base class for picker view components. */

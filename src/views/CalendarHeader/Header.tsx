@@ -9,7 +9,7 @@ import { BodyWidth } from '../CalendarBody/Body';
 import HeaderRange from './HeaderRange';
 import HeaderWeeks from './HeaderWeeks';
 
-interface HeaderProps {
+export interface HeaderProps {
   /** Header text content. */
   title: string;
   /** Called after click on next page button. */
