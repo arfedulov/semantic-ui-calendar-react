@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import BaseView, { BaseViewProps } from './BaseView';
+import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
@@ -31,7 +31,7 @@ interface Range {
   end: number | undefined;
 }
 
-interface DatesRangeViewProps extends BaseViewProps {
+interface DatesRangeViewProps extends BaseCalendarViewProps {
   /** An array of dates to fill a calendar with. */
   days: string[];
   /** Called after click on next page button. */
@@ -60,7 +60,7 @@ interface DatesRangeViewProps extends BaseViewProps {
   disabled?: number[];
 }
 
-class DatesRangeView extends BaseView<DatesRangeViewProps, any> {
+class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
   public static defaultProps = {
     active: {
       start: undefined,

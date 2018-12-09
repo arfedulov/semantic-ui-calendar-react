@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import BaseView, { BaseViewProps } from './BaseView';
+import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header, { HeaderProps } from './CalendarHeader/Header';
@@ -9,7 +9,7 @@ import { findHTMLElement } from '../lib';
 
 const HOUR_CALENDAR_ROW_WIDTH = 4;
 
-interface HourViewProps extends BaseViewProps {
+interface HourViewProps extends BaseCalendarViewProps {
   /** Array of hours to fill a calendar with. */
   hours: string[];
   /** Called after click on hour. */
@@ -36,7 +36,7 @@ interface HourViewProps extends BaseViewProps {
   currentDate?: string;
 }
 
-class HourView extends BaseView<HourViewProps, any> {
+class HourView extends BaseCalendarView<HourViewProps, any> {
   public render() {
     const {
       hours,

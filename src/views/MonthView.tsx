@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import BaseView, { BaseViewProps } from './BaseView';
+import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header, { HeaderProps } from './CalendarHeader/Header';
@@ -9,7 +9,7 @@ import { findHTMLElement } from '../lib';
 
 const MONTH_CALENDAR_ROW_WIDTH = 3;
 
-interface MonthViewProps extends BaseViewProps {
+interface MonthViewProps extends BaseCalendarViewProps {
   /** Array of months to fill a calendar with. */
   months: string[];
   /** Called after click on month. */
@@ -36,7 +36,7 @@ interface MonthViewProps extends BaseViewProps {
   currentYear?: string;
 }
 
-class MonthView extends BaseView<MonthViewProps, any> {
+class MonthView extends BaseCalendarView<MonthViewProps, any> {
   public render() {
     const {
       months,

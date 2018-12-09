@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export interface BaseViewProps {
+export interface BaseCalendarViewProps {
   /** Used for passing calendar dom element to parent component. */
   onMount: (e: HTMLElement) => void;
   /** Whether a calendar is inside a popup or inline. */
@@ -10,7 +10,7 @@ export interface BaseViewProps {
 }
 
 /** Base class for picker view components. */
-class BaseView<P extends BaseViewProps, S> extends React.Component<P, S> {
+class BaseCalendarView<P extends BaseCalendarViewProps, S> extends React.Component<P, S> {
   protected calendarNode: HTMLElement | undefined;
 
   public componentDidMount() {
@@ -20,4 +20,4 @@ class BaseView<P extends BaseViewProps, S> extends React.Component<P, S> {
   }
 }
 
-export default BaseView;
+export default BaseCalendarView;

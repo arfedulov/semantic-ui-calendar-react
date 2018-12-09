@@ -1,8 +1,7 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import BaseView from './BaseView';
-import { BaseViewProps } from './BaseView';
+import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
@@ -11,7 +10,7 @@ import { findHTMLElement } from '../lib';
 
 const YEAR_CALENDAR_ROW_WIDTH = 3;
 
-interface YearViewProps extends BaseViewProps {
+interface YearViewProps extends BaseCalendarViewProps {
   /** An array of years to fill a calendar with. */
   years: string[];
   /** Called after click on next page button. */
@@ -36,7 +35,7 @@ interface YearViewProps extends BaseViewProps {
   active: number;
 }
 
-class YearView extends BaseView<YearViewProps, any> {
+class YearView extends BaseCalendarView<YearViewProps, any> {
   public render() {
     const {
       years,

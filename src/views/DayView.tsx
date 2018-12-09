@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import BaseView, { BaseViewProps } from './BaseView';
+import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
@@ -10,7 +10,7 @@ import { findHTMLElement } from '../lib';
 export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
 
-interface DayViewProps extends BaseViewProps {
+interface DayViewProps extends BaseCalendarViewProps {
   /** An array of dates to fill a calendar with. */
   days: string[];
   /** Called after click on next page button. */
@@ -37,7 +37,7 @@ interface DayViewProps extends BaseViewProps {
   active?: number;
 }
 
-class DayView extends BaseView<DayViewProps, any> {
+class DayView extends BaseCalendarView<DayViewProps, any> {
   public render() {
     const {
       days,
