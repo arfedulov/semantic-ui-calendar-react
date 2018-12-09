@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as PropTypes from 'prop-types';
 
 import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';

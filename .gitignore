@@ -1,6 +1,7 @@
 node_modules
 dist
 calendar.bundle.js
+calendar.bundle.js.map
 
 ### STS ###
 .apt_generated
@@ -23,5 +24,3 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
-
-.vscode

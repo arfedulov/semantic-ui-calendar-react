@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import _ from 'lodash';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 import DatesRangeView from '../../views/DatesRangeView';
 import { DAYS_ON_PAGE } from './DayPicker';

@@ -107,7 +107,7 @@ Since ``semantic-ui-calendar-react`` uses moment.js it supports locales.
 To change locale you need to set ``moment``'s locale in a scope that contains ``semantic-ui-calendar-react`` components:
 
 ```javascript
-import moment from 'moment';
+import * as moment from 'moment';
 
 moment.locale('ru');
 

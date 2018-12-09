@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as PropTypes from 'prop-types';
 import { Popup, Form } from 'semantic-ui-react';
 
 import { getUnhandledProps } from '../lib';
@@ -28,7 +28,7 @@ class InputView extends React.Component {
     // TODO: find actual root of the problem.
     // Sometimes input node reference passed
     // to this.props.onMount stales.
-    // this.inputNode referes to 
+    // this.inputNode referes to
     // different DOM object than it was after first
     // component render.
     // InputView component doesn't unmount it just
@@ -54,7 +54,7 @@ class InputView extends React.Component {
       tabIndex,
     } = this.props;
     const rest = getUnhandledProps(InputView, this.props);
-  
+
     const inputElement = (
       <FormInputWithRef
         { ...rest }
@@ -67,7 +67,7 @@ class InputView extends React.Component {
         inline={inlineLabel}
         onChange={onChange} />
     );
-  
+
     if (inline) return this.props.render({
       tabIndex,
     });

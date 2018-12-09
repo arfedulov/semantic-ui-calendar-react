@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import _ from 'lodash';
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import * as PropTypes from 'prop-types';
+import * as _ from 'lodash';
 
 import Calendar from './Calendar';
 import Header from './CalendarHeader/Header';

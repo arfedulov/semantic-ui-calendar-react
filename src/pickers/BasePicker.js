@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import keyboardKey from 'keyboard-key';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 class BasePicker extends React.Component {
 

@@ -3,11 +3,11 @@ const webpack = require('webpack');
 
 const config = {
   entry: {
-    calendar: './example/calendar.tsx'
+    calendar: './example/calendar.tsx',
   },
   output: {
     path: path.resolve(__dirname, 'example'),
-    filename: '[name].bundle.js'
+    filename: '[name].bundle.js',
   },
   mode: 'development',
   module: {
@@ -21,8 +21,8 @@ const config = {
         test: /\.jsx?$/,
         exclude: /node-modules/,
         loader: 'babel-loader',
-      }
-    ]
+      },
+    ],
   },
   resolve: {
     extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', 'jsx']
@@ -35,7 +35,7 @@ const config = {
   devtool: 'source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-  ]
+  ],
 };
 
 module.exports = config;

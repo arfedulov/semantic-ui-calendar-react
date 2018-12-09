@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import {
   Table,
   Icon,
 } from 'semantic-ui-react';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 import HeaderRange from './HeaderRange';
 import HeaderWeeks from './HeaderWeeks';

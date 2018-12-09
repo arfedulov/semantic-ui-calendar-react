@@ -1,6 +1,6 @@
-import React from 'react';
+import * as React from 'react';
 import { Table } from 'semantic-ui-react';
-import moment from 'moment';
+import * as moment from 'moment';
 
 /** Return array of week day names.
  * 

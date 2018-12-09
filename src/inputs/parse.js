@@ -1,5 +1,5 @@
-import moment from 'moment';
-import _ from 'lodash';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 export const TIME_FORMAT = {
   '24': 'HH:mm',

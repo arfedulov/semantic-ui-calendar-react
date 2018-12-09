@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 /** Build days to fill page. */
 export function buildDays(date/*moment*/, daysOnPage/*number*/) {
