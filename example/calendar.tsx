@@ -3,16 +3,31 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
 
+import { SyntheticEvent } from 'react';
+
 import {
   DateInput,
+  DateInputOnChangeData,
   DatesRangeInput,
+  DatesRangeInputOnChangeData,
   DateTimeInput,
+  DateTimeInputOnChangeData,
   MonthInput,
+  MonthInputOnChangeData,
   TimeInput,
+  TimeInputOnChangeData,
   YearInput,
-} from '../src';
+  YearInputOnChangeData,
+} from '../src/inputs';
 
 moment.locale('en');
+
+type DateTimeFormHandleChangeData = DateInputOnChangeData
+  | DatesRangeInputOnChangeData
+  | DateTimeInputOnChangeData
+  | MonthInputOnChangeData
+  | TimeInputOnChangeData
+  | YearInputOnChangeData;
 
 function App() {
   return (
@@ -40,91 +55,91 @@ class DateTimeForm extends React.Component<any, any> {
     };
   }
 
-  handleChange = (event, {name = undefined, value}) => {
-    if (this.state.hasOwnProperty(name)) {
-      this.setState({ [name]: value });
-    }
-  }
-
-  render() {
+  public render() {
     return (
       <Form>
         <DateInput
-          placeholder="Date"
-          popupPosition="bottom right"
-          className="example-calendar-input"
-          name="date"
+          placeholder='Date'
+          popupPosition='bottom right'
+          className='example-calendar-input'
+          name='date'
           value={this.state.date}
-          iconPosition="left"
+          iconPosition='left'
           preserveViewMode={false}
-          autoComplete="off"
+          autoComplete='off'
           onChange={this.handleChange} />
         <br />
         <DateInput
-          startMode="year"
-          popupPosition="bottom right"
-          placeholder="Date startMode year"
-          className="example-calendar-input"
-          name="dateStartYear"
+          startMode='year'
+          popupPosition='bottom right'
+          placeholder='Date startMode year'
+          className='example-calendar-input'
+          name='dateStartYear'
           value={this.state.dateStartYear}
-          iconPosition="left"
-          autoComplete="off"
+          iconPosition='left'
+          autoComplete='off'
           preserveViewMode={false}
           onChange={this.handleChange} />
         <br />
         <TimeInput
-          placeholder="Time"
-          popupPosition="bottom right"
-          className="example-calendar-input"
-          name="time"
-          autoComplete="off"
+          placeholder='Time'
+          popupPosition='bottom right'
+          className='example-calendar-input'
+          name='time'
+          autoComplete='off'
           value={this.state.time}
-          iconPosition="left"
+          iconPosition='left'
           onChange={this.handleChange} />
         <br />
         <DateTimeInput
-          placeholder="Date Time"
-          className="example-calendar-input"
-          popupPosition="bottom right"
-          name="dateTime"
+          placeholder='Date Time'
+          className='example-calendar-input'
+          popupPosition='bottom right'
+          name='dateTime'
           value={this.state.dateTime}
-          iconPosition="left"
+          iconPosition='left'
           preserveViewMode={false}
-          autoComplete="off"
+          autoComplete='off'
           onChange={this.handleChange} />
         <br />
         <DatesRangeInput
-          dateFormat="DD.MM.YY"
-          placeholder="From - To"
-          popupPosition="bottom right"
-          className="example-calendar-input"
-          name="datesRange"
+          dateFormat='DD.MM.YY'
+          placeholder='From - To'
+          popupPosition='bottom right'
+          className='example-calendar-input'
+          name='datesRange'
           value={this.state.datesRange}
-          iconPosition="left"
-          autoComplete="off"
+          iconPosition='left'
+          autoComplete='off'
           onChange={this.handleChange} />
         <br />
         <YearInput
-          placeholder="Year"
-          className="example-calendar-input"
-          name="year"
-          popupPosition="bottom right"
+          placeholder='Year'
+          className='example-calendar-input'
+          name='year'
+          popupPosition='bottom right'
           value={this.state.year}
-          iconPosition="left"
-          autoComplete="off"
+          iconPosition='left'
+          autoComplete='off'
           onChange={this.handleChange} />
         <br />
         <MonthInput
-          placeholder="Month"
-          className="example-calendar-input"
-          name="month"
-          popupPosition="bottom right"
+          placeholder='Month'
+          className='example-calendar-input'
+          name='month'
+          popupPosition='bottom right'
           value={this.state.month}
-          iconPosition="left"
-          autoComplete="off"
+          iconPosition='left'
+          autoComplete='off'
           onChange={this.handleChange} />
       </Form>
     );
+  }
+
+  private handleChange = (event: SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
+    if (this.state.hasOwnProperty(name)) {
+      this.setState({ [name]: value });
+    }
   }
 }
 
@@ -138,78 +153,66 @@ class DateTimeFormInline extends React.Component<any, any> {
       date: '',
       time: '',
       dateTime: '',
-      datesRange: ''
+      datesRange: '',
     };
   }
 
-  handleYearChange = (event, { value }) => {
-    this.setState({ year: value });
-  }
-
-  handleMonthChange = (event, { value }) => {
-    this.setState({ month: value });
-  }
-
-  handleDateChange = (event, { value }) => {
-    this.setState({ date: value });
-  }
-
-  handleTimeChange = (event, { value }) => {
-    this.setState({ time: value });
-  }
-
-  handleDateTimeChange = (event, { value }) => {
-    this.setState({ dateTime: value });
-  }
-
-  handleDatesRangeChange = (event, { value }) => {
-    this.setState({ datesRange: value });
-  }
-
-  render() {
+  public render() {
     return (
       <Form>
         <DateInput
           inline
-          className="example-calendar-input"
+          className='example-calendar-input'
           value={this.state.date}
-          onChange={this.handleDateChange} />
+          name='date'
+          onChange={this.handleChange} />
         <br />
         <TimeInput
           inline
-          className="example-calendar-input"
+          className='example-calendar-input'
           value={this.state.time}
-          onChange={this.handleTimeChange} />
+          name='time'
+          onChange={this.handleChange} />
         <br />
         <DateTimeInput
           inline
-          className="example-calendar-input"
+          className='example-calendar-input'
           value={this.state.dateTime}
-          onChange={this.handleDateTimeChange} />
+          name='dateTime'
+          onChange={this.handleChange} />
         <br />
         <DatesRangeInput
           inline
-          className="example-calendar-input"
+          className='example-calendar-input'
           value={this.state.datesRange}
-          onChange={this.handleDatesRangeChange} />
+          name='datesRange'
+          onChange={this.handleChange} />
         <br />
         <YearInput
           inline
-          className="example-calendar-input"
+          className='example-calendar-input'
           value={this.state.year}
-          onChange={this.handleYearChange} />
+          name='year'
+          onChange={this.handleChange} />
         <br />
         <MonthInput
           inline
-          className="example-calendar-input"
+          className='example-calendar-input'
           value={this.state.month}
-          onChange={this.handleMonthChange} />
+          name='month'
+          onChange={this.handleChange} />
       </Form>
     );
+  }
+
+  private handleChange = (event: SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
+    if (this.state.hasOwnProperty(name)) {
+      this.setState({ [name]: value });
+    }
   }
 }
 
 ReactDOM.render(
   <App />,
-  document.getElementById('root')
+  document.getElementById('root'),
 );

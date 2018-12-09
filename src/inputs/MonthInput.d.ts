@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Moment from 'moment';
+import { Moment } from 'moment';
 
 export interface MonthInputProps {
   [key: string]: any;

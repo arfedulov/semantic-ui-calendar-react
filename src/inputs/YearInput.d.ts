@@ -11,7 +11,7 @@ export interface YearInputProps {
    */
   onChange: (
     event: React.SyntheticEvent<HTMLInputElement>,
-    data: YearInpuOnChangeData
+    data: YearInputOnChangeData
   ) => void;
 
   /** Shorthand for Icon. */

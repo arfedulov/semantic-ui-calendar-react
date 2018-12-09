@@ -7,7 +7,7 @@
     "test": "npx mocha -r @babel/register ./test/setup.js ./test/**/*.js",
     "start": "npx webpack-dev-server",
     "prebuild": "npx rimraf dist/*",
-    "build": "npx babel src -d dist",
+    "build": "npx tsc",
     "build:ts": "npx cpy **/*.d.ts ../dist/ --cwd=src --parents",
     "postbuild": "npm run build:ts",
     "publish-npm": "npm run test && npm run build && npm publish",
