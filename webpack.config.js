@@ -1,7 +1,15 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const baseConfig = {
+const config = {
+  entry: {
+    calendar: './example/calendar.tsx'
+  },
+  output: {
+    path: path.resolve(__dirname, 'example'),
+    filename: '[name].bundle.js'
+  },
+  mode: 'development',
   module: {
     rules: [
       {
@@ -29,16 +37,5 @@ const baseConfig = {
     new webpack.HotModuleReplacementPlugin(),
   ]
 };
-
-const config = Object.assign({
-  entry: {
-    calendar: './example/calendar.tsx'
-  },
-  output: {
-    path: path.resolve(__dirname, 'example'),
-    filename: '[name].bundle.js'
-  },
-  mode: 'development'
-}, baseConfig);
 
 module.exports = config;

@@ -1,23 +1,22 @@
+import * as moment from 'moment';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Form } from 'semantic-ui-react';
-import * as moment from 'moment';
 
 import {
-  YearInput,
-  MonthInput,
   DateInput,
   DatesRangeInput,
-  TimeInput,
   DateTimeInput,
+  MonthInput,
+  TimeInput,
+  YearInput,
 } from '../src';
-import { any } from 'prop-types';
 
 moment.locale('en');
 
 function App() {
   return (
-    <div className="example-calendar-container">
+    <div className='example-calendar-container'>
       <h2>As text fields</h2>
       <DateTimeForm />
       <h2>Inline</h2>
@@ -32,12 +31,12 @@ class DateTimeForm extends React.Component<any, any> {
 
     this.state = {
       year: '',
-      month: '',
       date: '',
       dateStartYear: '',
       time: '',
       dateTime: '',
-      datesRange: ''
+      datesRange: '',
+      month: '',
     };
   }
 
