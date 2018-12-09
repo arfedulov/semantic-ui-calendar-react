@@ -35,8 +35,6 @@ interface YearViewProps extends BaseViewProps {
   disabled: number[];
   /** Index of a year in `years` array that should be displayed as active. */
   active: number;
-  /** Whether a calendar is inside a popup or inline. */
-  inline: boolean;
 }
 
 class YearView extends BaseView<YearViewProps, any> {

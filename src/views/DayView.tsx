@@ -1,17 +1,47 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
 import * as PropTypes from 'prop-types';
+import * as React from 'react';
 
+import BaseView, { BaseViewProps } from './BaseView';
 import Calendar from './Calendar';
-import Header from './CalendarHeader/Header';
 import Body from './CalendarBody/Body';
-import BaseView from './BaseView';
+import Header from './CalendarHeader/Header';
+
+import { findHTMLElement } from '../lib';
 
 export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
 
-class DayView extends BaseView {
-  render() {
+interface DayViewProps extends BaseViewProps {
+  /** An array of dates to fill a calendar with. */
+  days: string[];
+  /** Called after click on next page button. */
+  onNextPageBtnClick: () => void;
+  /** Called after click on previous page button. */
+  onPrevPageBtnClick: () => void;
+  /** Called after click on day. */
+  onDayClick: (e: React.SyntheticEvent, data: any) => void;
+  /** Whether to display previous page button as active or disabled. */
+  hasPrevPage: boolean;
+  /** Whether to display next page button as active or disabled. */
+  hasNextPage: boolean;
+  /** A date that is displayed in calendar header. */
+  currentDate: string;
+  /** Called on calendar cell hover. */
+  onCellHover: (e: React.SyntheticEvent, data: any) => void;
+  /** Called after click on calendar header. */
+  onHeaderClick: () => void;
+  /** Index of a cell that should be displayed as hovered. */
+  hovered?: number;
+  /** An array of day positions to display as disabled. */
+  disabled?: number[];
+  /** Position of a day to display as active. */
+  active?: number;
+}
+
+class DayView extends BaseView<DayViewProps, any> {
+  public static propTypes: object;
+
+  public render() {
     const {
       days,
       onNextPageBtnClick,
@@ -30,8 +60,9 @@ class DayView extends BaseView {
       inline,
       ...rest
     } = this.props;
+
     return (
-      <Calendar ref={e => this.calendarNode = ReactDOM.findDOMNode(e)} outlineOnFocus={inline} {...rest}>
+      <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
           displayWeeks={true}

@@ -1,7 +1,12 @@
 import * as React from 'react';
 
 export interface BaseViewProps {
+  /** Used for passing calendar dom element to parent component. */
   onMount: (e: HTMLElement) => void;
+  /** Whether a calendar is inside a popup or inline. */
+  inline: boolean;
+  /** Whether a calendar has header. */
+  hasHeader?: boolean;
 }
 
 /** Base class for picker view components. */
