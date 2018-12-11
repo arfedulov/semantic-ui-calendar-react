@@ -1,7 +1,11 @@
 import * as _ from 'lodash';
 import * as React from 'react';
 
-import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
+import BaseCalendarView, {
+  BaseCalendarViewProps,
+  CalendarWithHeaderViewProps,
+  RangeSelectionCalendarViewProps,
+} from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
@@ -26,39 +30,10 @@ function getActive(start: number, end: number): number | number[] | undefined {
   }
 }
 
-interface Range {
-  start: number | undefined;
-  end: number | undefined;
-}
-
-interface DatesRangeViewProps extends BaseCalendarViewProps {
-  /** An array of dates to fill a calendar with. */
-  days: string[];
-  /** Called after click on next page button. */
-  onNextPageBtnClick: () => void;
-  /** Called after click on previous page button. */
-  onPrevPageBtnClick: () => void;
-  /** Called after click on day. */
-  onDayClick: (e: React.SyntheticEvent, data: any) => void;
-  /** Whether to display previous page button as active or disabled. */
-  hasPrevPage: boolean;
-  /** Whether to display next page button as active or disabled. */
-  hasNextPage: boolean;
-  /** Date that is displayed in calendar header. */
-  currentDate: string;
-  /** Selected range that is displayed in calendar header. */
-  selectedRange: string;
-  /** Start and end of a range of day positions to display as active. */
-  active: Range;
-  /** Called on calendar cell hover. */
-  onCellHover: (e: React.SyntheticEvent, data: any) => void;
-  /** Called after click on calendar header. */
-  onHeaderClick: () => void;
-  /** Index of a month that should be displayed as hovered. */
-  hovered?: number;
-  /** An array of day positions to display as disabled. */
-  disabled?: number[];
-}
+type DatesRangeViewProps =
+  BaseCalendarViewProps
+  & RangeSelectionCalendarViewProps
+  & CalendarWithHeaderViewProps;
 
 class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
   public static defaultProps = {
@@ -70,18 +45,18 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
 
   public render() {
     const {
-      days,
+      values,
       onNextPageBtnClick,
       onPrevPageBtnClick,
-      onDayClick,
+      onValueClick,
       hasPrevPage,
       hasNextPage,
-      currentDate,
+      currentHeadingValue,
       onHeaderClick,
-      active,
-      disabled,
-      selectedRange,
-      hovered,
+      activeRange,
+      disabledItemIndexes,
+      currentRangeHeadingValue,
+      hoveredItemIndex,
       onCellHover,
       onMount,
       inline,
@@ -90,28 +65,28 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
     const {
       start,
       end,
-    } = active;
+    } = activeRange;
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
           displayWeeks
-          rangeRowContent={selectedRange}
+          rangeRowContent={currentRangeHeadingValue}
           onNextPageBtnClick={onNextPageBtnClick}
           onPrevPageBtnClick={onPrevPageBtnClick}
           hasNextPage={hasNextPage}
           hasPrevPage={hasPrevPage}
-          title={currentDate}
+          title={currentHeadingValue}
           onHeaderClick={onHeaderClick} />
         <Body
           width={DAY_CALENDAR_ROW_WIDTH}
-          data={days}
-          onCellClick={onDayClick}
+          data={values}
+          onCellClick={onValueClick}
           onCellHover={onCellHover}
-          hovered={hovered}
+          hovered={hoveredItemIndex}
           active={getActive(start, end)}
-          disabled={disabled} />
+          disabled={disabledItemIndexes} />
       </Calendar>
     );
   }

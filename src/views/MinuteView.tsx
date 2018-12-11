@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
+import BaseCalendarView, {
+  BaseCalendarViewProps,
+  CalendarWithOptionalHeaderViewProps,
+  SingleSelectionCalendarViewProps,
+} from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header, { HeaderProps } from './CalendarHeader/Header';
@@ -9,45 +13,25 @@ import { findHTMLElement } from '../lib';
 
 const MINUTE_CALENDAR_ROW_WIDTH = 3;
 
-interface MinuteViewProps extends BaseCalendarViewProps {
-  /** Array of minutes to fill a calendar with. */
-  minutes: string[];
-  /** Called after click on minute. */
-  onMinuteClick: (e: React.SyntheticEvent, data: any) => void;
-  /** Called on calendar cell hover. */
-  onCellHover: (e: React.SyntheticEvent, data: any) => void;
-  /** Index of a cell that should be displayed as hovered. */
-  hovered?: number;
-  /** Called after click on next page button. */
-  onNextPageBtnClick?: () => void;
-  /** Called after click on previous page button. */
-  onPrevPageBtnClick?: () => void;
-  /** Whether to display previous page button as active or disabled. */
-  hasPrevPage?: boolean;
-  /** Whether to display next page button as active or disabled. */
-  hasNextPage?: boolean;
-  /** Called after click on calendar header. */
-  onHeaderClick?: () => void;
-  /** Minute index to display as active. */
-  active?: number;
-  /** A date that is displayed in calendar header. */
-  currentDate?: string;
-}
+type MinuteViewProps =
+  BaseCalendarViewProps
+  & SingleSelectionCalendarViewProps
+  & CalendarWithOptionalHeaderViewProps;
 
 class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
   public render() {
     const {
-      minutes,
+      values,
       hasHeader,
-      onMinuteClick,
+      onValueClick,
       onNextPageBtnClick,
       onPrevPageBtnClick,
       hasNextPage,
       hasPrevPage,
       onHeaderClick,
-      active,
-      currentDate,
-      hovered,
+      activeItemIndex,
+      currentHeadingValue,
+      hoveredItemIndex,
       onCellHover,
       onMount,
       inline,
@@ -59,7 +43,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       onPrevPageBtnClick,
       hasNextPage,
       hasPrevPage,
-      title: currentDate,
+      title: currentHeadingValue,
       width: MINUTE_CALENDAR_ROW_WIDTH,
       displayWeeks: false,
     };
@@ -69,11 +53,11 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
         { hasHeader && <Header { ...headerProps } /> }
         <Body
           width={MINUTE_CALENDAR_ROW_WIDTH}
-          data={minutes}
-          hovered={hovered}
+          data={values}
+          hovered={hoveredItemIndex}
           onCellHover={onCellHover}
-          onCellClick={onMinuteClick}
-          active={active} />
+          onCellClick={onValueClick}
+          active={activeItemIndex} />
       </Calendar>
     );
   }

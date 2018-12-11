@@ -169,19 +169,19 @@ class YearPicker extends BasePicker {
     return (
       <YearView
         { ...rest }
-        years={this.buildCalendarValues()}
+        values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
-        onYearClick={this.handleChange}
+        onValueClick={this.handleChange}
         onBlur={this.handleBlur}
         inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
-        hovered={this.state.hoveredCellPosition}
+        hoveredItemIndex={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
-        disabled={this.getDisabledYearsPositions()}
-        active={this.getActiveCellPosition()} />
+        disabledItemIndexes={this.getDisabledYearsPositions()}
+        activeItemIndex={this.getActiveCellPosition()} />
     );
   }
 }

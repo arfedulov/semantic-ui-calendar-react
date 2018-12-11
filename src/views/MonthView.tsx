@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
+import BaseCalendarView, {
+  BaseCalendarViewProps,
+  CalendarWithOptionalHeaderViewProps,
+  SingleSelectionCalendarViewProps,
+} from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header, { HeaderProps } from './CalendarHeader/Header';
@@ -9,49 +13,27 @@ import { findHTMLElement } from '../lib';
 
 const MONTH_CALENDAR_ROW_WIDTH = 3;
 
-interface MonthViewProps extends BaseCalendarViewProps {
-  /** Array of months to fill a calendar with. */
-  months: string[];
-  /** Called after click on month. */
-  onMonthClick: (e: React.SyntheticEvent, data: any) => void;
-  /** Called on calendar cell hover. */
-  onCellHover: (e: React.SyntheticEvent, data: any) => void;
-  /** Index of a month that should be displayed as hovered. */
-  hovered?: number;
-  /** Called after click on next page button. */
-  onNextPageBtnClick?: () => void;
-  /** Called after click on previous page button. */
-  onPrevPageBtnClick?: () => void;
-  /** Whether to display previous page button as active or disabled. */
-  hasPrevPage?: boolean;
-  /** Whether to display next page button as active or disabled. */
-  hasNextPage?: boolean;
-  /** Called after click on calendar header. */
-  onHeaderClick?: () => void;
-  /** An array of month indexes to display as disabled. */
-  disabled?: number[];
-  /** Index of a month that should be displayed as active. */
-  active?: number;
-  /** A year to display in header. */
-  currentYear?: string;
-}
+type MonthViewProps =
+  BaseCalendarViewProps
+  & SingleSelectionCalendarViewProps
+  & CalendarWithOptionalHeaderViewProps;
 
 class MonthView extends BaseCalendarView<MonthViewProps, any> {
   public render() {
     const {
-      months,
+      values,
       hasHeader,
-      onMonthClick,
+      onValueClick,
       onNextPageBtnClick,
       onPrevPageBtnClick,
       hasPrevPage,
       hasNextPage,
       onHeaderClick,
-      disabled,
-      active,
-      currentYear,
+      disabledItemIndexes,
+      activeItemIndex,
+      currentHeadingValue,
       onCellHover,
-      hovered,
+      hoveredItemIndex,
       onMount,
       inline,
       ...rest
@@ -62,7 +44,7 @@ class MonthView extends BaseCalendarView<MonthViewProps, any> {
       hasPrevPage,
       hasNextPage,
       onHeaderClick,
-      title: currentYear,
+      title: currentHeadingValue,
       displayWeeks: false,
       width: MONTH_CALENDAR_ROW_WIDTH,
     };
@@ -72,12 +54,12 @@ class MonthView extends BaseCalendarView<MonthViewProps, any> {
         { hasHeader && <Header { ...headerProps } /> }
         <Body
           width={MONTH_CALENDAR_ROW_WIDTH}
-          data={months}
-          onCellClick={onMonthClick}
+          data={values}
+          onCellClick={onValueClick}
           onCellHover={onCellHover}
-          active={active}
-          hovered={hovered}
-          disabled={disabled} />
+          active={activeItemIndex}
+          hovered={hoveredItemIndex}
+          disabled={disabledItemIndexes} />
       </Calendar>
     );
   }

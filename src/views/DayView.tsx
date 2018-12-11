@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import BaseCalendarView, { BaseCalendarViewProps } from './BaseCalendarView';
+import BaseCalendarView, {
+  BaseCalendarViewProps,
+  CalendarWithHeaderViewProps,
+  SingleSelectionCalendarViewProps,
+} from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
@@ -10,47 +14,25 @@ import { findHTMLElement } from '../lib';
 export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
 
-interface DayViewProps extends BaseCalendarViewProps {
-  /** An array of dates to fill a calendar with. */
-  days: string[];
-  /** Called after click on next page button. */
-  onNextPageBtnClick: () => void;
-  /** Called after click on previous page button. */
-  onPrevPageBtnClick: () => void;
-  /** Called after click on day. */
-  onDayClick: (e: React.SyntheticEvent, data: any) => void;
-  /** Whether to display previous page button as active or disabled. */
-  hasPrevPage: boolean;
-  /** Whether to display next page button as active or disabled. */
-  hasNextPage: boolean;
-  /** A date that is displayed in calendar header. */
-  currentDate: string;
-  /** Called on calendar cell hover. */
-  onCellHover: (e: React.SyntheticEvent, data: any) => void;
-  /** Called after click on calendar header. */
-  onHeaderClick: () => void;
-  /** Index of a cell that should be displayed as hovered. */
-  hovered?: number;
-  /** An array of day positions to display as disabled. */
-  disabled?: number[];
-  /** Position of a day to display as active. */
-  active?: number;
-}
+type DayViewProps =
+  BaseCalendarViewProps
+  & SingleSelectionCalendarViewProps
+  & CalendarWithHeaderViewProps;
 
 class DayView extends BaseCalendarView<DayViewProps, any> {
   public render() {
     const {
-      days,
+      values,
       onNextPageBtnClick,
       onPrevPageBtnClick,
-      onDayClick,
+      onValueClick,
       hasNextPage,
       hasPrevPage,
-      currentDate,
+      currentHeadingValue,
       onHeaderClick,
-      disabled,
-      active,
-      hovered,
+      disabledItemIndexes,
+      activeItemIndex,
+      hoveredItemIndex,
       onCellHover,
       hasHeader,
       onMount,
@@ -67,16 +49,16 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
           onPrevPageBtnClick={onPrevPageBtnClick}
           hasNextPage={hasNextPage}
           hasPrevPage={hasPrevPage}
-          title={currentDate}
+          title={currentHeadingValue}
           onHeaderClick={onHeaderClick} />
         <Body
           width={DAY_CALENDAR_ROW_WIDTH}
-          data={days}
-          hovered={hovered}
+          data={values}
+          hovered={hoveredItemIndex}
           onCellHover={onCellHover}
-          onCellClick={onDayClick}
-          active={active}
-          disabled={disabled} />
+          onCellClick={onValueClick}
+          active={activeItemIndex}
+          disabled={disabledItemIndexes} />
       </Calendar>
     );
   }

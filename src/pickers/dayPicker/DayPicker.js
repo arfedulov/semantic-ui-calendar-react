@@ -105,12 +105,12 @@ class DayPicker extends BasePicker {
 
   handleChange = (e, { value }) => {
     // `value` is selected date(string) like '31' or '1'
-    const result = { 
+    const result = {
       year: this.state.date.year(),
       month: this.state.date.month(),
       date: parseInt(value),
     };
-    
+
     _.invoke(this.props, 'onChange', e, { ...this.props, value: result });
   }
 
@@ -135,20 +135,20 @@ class DayPicker extends BasePicker {
     return (
       <DayView
         { ...rest }
-        days={this.buildCalendarValues()}
+        values={this.buildCalendarValues()}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
-        onDayClick={this.handleChange}
+        onValueClick={this.handleChange}
         onBlur={this.handleBlur}
         inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
-        hovered={this.state.hoveredCellPosition}
+        hoveredItemIndex={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
-        currentDate={this.getCurrentDate()}
-        disabled={this.getDisabledDaysPositions()}
-        active={this.getActiveCellPosition()} />
+        currentHeadingValue={this.getCurrentDate()}
+        disabledItemIndexes={this.getDisabledDaysPositions()}
+        activeItemIndex={this.getActiveCellPosition()} />
     );
   }
 }

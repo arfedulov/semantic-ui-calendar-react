@@ -147,20 +147,20 @@ class HourPicker extends BasePicker {
     return (
       <HourView
         { ...rest }
-        hours={this.buildCalendarValues()}
+        values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
-        onHourClick={this.handleChange}
+        onValueClick={this.handleChange}
         onBlur={this.handleBlur}
         inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
-        hovered={this.state.hoveredCellPosition}
+        hoveredItemIndex={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
-        disabled={this.getDisabledHoursPositions()}
-        active={this.getActiveCellPosition()}
-        currentDate={this.getCurrentDate()} />
+        disabledItemIndexes={this.getDisabledHoursPositions()}
+        activeItemIndex={this.getActiveCellPosition()}
+        currentHeadingValue={this.getCurrentDate()} />
     );
   }
 }
