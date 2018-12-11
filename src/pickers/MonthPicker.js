@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import _ from 'lodash';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 import MonthView from '../views/MonthView';
 import { getUnhandledProps } from '../lib';
@@ -161,8 +161,8 @@ class MonthPicker extends BasePicker {
     return (
       <MonthView
         { ...rest }
-        months={this.buildCalendarValues()}
-        onMonthClick={this.handleChange}
+        values={this.buildCalendarValues()}
+        onValueClick={this.handleChange}
         onCellHover={this.onHoveredCellPositionChange}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
@@ -171,10 +171,10 @@ class MonthPicker extends BasePicker {
         onBlur={this.handleBlur}
         inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
-        disabled={this.getDisabledMonthsPositions()}
-        active={this.getActiveCellPosition()}
-        hovered={this.state.hoveredCellPosition}
-        currentYear={this.getCurrentYear()} />
+        disabledItemIndexes={this.getDisabledMonthsPositions()}
+        activeItemIndex={this.getActiveCellPosition()}
+        hoveredItemIndex={this.state.hoveredCellPosition}
+        currentHeadingValue={this.getCurrentYear()} />
     );
   }
 }

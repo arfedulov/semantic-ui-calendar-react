@@ -1,22 +1,30 @@
-export { default as DateInput, DateInputProps } from './DateInput';
+export {
+  default as DateInput,
+  DateInputProps,
+  DateInputOnChangeData,
+} from './DateInput';
 export {
   default as DateTimeInput,
   DateTimeInputProps,
-  DateTimeInputData
+  DateTimeInputOnChangeData,
 } from './DateTimeInput';
 export {
   default as DatesRangeInput,
   DatesRangeInputProps,
-  DatesRangeInputOnChangeData
+  DatesRangeInputOnChangeData,
 } from './DatesRangeInput';
-export { default as TimeInput, TimeInputProps } from './TimeInput';
+export {
+  default as TimeInput,
+  TimeInputProps,
+  TimeInputOnChangeData,
+} from './TimeInput';
 export {
   default as YearInput,
   YearInputProps,
-  YearInputData
+  YearInputOnChangeData,
 } from './YearInput';
 export {
   default as MonthInput,
   MonthInputProps,
-  MonthInputData
+  MonthInputOnChangeData,
 } from './MonthInput';

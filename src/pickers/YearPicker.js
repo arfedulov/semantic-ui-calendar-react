@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import _ from 'lodash';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 import YearView from '../views/YearView';
 import { getUnhandledProps } from '../lib';
@@ -169,19 +169,19 @@ class YearPicker extends BasePicker {
     return (
       <YearView
         { ...rest }
-        years={this.buildCalendarValues()}
+        values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
-        onYearClick={this.handleChange}
+        onValueClick={this.handleChange}
         onBlur={this.handleBlur}
         inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
-        hovered={this.state.hoveredCellPosition}
+        hoveredItemIndex={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
-        disabled={this.getDisabledYearsPositions()}
-        active={this.getActiveCellPosition()} />
+        disabledItemIndexes={this.getDisabledYearsPositions()}
+        activeItemIndex={this.getActiveCellPosition()} />
     );
   }
 }

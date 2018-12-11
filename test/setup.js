@@ -1,5 +1,5 @@
-const { JSDOM } = require('jsdom');
-const moment = require('moment');
+import { JSDOM } from 'jsdom';
+import * as moment from 'moment';
 moment.locale('en');
 
 const { window } = new JSDOM('<!doctype html><html><body></body></html>', {

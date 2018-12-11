@@ -1,12 +1,12 @@
 import { assert } from 'chai';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import * as Enzyme from 'enzyme';
+import * as Adapter from 'enzyme-adapter-react-16';
 import {
   mount,
 } from 'enzyme';
-import sinon from 'sinon';
-import React from 'react';
-import _ from 'lodash';
+import * as sinon from 'sinon';
+import * as React from 'react';
+import * as _ from 'lodash';
 
 import DateInput from '../../src/inputs/DateInput';
 
@@ -35,7 +35,7 @@ describe('<DateInput />: handleSelect', () => {
       dateFormat="YYYY-MM-DD"
       startMode="year"
       onChange={onChangeFake} />);
-    
+
     assert.equal(wrapper.state('mode'), 'year', 'mode not switched yet');
     wrapper.instance().handleSelect('click', { value: { year: 2030 } });
     assert.equal(wrapper.state('mode'), 'month', 'switched to next mode');
@@ -48,7 +48,7 @@ describe('<DateInput />: handleSelect', () => {
       dateFormat="YYYY-MM-DD"
       startMode="day"
       onChange={onChangeFake} />);
-    
+
     assert.equal(wrapper.state('mode'), 'day', 'mode not switched yet');
     wrapper.instance().handleSelect('click', { value: { year: 2030 } });
     assert.equal(wrapper.state('mode'), 'day', 'mode still not switched');

@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import _ from 'lodash';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 import MinuteView from '../../views/MinuteView';
 import { getUnhandledProps } from '../../lib';
@@ -102,19 +102,19 @@ class MinutePicker extends BasePicker {
     return (
       <MinuteView
         { ...rest }
-        minutes={this.buildCalendarValues()}
+        values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
-        onMinuteClick={this.handleChange}
-        hovered={this.state.hoveredCellPosition}
+        onValueClick={this.handleChange}
+        hoveredItemIndex={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         onBlur={this.handleBlur}
         inline={this.props.inline}
         onMount={this.props.onCalendarViewMount}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}
-        currentDate={this.getCurrentDate()}
-        active={this.getActiveCellPosition()} />
+        currentHeadingValue={this.getCurrentDate()}
+        activeItemIndex={this.getActiveCellPosition()} />
     );
   }
 }

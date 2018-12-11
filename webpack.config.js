@@ -1,17 +1,31 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const baseConfig = {
+const config = {
+  entry: {
+    calendar: './example/calendar.tsx',
+  },
+  output: {
+    path: path.resolve(__dirname, 'example'),
+    filename: '[name].bundle.js',
+  },
+  mode: 'development',
   module: {
     rules: [
       {
-        test: /(\.jsx)|(\.js)$/,
+        test: /\.tsx?$/,
         exclude: /node-modules/,
-        use: {
-          loader: 'babel-loader',
-        }
-      }
-    ]
+        loader: 'ts-loader',
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /node-modules/,
+        loader: 'babel-loader',
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', 'jsx']
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'example'),
@@ -21,18 +35,7 @@ const baseConfig = {
   devtool: 'source-map',
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-  ]
+  ],
 };
-
-const config = Object.assign({
-  entry: {
-    calendar: './example/calendar.js'
-  },
-  output: {
-    path: path.resolve(__dirname, 'example'),
-    filename: '[name].bundle.js'
-  },
-  mode: 'development'
-}, baseConfig);
 
 module.exports = config;

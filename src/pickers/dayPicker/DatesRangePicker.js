@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
-import _ from 'lodash';
+import * as React from 'react';
+import * as PropTypes from 'prop-types';
+import * as moment from 'moment';
+import * as _ from 'lodash';
 
 import DatesRangeView from '../../views/DatesRangeView';
 import { DAYS_ON_PAGE } from './DayPicker';
@@ -18,18 +18,18 @@ import BasePicker from '../BasePicker';
 const PAGE_WIDTH = 7;
 
 /** Return position of a given date on the page.
- * 
+ *
  * Page consists of some dates from previous month, dates from current month
  * and some dates from next month.
  * Return undefined if date that is under test is out of page.
- * 
- * @param {Moment} prevMonth 
- * @param {Moment} currentMonth 
- * @param {Moment} nextMonth 
+ *
+ * @param {Moment} prevMonth
+ * @param {Moment} currentMonth
+ * @param {Moment} nextMonth
  * @param {Moment} date Date to test
- * @param {number[]} fromPrevMonthDates 
- * @param {number[]} fromCurrentMonthDates 
- * @param {number[]} fromNextMonthDates 
+ * @param {number[]} fromPrevMonthDates
+ * @param {number[]} fromCurrentMonthDates
+ * @param {number[]} fromNextMonthDates
  */
 function getDatePosition(
   prevMonth,
@@ -77,8 +77,8 @@ function buildMoment(date/*Moment*/, firstOnPage/*number*/, dateToBuildPosition/
     result = moment({ year: date.year(), month: date.month(), date: firstOnPage });
   } else {
     /* page starts from day in previous month */
-    result = moment({ year: date.month() ? date.year() : date.year() - 1, 
-      month: (date.month() + 11) % 12, 
+    result = moment({ year: date.month() ? date.year() : date.year() - 1,
+      month: (date.month() + 11) % 12,
       date: firstOnPage});
   }
   result.add(dateToBuildPosition, 'day');
@@ -267,21 +267,21 @@ class DatesRangePicker extends BasePicker {
     return (
       <DatesRangeView
         { ...rest }
-        days={this.buildCalendarValues()}
+        values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onCellHover={this.onHoveredCellPositionChange}
-        hovered={this.state.hoveredCellPosition}
-        onDayClick={this.handleChange}
+        hoveredItemIndex={this.state.hoveredCellPosition}
+        onValueClick={this.handleChange}
         inline={this.props.inline}
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         onBlur={this.handleBlur}
         onMount={this.props.onCalendarViewMount}
-        currentDate={this.getCurrentDate()}
-        selectedRange={this.getSelectedRange()}
-        active={this.getActiveCellsPositions()}
-        disabled={this.getDisabledDaysPositions()} />
+        currentHeadingValue={this.getCurrentDate()}
+        currentRangeHeadingValue={this.getSelectedRange()}
+        activeRange={this.getActiveCellsPositions()}
+        disabledItemIndexes={this.getDisabledDaysPositions()} />
     );
   }
 }

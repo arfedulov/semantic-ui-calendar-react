@@ -1,0 +1,5 @@
+{
+  "tslint.enable": true,
+  "tslint.jsEnable": true,
+  "tslint.run": "onSave"
+}

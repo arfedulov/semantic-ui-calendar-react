@@ -1,16 +1,16 @@
 import { assert } from 'chai';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import * as Enzyme from 'enzyme';
+import * as Adapter from 'enzyme-adapter-react-16';
 import {
   shallow,
 } from 'enzyme';
-import sinon from 'sinon';
-import React from 'react';
+import * as sinon from 'sinon';
+import * as React from 'react';
 import {
   Table,
   Icon,
 } from 'semantic-ui-react';
-import _ from 'lodash';
+import * as _ from 'lodash';
 
 import {
   Header,

@@ -1,6 +1,6 @@
 import { assert } from 'chai';
-import _ from 'lodash';
-import moment from 'moment';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 import {
   getInitializer,
