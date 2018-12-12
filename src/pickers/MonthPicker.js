@@ -5,12 +5,12 @@ import * as _ from 'lodash';
 
 import MonthView from '../views/MonthView';
 import { getUnhandledProps } from '../lib';
-import BasePicker from './BasePicker';
+import { SingleSelectionPicker } from './BasePicker';
 
 const MONTHS_IN_YEAR = 12;
 const PAGE_WIDTH = 3;
 
-class MonthPicker extends BasePicker {
+class MonthPicker extends SingleSelectionPicker {
   /*
     Note:
       use it like this <MonthPicker key={someInputValue} />

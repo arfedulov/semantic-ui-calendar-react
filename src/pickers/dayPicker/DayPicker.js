@@ -12,12 +12,12 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
-import BasePicker from '../BasePicker';
+import { SingleSelectionPicker } from '../BasePicker';
 
 const PAGE_WIDTH = 7;
 export const DAYS_ON_PAGE = WEEKS_TO_DISPLAY * PAGE_WIDTH;
 
-class DayPicker extends BasePicker {
+class DayPicker extends SingleSelectionPicker {
   constructor(props) {
     super(props);
     this.state = {

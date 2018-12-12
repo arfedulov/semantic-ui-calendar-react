@@ -11,13 +11,13 @@ import {
   isPrevPageAvailable,
   getCurrentDate,
 } from './sharedFunctions';
-import BasePicker from '../BasePicker';
+import { SingleSelectionPicker } from '../BasePicker';
 
 const MINUTES_STEP = 5;
 const MINUTES_ON_PAGE = 12;
 const PAGE_WIDTH = 3;
 
-class MinutePicker extends BasePicker {
+class MinutePicker extends SingleSelectionPicker {
   constructor(props) {
     super(props);
     this.state = {

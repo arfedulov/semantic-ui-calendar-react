@@ -5,13 +5,13 @@ import * as _ from 'lodash';
 
 import YearView from '../views/YearView';
 import { getUnhandledProps } from '../lib';
-import BasePicker from './BasePicker';
+import { SingleSelectionPicker } from './BasePicker';
 
 const PAGE_WIDTH = 3;
 const PAGE_HEIGHT = 4;
 const YEARS_ON_PAGE = PAGE_WIDTH * PAGE_HEIGHT;
 
-class YearPicker extends BasePicker {
+class YearPicker extends SingleSelectionPicker {
   /*
     Note:
       use it like this <YearPicker key={someInputValue} />

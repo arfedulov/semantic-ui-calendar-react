@@ -13,7 +13,7 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
-import BasePicker from '../BasePicker';
+import { RangeSelectionPicker } from '../BasePicker';
 
 const PAGE_WIDTH = 7;
 
@@ -85,7 +85,7 @@ function buildMoment(date/*Moment*/, firstOnPage/*number*/, dateToBuildPosition/
   return result;
 }
 
-class DatesRangePicker extends BasePicker {
+class DatesRangePicker extends RangeSelectionPicker {
   constructor(props) {
     super(props);
     this.state = {

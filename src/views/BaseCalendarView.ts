@@ -24,7 +24,7 @@ export interface SingleSelectionCalendarViewProps {
   activeItemIndex?: number;
 }
 
-interface RangeIndexes {
+export interface RangeIndexes {
   start: number | undefined;
   end: number | undefined;
 }
