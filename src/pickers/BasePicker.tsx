@@ -3,27 +3,55 @@ import {
   includes,
   isNumber,
 } from 'lodash';
+import { Moment } from 'moment';
 import * as React from 'react';
 
 import {
   RangeIndexes,
 } from '../views/BaseCalendarView';
 
-export interface BasePickerProps {
-  closePopup: () => void;
-  inline: boolean;
-  isPickerInFocus: () => boolean;
-  isTriggerInFocus: () => boolean;
-}
-
 interface HandleChangeParams {
   value: string;
   itemPosition?: number;
 }
 
+export interface BasePickerProps {
+  /** A value for initializing day picker's state. */
+  initializeWith: Moment;
+  /** Forse popup to close. */
+  closePopup: () => void;
+  /** Whether to display picker without a popup or inside a popup. */
+  inline: boolean;
+  /** WHether picker in focus. */
+  isPickerInFocus: () => boolean;
+  /** Whether popup-trigger in focus. */
+  isTriggerInFocus: () => boolean;
+  /** Used to pass underlying picker's html element to parent component. */
+  onCalendarViewMount: (e: HTMLElement) => void;
+  /** Whether to display calendar's header. */
+  hasHeader: boolean;
+  /** Called on calendar's header click. */
+  onHeaderClick: () => void;
+}
+
+export interface BasePickerState extends Readonly<any> {
+  /** Position of a cell that is currently hovered on. */
+  hoveredCellPosition: number | undefined;
+  /** Inner picker's currently selected date. */
+  date: Moment;
+}
+
 /** Do not expose this class. Instead use RangeSelectionPicker and SingleSelectionPicker. */
-abstract class BasePicker extends React.Component<BasePickerProps, any> {
+abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, BasePickerState> {
   protected PAGE_WIDTH: number;
+
+  constructor(props: P) {
+    super(props);
+    this.state = {
+      hoveredCellPosition: undefined,
+      date: props.initializeWith.clone(),
+    };
+  }
 
   public componentDidMount(): void {
     document.addEventListener('keydown', this.handleKeyPress);
@@ -156,9 +184,12 @@ abstract class BasePicker extends React.Component<BasePickerProps, any> {
 
   /** Change currently displayed page (i.e. year, month, day) to next one. */
   protected abstract switchToNextPage(e?: React.SyntheticEvent, data?: any, cb?: () => void): void;
+
+  /** Return currently selected value to display in calendar header. */
+  protected abstract getCurrentDate(): string;
 }
 
-export abstract class RangeSelectionPicker extends BasePicker {
+export abstract class RangeSelectionPicker<P extends BasePickerProps> extends BasePicker<P> {
   public componentDidMount(): void {
     super.componentDidMount();
     const { start, end } = this.getActiveCellsPositions();
@@ -178,7 +209,7 @@ export abstract class RangeSelectionPicker extends BasePicker {
   protected abstract getActiveCellsPositions(): RangeIndexes | undefined;
 }
 
-export abstract class SingleSelectionPicker extends BasePicker {
+export abstract class SingleSelectionPicker<P extends BasePickerProps> extends BasePicker<P> {
   public componentDidMount(): void {
     super.componentDidMount();
     const active = this.getActiveCellPosition();

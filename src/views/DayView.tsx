@@ -44,7 +44,7 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
-          displayWeeks={true}
+          displayWeeks
           onNextPageBtnClick={onNextPageBtnClick}
           onPrevPageBtnClick={onPrevPageBtnClick}
           hasNextPage={hasNextPage}

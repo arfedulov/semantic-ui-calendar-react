@@ -3,6 +3,8 @@ import * as React from 'react';
 export interface BaseCalendarViewProps {
   /** Used for passing calendar dom element to parent component. */
   onMount: (e: HTMLElement) => void;
+  /** Called on calendar blur. */
+  onBlur: () => void;
   /** Whether a calendar is inside a popup or inline. */
   inline: boolean;
   /** Whether a calendar has header. */
