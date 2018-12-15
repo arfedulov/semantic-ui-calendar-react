@@ -37,17 +37,20 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> {
 
   public render() {
     const {
+      onChange,
+      value,
+      initializeWith,
+      closePopup,
       inline,
+      isPickerInFocus,
+      isTriggerInFocus,
       onCalendarViewMount,
-      onHeaderClick,
       ...rest
     } = this.props;
 
     return (
       <DayView
         { ...rest }
-        hasHeader
-        onHeaderClick={onHeaderClick}
         values={this.buildCalendarValues()}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}
