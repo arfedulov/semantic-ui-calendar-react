@@ -6,6 +6,7 @@ import {
   BasePickerProps,
   DisableValuesProps,
   MinMaxValueProps,
+  ProvideHeadingValue,
   SingleSelectionPicker,
   TimeFormat,
   TimePickerProps,
@@ -26,7 +27,9 @@ type MinutePickerProps = BasePickerProps
   & DisableValuesProps
   & TimePickerProps;
 
-class MinutePicker extends SingleSelectionPicker<MinutePickerProps> {
+class MinutePicker
+  extends SingleSelectionPicker<MinutePickerProps>
+  implements ProvideHeadingValue {
   public static readonly defaultProps: { timeFormat: TimeFormat } = {
     timeFormat: '24',
   };
@@ -71,6 +74,11 @@ class MinutePicker extends SingleSelectionPicker<MinutePickerProps> {
         currentHeadingValue={this.getCurrentDate()}
         activeItemIndex={this.getActiveCellPosition()} />
     );
+  }
+
+  public getCurrentDate(): string {
+    /* Return currently selected month, date and year(string) to display in calendar header. */
+    return getCurrentDate(this.state.date);
   }
 
   protected buildCalendarValues(): string[] {
@@ -150,11 +158,6 @@ class MinutePicker extends SingleSelectionPicker<MinutePickerProps> {
 
   protected isPrevPageAvailable(): boolean {
     return isPrevPageAvailable(this.state.date, this.props.minDate);
-  }
-
-  protected getCurrentDate(): string {
-    /* Return currently selected month, date and year(string) to display in calendar header. */
-    return getCurrentDate(this.state.date);
   }
 
   protected handleChange = (e, { value }): void => {

@@ -8,6 +8,7 @@ import DatesRangeView from '../../views/DatesRangeView';
 import {
   BasePickerProps,
   MinMaxValueProps,
+  ProvideHeadingValue,
   RangeSelectionPicker,
 } from '../BasePicker';
 import { DAYS_ON_PAGE } from './DayPicker';
@@ -30,7 +31,9 @@ interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps {
   end: Moment;
 }
 
-class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> {
+class DatesRangePicker
+  extends RangeSelectionPicker<DatesRangePickerProps>
+  implements ProvideHeadingValue {
   constructor(props) {
     super(props);
     this.PAGE_WIDTH = PAGE_WIDTH;
@@ -73,6 +76,11 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> {
         activeRange={this.getActiveCellsPositions()}
         disabledItemIndexes={this.getDisabledPositions()} />
     );
+  }
+
+  public getCurrentDate(): string {
+    /* Return currently selected year and month(string) to display in calendar header. */
+    return this.state.date.format('MMMM YYYY');
   }
 
   protected buildCalendarValues(): string[] {
@@ -184,11 +192,6 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> {
 
   protected isPrevPageAvailable(): boolean {
     return isPrevPageAvailable(this.state.date, this.props.minDate);
-  }
-
-  protected getCurrentDate(): string {
-    /* Return currently selected year and month(string) to display in calendar header. */
-    return this.state.date.format('MMMM YYYY');
   }
 
   protected getSelectedRange(): string {

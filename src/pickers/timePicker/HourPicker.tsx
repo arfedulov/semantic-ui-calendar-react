@@ -6,6 +6,7 @@ import {
   BasePickerProps,
   DisableValuesProps,
   MinMaxValueProps,
+  ProvideHeadingValue,
   SingleSelectionPicker,
   TimeFormat,
   TimePickerProps,
@@ -25,7 +26,9 @@ type HourPickerProps = BasePickerProps
   & DisableValuesProps
   & TimePickerProps;
 
-class HourPicker extends SingleSelectionPicker<HourPickerProps> {
+class HourPicker
+  extends SingleSelectionPicker<HourPickerProps>
+  implements ProvideHeadingValue {
   public static readonly defaultProps: { timeFormat: TimeFormat } = {
     timeFormat: '24',
   };
@@ -70,6 +73,11 @@ class HourPicker extends SingleSelectionPicker<HourPickerProps> {
         activeItemIndex={this.getActiveCellPosition()}
         currentHeadingValue={this.getCurrentDate()} />
     );
+  }
+
+  public getCurrentDate(): string {
+    /* Return currently selected month, date and year(string) to display in calendar header. */
+    return getCurrentDate(this.state.date);
   }
 
   protected buildCalendarValues(): string[] {
@@ -152,11 +160,6 @@ class HourPicker extends SingleSelectionPicker<HourPickerProps> {
     if (result.length > 0) {
       return result;
     }
-  }
-
-  protected getCurrentDate(): string {
-    /* Return currently selected month, date and year(string) to display in calendar header. */
-    return getCurrentDate(this.state.date);
   }
 
   protected handleChange = (e, { value }): void => {

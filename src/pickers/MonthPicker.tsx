@@ -7,6 +7,7 @@ import {
   BasePickerProps,
   DisableValuesProps,
   EnableValuesProps,
+  ProvideHeadingValue,
   MinMaxValueProps,
   SingleSelectionPicker,
 } from './BasePicker';
@@ -19,7 +20,9 @@ type MonthPickerProps = BasePickerProps
   & EnableValuesProps
   & MinMaxValueProps;
 
-class MonthPicker extends SingleSelectionPicker<MonthPickerProps> {
+class MonthPicker
+  extends SingleSelectionPicker<MonthPickerProps>
+  implements ProvideHeadingValue {
   /*
     Note:
       use it like this <MonthPicker key={someInputValue} />
@@ -65,6 +68,11 @@ class MonthPicker extends SingleSelectionPicker<MonthPickerProps> {
         hoveredItemIndex={this.state.hoveredCellPosition}
         currentHeadingValue={this.getCurrentDate()} />
     );
+  }
+
+  public getCurrentDate(): string {
+    /* Return current year(string) to display in calendar header. */
+    return this.state.date.year().toString();
   }
 
   protected buildCalendarValues(): string[] {
@@ -172,11 +180,6 @@ class MonthPicker extends SingleSelectionPicker<MonthPickerProps> {
     }
 
     return true;
-  }
-
-  protected getCurrentDate(): string {
-    /* Return current year(string) to display in calendar header. */
-    return this.state.date.year().toString();
   }
 
   protected handleChange = (e, { value }): void => {

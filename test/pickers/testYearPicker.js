@@ -71,7 +71,7 @@ describe('<YearPicker />: getActiveCellPosition', function() {
   });
 });
 
-describe('<YearPicker />: getDisabledYearsPositions', function() {
+describe('<YearPicker />: getDisabledPositions', function() {
   it('works properly when `disable` prop is provided', () => {
     const date = moment('2015-05-01');
     /*
@@ -85,14 +85,14 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const wrapper = mount(<YearPicker
       disable={[moment('2006-01-01'), moment('2008-01-01')]}
       initializeWith={date} />);
-    assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
-    assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
-    assert.equal(wrapper.instance().getDisabledYearsPositions().length, 2, 'method returns an array of length 2');
-    _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+    assert(_.isFunction(wrapper.instance().getDisabledPositions), 'has the method');
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'method returns an array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 2, 'method returns an array of length 2');
+    _.forEach(wrapper.instance().getDisabledPositions(), (disabledIndex) => {
       assert(_.isNumber(disabledIndex), 'contains numbers only');
     });
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 2), 'year at position 2 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 4), 'year at position 4 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 2), 'year at position 2 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 4), 'year at position 4 is disabled');
   });
 
   it('works properly when `maxDate` prop is provided', () => {
@@ -108,15 +108,15 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const wrapper = mount(<YearPicker
       maxDate={moment('2011-01-01')}
       initializeWith={date} />);
-    assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
-    assert.equal(wrapper.instance().getDisabledYearsPositions().length, 4, 'method returns an array of length 4');
-    _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'method returns an array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 4, 'method returns an array of length 4');
+    _.forEach(wrapper.instance().getDisabledPositions(), (disabledIndex) => {
       assert(_.isNumber(disabledIndex), 'contains numbers only');
     });
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 8), 'year at position 8 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 9), 'year at position 9 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 10), 'year at position 10 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 11), 'year at position 11 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 8), 'year at position 8 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 9), 'year at position 9 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 10), 'year at position 10 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 11), 'year at position 11 is disabled');
   });
 
   it('works properly when `minDate` prop is provided', () => {
@@ -132,13 +132,13 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     const wrapper = mount(<YearPicker
       minDate={moment('2006-01-01')}
       initializeWith={date} />);
-    assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
-    assert.equal(wrapper.instance().getDisabledYearsPositions().length, 2, 'method returns an array of length 2');
-    _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'method returns an array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 2, 'method returns an array of length 2');
+    _.forEach(wrapper.instance().getDisabledPositions(), (disabledIndex) => {
       assert(_.isNumber(disabledIndex), 'contains numbers only');
     });
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 0), 'year at position 0 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 1), 'year at position 1 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 0), 'year at position 0 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 1), 'year at position 1 is disabled');
   });
 
   it('works properly when `minDate`, `maxDate`, `disable` props are all provided', () => {
@@ -157,15 +157,15 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
       disable={[moment('2008-01-01')]}
       initializeWith={date} />);
     /* disabled indexes: 0, 1, 4, 11 */
-    assert(_.isArray(wrapper.instance().getDisabledYearsPositions()), 'method returns an array');
-    assert.equal(wrapper.instance().getDisabledYearsPositions().length, 4, 'method returns an array of length 4');
-    _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'method returns an array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 4, 'method returns an array of length 4');
+    _.forEach(wrapper.instance().getDisabledPositions(), (disabledIndex) => {
       assert(_.isNumber(disabledIndex), 'contains numbers only');
     });
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 0), 'year at position 0 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 1), 'year at position 1 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 4), 'year at position 4 is disabled');
-    assert(_.includes(wrapper.instance().getDisabledYearsPositions(), 11), 'year at position 11 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 0), 'year at position 0 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 1), 'year at position 1 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 4), 'year at position 4 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 11), 'year at position 11 is disabled');
   });
 
   it('works properly when `disable`, `minDate`, `maxDate` props are undefined', () => {
@@ -180,8 +180,8 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
     */
     const wrapper = mount(<YearPicker
       initializeWith={date} />);
-    assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
-    assert(_.isUndefined(wrapper.instance().getDisabledYearsPositions()), 'method returns undefined');
+    assert(_.isFunction(wrapper.instance().getDisabledPositions), 'has the method');
+    assert(_.isUndefined(wrapper.instance().getDisabledPositions()), 'method returns undefined');
   });
 
   describe('maxDate and minDate are in current year', () => {
@@ -204,12 +204,12 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
         minDate={minDate} />);
 
       const shouldReturn = _.range(0, YEARS_ON_PAGE - 1);
-      assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
-      assert.equal(wrapper.instance().getDisabledYearsPositions().length, 11, 'method returns an array of length 11');
-      _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+      assert(_.isFunction(wrapper.instance().getDisabledPositions), 'has the method');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 11, 'method returns an array of length 11');
+      _.forEach(wrapper.instance().getDisabledPositions(), (disabledIndex) => {
         assert(_.isNumber(disabledIndex), 'contains numbers only');
       });
-      const producesValues = wrapper.instance().getDisabledYearsPositions();
+      const producesValues = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((yearPosition) => {
         assert(_.includes(producesValues, yearPosition), 'produce correct values');
       });
@@ -236,12 +236,12 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
         minDate={minDate} />);
 
       const shouldReturn = _.range(0, YEARS_ON_PAGE);
-      assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
-      assert.equal(wrapper.instance().getDisabledYearsPositions().length, 12, 'method returns an array of length 12');
-      _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+      assert(_.isFunction(wrapper.instance().getDisabledPositions), 'has the method');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 12, 'method returns an array of length 12');
+      _.forEach(wrapper.instance().getDisabledPositions(), (disabledIndex) => {
         assert(_.isNumber(disabledIndex), 'contains numbers only');
       });
-      const producesValues = wrapper.instance().getDisabledYearsPositions();
+      const producesValues = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((yearPosition) => {
         assert(_.includes(producesValues, yearPosition), 'produce correct values');
       });
@@ -268,12 +268,12 @@ describe('<YearPicker />: getDisabledYearsPositions', function() {
         minDate={minDate} />);
 
       const shouldReturn = _.range(0, YEARS_ON_PAGE);
-      assert(_.isFunction(wrapper.instance().getDisabledYearsPositions), 'has the method');
-      assert.equal(wrapper.instance().getDisabledYearsPositions().length, 12, 'method returns an array of length 12');
-      _.forEach(wrapper.instance().getDisabledYearsPositions(), (disabledIndex) => {
+      assert(_.isFunction(wrapper.instance().getDisabledPositions), 'has the method');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 12, 'method returns an array of length 12');
+      _.forEach(wrapper.instance().getDisabledPositions(), (disabledIndex) => {
         assert(_.isNumber(disabledIndex), 'contains numbers only');
       });
-      const producesValues = wrapper.instance().getDisabledYearsPositions();
+      const producesValues = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((yearPosition) => {
         assert(_.includes(producesValues, yearPosition), 'produce correct values');
       });

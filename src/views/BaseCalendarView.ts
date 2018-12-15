@@ -38,19 +38,22 @@ export interface RangeSelectionCalendarViewProps {
   activeRange: RangeIndexes;
 }
 
-export interface CalendarWithHeaderViewProps {
+export interface CalendarWithHeaderViewPropsBase {
   /** Called after click on next page button. */
-  onNextPageBtnClick: () => void;
+  onNextPageBtnClick: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
   /** Called after click on previous page button. */
-  onPrevPageBtnClick: () => void;
+  onPrevPageBtnClick: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
   /** Whether to display previous page button as active or disabled. */
   hasPrevPage: boolean;
   /** Whether to display next page button as active or disabled. */
   hasNextPage: boolean;
-  /** A value (date, year or anything like that) that is displayed in calendar header. */
-  currentHeadingValue: string;
   /** Called after click on calendar header. */
   onHeaderClick: () => void;
+}
+
+export interface CalendarWithHeaderViewProps extends CalendarWithHeaderViewPropsBase {
+  /** A value (date, year or anything like that) that is displayed in calendar header. */
+  currentHeadingValue: string;
 }
 
 export interface CalendarWithOptionalHeaderViewProps {

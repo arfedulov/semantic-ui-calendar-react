@@ -212,11 +212,13 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
   /** Change currently displayed page (i.e. year, month, day) to next one. */
   protected abstract switchToNextPage(e?: React.SyntheticEvent, data?: any, cb?: () => void): void;
 
-  /** Return currently selected value to display in calendar header. */
-  protected abstract getCurrentDate(): string;
-
   /** Return position numbers of cells that should be displayed as disabled */
   protected abstract getDisabledPositions(): number[];
+}
+
+export interface ProvideHeadingValue {
+  /** Return currently selected value to display in calendar header. */
+  getCurrentDate(): string;
 }
 
 export abstract class RangeSelectionPicker<P extends BasePickerProps> extends BasePicker<P> {

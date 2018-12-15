@@ -8,6 +8,7 @@ import {
   DisableValuesProps,
   EnableValuesProps,
   MinMaxValueProps,
+  ProvideHeadingValue,
   SingleSelectionPicker,
 } from '../BasePicker';
 import {
@@ -25,7 +26,9 @@ type DayPickerProps = BasePickerProps
   & EnableValuesProps
   & MinMaxValueProps;
 
-class DayPicker extends SingleSelectionPicker<DayPickerProps> {
+class DayPicker
+  extends SingleSelectionPicker<DayPickerProps>
+  implements ProvideHeadingValue {
   constructor(props) {
     super(props);
     this.PAGE_WIDTH = PAGE_WIDTH;
@@ -62,6 +65,11 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> {
         disabledItemIndexes={this.getDisabledPositions()}
         activeItemIndex={this.getActiveCellPosition()} />
     );
+  }
+
+  public getCurrentDate(): string {
+    /* Return currently selected year and month(string) to display in calendar header. */
+    return this.state.date.format('MMMM YYYY');
   }
 
   protected buildCalendarValues(): string[] {
@@ -136,11 +144,6 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> {
     }
 
     return isPrevPageAvailable(this.state.date, minDate);
-  }
-
-  protected getCurrentDate(): string {
-    /* Return currently selected year and month(string) to display in calendar header. */
-    return this.state.date.format('MMMM YYYY');
   }
 
   protected handleChange = (e, { value }): void => {
