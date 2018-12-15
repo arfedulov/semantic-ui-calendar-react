@@ -44,6 +44,10 @@ class DayPicker
       isPickerInFocus,
       isTriggerInFocus,
       onCalendarViewMount,
+      disable,
+      enable,
+      minDate,
+      maxDate,
       ...rest
     } = this.props;
 

@@ -7,8 +7,9 @@ import {
   BasePickerProps,
   DisableValuesProps,
   EnableValuesProps,
-  ProvideHeadingValue,
   MinMaxValueProps,
+  OptionalHeaderProps,
+  ProvideHeadingValue,
   SingleSelectionPicker,
 } from './BasePicker';
 
@@ -18,7 +19,8 @@ const PAGE_WIDTH = 3;
 type MonthPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
-  & MinMaxValueProps;
+  & MinMaxValueProps
+  & OptionalHeaderProps;
 
 class MonthPicker
   extends SingleSelectionPicker<MonthPickerProps>

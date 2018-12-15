@@ -3,6 +3,7 @@ import * as React from 'react';
 import BaseCalendarView, {
   BaseCalendarViewProps,
   CalendarWithHeaderViewProps,
+  HeadingValueProps,
   SingleSelectionCalendarViewProps,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
@@ -16,6 +17,7 @@ export const WEEKS_TO_DISPLAY = 6;
 
 type DayViewProps =
   BaseCalendarViewProps
+  & HeadingValueProps
   & SingleSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
 
@@ -34,7 +36,6 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
       activeItemIndex,
       hoveredItemIndex,
       onCellHover,
-      hasHeader,
       onMount,
       inline,
       ...rest

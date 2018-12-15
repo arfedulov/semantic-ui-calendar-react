@@ -47,6 +47,7 @@ interface CellProps {
 class Cell extends React.Component<CellProps, any> {
   public render() {
     const {
+      itemPosition,
       content,
       style,
       onClick,

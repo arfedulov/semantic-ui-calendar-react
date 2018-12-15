@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
-  CalendarWithHeaderViewPropsBase,
+  CalendarWithHeaderViewProps,
   SingleSelectionCalendarViewProps,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
@@ -17,7 +17,7 @@ const YEAR_CALENDAR_ROW_WIDTH = 3;
 type YearViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
-  & CalendarWithHeaderViewPropsBase;
+  & CalendarWithHeaderViewProps;
 
 class YearView extends BaseCalendarView<YearViewProps, any> {
   public render() {

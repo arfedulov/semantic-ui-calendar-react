@@ -1,4 +1,3 @@
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
@@ -36,12 +35,5 @@ class Calendar extends React.Component<CalendarProps, any> {
     );
   }
 }
-
-Calendar.propTypes = {
-  /** Table content. */
-  children: PropTypes.node.isRequired,
-  /** Whether to outline the calendar on focus. */
-  outlineOnFocus: PropTypes.bool.isRequired,
-};
 
 export default Calendar;

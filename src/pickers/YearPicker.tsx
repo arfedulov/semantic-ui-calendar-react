@@ -40,6 +40,10 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
       isPickerInFocus,
       isTriggerInFocus,
       onCalendarViewMount,
+      disable,
+      enable,
+      minDate,
+      maxDate,
       ...rest
     } = this.props;
 

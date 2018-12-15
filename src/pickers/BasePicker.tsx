@@ -32,10 +32,13 @@ export interface BasePickerProps {
   isTriggerInFocus: () => boolean;
   /** Used to pass underlying picker's html element to parent component. */
   onCalendarViewMount: (e: HTMLElement) => void;
-  /** Whether to display calendar's header. */
-  hasHeader: boolean;
   /** Called on calendar's header click. */
   onHeaderClick: () => void;
+}
+
+export interface OptionalHeaderProps {
+  /** Whether to display calendar's header. */
+  hasHeader: boolean;
 }
 
 export interface DisableValuesProps {
