@@ -84,7 +84,7 @@ describe('<HourPicker />: buildCalendarValues', () => {
     });
   });
 
-  
+
 });
 
 describe('<HourPicker />: getActiveCellPosition', () => {
@@ -107,7 +107,7 @@ describe('<HourPicker />: getActiveCellPosition', () => {
   });
 });
 
-describe('<HourPicker />: getDisabledHoursPositions', () => {
+describe('<HourPicker />: getDisabledPositions', () => {
   const date = moment('2018-08-12');
 
   describe('return disabled hour positions based on `disable` prop', () => {
@@ -115,14 +115,14 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
       const wrapper = mount(<HourPicker
         disable={[moment('2018-08-12 12:00'), moment('2018-08-12 14:00')]}
         initializeWith={date} />);
-      
-      assert(_.isArray(wrapper.instance().getDisabledHoursPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledHoursPositions().length, 2, 'return array of length 2');
-      wrapper.instance().getDisabledHoursPositions().forEach((hour) => {
+
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 2, 'return array of length 2');
+      wrapper.instance().getDisabledPositions().forEach((hour) => {
         assert(_.isNumber(hour), 'contains numbers');
       });
-      assert(_.includes(wrapper.instance().getDisabledHoursPositions(), 12), 'contains correct hour positions');
-      assert(_.includes(wrapper.instance().getDisabledHoursPositions(), 14), 'contains correct hour positions');
+      assert(_.includes(wrapper.instance().getDisabledPositions(), 12), 'contains correct hour positions');
+      assert(_.includes(wrapper.instance().getDisabledPositions(), 14), 'contains correct hour positions');
     });
   });
 
@@ -134,12 +134,12 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
       const shouldReturn = [
         16, 17, 18, 19, 20, 21, 22, 23,
       ]; //disabled hours position numbers
-      assert(_.isArray(wrapper.instance().getDisabledHoursPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledHoursPositions().length, 8, 'return array of length 8');
-      wrapper.instance().getDisabledHoursPositions().forEach((hourPos) => {
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 8, 'return array of length 8');
+      wrapper.instance().getDisabledPositions().forEach((hourPos) => {
         assert(_.isNumber(hourPos), 'contains numbers');
       });
-      const producedHourPositions = wrapper.instance().getDisabledHoursPositions();
+      const producedHourPositions = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((expectedPosition) => {
         assert(_.includes(producedHourPositions, expectedPosition), 'contains correct posiotion numbers');
       });
@@ -151,16 +151,16 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
       const wrapper = mount(<HourPicker
         minDate={moment('2018-08-12 03:00')}
         initializeWith={date} />);
-      
+
       const shouldReturn = [
         0, 1, 2,
       ]; //disabled hours position numbers
-      assert(_.isArray(wrapper.instance().getDisabledHoursPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledHoursPositions().length, 3, 'return array of length 3');
-      wrapper.instance().getDisabledHoursPositions().forEach((hourPos) => {
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 3, 'return array of length 3');
+      wrapper.instance().getDisabledPositions().forEach((hourPos) => {
         assert(_.isNumber(hourPos), 'contains numbers');
       });
-      const producedHourPositions = wrapper.instance().getDisabledHoursPositions();
+      const producedHourPositions = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((expectedHourPos) => {
         assert(_.includes(producedHourPositions, expectedHourPos), 'contains correct posiotion numbers');
       });
@@ -179,12 +179,12 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
         12, 14,
         20, 21, 22, 23,
       ]; //disabled hours position numbers
-      assert(_.isArray(wrapper.instance().getDisabledHoursPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledHoursPositions().length, 9, 'return array of length 9');
-      wrapper.instance().getDisabledHoursPositions().forEach((hourPos) => {
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 9, 'return array of length 9');
+      wrapper.instance().getDisabledPositions().forEach((hourPos) => {
         assert(_.isNumber(hourPos), 'contains numbers');
       });
-      const producedHourPositions = wrapper.instance().getDisabledHoursPositions();
+      const producedHourPositions = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((expectedHourPos) => {
         assert(_.includes(producedHourPositions, expectedHourPos), 'contains correct posiotion numbers');
       });
@@ -195,8 +195,8 @@ describe('<HourPicker />: getDisabledHoursPositions', () => {
     it('return disabled hour positions position numbers', () => {
       const wrapper = mount(<HourPicker
         initializeWith={date} />);
-      
-      assert(_.isUndefined(wrapper.instance().getDisabledHoursPositions()), 'return undefined');
+
+      assert(_.isUndefined(wrapper.instance().getDisabledPositions()), 'return undefined');
     });
   });
 });
@@ -209,7 +209,7 @@ describe('<HourPicker />: isNextPageAvailable', () => {
       const wrapper = mount(<HourPicker
         maxDate={moment('2018-08-12')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isNextPageAvailable()), 'return boolean');
       assert.isFalse(wrapper.instance().isNextPageAvailable(), 'return false');
     });
@@ -220,7 +220,7 @@ describe('<HourPicker />: isNextPageAvailable', () => {
       const wrapper = mount(<HourPicker
         maxDate={moment('2018-08-13')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isNextPageAvailable()), 'return boolean');
       assert.isTrue(wrapper.instance().isNextPageAvailable(), 'return true');
     });
@@ -235,7 +235,7 @@ describe('<HourPicker />: isPrevPageAvailable', () => {
       const wrapper = mount(<HourPicker
         minDate={moment('2018-08-12')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isPrevPageAvailable()), 'return boolean');
       assert.isFalse(wrapper.instance().isPrevPageAvailable(), 'return false');
     });
@@ -246,7 +246,7 @@ describe('<HourPicker />: isPrevPageAvailable', () => {
       const wrapper = mount(<HourPicker
         minDate={moment('2018-07-11')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isPrevPageAvailable()), 'return boolean');
       assert.isTrue(wrapper.instance().isPrevPageAvailable(), 'return true');
     });
@@ -259,7 +259,7 @@ describe('<HourPicker />: getCurrentDate', () => {
   it('return string in format `MMMM DD, YYYY`', () => {
     const wrapper = mount(<HourPicker
       initializeWith={date} />);
-    
+
     assert(_.isString(wrapper.instance().getCurrentDate()), 'return string');
     assert.equal(wrapper.instance().getCurrentDate(), date.format('MMMM DD, YYYY'), 'return proper value');
   });
@@ -292,7 +292,7 @@ describe('<HourPicker />: switchToNextPage', () => {
   it('shift `date` state field one day forward', () => {
     const wrapper = mount(<HourPicker
       initializeWith={date} />);
-    
+
     assert.equal(wrapper.state('date').date(), 12, 'date not changed yet');
     wrapper.instance().switchToNextPage();
     assert.equal(wrapper.state('date').date(), 12 + 1, 'date shifted one day forward');
@@ -305,7 +305,7 @@ describe('<HourPicker />: switchToPrevPage', () => {
   it('shift `date` state field one day backward', () => {
     const wrapper = mount(<HourPicker
       initializeWith={date} />);
-    
+
     assert.equal(wrapper.state('date').date(), 12, 'date not changed yet');
     wrapper.instance().switchToPrevPage();
     assert.equal(wrapper.state('date').date(), 12 - 1, 'date shifted one day backward');
