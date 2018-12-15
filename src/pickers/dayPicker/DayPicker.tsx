@@ -19,10 +19,6 @@ const PAGE_WIDTH = 7;
 export const DAYS_ON_PAGE = WEEKS_TO_DISPLAY * PAGE_WIDTH;
 
 interface DayPickerProps extends BasePickerProps {
-  /** Called after day is selected. */
-  onChange: (e: React.SyntheticEvent, data: any) => void;
-  /** Currently selected date. */
-  value: Moment;
   /** Array of disabled dates. */
   disable: Moment[];
   /** Array of enabled dates. */
@@ -64,7 +60,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> {
         hoveredItemIndex={this.state.hoveredCellPosition}
         onCellHover={this.onHoveredCellPositionChange}
         currentHeadingValue={this.getCurrentDate()}
-        disabledItemIndexes={this.getDisabledDaysPositions()}
+        disabledItemIndexes={this.getDisabledPositions()}
         activeItemIndex={this.getActiveCellPosition()} />
     );
   }
@@ -80,7 +76,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> {
   protected getSelectableCellPositions(): number[] {
     return _.filter(
       _.range(0, DAYS_ON_PAGE),
-      (d) => !_.includes(this.getDisabledDaysPositions(), d),
+      (d) => !_.includes(this.getDisabledPositions(), d),
     );
   }
 
@@ -94,7 +90,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> {
       (position in array returned by `this.buildCalendarValues`).
     */
     if (this.props.value && this.props.value.isSame(this.state.date, 'month')) {
-      const disabledPositions = this.getDisabledDaysPositions();
+      const disabledPositions = this.getDisabledPositions();
       const active = this.buildCalendarValues()
         .map((day, i) => _.includes(disabledPositions, i) ? undefined : day)
         .indexOf(this.props.value.date().toString());
@@ -104,7 +100,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> {
     }
   }
 
-  protected getDisabledDaysPositions(): number[] {
+  protected getDisabledPositions(): number[] {
     /*
       Return position numbers of dates that should be displayed as disabled
       (position in array returned by `this.buildCalendarValues`).

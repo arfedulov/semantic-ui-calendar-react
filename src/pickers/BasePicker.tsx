@@ -11,11 +11,15 @@ import {
 } from '../views/BaseCalendarView';
 
 interface HandleChangeParams {
-  value: string;
+  value?: string;
   itemPosition?: number;
 }
 
 export interface BasePickerProps {
+  /** Called after day is selected. */
+  onChange: (e: React.SyntheticEvent, data: any) => void;
+  /** Currently selected date. */
+  value: Moment;
   /** A value for initializing day picker's state. */
   initializeWith: Moment;
   /** Forse popup to close. */
@@ -187,6 +191,9 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
 
   /** Return currently selected value to display in calendar header. */
   protected abstract getCurrentDate(): string;
+
+  /** Return position numbers of cells that should be displayed as disabled */
+  protected abstract getDisabledPositions(): number[];
 }
 
 export abstract class RangeSelectionPicker<P extends BasePickerProps> extends BasePicker<P> {
@@ -207,6 +214,9 @@ export abstract class RangeSelectionPicker<P extends BasePickerProps> extends Ba
   }
 
   protected abstract getActiveCellsPositions(): RangeIndexes | undefined;
+
+  /** Return value to display in range header. */
+  protected abstract getSelectedRange(): string;
 }
 
 export abstract class SingleSelectionPicker<P extends BasePickerProps> extends BasePicker<P> {
