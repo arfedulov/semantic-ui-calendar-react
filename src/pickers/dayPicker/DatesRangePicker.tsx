@@ -24,24 +24,17 @@ const PAGE_WIDTH = 7;
  *
  * Page consists of some dates from previous month, dates from current month
  * and some dates from next month.
- * Return undefined if date that is under test is out of page.
  *
- * @param {Moment} prevMonth
- * @param {Moment} currentMonth
- * @param {Moment} nextMonth
- * @param {Moment} date Date to test
- * @param {number[]} fromPrevMonthDates
- * @param {number[]} fromCurrentMonthDates
- * @param {number[]} fromNextMonthDates
+ * Return undefined if date that is under test is out of page.
  */
 function getDatePosition(
-  prevMonth,
-  currentMonth,
-  nextMonth,
-  date,
-  fromPrevMonthDates,
-  fromCurrentMonthDates,
-  fromNextMonthDates) {
+  prevMonth: Moment,
+  currentMonth: Moment,
+  nextMonth: Moment,
+  date: Moment,
+  fromPrevMonthDates: number[],
+  fromCurrentMonthDates: number[],
+  fromNextMonthDates: number[]): number | undefined {
   if (date.isSame(prevMonth, 'month')) {
     const position = fromPrevMonthDates.indexOf(date.date());
     if (position >= 0) {
@@ -76,14 +69,14 @@ function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
 }
 
 /** Build moment based on current page and date position on that page. */
-function buildMoment(date/*Moment*/, firstOnPage/*number*/, dateToBuildPosition/*number*/) {
+function buildMoment(pageReferenceDate: Moment, firstOnPage: number, dateToBuildPosition: number): Moment {
   let result;
   if (firstOnPage === 1/* page starts from first day in month */) {
-    result = moment({ year: date.year(), month: date.month(), date: firstOnPage });
+    result = moment({ year: pageReferenceDate.year(), month: pageReferenceDate.month(), date: firstOnPage });
   } else {
     /* page starts from day in previous month */
-    result = moment({ year: date.month() ? date.year() : date.year() - 1,
-      month: (date.month() + 11) % 12,
+    result = moment({ year: pageReferenceDate.month() ? pageReferenceDate.year() : pageReferenceDate.year() - 1,
+      month: (pageReferenceDate.month() + 11) % 12,
       date: firstOnPage});
   }
   result.add(dateToBuildPosition, 'day');
