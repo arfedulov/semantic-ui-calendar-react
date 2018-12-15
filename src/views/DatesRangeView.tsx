@@ -4,6 +4,7 @@ import * as React from 'react';
 import BaseCalendarView, {
   BaseCalendarViewProps,
   CalendarWithHeaderViewProps,
+  HeadingValueProps,
   RangeSelectionCalendarViewProps,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
@@ -32,6 +33,7 @@ function getActive(start: number, end: number): number | number[] | undefined {
 
 type DatesRangeViewProps =
   BaseCalendarViewProps
+  & HeadingValueProps
   & RangeSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
 

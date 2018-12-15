@@ -83,7 +83,7 @@ describe('<DatesRangePicker />: buildCalendarValues', () => {
         '26', '27', '28', '1', '2', '3', '4',
         '5', '6', '7', '8', '9', '10', '11',
       ];
- 
+
       assert(_.isArray(wrapper.instance().buildCalendarValues()), 'return array');
       assert.equal(wrapper.instance().buildCalendarValues().length, 42, 'return array of length 42');
       wrapper.instance().buildCalendarValues().forEach((date, i) => {
@@ -105,7 +105,7 @@ describe('<DatesRangePicker />: buildCalendarValues', () => {
         '25', '26', '27', '28', '29', '30', '1',
         '2', '3', '4', '5', '6', '7', '8',
       ];
- 
+
       assert(_.isArray(wrapper.instance().buildCalendarValues()), 'return array');
       assert.equal(wrapper.instance().buildCalendarValues().length, 42, 'return array of length 42');
       wrapper.instance().buildCalendarValues().forEach((date, i) => {
@@ -113,7 +113,7 @@ describe('<DatesRangePicker />: buildCalendarValues', () => {
       });
     });
   });
-  
+
 });
 
 describe('<DatesRangePicker />: getActiveCellsPositions', () => {
@@ -373,7 +373,7 @@ describe('<DatesRangePicker />: getActiveCellsPositions', () => {
   });
 });
 
-describe('<DatesRangePicker />: getDisabledDaysPositions', () => {
+describe('<DatesRangePicker />: getDisabledPositions', () => {
   const date = moment('2018-08-12');
 
   describe('return disabled days based on `maxDate` prop', () => {
@@ -396,12 +396,12 @@ describe('<DatesRangePicker />: getDisabledDaysPositions', () => {
         25, 26, 27, 28, 29, 30, 31, 32, 33,
         34, 35, 36, 37, 38, 39, 40, 41,
       ]; //disabled days position numbers
-      assert(_.isArray(wrapper.instance().getDisabledDaysPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledDaysPositions().length, 20, 'return array of length 20');
-      wrapper.instance().getDisabledDaysPositions().forEach((day) => {
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 20, 'return array of length 20');
+      wrapper.instance().getDisabledPositions().forEach((day) => {
         assert(_.isNumber(day), 'contains numbers');
       });
-      const producedDays = wrapper.instance().getDisabledDaysPositions();
+      const producedDays = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((expectedDay) => {
         assert(_.includes(producedDays, expectedDay), 'contains correct posiotion numbers');
       });
@@ -428,12 +428,12 @@ describe('<DatesRangePicker />: getDisabledDaysPositions', () => {
         3, 4, 5,
         34, 35, 36, 37, 38, 39, 40, 41,
       ]; //disabled days position numbers
-      assert(_.isArray(wrapper.instance().getDisabledDaysPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledDaysPositions().length, 14, 'return array of length 14');
-      wrapper.instance().getDisabledDaysPositions().forEach((day) => {
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 14, 'return array of length 14');
+      wrapper.instance().getDisabledPositions().forEach((day) => {
         assert(_.isNumber(day), 'contains numbers');
       });
-      const producedDays = wrapper.instance().getDisabledDaysPositions();
+      const producedDays = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((expectedDay) => {
         assert(_.includes(producedDays, expectedDay), 'contains correct posiotion numbers');
       });
@@ -460,12 +460,12 @@ describe('<DatesRangePicker />: getDisabledDaysPositions', () => {
         0, 1, 2, 3, 4, 5,
         32, 33, 34, 35, 36, 37, 38, 39, 40, 41,
       ]; //disabled days position numbers
-      assert(_.isArray(wrapper.instance().getDisabledDaysPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledDaysPositions().length, 16, 'return array of length 16');
-      wrapper.instance().getDisabledDaysPositions().forEach((day) => {
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 16, 'return array of length 16');
+      wrapper.instance().getDisabledPositions().forEach((day) => {
         assert(_.isNumber(day), 'contains numbers');
       });
-      const producedDays = wrapper.instance().getDisabledDaysPositions();
+      const producedDays = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((expectedDay) => {
         assert(_.includes(producedDays, expectedDay), 'contains correct posiotion numbers');
       });
@@ -490,12 +490,12 @@ describe('<DatesRangePicker />: getDisabledDaysPositions', () => {
         0, 1, 2,
         34, 35, 36, 37, 38, 39, 40, 41,
       ]; //disabled days position numbers
-      assert(_.isArray(wrapper.instance().getDisabledDaysPositions()), 'return array of numbers');
-      assert.equal(wrapper.instance().getDisabledDaysPositions().length, 11, 'return array of length 11');
-      wrapper.instance().getDisabledDaysPositions().forEach((day) => {
+      assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array of numbers');
+      assert.equal(wrapper.instance().getDisabledPositions().length, 11, 'return array of length 11');
+      wrapper.instance().getDisabledPositions().forEach((day) => {
         assert(_.isNumber(day), 'contains numbers');
       });
-      const producedDays = wrapper.instance().getDisabledDaysPositions();
+      const producedDays = wrapper.instance().getDisabledPositions();
       shouldReturn.forEach((expectedDay) => {
         assert(_.includes(producedDays, expectedDay), 'contains correct posiotion numbers');
       });
@@ -521,7 +521,7 @@ describe('<DatesRangePicker />: isNextPageAvailable', () => {
       const wrapper = mount(<DatesRangePicker
         maxDate={moment('2018-08-31')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isNextPageAvailable()), 'return boolean');
       assert.isFalse(wrapper.instance().isNextPageAvailable(), 'return false');
     });
@@ -542,7 +542,7 @@ describe('<DatesRangePicker />: isNextPageAvailable', () => {
       const wrapper = mount(<DatesRangePicker
         maxDate={moment('2018-09-01')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isNextPageAvailable()), 'return boolean');
       assert.isTrue(wrapper.instance().isNextPageAvailable(), 'return true');
     });
@@ -567,7 +567,7 @@ describe('<DatesRangePicker />: isPrevPageAvailable', () => {
       const wrapper = mount(<DatesRangePicker
         minDate={moment('2018-08-01')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isPrevPageAvailable()), 'return boolean');
       assert.isFalse(wrapper.instance().isPrevPageAvailable(), 'return false');
     });
@@ -588,7 +588,7 @@ describe('<DatesRangePicker />: isPrevPageAvailable', () => {
       const wrapper = mount(<DatesRangePicker
         minDate={moment('2018-07-31')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isPrevPageAvailable()), 'return boolean');
       assert.isTrue(wrapper.instance().isPrevPageAvailable(), 'return true');
     });
@@ -601,7 +601,7 @@ describe('<DatesRangePicker />: getCurrentDate', () => {
   it('return string in format `MMMM YYYY`', () => {
     const wrapper = mount(<DatesRangePicker
       initializeWith={date} />);
-    
+
     assert(_.isString(wrapper.instance().getCurrentDate()), 'return string');
     assert.equal(wrapper.instance().getCurrentDate(), date.format('MMMM YYYY'), 'return proper value');
   });
@@ -628,7 +628,7 @@ describe('<DatesRangePicker />: handleChange', () => {
         initializeWith={date} />);
       wrapper.instance().handleChange('click', { itemPosition: 17});
       const calledWithArgs = onChangeFake.args[0];
-  
+
       assert(onChangeFake.calledOnce, 'onChangeFake called once');
       assert.equal(calledWithArgs[0], 'click', 'correct first argument');
       assert(moment.isMoment(calledWithArgs[1].value.start), 'has moment instance in `value.start`');
@@ -656,7 +656,7 @@ describe('<DatesRangePicker />: handleChange', () => {
         initializeWith={date} />);
       wrapper.instance().handleChange('click', { itemPosition: 17 });
       const calledWithArgs = onChangeFake.args[0];
-  
+
       assert(onChangeFake.calledOnce, 'onChangeFake called once');
       assert.equal(calledWithArgs[0], 'click', 'correct first argument');
       assert(moment.isMoment(calledWithArgs[1].value.start), 'has moment instance in `value.start`');
@@ -690,7 +690,7 @@ describe('<DatesRangePicker />: handleChange', () => {
         initializeWith={date} />);
       wrapper.instance().handleChange('click', { itemPosition: 17 });
       const calledWithArgs = onChangeFake.args[0];
-  
+
       assert(onChangeFake.calledOnce, 'onChangeFake called once');
       assert.equal(calledWithArgs[0], 'click', 'correct first argument');
       assert(_.isUndefined(calledWithArgs[1].value.start), 'has undefined in `value.start`');
@@ -717,7 +717,7 @@ describe('<DatesRangePicker />: handleChange', () => {
         initializeWith={date} />);
       wrapper.instance().handleChange('click', { itemPosition: 9 });
       const calledWithArgs = onChangeFake.args[0];
-  
+
       assert(onChangeFake.calledOnce, 'onChangeFake called once');
       assert.equal(calledWithArgs[0], 'click', 'correct first argument');
       assert(_.isUndefined(calledWithArgs[1].value.start), 'has undefined in `value.start`');
@@ -732,7 +732,7 @@ describe('<DatesRangePicker />: switchToNextPage', () => {
   it('shift `date` state field one month forward', () => {
     const wrapper = mount(<DatesRangePicker
       initializeWith={date} />);
-    
+
     assert.equal(wrapper.state('date').month(), 7, 'month not changed yet');
     wrapper.instance().switchToNextPage();
     assert.equal(wrapper.state('date').month(), 7 + 1, 'month shifted one month forward');
@@ -745,7 +745,7 @@ describe('<DatesRangePicker />: switchToPrevPage', () => {
   it('shift `date` state field one month backward', () => {
     const wrapper = mount(<DatesRangePicker
       initializeWith={date} />);
-    
+
     assert.equal(wrapper.state('date').month(), 7, 'month not changed yet');
     wrapper.instance().switchToPrevPage();
     assert.equal(wrapper.state('date').month(), 7 - 1, 'month shifted one month backward');

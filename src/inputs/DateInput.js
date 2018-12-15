@@ -55,8 +55,8 @@ class DateInput extends BaseInput {
     }
   }
 
-  getDateParams() { 
-    /* 
+  getDateParams() {
+    /*
       Return date params that are used for picker initialization.
       Return undefined if none of [ 'year', 'month', 'date' ]
       state fields defined.

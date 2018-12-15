@@ -65,7 +65,7 @@ class DateTimeInput extends BaseInput {
   }
 
   getDateParams() {
-    /* 
+    /*
       Return date params that are used for picker initialization.
       Return undefined if none of [ 'year', 'month', 'date', 'hour', 'minute' ]
       state fields defined.
@@ -110,7 +110,6 @@ class DateTimeInput extends BaseInput {
       inline: inline,
       onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
-      displayWeeks: true,
       hasHeader: true,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,

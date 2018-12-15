@@ -3,10 +3,10 @@ import * as React from 'react';
 export interface BaseCalendarViewProps {
   /** Used for passing calendar dom element to parent component. */
   onMount: (e: HTMLElement) => void;
+  /** Called on calendar blur. */
+  onBlur: () => void;
   /** Whether a calendar is inside a popup or inline. */
   inline: boolean;
-  /** Whether a calendar has header. */
-  hasHeader: boolean;
   /** An array of values to fill a calendar with (dates, or years, or anything like that). */
   values: string[];
   /** Called after clicking on particular value (date, year or anything like that). */
@@ -24,7 +24,7 @@ export interface SingleSelectionCalendarViewProps {
   activeItemIndex?: number;
 }
 
-interface RangeIndexes {
+export interface RangeIndexes {
   start: number | undefined;
   end: number | undefined;
 }
@@ -38,20 +38,30 @@ export interface RangeSelectionCalendarViewProps {
 
 export interface CalendarWithHeaderViewProps {
   /** Called after click on next page button. */
-  onNextPageBtnClick: () => void;
+  onNextPageBtnClick: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
   /** Called after click on previous page button. */
-  onPrevPageBtnClick: () => void;
+  onPrevPageBtnClick: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
   /** Whether to display previous page button as active or disabled. */
   hasPrevPage: boolean;
   /** Whether to display next page button as active or disabled. */
   hasNextPage: boolean;
-  /** A value (date, year or anything like that) that is displayed in calendar header. */
-  currentHeadingValue: string;
   /** Called after click on calendar header. */
   onHeaderClick: () => void;
 }
 
+export interface HeadingValueProps {
+  /** A value (date, year or anything like that) that is displayed in calendar header. */
+  currentHeadingValue: string;
+}
+
+// export interface CalendarWithHeaderViewProps extends CalendarWithHeaderViewPropsBase {
+//   /** A value (date, year or anything like that) that is displayed in calendar header. */
+//   currentHeadingValue: string;
+// }
+
 export interface CalendarWithOptionalHeaderViewProps {
+  /** Whether a calendar has header. */
+  hasHeader: boolean;
   /** Called after click on next page button. */
   onNextPageBtnClick?: () => void;
   /** Called after click on previous page button. */
