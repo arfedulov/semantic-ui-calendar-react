@@ -55,6 +55,12 @@ export interface MinMaxValueProps {
   maxDate: Moment;
 }
 
+export interface TimePickerProps {
+  timeFormat: TimeFormat;
+}
+
+export type TimeFormat = 'ampm' | 'AMPM' | '24';
+
 export interface BasePickerState extends Readonly<any> {
   /** Position of a cell that is currently hovered on. */
   hoveredCellPosition: number | undefined;

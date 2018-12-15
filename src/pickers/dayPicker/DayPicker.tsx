@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import { Moment } from 'moment';
 import * as React from 'react';
 
 import DayView from '../../views/DayView';

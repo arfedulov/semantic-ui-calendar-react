@@ -32,6 +32,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       activeItemIndex,
       currentHeadingValue,
       hoveredItemIndex,
+      disabledItemIndexes,
       onCellHover,
       onMount,
       inline,
@@ -57,7 +58,8 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
           hovered={hoveredItemIndex}
           onCellHover={onCellHover}
           onCellClick={onValueClick}
-          active={activeItemIndex} />
+          active={activeItemIndex}
+          disabled={disabledItemIndexes} />
       </Calendar>
     );
   }
