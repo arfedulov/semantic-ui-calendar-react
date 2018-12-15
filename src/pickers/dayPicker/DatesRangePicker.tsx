@@ -175,7 +175,7 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> {
       minDate,
     } = this.props;
 
-    return getDisabledDays(undefined, maxDate, minDate, this.state.date, DAYS_ON_PAGE);
+    return getDisabledDays(undefined, maxDate, minDate, this.state.date, DAYS_ON_PAGE, undefined);
   }
 
   protected isNextPageAvailable(): boolean {

@@ -2,14 +2,15 @@ import { assert } from 'chai';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
-import {
+import { testExport } from '../../../src/pickers/dayPicker/sharedFunctions';
+const {
   getDaysArray,
   getBrakepoints,
   getDefaultEnabledDayPositions,
   getDisabledDays,
   isNextPageAvailable,
   isPrevPageAvailable,
-} from '../../../src/pickers/dayPicker/sharedFunctions';
+} = testExport;
 
 describe('getDaysArray', () => {
   const start = 30;
@@ -79,7 +80,7 @@ describe('getDefaultEnabledDayPositions', () => {
 
   describe('return array of day positions (days from given month)', () => {
     it('return expected object', () => {
-      
+
       const allDays = [
         '29', '30', '31', '1', '2', '3', '4',
         '5', '6', '7', '8', '9', '10', '11',
@@ -88,7 +89,7 @@ describe('getDefaultEnabledDayPositions', () => {
         '26', '27', '28', '29', '30', '31', '1',
         '2', '3', '4', '5', '6', '7', '8',
       ];
-      
+
       const shouldReturn = [
         3, 4, 5, 6, 7, 8, 9,
         10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
@@ -114,7 +115,7 @@ describe('getDisabledDays', () => {
 
   describe('minDate, maxDate, disable are all undefined', () => {
     it('return just default disabled days', () => {
-      
+
       /*
       [
         '29', '30', '31', '1', '2', '3', '4',
@@ -125,7 +126,7 @@ describe('getDisabledDays', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       const shouldReturn = [
         0, 1, 2,
         34, 35, 36, 37, 38, 39, 40, 41,
@@ -147,7 +148,7 @@ describe('getDisabledDays', () => {
       moment('2018-08-09'), moment('2018-08-12'), moment('2018-08-16'),
     ];
     it('return all days positions except those that are in `enable` param', () => {
-      
+
       /*
       [
         '29', '30', '31', '1', '2', '3', '4',
@@ -158,7 +159,7 @@ describe('getDisabledDays', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       const shouldReturn = _.range(0, 41).filter(position => !_.includes([11, 14, 18], position));
       assert(_.isArray(getDisabledDays(undefined, undefined, undefined, date, DAYS_ON_PAGE, enable)), 'return array');
       assert.equal(getDisabledDays(undefined, undefined, undefined, date, DAYS_ON_PAGE, enable).length, 39, 'return array of length 39');
@@ -177,7 +178,7 @@ describe('getDisabledDays', () => {
       moment('2018-08-09'), moment('2018-08-12'), moment('2018-08-16'),
     ];
     it('return default disabled days and those that are in `disable` param', () => {
-      
+
       /*
       [
         '29', '30', '31', '1', '2', '3', '4',
@@ -188,7 +189,7 @@ describe('getDisabledDays', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       const shouldReturn = [
         0, 1, 2,
         11, 14, 18,
@@ -209,7 +210,7 @@ describe('getDisabledDays', () => {
   describe('`minDate` is defined', () => {
     const minDate = moment('2018-08-09');
     it('return default disabled days and those that are before `minDate`', () => {
-      
+
       /*
       [
         '29', '30', '31', '1', '2', '3', '4',
@@ -220,7 +221,7 @@ describe('getDisabledDays', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       const shouldReturn = [
         0, 1, 2,
         3, 4, 5, 6, 7, 8, 9, 10,
@@ -241,7 +242,7 @@ describe('getDisabledDays', () => {
   describe('`maxDate` is defined', () => {
     const maxDate = moment('2018-08-29');
     it('return default disabled days and those that are before `minDate`', () => {
-      
+
       /*
       [
         '29', '30', '31', '1', '2', '3', '4',
@@ -252,7 +253,7 @@ describe('getDisabledDays', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       const shouldReturn = [
         0, 1, 2,
         32, 33,
@@ -273,7 +274,7 @@ describe('getDisabledDays', () => {
   describe('`maxDate` is in previous month or before', () => {
     const maxDate = moment('2018-07-31');
     it('return all days from `date` month', () => {
-      
+
       /*
       [
         '29', '30', '31', '1', '2', '3', '4',
@@ -284,7 +285,7 @@ describe('getDisabledDays', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       const shouldReturn = _.range(0, DAYS_ON_PAGE); // days in given month position numbers
       assert(_.isArray(getDisabledDays(undefined, maxDate, undefined, date, DAYS_ON_PAGE)), 'return array');
       assert.equal(getDisabledDays(undefined, maxDate, undefined, date, DAYS_ON_PAGE).length, 42, 'return array of length 42');
@@ -301,7 +302,7 @@ describe('getDisabledDays', () => {
   describe('`minDate` is in next month or after', () => {
     const minDate = moment('2018-09-01');
     it('return all days from `date` month', () => {
-      
+
       /*
       [
         '29', '30', '31', '1', '2', '3', '4',
@@ -312,7 +313,7 @@ describe('getDisabledDays', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       const shouldReturn = _.range(0, DAYS_ON_PAGE); // days in given month position numbers
       assert(_.isArray(getDisabledDays(undefined, undefined, minDate, date, DAYS_ON_PAGE)), 'return array');
       assert.equal(getDisabledDays(undefined, undefined, minDate, date, DAYS_ON_PAGE).length, 42, 'return array of length 42');
@@ -342,7 +343,7 @@ describe('isNextPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isNextPageAvailable(date)), 'return boolean');
       assert.isTrue(isNextPageAvailable(date), 'return true');
     });
@@ -361,7 +362,7 @@ describe('isNextPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isNextPageAvailable(date, maxDate)), 'return boolean');
       assert.isTrue(isNextPageAvailable(date, maxDate), 'return true');
     });
@@ -380,7 +381,7 @@ describe('isNextPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isNextPageAvailable(date, maxDate)), 'return boolean');
       assert.isFalse(isNextPageAvailable(date, maxDate), 'return false');
     });
@@ -399,7 +400,7 @@ describe('isNextPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isNextPageAvailable(date, maxDate)), 'return boolean');
       assert.isFalse(isNextPageAvailable(date, maxDate), 'return false');
     });
@@ -418,7 +419,7 @@ describe('isNextPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isNextPageAvailable(date, maxDate)), 'return boolean');
       assert.isFalse(isNextPageAvailable(date, maxDate), 'return false');
     });
@@ -440,7 +441,7 @@ describe('isPrevPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isPrevPageAvailable(date)), 'return boolean');
       assert.isTrue(isPrevPageAvailable(date), 'return true');
     });
@@ -459,7 +460,7 @@ describe('isPrevPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isPrevPageAvailable(date, minDate)), 'return boolean');
       assert.isTrue(isPrevPageAvailable(date, minDate), 'return true');
     });
@@ -478,7 +479,7 @@ describe('isPrevPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isPrevPageAvailable(date, minDate)), 'return boolean');
       assert.isFalse(isPrevPageAvailable(date, minDate), 'return false');
     });
@@ -497,7 +498,7 @@ describe('isPrevPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isPrevPageAvailable(date, minDate)), 'return boolean');
       assert.isFalse(isPrevPageAvailable(date, minDate), 'return false');
     });
@@ -516,7 +517,7 @@ describe('isPrevPageAvailable', () => {
         '2', '3', '4', '5', '6', '7', '8',
       ]
       */
-      
+
       assert(_.isBoolean(isPrevPageAvailable(date, minDate)), 'return boolean');
       assert.isFalse(isPrevPageAvailable(date, minDate), 'return false');
     });
