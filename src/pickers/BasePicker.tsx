@@ -38,6 +38,23 @@ export interface BasePickerProps {
   onHeaderClick: () => void;
 }
 
+export interface DisableValuesProps {
+  /** Array of disabled dates. */
+  disable: Moment[];
+}
+
+export interface EnableValuesProps {
+  /** Array of enabled dates. */
+  enable: Moment[];
+}
+
+export interface MinMaxValueProps {
+  /** Minimal date that could be selected. */
+  minDate: Moment;
+  /** Maximal date that could be selected. */
+  maxDate: Moment;
+}
+
 export interface BasePickerState extends Readonly<any> {
   /** Position of a cell that is currently hovered on. */
   hoveredCellPosition: number | undefined;

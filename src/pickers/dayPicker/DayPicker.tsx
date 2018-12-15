@@ -6,6 +6,9 @@ import DayView from '../../views/DayView';
 import { WEEKS_TO_DISPLAY } from '../../views/DayView';
 import {
   BasePickerProps,
+  DisableValuesProps,
+  EnableValuesProps,
+  MinMaxValueProps,
   SingleSelectionPicker,
 } from '../BasePicker';
 import {
@@ -18,16 +21,10 @@ import {
 const PAGE_WIDTH = 7;
 export const DAYS_ON_PAGE = WEEKS_TO_DISPLAY * PAGE_WIDTH;
 
-interface DayPickerProps extends BasePickerProps {
-  /** Array of disabled dates. */
-  disable: Moment[];
-  /** Array of enabled dates. */
-  enable: Moment[];
-  /** Minimal date that could be selected. */
-  minDate: Moment;
-  /** Maximal date that could be selected. */
-  maxDate: Moment;
-}
+type DayPickerProps = BasePickerProps
+  & DisableValuesProps
+  & EnableValuesProps
+  & MinMaxValueProps;
 
 class DayPicker extends SingleSelectionPicker<DayPickerProps> {
   constructor(props) {

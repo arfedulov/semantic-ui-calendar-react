@@ -7,6 +7,7 @@ import { RangeIndexes } from '../../views/BaseCalendarView';
 import DatesRangeView from '../../views/DatesRangeView';
 import {
   BasePickerProps,
+  MinMaxValueProps,
   RangeSelectionPicker,
 } from '../BasePicker';
 import { DAYS_ON_PAGE } from './DayPicker';
@@ -20,81 +21,13 @@ import {
 
 const PAGE_WIDTH = 7;
 
-/** Return position of a given date on the page.
- *
- * Page consists of some dates from previous month, dates from current month
- * and some dates from next month.
- *
- * Return undefined if date that is under test is out of page.
- */
-function getDatePosition(
-  prevMonth: Moment,
-  currentMonth: Moment,
-  nextMonth: Moment,
-  date: Moment,
-  fromPrevMonthDates: number[],
-  fromCurrentMonthDates: number[],
-  fromNextMonthDates: number[]): number | undefined {
-  if (date.isSame(prevMonth, 'month')) {
-    const position = fromPrevMonthDates.indexOf(date.date());
-    if (position >= 0) {
-      return position;
-    }
-  }
-  if (date.isSame(currentMonth, 'month')) {
-    return fromCurrentMonthDates.indexOf(date.date()) + fromPrevMonthDates.length;
-  }
-  if (date.isSame(nextMonth, 'month')) {
-    const position = fromNextMonthDates.indexOf(date.date());
-    if (position >= 0) {
-      return position + fromPrevMonthDates.length + fromCurrentMonthDates.length;
-    }
-  }
-}
-
-function getDatesFromPrevMonth(date, allDays, currentMonthStartPosition) {
-  if (currentMonthStartPosition === 0) {
-    return [];
-  }
-
-  return allDays.slice(0, currentMonthStartPosition).map((d) => parseInt(d, 10));
-}
-
-function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
-  if (nextMonthStartPosition === allDays.length) {
-    return [];
-  }
-
-  return allDays.slice(nextMonthStartPosition, allDays.length).map((d) => parseInt(d, 10));
-}
-
-/** Build moment based on current page and date position on that page. */
-function buildMoment(pageReferenceDate: Moment, firstOnPage: number, dateToBuildPosition: number): Moment {
-  let result;
-  if (firstOnPage === 1/* page starts from first day in month */) {
-    result = moment({ year: pageReferenceDate.year(), month: pageReferenceDate.month(), date: firstOnPage });
-  } else {
-    /* page starts from day in previous month */
-    result = moment({ year: pageReferenceDate.month() ? pageReferenceDate.year() : pageReferenceDate.year() - 1,
-      month: (pageReferenceDate.month() + 11) % 12,
-      date: firstOnPage});
-  }
-  result.add(dateToBuildPosition, 'day');
-
-  return result;
-}
-
-interface DatesRangePickerProps extends BasePickerProps {
+interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps {
   /** Moment date formatting string. */
   dateFormat: string;
   /** Start of currently selected dates range. */
   start: Moment;
   /** End of currently selected dates range. */
   end: Moment;
-  /** Minimal date that could be selected. */
-  minDate: Moment;
-  /** Maximal date that could be selected. */
-  maxDate: Moment;
 }
 
 class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> {
@@ -314,6 +247,70 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> {
       return { date: prevDate };
     });
   }
+}
+
+/** Return position of a given date on the page.
+ *
+ * Page consists of some dates from previous month, dates from current month
+ * and some dates from next month.
+ *
+ * Return undefined if date that is under test is out of page.
+ */
+function getDatePosition(
+  prevMonth: Moment,
+  currentMonth: Moment,
+  nextMonth: Moment,
+  date: Moment,
+  fromPrevMonthDates: number[],
+  fromCurrentMonthDates: number[],
+  fromNextMonthDates: number[]): number | undefined {
+  if (date.isSame(prevMonth, 'month')) {
+    const position = fromPrevMonthDates.indexOf(date.date());
+    if (position >= 0) {
+      return position;
+    }
+  }
+  if (date.isSame(currentMonth, 'month')) {
+    return fromCurrentMonthDates.indexOf(date.date()) + fromPrevMonthDates.length;
+  }
+  if (date.isSame(nextMonth, 'month')) {
+    const position = fromNextMonthDates.indexOf(date.date());
+    if (position >= 0) {
+      return position + fromPrevMonthDates.length + fromCurrentMonthDates.length;
+    }
+  }
+}
+
+function getDatesFromPrevMonth(date, allDays, currentMonthStartPosition) {
+  if (currentMonthStartPosition === 0) {
+    return [];
+  }
+
+  return allDays.slice(0, currentMonthStartPosition).map((d) => parseInt(d, 10));
+}
+
+function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
+  if (nextMonthStartPosition === allDays.length) {
+    return [];
+  }
+
+  return allDays.slice(nextMonthStartPosition, allDays.length).map((d) => parseInt(d, 10));
+}
+
+/** Build moment based on current page and date position on that page. */
+function buildMoment(pageReferenceDate: Moment, firstOnPage: number, dateToBuildPosition: number): Moment {
+  let result;
+  if (firstOnPage === 1/* page starts from first day in month */) {
+    result = moment({ year: pageReferenceDate.year(), month: pageReferenceDate.month(), date: firstOnPage });
+  } else {
+    /* page starts from day in previous month */
+    result = moment({ year: pageReferenceDate.month() ? pageReferenceDate.year() : pageReferenceDate.year() - 1,
+      month: (pageReferenceDate.month() + 11) % 12,
+      date: firstOnPage});
+  }
+  result.add(dateToBuildPosition, 'day');
+
+  return result;
 }
 
 export default DatesRangePicker;
