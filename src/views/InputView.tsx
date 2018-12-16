@@ -22,7 +22,7 @@ interface InputViewProps {
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent, data: any) => void;
   /** Called on input focus. */
-  onFocus: () => void;
+  onFocus?: () => void;
   /** Function for rendering component. */
   render?: (props: any) => React.ReactNode;
   /** Picker. */

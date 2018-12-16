@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import * as React from 'react';
 
 export interface BaseInputProps {
+  [key: string]: any;
   /** Currently selected value. */
   value: string;
   /** Called on selected value change. */

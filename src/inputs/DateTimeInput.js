@@ -110,7 +110,6 @@ class DateTimeInput extends BaseInput {
       inline: inline,
       onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
-      hasHeader: true,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
       initializeWith: getInitializer({ initialDate, dateFormat: dateTimeFormat, dateParams: this.getDateParams() }),
@@ -125,15 +124,15 @@ class DateTimeInput extends BaseInput {
       return <YearPicker { ...pickerProps } disable={getDisabledYears(disableParsed)} />;
     }
     if (mode === 'month') {
-      return <MonthPicker { ...pickerProps } disable={getDisabledMonths(disableParsed)} />;
+      return <MonthPicker { ...pickerProps } hasHeader disable={getDisabledMonths(disableParsed)} />;
     }
     if (mode === 'day') {
       return <DayPicker { ...pickerProps } disable={disableParsed} />;
     }
     if (mode === 'hour') {
-      return <HourPicker timeFormat={ this.props.timeFormat } { ...pickerProps } disable={disableParsed} />;
+      return <HourPicker timeFormat={ this.props.timeFormat } hasHeader { ...pickerProps } disable={disableParsed} />;
     }
-    return <MinutePicker timeFormat={ this.props.timeFormat } { ...pickerProps } disable={disableParsed} />;
+    return <MinutePicker timeFormat={ this.props.timeFormat } hasHeader { ...pickerProps } disable={disableParsed} />;
   }
 
   _switchToNextModeUndelayed = () => {

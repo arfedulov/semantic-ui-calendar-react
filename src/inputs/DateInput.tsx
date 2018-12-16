@@ -62,7 +62,6 @@ interface DateInputProps extends
   DisableValuesProps,
   EnableValuesProps,
   MinMaxValueProps {
-  [key: string]: any;
   /** Display mode to start. */
   startMode?: CalendarMode;
 }
@@ -215,7 +214,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
       tabIndex,
-      hasHeader: true,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
       initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams() }),
@@ -227,10 +225,21 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     const disableParsed = parseArrayOrValue(disable, dateFormat);
     const { mode } = this.state;
     if (mode === 'year') {
-      return <YearPicker { ...pickerProps } disable={getDisabledYears(disableParsed)} />;
+      return (
+        <YearPicker
+          { ...pickerProps }
+          disable={getDisabledYears(disableParsed)}
+        />
+      );
     }
     if (mode === 'month') {
-      return <MonthPicker { ...pickerProps } disable={getDisabledMonths(disableParsed)} />;
+      return (
+        <MonthPicker
+          { ...pickerProps }
+          hasHeader
+          disable={getDisabledMonths(disableParsed)}
+        />
+      );
     }
 
     return <DayPicker { ...pickerProps } disable={disableParsed} />;
