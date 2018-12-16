@@ -19,12 +19,14 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
 interface InputViewProps {
   /** Used for passing input dom node (input field or inline calendar) to parent component. */
   onMount: (e: HTMLElement) => void;
-  /** Function for rendering component. */
-  render: (props: any) => React.ReactNode[];
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent, data: any) => void;
+  /** Called on input focus. */
+  onFocus: () => void;
+  /** Function for rendering component. */
+  render?: (props: any) => React.ReactNode;
   /** Picker. */
-  children: React.ReactNode[];
+  children?: React.ReactNode;
   /** Whether to close a popup when cursor leaves it. */
   closeOnMouseLeave?: boolean;
   /** A field can have its label next to instead of above it. */
@@ -49,6 +51,8 @@ interface InputViewProps {
     | 'bottom center';
   /** Currently selected value. */
   value?: string;
+  /** Icon to display in input field. */
+  icon?: string;
 }
 
 class InputView extends React.Component<InputViewProps, any> {
