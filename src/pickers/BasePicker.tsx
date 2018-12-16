@@ -43,19 +43,19 @@ export interface OptionalHeaderProps {
 
 export interface DisableValuesProps {
   /** Array of disabled dates. */
-  disable: Moment[];
+  disable?: Moment[];
 }
 
 export interface EnableValuesProps {
   /** Array of enabled dates. */
-  enable: Moment[];
+  enable?: Moment[];
 }
 
 export interface MinMaxValueProps {
   /** Minimal date that could be selected. */
-  minDate: Moment;
+  minDate?: Moment;
   /** Maximal date that could be selected. */
-  maxDate: Moment;
+  maxDate?: Moment;
 }
 
 export interface TimePickerProps {

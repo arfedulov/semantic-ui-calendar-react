@@ -1,6 +1,10 @@
 import { Moment } from 'moment';
 import * as React from 'react';
 
+import {
+  TimeFormat,
+} from '../pickers/BasePicker';
+
 export interface BaseInputProps {
   [key: string]: any;
   /** Currently selected value. */
@@ -20,6 +24,11 @@ export interface DateRelatedProps {
   dateFormat?: string;
   /** Date to display initially when no date is selected. */
   initialDate?: string | Date | Moment;
+}
+
+export interface TimeRelatedProps {
+  /** Time format. */
+  timeFormat: TimeFormat;
 }
 
 export interface DisableValuesProps {
