@@ -90,6 +90,11 @@ interface DateParams {
 }
 
 class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
+  /**
+   * Component responsibility:
+   *  - parse input value
+   *  - handle underlying picker change
+   */
   public static readonly defaultProps = {
     dateFormat: 'DD-MM-YYYY',
     timeFormat: '24',
@@ -250,7 +255,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       value: parseValue(chooseValue(value, initialDate), dateTimeFormat),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
-      // key: value, // seems like it works without reinstantiating picker every time value changes
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat);
     const { mode } = this.state;
