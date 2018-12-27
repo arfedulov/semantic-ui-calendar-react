@@ -46,7 +46,7 @@ interface InputViewProps {
   render: (props: any) => React.ReactNode[];
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent, data: any) => void;
-  /** Called after remove icon has clicked. */
+  /** Called after clear icon has clicked. */
   onClear: (e: React.SyntheticEvent, data: any) => void;
   /** Picker. */
   children: React.ReactNode[];

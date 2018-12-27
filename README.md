@@ -17,6 +17,7 @@ npm i semantic-ui-calendar-react
 Let's create a form that needs date-related input fields.
 
 Import input components:
+
 ```javascript
 import {
   DateInput,
@@ -26,6 +27,7 @@ import {
 } from 'semantic-ui-calendar-react';
 ```
 Then build a form:
+
 ```javascript
 class DateTimeForm extends React.Component {
   constructor(props) {
@@ -53,25 +55,29 @@ class DateTimeForm extends React.Component {
           placeholder="Date"
           value={this.state.date}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <TimeInput
           name="time"
           placeholder="Time"
           value={this.state.time}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <DateTimeInput
           name="dateTime"
           placeholder="Date Time"
           value={this.state.dateTime}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <DatesRangeInput
           name="datesRange"
           placeholder="From - To"
           value={this.state.datesRange}
           iconPosition="left"
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
       </Form>
     );
   }
@@ -79,6 +85,7 @@ class DateTimeForm extends React.Component {
 ```
 
 Also you can build a form with inline pickers as inputs. Just set ``inline`` prop on input element and it will be displayed as inline picker:
+
 ```javascript
 class DateTimeFormInline extends React.Component {
  handleChange = (event, {name, value}) => {
@@ -92,9 +99,36 @@ class DateTimeFormInline extends React.Component {
       <Form>
         <DateInput
           inline
+          name='date'
+          value={this.state.date}
+          onChange={this.handleDateChange}
+        />
+      </Form>
+    );
+  }
+}
+```
+
+or you can make it cleanable in the following way,
+
+```javascript
+class ClearableDateTimeForm extends React.Component {
+  handleChange = (event, {name, value}) => {
+    if (this.state.hasOwnProperty(name)) {
+      this.setState({ [name]: value });
+    }
+  }
+
+  render() {
+    return (
+      <Form>
+        <DateInput
+          clearable
+          clearIcon={<Icon name="remove" color="red" />}
           name="date"
           value={this.state.date}
-          onChange={this.handleDateChange} />
+          onChange={this.handleDateChange}
+        />
       </Form>
     );
   }
@@ -136,6 +170,9 @@ moment.locale('ru');
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``preserveViewMode`` | {bool} Preserve last mode (`day`, `hour`, `minute`) each time user opens dialog. Default ``true`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
+| ``onClear`` | {func} Called after clear icon has clicked. |
+| ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
+| ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 
 ### TimeInput
 
@@ -150,6 +187,9 @@ moment.locale('ru');
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 | ``disableMinute`` | {bool} If ``true``, minutes picker won't be shown after picking the hour. Default: ``false`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
+| ``onClear`` | {func} Called after clear icon has clicked. |
+| ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
+| ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 
 ### DateTimeInput
 
@@ -173,6 +213,9 @@ moment.locale('ru');
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 | ``preserveViewMode`` | {bool} Preserve last mode (`day`, `hour`, `minute`) each time user opens dialog. Default ``true`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
+| ``onClear`` | {func} Called after clear icon has clicked. |
+| ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
+| ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 
 ### DatesRangeInput
 
@@ -189,6 +232,9 @@ moment.locale('ru');
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
+| ``onClear`` | {func} Called after clear icon has clicked. |
+| ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
+| ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 
 ### YearInput
 
@@ -201,6 +247,9 @@ moment.locale('ru');
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
+| ``onClear`` | {func} Called after clear icon has clicked. |
+| ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
+| ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 
 ### MonthInput
 
@@ -217,3 +266,6 @@ moment.locale('ru');
 | ``maxDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Maximum date that can be selected. |
 | ``minDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Minimum date that can be selected. |
 | ``mountNode`` | {any} The node where the picker should mount. |
+| ``onClear`` | {func} Called after clear icon has clicked. |
+| ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
+| ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
