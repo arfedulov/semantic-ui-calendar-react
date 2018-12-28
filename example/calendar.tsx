@@ -1,7 +1,12 @@
 import * as moment from 'moment';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Form } from 'semantic-ui-react';
+import {
+  Checkbox,
+  Form,
+  Header,
+  Icon,
+} from 'semantic-ui-react';
 
 import {
   DateInput,
@@ -27,15 +32,42 @@ type DateTimeFormHandleChangeData = DateInputOnChangeData
   | TimeInputOnChangeData
   | YearInputOnChangeData;
 
-function App() {
-  return (
-    <div className='example-calendar-container'>
-      <h2>As text fields</h2>
-      <DateTimeForm />
-      <h2>Inline</h2>
-      <DateTimeFormInline />
-    </div>
-  );
+class App extends React.Component<any, any> {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      clearable: false,
+    };
+  }
+
+  handleCheckboxChange() {
+    this.setState(() => ({
+      clearable: !this.state.clearable,
+    }))
+  }
+
+  public render() {
+    return (
+      <div className='example-calendar-container'>
+        <Header as='h2' dividing>
+          As text fields
+          <Header.Subheader>
+            <Checkbox
+              label='Make data inputs clearable'
+              checked={this.state.clearable}
+              onChange={this.handleCheckboxChange.bind(this)}
+            />
+          </Header.Subheader>
+        </Header>
+
+        <DateTimeForm clearable={this.state.clearable}
+      />
+        <h2>Inline</h2>
+        <DateTimeFormInline />
+      </div>
+    );
+  }
 }
 
 class DateTimeForm extends React.Component<any, any> {
@@ -54,6 +86,8 @@ class DateTimeForm extends React.Component<any, any> {
   }
 
   public render() {
+    const { clearable } = this.props
+
     return (
       <Form>
         <DateInput
@@ -61,11 +95,14 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           className='example-calendar-input'
           name='date'
+          clearIcon={(<Icon name='remove' color='red' />)}
+          clearable={clearable}
           value={this.state.date}
           iconPosition='left'
           preserveViewMode={false}
           autoComplete='off'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <DateInput
           startMode='year'
@@ -73,11 +110,13 @@ class DateTimeForm extends React.Component<any, any> {
           placeholder='Date startMode year'
           className='example-calendar-input'
           name='dateStartYear'
+          clearable={clearable}
           value={this.state.dateStartYear}
           iconPosition='left'
           autoComplete='off'
           preserveViewMode={false}
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <TimeInput
           placeholder='Time'
@@ -85,20 +124,24 @@ class DateTimeForm extends React.Component<any, any> {
           className='example-calendar-input'
           name='time'
           autoComplete='off'
+          clearable={clearable}
           value={this.state.time}
           iconPosition='left'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <DateTimeInput
           placeholder='Date Time'
           className='example-calendar-input'
           popupPosition='bottom right'
           name='dateTime'
+          clearable={clearable}
           value={this.state.dateTime}
           iconPosition='left'
           preserveViewMode={false}
           autoComplete='off'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <DatesRangeInput
           dateFormat='DD.MM.YY'
@@ -106,30 +149,36 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           className='example-calendar-input'
           name='datesRange'
+          clearable={clearable}
           value={this.state.datesRange}
           iconPosition='left'
           autoComplete='off'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <YearInput
           placeholder='Year'
           className='example-calendar-input'
           name='year'
           popupPosition='bottom right'
+          clearable={clearable}
           value={this.state.year}
           iconPosition='left'
           autoComplete='off'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <MonthInput
           placeholder='Month'
           className='example-calendar-input'
           name='month'
           popupPosition='bottom right'
+          clearable={clearable}
           value={this.state.month}
           iconPosition='left'
           autoComplete='off'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
       </Form>
     );
   }
@@ -163,42 +212,48 @@ class DateTimeFormInline extends React.Component<any, any> {
           className='example-calendar-input'
           value={this.state.date}
           name='date'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <TimeInput
           inline
           className='example-calendar-input'
           value={this.state.time}
           name='time'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <DateTimeInput
           inline
           className='example-calendar-input'
           value={this.state.dateTime}
           name='dateTime'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <DatesRangeInput
           inline
           className='example-calendar-input'
           value={this.state.datesRange}
           name='datesRange'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <YearInput
           inline
           className='example-calendar-input'
           value={this.state.year}
           name='year'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
         <br />
         <MonthInput
           inline
           className='example-calendar-input'
           value={this.state.month}
           name='month'
-          onChange={this.handleChange} />
+          onChange={this.handleChange}
+        />
       </Form>
     );
   }

@@ -15,8 +15,25 @@ export interface DateInputProps {
     data: DateInputOnChangeData
   ) => void;
 
+  /**
+   * Called on clear.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
+  onClear?: (
+    event: React.SyntheticEvent<HTMLInputElement>,
+    data: DateInputOnChangeData
+  ) => void;
+
+  /** Using the clearable setting will let users remove their selection from a calendar. */
+  clearable?: boolean;
+
   /** Shorthand for Icon. */
   icon?: any;
+
+  /** Optional Icon to display inside the clearable Input. */  
+  clearIcon?: any;
 
   /** Position for the popup. */
   popupPosition?:
