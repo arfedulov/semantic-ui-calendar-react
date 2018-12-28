@@ -15,8 +15,17 @@ export interface BaseInputProps {
   closable?: boolean;
   /** An input can be formatted to appear inline in other content. */
   inline?: boolean;
-  /** Icon to display in input field. */
+  /** Optional icon to display inside the Input. */
   icon?: string | false;
+  /** Called on clear. */
+  onClear?: (
+    event: React.SyntheticEvent<HTMLInputElement>,
+    data: any,
+  ) => void;
+  /** Using the clearable setting will let users remove their selection from a calendar. */
+  clearable?: boolean;
+  /** Optional Icon to display inside the clearable Input. */
+  clearIcon?: any;
 }
 
 export interface DateRelatedProps {

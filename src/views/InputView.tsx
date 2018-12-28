@@ -1,5 +1,6 @@
+import * as _ from 'lodash';
 import * as React from 'react';
-import { Form, FormInputProps, Popup } from 'semantic-ui-react';
+import { Form, FormInputProps, Icon, Popup, SemanticICONS } from 'semantic-ui-react';
 
 import { findHTMLElement } from '../lib';
 
@@ -10,8 +11,27 @@ const popupStyle = {
 
 class FormInputWithRef extends React.Component<FormInputProps, any> {
   public render() {
+
+    const {
+      value,
+      clearable,
+      icon,
+      clearIcon,
+      onClear,
+      ...rest
+    } = this.props;
+
+    const ClearIcon = _.isString(clearIcon) ?
+      <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
+      <clearIcon.type {...clearIcon.props} link onClick={onClear} />
+    ;
+
     return (
-      <Form.Input { ...this.props }/>
+      <Form.Input
+        { ...rest }
+        value={value}
+        icon={value && clearable ? ClearIcon : icon}
+      />
     );
   }
 }
@@ -25,12 +45,20 @@ interface InputViewProps {
   onFocus?: () => void;
   /** Function for rendering component. */
   render?: (props: any) => React.ReactNode;
+  /** Called after clear icon has clicked. */
+  onClear?: (e: React.SyntheticEvent, data: any) => void;
   /** Picker. */
   children?: React.ReactNode;
   /** Whether to close a popup when cursor leaves it. */
   closeOnMouseLeave?: boolean;
   /** A field can have its label next to instead of above it. */
   inlineLabel?: boolean;
+  /** Using the clearable setting will let users remove their selection from a calendar. */
+  clearable?: boolean;
+  /** Optional Icon to display inside the Input. */
+  icon?: any;
+  /** Optional Icon to display inside the clearable Input. */
+  clearIcon?: any;
   /** Whether popup is closed. */
   popupIsClosed?: boolean;
   /** The node where the picker should mount. */
@@ -51,8 +79,6 @@ interface InputViewProps {
     | 'bottom center';
   /** Currently selected value. */
   value?: string;
-  /** Icon to display in input field. */
-  icon?: string;
 }
 
 class InputView extends React.Component<InputViewProps, any> {
@@ -60,6 +86,9 @@ class InputView extends React.Component<InputViewProps, any> {
     inline: false,
     closeOnMouseLeave: true,
     tabIndex: '0',
+    clearable: false,
+    icon: 'calendar',
+    clearIcon: 'remove',
   };
 
   private initialInputNode: HTMLElement | undefined;
@@ -97,6 +126,7 @@ class InputView extends React.Component<InputViewProps, any> {
       value,
       closeOnMouseLeave,
       onChange,
+      onClear,
       children,
       inlineLabel,
       popupIsClosed,
@@ -116,6 +146,7 @@ class InputView extends React.Component<InputViewProps, any> {
         value={value}
         tabIndex={tabIndex}
         inline={inlineLabel}
+        onClear={(e) => (onClear || onChange)(e, { ...rest, value: '' })}
         onChange={onChange} />
     );
 
