@@ -75,6 +75,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
    */
   public static readonly defaultProps = {
     dateFormat: 'DD-MM-YYYY',
+    icon: 'calendar',
     inline: false,
   };
 
