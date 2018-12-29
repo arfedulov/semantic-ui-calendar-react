@@ -7,9 +7,7 @@
     "test": "npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
     "start": "npx webpack-dev-server",
     "prebuild": "npx rimraf dist/*",
-    "build": "npx tsc",
-    "build:ts": "npx cpy **/*.d.ts ../dist/ --cwd=src --parents",
-    "postbuild": "npm run build:ts",
+    "build": "npx tsc --declaration",
     "publish-npm": "npm run test && npm run build && npm publish",
     "build:example": "npx webpack --production",
     "lint": "npx tslint src/**"
@@ -20,6 +18,7 @@
     "calendar",
     "datepicker"
   ],
+  "types": "./dist/index.d.ts",
   "author": "Artem Fedulov <arfedulov@gmail.com>",
   "homepage": "https://github.com/arfedulov/semantic-ui-calendar-react#readme",
   "bugs": {
