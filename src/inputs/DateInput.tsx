@@ -3,6 +3,7 @@ import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
+import CustomPropTypes from '../lib/CustomPropTypes';
 import DayPicker from '../pickers/dayPicker/DayPicker';
 import MonthPicker from '../pickers/MonthPicker';
 import YearPicker from '../pickers/YearPicker';
@@ -101,15 +102,15 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     /** Date to display initially when no date is selected. */
     initialDate: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.instanceOf(moment),
+      CustomPropTypes.momentObj,
       PropTypes.instanceOf(Date),
     ]),
     /** Date or list of dates that are displayed as disabled. */
     disable: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
-      PropTypes.instanceOf(moment),
-      PropTypes.arrayOf(PropTypes.instanceOf(moment)),
+      CustomPropTypes.momentObj,
+      PropTypes.arrayOf(CustomPropTypes.momentObj),
       PropTypes.instanceOf(Date),
       PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     ]),
@@ -117,21 +118,21 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     enable: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
-      PropTypes.instanceOf(moment),
-      PropTypes.arrayOf(PropTypes.instanceOf(moment)),
+      CustomPropTypes.momentObj,
+      PropTypes.arrayOf(CustomPropTypes.momentObj),
       PropTypes.instanceOf(Date),
       PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     ]),
     /** Maximum date that can be selected. */
     maxDate: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.instanceOf(moment),
+      CustomPropTypes.momentObj,
       PropTypes.instanceOf(Date),
     ]),
     /** Minimum date that can be selected. */
     minDate: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.instanceOf(moment),
+      CustomPropTypes.momentObj,
       PropTypes.instanceOf(Date),
     ]),
     /** Preserve viewmode on focus? */

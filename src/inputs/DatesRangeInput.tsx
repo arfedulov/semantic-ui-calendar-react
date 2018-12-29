@@ -4,6 +4,7 @@ import { Moment } from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
+import CustomPropTypes from '../lib/CustomPropTypes';
 import InputView from '../views/InputView';
 import {
   getInitializer,
@@ -87,19 +88,19 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     /** Date to display initially when no date is selected. */
     initialDate: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.instanceOf(moment),
+      CustomPropTypes.momentObj,
       PropTypes.instanceOf(Date),
     ]),
     /** Maximum date that can be selected. */
     maxDate: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.instanceOf(moment),
+      CustomPropTypes.momentObj,
       PropTypes.instanceOf(Date),
     ]),
     /** Minimum date that can be selected. */
     minDate: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.instanceOf(moment),
+      CustomPropTypes.momentObj,
       PropTypes.instanceOf(Date),
     ]),
     /** If true, popup closes after selecting a date-time. */
