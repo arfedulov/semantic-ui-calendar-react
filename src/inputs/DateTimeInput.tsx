@@ -17,6 +17,7 @@ import BaseInput, {
   DisableValuesProps,
   MinMaxValueProps,
   MultimodeProps,
+  TimeRelatedProps,
 } from './BaseInput';
 
 import { tick } from '../lib';
@@ -63,15 +64,25 @@ function getPrevMode(currentMode: CalendarMode): CalendarMode {
   return prevMode[currentMode];
 }
 
-interface DateTimeInputProps extends
+export interface DateTimeInputProps extends
   BaseInputProps,
   DateRelatedProps,
+  TimeRelatedProps,
   MultimodeProps,
   DisableValuesProps,
   MinMaxValueProps {
+    startMode?: 'year' | 'month' | 'day';
     /** Date and time divider. */
     divider?: string;
+    /** Preserve last mode (day, hour, minute) each time user opens dialog. */
+    preserveViewMode?: boolean;
+    /** Datetime formatting string. */
+    dateTimeFormat?: string;
   }
+
+export interface DateTimeInputOnChangeData extends DateTimeInputProps {
+  value: string;
+}
 
 interface DateTimeInputState extends BaseInputState {
   mode: CalendarMode;

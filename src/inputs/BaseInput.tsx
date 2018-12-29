@@ -31,6 +31,22 @@ export interface BaseInputProps {
   clearable?: boolean;
   /** Optional Icon to display inside the clearable Input. */
   clearIcon?: any;
+  /** Position for the popup. */
+  popupPosition?:
+    | 'top left'
+    | 'top right'
+    | 'bottom left'
+    | 'bottom right'
+    | 'right center'
+    | 'left center'
+    | 'top center'
+    | 'bottom center';
+  /** Should close when cursor leaves calendar popup. */
+  closeOnMouseLeave?: boolean;
+  /** The node where the picker should mount. */
+  mountNode?: any;
+  /** A field can have its label next to instead of above it. */
+  inlineLabel?: boolean;
 }
 
 export interface DateRelatedProps {
@@ -43,6 +59,8 @@ export interface DateRelatedProps {
 export interface TimeRelatedProps {
   /** Time format. */
   timeFormat?: TimeFormat;
+  /** If true, minutes picker won't be shown after picking the hour. */
+  disableMinute?: boolean;
 }
 
 export interface DisableValuesProps {

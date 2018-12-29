@@ -60,11 +60,13 @@ function parseDatesRange(inputString: string, dateFormat: string): Range {
   return result;
 }
 
-interface DatesRangeInputProps extends
-  BaseInputProps,
-  DateRelatedProps,
-  MinMaxValueProps {
-  //
+export type DatesRangeInputProps =
+  & BaseInputProps
+  & DateRelatedProps
+  & MinMaxValueProps;
+
+export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
+  value: string;
 }
 
 class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {

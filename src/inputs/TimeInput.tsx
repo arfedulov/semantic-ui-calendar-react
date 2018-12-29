@@ -29,10 +29,14 @@ function getNextMode(currentMode) {
 
 type CalendarMode = 'hour' | 'minute';
 
-type TimeInputProps =
+export type TimeInputProps =
   & BaseInputProps
   & MultimodeProps
   & TimeRelatedProps;
+
+export interface TimeInputOnChangeData extends TimeInputProps {
+  value: string;
+}
 
 interface TimeInputState extends BaseInputState {
   mode: CalendarMode;

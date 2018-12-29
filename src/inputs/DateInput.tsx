@@ -56,15 +56,19 @@ function getPrevMode(currentMode: CalendarMode) {
   return 'day';
 }
 
-interface DateInputProps extends
+export interface DateInputProps extends
   BaseInputProps,
   DateRelatedProps,
   MultimodeProps,
   DisableValuesProps,
   EnableValuesProps,
   MinMaxValueProps {
-  /** Display mode to start. */
-  startMode?: CalendarMode;
+    /** Display mode to start. */
+    startMode?: CalendarMode;
+}
+
+export interface DateInputOnChangeData extends DateInputProps {
+  value: string;
 }
 
 interface DateInputState extends BaseInputState {

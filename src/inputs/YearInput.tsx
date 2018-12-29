@@ -19,11 +19,15 @@ import {
   parseValue,
 } from './parse';
 
-type YearInputProps =
+export type YearInputProps =
   & BaseInputProps
   & DateRelatedProps
   & MinMaxValueProps
   & DisableValuesProps;
+
+export interface YearInputOnChangeData extends YearInputProps {
+  value: string;
+}
 
 class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   public static readonly defaultProps = {

@@ -24,11 +24,15 @@ interface MonthPickerOutput {
   month: number;
 }
 
-type MonthInputProps =
+export type MonthInputProps =
   & BaseInputProps
   & DateRelatedProps
   & DisableValuesProps
   & MinMaxValueProps;
+
+export interface MonthInputOnChangeData extends MonthInputProps {
+  value: string;
+}
 
 class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
   public static readonly defaultProps = {
