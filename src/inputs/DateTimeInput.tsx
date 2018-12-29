@@ -152,6 +152,17 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     divider: PropTypes.string,
     /** If true, popup closes after selecting a date-time. */
     closable: PropTypes.bool,
+    /**
+     * Called on clear.
+     *
+     * @param {SyntheticEvent} event - React's original SyntheticEvent.
+     * @param {object} data - All props and proposed value.
+     */
+    onClear: PropTypes.func,
+    /** Using the clearable setting will let users remove their selection from a calendar. */
+    clearable: PropTypes.bool,
+    /** Optional Icon to display inside the clearable Input. */
+    clearIcon: PropTypes.any,
   };
 
   constructor(props: DateTimeInputProps) {

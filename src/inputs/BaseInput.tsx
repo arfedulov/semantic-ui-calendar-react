@@ -17,7 +17,12 @@ export interface BaseInputProps {
   inline?: boolean;
   /** Optional icon to display inside the Input. */
   icon?: string | false;
-  /** Called on clear. */
+  /**
+   * Called on clear.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onClear?: (
     event: React.SyntheticEvent<HTMLInputElement>,
     data: any,
