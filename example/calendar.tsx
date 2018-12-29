@@ -41,12 +41,6 @@ class App extends React.Component<any, any> {
     };
   }
 
-  handleCheckboxChange() {
-    this.setState(() => ({
-      clearable: !this.state.clearable,
-    }))
-  }
-
   public render() {
     return (
       <div className='example-calendar-container'>
@@ -68,6 +62,12 @@ class App extends React.Component<any, any> {
       </div>
     );
   }
+
+  private handleCheckboxChange() {
+    this.setState(() => ({
+      clearable: !this.state.clearable,
+    }));
+  }
 }
 
 class DateTimeForm extends React.Component<any, any> {
@@ -86,7 +86,7 @@ class DateTimeForm extends React.Component<any, any> {
   }
 
   public render() {
-    const { clearable } = this.props
+    const { clearable } = this.props;
 
     return (
       <Form>

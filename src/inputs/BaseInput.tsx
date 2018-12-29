@@ -42,7 +42,7 @@ export interface DateRelatedProps {
 
 export interface TimeRelatedProps {
   /** Time format. */
-  timeFormat: TimeFormat;
+  timeFormat?: TimeFormat;
 }
 
 export interface DisableValuesProps {
