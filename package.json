@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
     "start": "npx webpack-dev-server",
-    "prebuild": "npx rimraf dist/*",
+    "prebuild": "npm run lint && npx rimraf dist/*",
     "build": "npx tsc --declaration",
     "publish-npm": "npm run test && npm run build && npm publish",
     "build:example": "npx webpack --production",
