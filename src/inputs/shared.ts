@@ -1,3 +1,4 @@
+import { Moment } from 'moment';
 
 /**
  * Filter out all moments that don't have
@@ -6,19 +7,19 @@
  * @return An array of moments; each of these moments
  * doesn't have any selectable date in month.
  */
-export function getDisabledMonths(moments) {
+export function getDisabledMonths(moments: Moment[]): Moment[] {
   if (!moments) {
     return;
   }
   const disabledMonths = [];
   const checkedMonths = [];
-  for (let m of moments) {
+  for (const m of moments) {
     if (checkedMonths.indexOf(m.month()) < 0) {
-      const momentsForMonth = moments.filter(_m => _m.month() === m.month());
+      const momentsForMonth = moments.filter((mForMonth) => mForMonth.month() === m.month());
       const momentsForMonthUniq = [];
-      for (let i =0; i < momentsForMonth.length; i++) {
-        if (momentsForMonthUniq.indexOf(momentsForMonth[i]) < 0) {
-          momentsForMonthUniq.push(momentsForMonth[i]);
+      for (const mForMonth of momentsForMonth) {
+        if (momentsForMonthUniq.indexOf(mForMonth) < 0) {
+          momentsForMonthUniq.push(mForMonth);
         }
       }
       if (momentsForMonthUniq.length === m.daysInMonth()) {
@@ -27,6 +28,7 @@ export function getDisabledMonths(moments) {
       checkedMonths.push(m);
     }
   }
+
   return disabledMonths;
 }
 
@@ -37,19 +39,19 @@ export function getDisabledMonths(moments) {
  * @return An array of moments; each of these moments
  * doesn't have any selectable month in year.
  */
-export function getDisabledYears(moments) {
+export function getDisabledYears(moments: Moment[]): Moment[] {
   if (!moments) {
     return;
   }
   const disabledYears = [];
   const checkedYears = [];
-  for (let y of moments) {
+  for (const y of moments) {
     if (checkedYears.indexOf(y.year()) < 0) {
-      const momentsForYear = getDisabledMonths(moments.filter(_y => _y.year() === y.year()));
+      const momentsForYear = getDisabledMonths(moments.filter((mForYear) => mForYear.year() === y.year()));
       const momentsForYearUniq = [];
-      for (let i =0; i < momentsForYear.length; i++) {
-        if (momentsForYearUniq.indexOf(momentsForYear[i]) < 0) {
-          momentsForYearUniq.push(momentsForYear[i]);
+      for (const mForYear of momentsForYear) {
+        if (momentsForYearUniq.indexOf(mForYear) < 0) {
+          momentsForYearUniq.push(mForYear);
         }
       }
       if (momentsForYearUniq.length === 12) {
@@ -58,5 +60,6 @@ export function getDisabledYears(moments) {
       checkedYears.push(y);
     }
   }
+
   return disabledYears;
 }
