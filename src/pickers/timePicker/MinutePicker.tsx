@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import MinuteView from '../../views/MinuteView';
 import {
+  BasePickerOnChangeData,
   BasePickerProps,
   DisableValuesProps,
   MinMaxValueProps,
@@ -28,6 +29,16 @@ type MinutePickerProps = BasePickerProps
   & DisableValuesProps
   & TimePickerProps
   & OptionalHeaderProps;
+
+export interface MinutePickerOnChangeData extends BasePickerOnChangeData {
+  value: {
+    year: number,
+    month: number,
+    date: number,
+    hour: number,
+    minute: number,
+  };
+}
 
 class MinutePicker
   extends SingleSelectionPicker<MinutePickerProps>
@@ -162,15 +173,18 @@ class MinutePicker
     return isPrevPageAvailable(this.state.date, this.props.minDate);
   }
 
-  protected handleChange = (e, { value }): void => {
-    const data = {
-      year: this.state.date.year(),
-      month: this.state.date.month(),
-      date: this.state.date.date(),
-      hour: this.state.date.hour(),
-      minute: this.buildCalendarValues().indexOf(value) * MINUTES_STEP,
+  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+    const data: MinutePickerOnChangeData = {
+      ...this.props,
+      value: {
+        year: this.state.date.year(),
+        month: this.state.date.month(),
+        date: this.state.date.date(),
+        hour: this.state.date.hour(),
+        minute: this.buildCalendarValues().indexOf(value) * MINUTES_STEP,
+      },
     };
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: data });
+    this.props.onChange(e, data);
   }
 
   protected switchToNextPage = (): void => {

@@ -4,7 +4,9 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
-import MonthPicker from '../pickers/MonthPicker';
+import MonthPicker, {
+  MonthPickerOnChangeData,
+} from '../pickers/MonthPicker';
 import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
@@ -18,11 +20,6 @@ import {
   parseArrayOrValue,
   parseValue,
 } from './parse';
-
-interface MonthPickerOutput {
-  year: number;
-  month: number;
-}
 
 export type MonthInputProps =
   & BaseInputProps
@@ -136,7 +133,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent,
-                          { value }: { value: MonthPickerOutput }) => {
+                          { value }: MonthPickerOnChangeData) => {
     const date = moment({ month: value.month });
     let output = '';
     if (date.isValid()) {

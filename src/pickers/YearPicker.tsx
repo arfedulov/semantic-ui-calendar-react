@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import YearView from '../views/YearView';
 import {
+  BasePickerOnChangeData,
   BasePickerProps,
   DisableValuesProps,
   EnableValuesProps,
@@ -18,6 +19,12 @@ type YearPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
   & MinMaxValueProps;
+
+export interface YearPickerOnChangeData extends BasePickerOnChangeData {
+  value: {
+    year: number,
+  };
+}
 
 class YearPicker extends SingleSelectionPicker<YearPickerProps> {
   /*
@@ -184,9 +191,12 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     return firstOnPage > minDate.year();
   }
 
-  protected handleChange = (e, { value }): void => {
-    const year = parseInt(value, 10);
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: { year } });
+  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+    const data: YearPickerOnChangeData = {
+      ...this.props,
+      value: { year: parseInt(value, 10) },
+    };
+    this.props.onChange(e, data);
   }
 
   protected switchToNextPage = (e, data, callback): void => {

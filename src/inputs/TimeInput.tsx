@@ -4,6 +4,9 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { tick } from '../lib';
+import {
+  BasePickerOnChangeData,
+} from '../pickers/BasePicker';
 import HourPicker from '../pickers/timePicker/HourPicker';
 import MinutePicker from '../pickers/timePicker/MinutePicker';
 import InputView from '../views/InputView';
@@ -40,11 +43,6 @@ export interface TimeInputOnChangeData extends TimeInputProps {
 
 interface TimeInputState extends BaseInputState {
   mode: CalendarMode;
-}
-
-interface TimePickerOutput {
-  hour: number;
-  minute?: number;
 }
 
 class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
@@ -114,12 +112,12 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent,
-                          { value }: { value: TimePickerOutput }) => {
+                          { value }: BasePickerOnChangeData) => {
     tick(this.handleSelectUndelayed, e, { value });
   }
 
   private handleSelectUndelayed = (e: React.SyntheticEvent,
-                                   { value }: { value: TimePickerOutput }) => {
+                                   { value }: BasePickerOnChangeData) => {
     const {
       hour,
       minute,

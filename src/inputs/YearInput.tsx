@@ -4,7 +4,9 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
-import YearPicker from '../pickers/YearPicker';
+import YearPicker, {
+  YearPickerOnChangeData,
+} from '../pickers/YearPicker';
 import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
@@ -136,16 +138,18 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     );
   }
 
-  private handleSelect = (e, { value }) => {
+  private handleSelect = (e: React.SyntheticEvent,
+                          { value }: YearPickerOnChangeData) => {
     const date = moment({ year: value.year });
     let output = '';
     if (date.isValid()) {
       output = date.format(this.props.dateFormat);
     }
-    _.invoke(
-      this.props,
-      'onChange',
-      e, { ...this.props, value: output });
+    const data = {
+      ...this.props,
+      value: output,
+    };
+    this.props.onChange(e, data);
     if (this.props.closable) {
       this.closePopup();
     }

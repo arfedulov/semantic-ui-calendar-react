@@ -4,6 +4,9 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
+import {
+  BasePickerOnChangeData,
+} from '../pickers/BasePicker';
 import DayPicker from '../pickers/dayPicker/DayPicker';
 import MonthPicker from '../pickers/MonthPicker';
 import YearPicker from '../pickers/YearPicker';
@@ -292,7 +295,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     }
   }
 
-  private handleSelect = (e, { value }) => {
+  private handleSelect = (e, { value }: BasePickerOnChangeData) => {
     if (this.state.mode === 'day' && this.props.closable) {
       this.closePopup();
     }
@@ -305,7 +308,11 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         _.invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
 
-      return { ...value };
+      return {
+        year: value.year,
+        month: value.month,
+        date: value.date,
+      };
     }, () => this.state.mode !== 'day' && this.switchToNextMode());
   }
 }

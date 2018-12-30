@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
+import { OnValueClickData } from '../BaseCalendarView';
 import Cell from './Cell';
 import {
   cellStyleWidth3,
@@ -18,7 +19,7 @@ interface BodyProps {
   /** Data that is used to fill a calendar. */
   data: string[];
   /** Called after a click on calendar's cell. */
-  onCellClick: (e: React.SyntheticEvent, data: any) => void;
+  onCellClick: (e: React.SyntheticEvent, data: OnValueClickData) => void;
   /** Called on cell hover. */
   onCellHover: (e: React.SyntheticEvent, data: any) => void;
   /** Index of an element in `data` array that should be displayed as hovered. */

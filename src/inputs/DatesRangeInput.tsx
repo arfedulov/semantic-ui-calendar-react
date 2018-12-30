@@ -11,7 +11,9 @@ import {
   parseValue,
 } from './parse';
 
-import DatesRangePicker from '../pickers/dayPicker/DatesRangePicker';
+import DatesRangePicker, {
+  DatesRangePickerOnChangeData,
+} from '../pickers/dayPicker/DatesRangePicker';
 import BaseInput, {
   BaseInputProps,
   BaseInputState,
@@ -171,7 +173,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     );
   }
 
-  private handleSelect = (e, { value }) => {
+  private handleSelect = (e: React.SyntheticEvent,
+                          { value }: DatesRangePickerOnChangeData) => {
     const { dateFormat } = this.props;
     const {
       start,

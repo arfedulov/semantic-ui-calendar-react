@@ -4,6 +4,9 @@ import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
+import {
+  BasePickerOnChangeData,
+} from '../pickers/BasePicker';
 import DayPicker from '../pickers/dayPicker/DayPicker';
 import MonthPicker from '../pickers/MonthPicker';
 import HourPicker from '../pickers/timePicker/HourPicker';
@@ -347,7 +350,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     tick(this.switchToPrevModeUndelayed);
   }
 
-  private handleSelect = (e, { value }): void => {
+  private handleSelect = (e: React.SyntheticEvent,
+                          { value }: BasePickerOnChangeData): void => {
     tick(this.handleSelectUndelayed, e, { value });
   }
 
@@ -357,7 +361,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     }
   }
 
-  private handleSelectUndelayed = (e, { value }): void => {
+  private handleSelectUndelayed = (e: React.SyntheticEvent,
+                                   { value }: BasePickerOnChangeData): void => {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
     }
@@ -370,7 +375,13 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         _.invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
 
-      return { ...value };
+      return {
+        year: value.year,
+        month: value.month,
+        date: value.date,
+        hour: value.hour,
+        minute: value.minute,
+      };
     }, () => this.state.mode !== 'minute' && this.switchToNextMode());
   }
 }

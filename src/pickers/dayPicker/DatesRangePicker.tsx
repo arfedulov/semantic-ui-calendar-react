@@ -6,6 +6,7 @@ import * as React from 'react';
 import { RangeIndexes } from '../../views/BaseCalendarView';
 import DatesRangeView from '../../views/DatesRangeView';
 import {
+  BasePickerOnChangeData,
   BasePickerProps,
   MinMaxValueProps,
   ProvideHeadingValue,
@@ -30,6 +31,8 @@ interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps {
   /** End of currently selected dates range. */
   end: Moment;
 }
+
+export type DatesRangePickerOnChangeData = BasePickerOnChangeData;
 
 class DatesRangePicker
   extends RangeSelectionPicker<DatesRangePickerProps>
@@ -205,32 +208,29 @@ class DatesRangePicker
     return `${start ? start.format(dateFormat) : '- - -'} - ${end ? end.format(dateFormat) : '- - -'}`;
   }
 
-  protected handleChange = (e, { itemPosition }) => {
+  protected handleChange = (e: React.SyntheticEvent, { itemPosition }) => {
     // call `onChange` with value: { start: moment, end: moment }
     const {
       start,
       end,
     } = this.props;
+    const data: DatesRangePickerOnChangeData = {
+      ...this.props,
+      value: {},
+    };
     const firstOnPage = parseInt(this.buildCalendarValues()[0], 10);
     if (_.isNil(start) && _.isNil(end)) {
-      const range = {
-        start: buildMoment(this.state.date, firstOnPage, itemPosition),
-      };
-      _.invoke(this.props, 'onChange', e, { ...this.props, value: range });
+      data.value = { start: buildMoment(this.state.date, firstOnPage, itemPosition) };
     } else if (!_.isNil(start) && _.isNil(end)) {
       const selectedDate = buildMoment(this.state.date, firstOnPage, itemPosition);
       if (selectedDate.isAfter(start, 'date')) {
-        const range = {
+        data.value = {
           start,
           end: selectedDate,
         };
-        _.invoke(this.props, 'onChange', e, { ...this.props, value: range });
-      } else {
-        _.invoke(this.props, 'onChange', e, { ...this.props, value: {} });
       }
-    } else {
-      _.invoke(this.props, 'onChange', e, { ...this.props, value: {} });
     }
+    this.props.onChange(e, data);
   }
 
   protected switchToNextPage = (): void => {
