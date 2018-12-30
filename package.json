@@ -4,7 +4,7 @@
   "description": "date/time picker built from semantic-ui elements",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
+    "test": "npx cross-env TS_NODE_COMPILER_OPTIONS=\"{\"\"allowJs\"\":true}\" npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
     "start": "npx webpack-dev-server",
     "prebuild": "npm run lint && npx rimraf dist/*",
     "build": "npx tsc --declaration",
@@ -58,6 +58,7 @@
     "babel-preset-airbnb": "^2.5.3",
     "chai": "^4.1.2",
     "cpy-cli": "^1.0.1",
+    "cross-env": "^5.2.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "jsdom": "^11.12.0",
