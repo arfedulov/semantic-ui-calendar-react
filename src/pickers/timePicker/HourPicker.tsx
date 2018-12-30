@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import HourView from '../../views/HourView';
 import {
+  BasePickerOnChangeData,
   BasePickerProps,
   DisableValuesProps,
   MinMaxValueProps,
@@ -27,6 +28,15 @@ type HourPickerProps = BasePickerProps
   & DisableValuesProps
   & TimePickerProps
   & OptionalHeaderProps;
+
+export interface HourPickerOnChangeData extends BasePickerOnChangeData {
+  value: {
+    year: number,
+    month: number,
+    date: number,
+    hour: number,
+  };
+}
 
 class HourPicker
   extends SingleSelectionPicker<HourPickerProps>
@@ -164,14 +174,17 @@ class HourPicker
     }
   }
 
-  protected handleChange = (e, { value }): void => {
-    const data = {
-      year: this.state.date.year(),
-      month: this.state.date.month(),
-      date: this.state.date.date(),
-      hour: this.buildCalendarValues().indexOf(value),
+  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+    const data: HourPickerOnChangeData = {
+      ...this.props,
+      value: {
+        year: this.state.date.year(),
+        month: this.state.date.month(),
+        date: this.state.date.date(),
+        hour: this.buildCalendarValues().indexOf(value),
+      },
     };
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: data });
+    this.props.onChange(e, data);
   }
 
   protected switchToNextPage = (): void => {

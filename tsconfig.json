@@ -2,7 +2,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "./dist",
-    "allowJs": true,
+    "allowJs": false,
     "target": "es5",
     "jsx": "react",
     "lib": [

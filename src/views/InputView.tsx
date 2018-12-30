@@ -1,6 +1,6 @@
-import * as React from 'react';
 import * as _ from 'lodash';
-import { Icon, Form, FormInputProps, Popup, SemanticICONS } from 'semantic-ui-react';
+import * as React from 'react';
+import { Form, FormInputProps, Icon, Popup, SemanticICONS } from 'semantic-ui-react';
 
 import { findHTMLElement } from '../lib';
 
@@ -11,29 +11,26 @@ const popupStyle = {
 
 class FormInputWithRef extends React.Component<FormInputProps, any> {
   public render() {
-    const inputProps = {
-      ...this.props,
-      clearable: undefined,
-      onClear: undefined,
-    };
 
-    let {
+    const {
       value,
       clearable,
       icon,
       clearIcon,
       onClear,
+      ...rest
     } = this.props;
 
-    clearIcon = _.isString(clearIcon) ?
+    const ClearIcon = _.isString(clearIcon) ?
       <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
       <clearIcon.type {...clearIcon.props} link onClick={onClear} />
     ;
 
     return (
       <Form.Input
-        {...inputProps}
-        icon={value && clearable ? clearIcon : icon}
+        { ...rest }
+        value={value}
+        icon={value && clearable ? ClearIcon : icon}
       />
     );
   }
@@ -42,14 +39,16 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
 interface InputViewProps {
   /** Used for passing input dom node (input field or inline calendar) to parent component. */
   onMount: (e: HTMLElement) => void;
-  /** Function for rendering component. */
-  render: (props: any) => React.ReactNode[];
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent, data: any) => void;
+  /** Called on input focus. */
+  onFocus?: () => void;
+  /** Function for rendering component. */
+  render?: (props: any) => React.ReactNode;
   /** Called after clear icon has clicked. */
-  onClear: (e: React.SyntheticEvent, data: any) => void;
+  onClear?: (e: React.SyntheticEvent, data: any) => void;
   /** Picker. */
-  children: React.ReactNode[];
+  children?: React.ReactNode;
   /** Whether to close a popup when cursor leaves it. */
   closeOnMouseLeave?: boolean;
   /** A field can have its label next to instead of above it. */
@@ -58,7 +57,7 @@ interface InputViewProps {
   clearable?: boolean;
   /** Optional Icon to display inside the Input. */
   icon?: any;
-  /** Optional Icon to display inside the clearable Input. */  
+  /** Optional Icon to display inside the clearable Input. */
   clearIcon?: any;
   /** Whether popup is closed. */
   popupIsClosed?: boolean;

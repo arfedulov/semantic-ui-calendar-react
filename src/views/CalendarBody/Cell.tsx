@@ -2,6 +2,8 @@ import * as _ from 'lodash';
 import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
+import { OnValueClickData } from '../BaseCalendarView';
+
 const hoverCellStyles = {
   outline: '1px solid #85b7d9',
   cursor: 'pointer',
@@ -33,9 +35,9 @@ interface CellProps {
   /** Styles for cell width. */
   style: CellWidthStyle;
   /** Called after click on a cell. */
-  onClick: (e: React.SyntheticEvent, data: any) => void;
+  onClick: (e: React.SyntheticEvent, data: OnValueClickData) => void;
   /** Called on cell hover. */
-  onHover: (e: React.SyntheticEvent, data: any) => void;
+  onHover: (e: React.SyntheticEvent, data: OnValueClickData) => void;
   /** Is cell is hovered. */
   hovered?: boolean;
   /** Is cell active. */

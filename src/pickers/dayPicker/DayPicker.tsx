@@ -4,6 +4,7 @@ import * as React from 'react';
 import DayView from '../../views/DayView';
 import { WEEKS_TO_DISPLAY } from '../../views/DayView';
 import {
+  BasePickerOnChangeData,
   BasePickerProps,
   DisableValuesProps,
   EnableValuesProps,
@@ -20,6 +21,14 @@ import {
 
 const PAGE_WIDTH = 7;
 export const DAYS_ON_PAGE = WEEKS_TO_DISPLAY * PAGE_WIDTH;
+
+export interface DayPickerOnChangeData extends BasePickerOnChangeData {
+  value: {
+    year: number;
+    month: number;
+    date: number;
+  };
+}
 
 type DayPickerProps = BasePickerProps
   & DisableValuesProps
@@ -150,15 +159,18 @@ class DayPicker
     return isPrevPageAvailable(this.state.date, minDate);
   }
 
-  protected handleChange = (e, { value }): void => {
+  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
     // `value` is selected date(string) like '31' or '1'
-    const result = {
-      year: this.state.date.year(),
-      month: this.state.date.month(),
-      date: parseInt(value, 10),
+    const data: DayPickerOnChangeData = {
+      ...this.props,
+      value: {
+        year: this.state.date.year(),
+        month: this.state.date.month(),
+        date: parseInt(value, 10),
+      },
     };
 
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: result });
+    this.props.onChange(e, data);
   }
 
   protected switchToNextPage = (): void => {

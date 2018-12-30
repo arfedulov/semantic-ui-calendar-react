@@ -15,9 +15,29 @@ interface HandleChangeParams {
   itemPosition?: number;
 }
 
+export interface BasePickerOnChangeData {
+  [key: string]: any;
+  value: {
+    /** Year. */
+    year?: number;
+    /** Month (0 - 11). */
+    month?: number;
+    /** Date (1 - 31). */
+    date?: number;
+    /** Hour (0 - 23). */
+    hour?: number;
+    /** Minute (0 - 59). */
+    minute?: number;
+    /** Selected start date. */
+    start?: Moment;
+    /** Selected end date. */
+    end?: Moment;
+  };
+}
+
 export interface BasePickerProps {
   /** Called after day is selected. */
-  onChange: (e: React.SyntheticEvent, data: any) => void;
+  onChange: (e: React.SyntheticEvent, data: BasePickerOnChangeData) => void;
   /** Currently selected date. */
   value: Moment;
   /** A value for initializing day picker's state. */
@@ -43,19 +63,19 @@ export interface OptionalHeaderProps {
 
 export interface DisableValuesProps {
   /** Array of disabled dates. */
-  disable: Moment[];
+  disable?: Moment[];
 }
 
 export interface EnableValuesProps {
   /** Array of enabled dates. */
-  enable: Moment[];
+  enable?: Moment[];
 }
 
 export interface MinMaxValueProps {
   /** Minimal date that could be selected. */
-  minDate: Moment;
+  minDate?: Moment;
   /** Maximal date that could be selected. */
-  maxDate: Moment;
+  maxDate?: Moment;
 }
 
 export interface TimePickerProps {

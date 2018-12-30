@@ -4,6 +4,7 @@ import * as React from 'react';
 
 import MonthView from '../views/MonthView';
 import {
+  BasePickerOnChangeData,
   BasePickerProps,
   DisableValuesProps,
   EnableValuesProps,
@@ -21,6 +22,13 @@ type MonthPickerProps = BasePickerProps
   & EnableValuesProps
   & MinMaxValueProps
   & OptionalHeaderProps;
+
+export interface MonthPickerOnChangeData extends BasePickerOnChangeData {
+  value: {
+    year: number,
+    month: number,
+  };
+}
 
 class MonthPicker
   extends SingleSelectionPicker<MonthPickerProps>
@@ -184,10 +192,15 @@ class MonthPicker
     return true;
   }
 
-  protected handleChange = (e, { value }): void => {
-    const year = parseInt(this.getCurrentDate(), 10);
-    const month = this.buildCalendarValues().indexOf(value);
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: { year, month } });
+  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+    const data: MonthPickerOnChangeData = {
+      ...this.props,
+      value: {
+        year: parseInt(this.getCurrentDate(), 10),
+        month: this.buildCalendarValues().indexOf(value),
+      },
+    };
+    this.props.onChange(e, data);
   }
 
   protected switchToNextPage = (): void => {

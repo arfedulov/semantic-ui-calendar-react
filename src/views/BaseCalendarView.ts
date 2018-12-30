@@ -10,7 +10,7 @@ export interface BaseCalendarViewProps {
   /** An array of values to fill a calendar with (dates, or years, or anything like that). */
   values: string[];
   /** Called after clicking on particular value (date, year or anything like that). */
-  onValueClick: (e: React.SyntheticEvent, data: any) => void;
+  onValueClick: (e: React.SyntheticEvent, data: OnValueClickData) => void;
   /** Called on calendar cell hover. */
   onCellHover: (e: React.SyntheticEvent, data: any) => void;
   /** Index of a cell that should be displayed as hovered. */
@@ -74,6 +74,14 @@ export interface CalendarWithOptionalHeaderViewProps {
   currentHeadingValue?: string;
   /** Called after click on calendar header. */
   onHeaderClick?: () => void;
+}
+
+export interface OnValueClickData {
+  [key: string]: any;
+  /** Position of the clicked cell. */
+  itemPosition: number;
+  /** Text content of the clicked cell. */
+  value: string;
 }
 
 /** Base class for picker view components. */

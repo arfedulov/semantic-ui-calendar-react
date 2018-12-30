@@ -1,5 +1,5 @@
 /** Set zero timeout.
- * 
+ *
  * Sometimes we need to delay rerendering components
  * on one tick (if they are inside  `Popup` and rerendering could
  * change `Popup`'s content sizes).
