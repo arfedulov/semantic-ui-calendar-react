@@ -101,6 +101,11 @@ class MonthPicker
   }
 
   protected getInitialDatePosition(): number {
+    const selectable = this.getSelectableCellPositions();
+    if (selectable.indexOf(this.state.date.month()) < 0) {
+      return selectable[0];
+    }
+
     return this.state.date.month();
   }
 

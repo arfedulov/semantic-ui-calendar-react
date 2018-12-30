@@ -113,7 +113,10 @@ class MinutePicker
   }
 
   protected getInitialDatePosition(): number {
-    return 0;
+    const selectable = this.getSelectableCellPositions();
+    if (selectable.indexOf(this.state.date.hour()) < 0) {
+      return selectable[0];
+    }
   }
 
   protected getDisabledPositions(): number[] {

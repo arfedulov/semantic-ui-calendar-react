@@ -17,6 +17,7 @@ import {
   buildDays,
   getDefaultEnabledDayPositions,
   getDisabledDays,
+  getInitialDatePosition,
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
@@ -102,7 +103,9 @@ class DatesRangePicker
   }
 
   protected getInitialDatePosition(): number {
-    return this.buildCalendarValues().indexOf(this.state.date.date().toString());
+    return getInitialDatePosition(this.state.date.date().toString(),
+                                  this.buildCalendarValues(),
+                                  this.getSelectableCellPositions());
   }
 
   // TODO: too complicated method

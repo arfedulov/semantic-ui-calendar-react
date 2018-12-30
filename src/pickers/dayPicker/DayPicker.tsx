@@ -15,6 +15,7 @@ import {
 import {
   buildDays,
   getDisabledDays,
+  getInitialDatePosition,
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
@@ -101,7 +102,9 @@ class DayPicker
   }
 
   protected getInitialDatePosition(): number {
-    return this.buildCalendarValues().indexOf(this.state.date.date().toString());
+    return getInitialDatePosition(this.state.date.date().toString(),
+                                  this.buildCalendarValues(),
+                                  this.getSelectableCellPositions());
   }
 
   protected getActiveCellPosition(): number {

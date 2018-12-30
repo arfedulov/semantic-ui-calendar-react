@@ -149,3 +149,19 @@ export const testExport = {
   getDaysArray,
   getDefaultEnabledDayPositions,
 };
+
+export function getInitialDatePosition(initDate: string,
+                                       values: string[],
+                                       selectablePositions: number[]): number {
+const selectable = selectablePositions.reduce((acc, pos) => {
+acc.push({ value: values[pos], position: pos });
+
+return acc;
+}, []);
+const res = _.find(selectable, (item) => item.value === initDate);
+if (res) {
+return res.position;
+}
+
+return selectable[0].position;
+}

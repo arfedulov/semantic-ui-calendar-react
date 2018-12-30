@@ -90,7 +90,14 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
   }
 
   protected getInitialDatePosition(): number {
-    return this.buildCalendarValues().indexOf(this.state.date.year().toString());
+    const selectable = this.getSelectableCellPositions();
+    const values = this.buildCalendarValues();
+    const currentYearIndex = values.indexOf(this.state.date.year().toString());
+    if (selectable.indexOf(currentYearIndex) < 0) {
+      return selectable[0];
+    }
+
+    return currentYearIndex;
   }
 
   protected getActiveCellPosition(): number {
