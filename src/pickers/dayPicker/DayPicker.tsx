@@ -176,22 +176,26 @@ class DayPicker
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (): void => {
+  protected switchToNextPage = (e: React.SyntheticEvent,
+                                data: any,
+                                callback: () => void): void => {
     this.setState(({ date }) => {
       const nextDate = date.clone();
       nextDate.add(1, 'month');
 
       return { date: nextDate };
-    });
+    }, callback);
   }
 
-  protected switchToPrevPage = (): void => {
+  protected switchToPrevPage = (e: React.SyntheticEvent,
+                                data: any,
+                                callback: () => void): void => {
     this.setState(({ date }) => {
       const prevDate = date.clone();
       prevDate.subtract(1, 'month');
 
       return { date: prevDate };
-    });
+    }, callback);
   }
 }
 

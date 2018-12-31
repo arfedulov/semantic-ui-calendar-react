@@ -206,7 +206,9 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (e, data, callback): void => {
+  protected switchToNextPage = (e: React.SyntheticEvent,
+                                data: any,
+                                callback: () => void): void => {
     this.setState(({ date }) => {
       const nextDate = date.clone();
       nextDate.add(YEARS_ON_PAGE, 'year');
@@ -215,7 +217,9 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     }, callback);
   }
 
-  protected switchToPrevPage = (e, data, callback): void => {
+  protected switchToPrevPage = (e: React.SyntheticEvent,
+                                data: any,
+                                callback: () => void): void => {
     this.setState(({ date }) => {
       const prevDate = date.clone();
       prevDate.subtract(YEARS_ON_PAGE, 'year');

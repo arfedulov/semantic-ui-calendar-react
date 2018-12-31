@@ -63,9 +63,9 @@ export interface CalendarWithOptionalHeaderViewProps {
   /** Whether a calendar has header. */
   hasHeader: boolean;
   /** Called after click on next page button. */
-  onNextPageBtnClick?: () => void;
+  onNextPageBtnClick?: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
   /** Called after click on previous page button. */
-  onPrevPageBtnClick?: () => void;
+  onPrevPageBtnClick?: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
   /** Whether to display previous page button as active or disabled. */
   hasPrevPage?: boolean;
   /** Whether to display next page button as active or disabled. */

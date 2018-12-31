@@ -138,7 +138,6 @@ class DateTimeForm extends React.Component<any, any> {
           clearable={clearable}
           value={this.state.dateTime}
           iconPosition='left'
-          minDate={moment('2018-12-31 10:20')}
           preserveViewMode={false}
           autoComplete='off'
           onChange={this.handleChange}
