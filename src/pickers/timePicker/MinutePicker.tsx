@@ -109,14 +109,24 @@ class MinutePicker
   }
 
   protected getSelectableCellPositions(): number[] {
-    return _.range(0, MINUTES_ON_PAGE);
+    const disabled = this.getDisabledPositions();
+    const all = _.range(0, MINUTES_ON_PAGE);
+    if (disabled) {
+      return all.filter((pos) => {
+        return disabled.indexOf(pos) < 0;
+      });
+    }
+
+    return all;
   }
 
   protected getInitialDatePosition(): number {
     const selectable = this.getSelectableCellPositions();
-    if (selectable.indexOf(this.state.date.hour()) < 0) {
+    if (selectable.indexOf(getMinuteCellPosition(this.state.date.minute())) < 0) {
       return selectable[0];
     }
+
+    return getMinuteCellPosition(this.state.date.minute());
   }
 
   protected getDisabledPositions(): number[] {

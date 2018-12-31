@@ -139,7 +139,7 @@ describe('<MinutePicker />: isNextPageAvailable', () => {
       const wrapper = mount(<MinutePicker
         maxDate={moment('2018-08-12')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isNextPageAvailable()), 'return boolean');
       assert.isFalse(wrapper.instance().isNextPageAvailable(), 'return false');
     });
@@ -150,7 +150,7 @@ describe('<MinutePicker />: isNextPageAvailable', () => {
       const wrapper = mount(<MinutePicker
         maxDate={moment('2018-08-13')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isNextPageAvailable()), 'return boolean');
       assert.isTrue(wrapper.instance().isNextPageAvailable(), 'return true');
     });
@@ -165,7 +165,7 @@ describe('<MinutePicker />: isPrevPageAvailable', () => {
       const wrapper = mount(<MinutePicker
         minDate={moment('2018-08-12')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isPrevPageAvailable()), 'return boolean');
       assert.isFalse(wrapper.instance().isPrevPageAvailable(), 'return false');
     });
@@ -176,7 +176,7 @@ describe('<MinutePicker />: isPrevPageAvailable', () => {
       const wrapper = mount(<MinutePicker
         minDate={moment('2018-07-11')}
         initializeWith={date} />);
-      
+
       assert(_.isBoolean(wrapper.instance().isPrevPageAvailable()), 'return boolean');
       assert.isTrue(wrapper.instance().isPrevPageAvailable(), 'return true');
     });
@@ -189,7 +189,7 @@ describe('<MinutePicker />: getCurrentDate', () => {
   it('return string in format `MMMM DD, YYYY`', () => {
     const wrapper = mount(<MinutePicker
       initializeWith={date} />);
-    
+
     assert(_.isString(wrapper.instance().getCurrentDate()), 'return string');
     assert.equal(wrapper.instance().getCurrentDate(), date.format('MMMM DD, YYYY'), 'return proper value');
   });
@@ -229,7 +229,7 @@ describe('<MinutePicker />: switchToNextPage', () => {
   it('shift `date` state field one day forward', () => {
     const wrapper = mount(<MinutePicker
       initializeWith={date} />);
-    
+
     assert.equal(wrapper.state('date').date(), 12, 'date not changed yet');
     wrapper.instance().switchToNextPage();
     assert.equal(wrapper.state('date').date(), 12 + 1, 'date shifted one day forward');
@@ -242,9 +242,26 @@ describe('<MinutePicker />: switchToPrevPage', () => {
   it('shift `date` state field one day backward', () => {
     const wrapper = mount(<MinutePicker
       initializeWith={date} />);
-    
+
     assert.equal(wrapper.state('date').date(), 12, 'date not changed yet');
     wrapper.instance().switchToPrevPage();
     assert.equal(wrapper.state('date').date(), 12 - 1, 'date shifted one day backward');
+  });
+});
+
+describe('<MinutePicker />: getSelectableCellPositions', () => {
+  const date = moment('2018-08-12 10:00');
+
+  it('return minutes positions that are >= `minDate`', () => {
+    const wrapper = mount(<MinutePicker
+      minDate={moment('2018-08-12 10:15')}
+      initializeWith={date} />);
+    const expected = [ 3, 4, 5, 6, 7, 8, 9, 10, 11 ];
+    const actual = wrapper.instance().getSelectableCellPositions();
+
+    assert.equal(actual.length, expected.length);
+    expected.forEach((expectPos, i) => {
+      assert.equal(expectPos, actual[i]);
+    });
   });
 });
