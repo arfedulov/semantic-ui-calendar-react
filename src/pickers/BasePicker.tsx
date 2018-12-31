@@ -1,6 +1,7 @@
 import * as keyboardKey from 'keyboard-key';
 import {
   includes,
+  isNil,
   isNumber,
 } from 'lodash';
 import { Moment } from 'moment';
@@ -169,7 +170,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     switch (key) {
     case 'ArrowLeft':
       event.preventDefault();
-      if (nextSelectableCellPositionLeft) {
+      if (!isNil(nextSelectableCellPositionLeft)) {
         this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionLeft });
       } else {
         if (this.isPrevPageAvailable()) {
@@ -183,7 +184,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       break;
     case 'ArrowRight':
       event.preventDefault();
-      if (nextSelectableCellPositionRight) {
+      if (!isNil(nextSelectableCellPositionRight)) {
         this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionRight });
       } else {
         if (this.isNextPageAvailable()) {
