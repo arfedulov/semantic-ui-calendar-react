@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.12.2 2018-12-31
+
+- feat: add clearable props to Input [`#60`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/60)
+
+- fix: do not select disabled cells after page switch [`b536d89`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/b536d89e8af52e533c97735a0301a0c4dfd04963)
+
+- fix: not jump over 0th cell on ArrowLeft press [`394470c`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/394470c1105400ca3f62858dc0856da4125c047b)
+
+- fix(MinutePicker): getInitialDatePosition handles disabled positions [`c1ad726`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/c1ad72661e8d5a88efeacf5573ecfd2e9104bff8)
+
+- fix: #59 prevent selecting disabled values [`bab7718`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/bab7718df3f969e4deb6001517c14b8ac6bb6137)
+
 ## v0.12.1 2018-11-24
 
 - fix: stale input node reference [`32b56c3`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/32b56c381891bd716efb3a93e1ef8ef1ac0400a6)
