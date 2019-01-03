@@ -66,8 +66,8 @@ export interface DateInputProps extends
   DisableValuesProps,
   EnableValuesProps,
   MinMaxValueProps {
-    /** Display mode to start. */
-    startMode?: CalendarMode;
+  /** Display mode to start. */
+  startMode?: CalendarMode;
 }
 
 export interface DateInputOnChangeData extends DateInputProps {
@@ -168,7 +168,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     const parsedValue = parseValue(props.value, props.dateFormat);
     this.state = {
       mode: props.startMode,
-      popupIsClosed: false,
+      popupIsClosed: true,
       year: parsedValue ? parsedValue.year() : undefined,
       month: parsedValue ? parsedValue.month() : undefined,
       date: parsedValue ? parsedValue.date() : undefined,
@@ -193,11 +193,13 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
 
     return (
       <InputView
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
         icon={_.isBoolean(icon) && !icon ? undefined : icon}
         onFocus={this.onFocus}
-        { ...rest }
+        {...rest}
         render={(props) => this.getPicker(props)}
         value={dateValueToString(chooseValue(value, undefined), dateFormat)}
       />
@@ -251,7 +253,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     if (mode === 'year') {
       return (
         <YearPicker
-          { ...pickerProps }
+          {...pickerProps}
           disable={getDisabledYears(disableParsed)}
         />
       );
@@ -259,14 +261,14 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     if (mode === 'month') {
       return (
         <MonthPicker
-          { ...pickerProps }
+          {...pickerProps}
           hasHeader
           disable={getDisabledMonths(disableParsed)}
         />
       );
     }
 
-    return <DayPicker { ...pickerProps } disable={disableParsed} />;
+    return <DayPicker {...pickerProps} disable={disableParsed} />;
   }
 
   private switchToNextModeUndelayed = (): void => {
@@ -299,7 +301,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     if (this.state.mode === 'day' && this.props.closable) {
       this.closePopup();
     }
-    this.setState(( prevState ) => {
+    this.setState((prevState) => {
       const {
         mode,
       } = prevState;

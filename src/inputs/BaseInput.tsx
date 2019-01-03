@@ -33,14 +33,14 @@ export interface BaseInputProps {
   clearIcon?: any;
   /** Position for the popup. */
   popupPosition?:
-    | 'top left'
-    | 'top right'
-    | 'bottom left'
-    | 'bottom right'
-    | 'right center'
-    | 'left center'
-    | 'top center'
-    | 'bottom center';
+  | 'top left'
+  | 'top right'
+  | 'bottom left'
+  | 'bottom right'
+  | 'right center'
+  | 'left center'
+  | 'top center'
+  | 'bottom center';
   /** Should close when cursor leaves calendar popup. */
   closeOnMouseLeave?: boolean;
   /** The node where the picker should mount. */
@@ -66,36 +66,36 @@ export interface TimeRelatedProps {
 export interface DisableValuesProps {
   /** Date or list of dates that are displayed as disabled. */
   disable?:
-    | string
-    | string[]
-    | Moment
-    | Moment[]
-    | Date
-    | Date[];
+  | string
+  | string[]
+  | Moment
+  | Moment[]
+  | Date
+  | Date[];
 }
 
 export interface EnableValuesProps {
-   /** Date or list of dates that are enabled (the rest are disabled). */
-   enable?:
-    | string
-    | string[]
-    | Moment
-    | Moment[]
-    | Date
-    | Date[];
+  /** Date or list of dates that are enabled (the rest are disabled). */
+  enable?:
+  | string
+  | string[]
+  | Moment
+  | Moment[]
+  | Date
+  | Date[];
 }
 
 export interface MinMaxValueProps {
   /** Maximum date that can be selected. */
   maxDate?:
-    | string
-    | Moment
-    | Date;
+  | string
+  | Moment
+  | Date;
   /** Minimum date that can be selected. */
   minDate?:
-    | string
-    | Moment
-    | Date;
+  | string
+  | Moment
+  | Date;
 }
 
 export interface MultimodeProps {
@@ -108,7 +108,7 @@ export interface BaseInputState {
 }
 
 abstract class BaseInput<P extends BaseInputProps,
-                         S extends BaseInputState> extends React.Component<P, S> {
+  S extends BaseInputState> extends React.Component<P, S> {
   public static defaultProps = {
     inline: false,
   };
@@ -118,19 +118,11 @@ abstract class BaseInput<P extends BaseInputProps,
   private inputNode: HTMLElement;
 
   protected closePopup = (): void => {
-    this.setState({ popupIsClosed: true }, this.onPopupClose);
+    this.setState({ popupIsClosed: true });
   }
 
-  protected onPopupClose = (): void => {
-    // When `closable` prop is true on *Input element
-    // `this.closePopup` is invoked after selection complete.
-    // To allow popup to be opened again we need to set
-    // `popupIsClosed` to false
-    // Also `this.closePopup` is used when we force popup to close on blur
-    // when using Tab navigation
-    this.setState({
-      popupIsClosed: false,
-    });
+  protected openPopup = (): void => {
+    this.setState({ popupIsClosed: false });
   }
 
   protected isPickerInFocus = (): boolean => {
@@ -149,8 +141,8 @@ abstract class BaseInput<P extends BaseInputProps,
     // `calendarNode` goes from *View component via
     // `this.onCalendarViewMount` callback
     if (this.props.inline
-        && !this.isPickerInFocus()
-        && this.calendarNode) {
+      && !this.isPickerInFocus()
+      && this.calendarNode) {
       this.calendarNode.focus();
     }
   }

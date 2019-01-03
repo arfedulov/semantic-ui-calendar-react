@@ -56,7 +56,7 @@ class App extends React.Component<any, any> {
         </Header>
 
         <DateTimeForm clearable={this.state.clearable}
-      />
+        />
         <h2>Inline</h2>
         <DateTimeFormInline />
       </div>
@@ -95,8 +95,11 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           className='example-calendar-input'
           name='date'
+          closable={true}
           clearIcon={(<Icon name='remove' color='red' />)}
           clearable={clearable}
+          animation='scale'
+          duration={200}
           value={this.state.date}
           iconPosition='left'
           preserveViewMode={false}
@@ -110,6 +113,8 @@ class DateTimeForm extends React.Component<any, any> {
           placeholder='Date startMode year'
           className='example-calendar-input'
           name='dateStartYear'
+          animation='fly left'
+          duration={300}
           clearable={clearable}
           value={this.state.dateStartYear}
           iconPosition='left'
@@ -123,6 +128,8 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           className='example-calendar-input'
           name='time'
+          animation='horizontal flip'
+          duration={300}
           autoComplete='off'
           clearable={clearable}
           value={this.state.time}
@@ -183,7 +190,7 @@ class DateTimeForm extends React.Component<any, any> {
     );
   }
 
-  private handleChange = (event: React.SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
+  private handleChange = (event: React.SyntheticEvent, { name, value }: DateTimeFormHandleChangeData) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }
@@ -258,7 +265,7 @@ class DateTimeFormInline extends React.Component<any, any> {
     );
   }
 
-  private handleChange = (event: React.SyntheticEvent, {name, value}: DateTimeFormHandleChangeData) => {
+  private handleChange = (event: React.SyntheticEvent, { name, value }: DateTimeFormHandleChangeData) => {
     if (this.state.hasOwnProperty(name)) {
       this.setState({ [name]: value });
     }

@@ -74,14 +74,14 @@ export interface DateTimeInputProps extends
   MultimodeProps,
   DisableValuesProps,
   MinMaxValueProps {
-    startMode?: 'year' | 'month' | 'day';
-    /** Date and time divider. */
-    divider?: string;
-    /** Preserve last mode (day, hour, minute) each time user opens dialog. */
-    preserveViewMode?: boolean;
-    /** Datetime formatting string. */
-    dateTimeFormat?: string;
-  }
+  startMode?: 'year' | 'month' | 'day';
+  /** Date and time divider. */
+  divider?: string;
+  /** Preserve last mode (day, hour, minute) each time user opens dialog. */
+  preserveViewMode?: boolean;
+  /** Datetime formatting string. */
+  dateTimeFormat?: string;
+}
 
 export interface DateTimeInputOnChangeData extends DateTimeInputProps {
   value: string;
@@ -189,7 +189,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       date: parsedValue ? parsedValue.date() : undefined,
       hour: parsedValue ? parsedValue.hour() : undefined,
       minute: parsedValue ? parsedValue.minute() : undefined,
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -215,9 +215,11 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         icon={_.isBoolean(icon) && !icon ? undefined : icon}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
         onFocus={this.onFocus}
         onMount={this.onInputViewMount}
-        { ...rest }
+        {...rest}
         value={value}
         render={(pickerProps) => this.getPicker(pickerProps)}
       />
@@ -287,7 +289,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     if (mode === 'year') {
       return (
         <YearPicker
-          { ...pickerProps }
+          {...pickerProps}
           disable={getDisabledYears(disableParsed)}
         />
       );
@@ -295,7 +297,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     if (mode === 'month') {
       return (
         <MonthPicker
-          { ...pickerProps }
+          {...pickerProps}
           hasHeader
           disable={getDisabledMonths(disableParsed)}
         />
@@ -304,7 +306,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     if (mode === 'day') {
       return (
         <DayPicker
-          { ...pickerProps }
+          {...pickerProps}
           disable={disableParsed}
         />
       );
@@ -312,9 +314,9 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     if (mode === 'hour') {
       return (
         <HourPicker
-          timeFormat={ this.props.timeFormat }
+          timeFormat={this.props.timeFormat}
           hasHeader
-          { ...pickerProps }
+          {...pickerProps}
           disable={disableParsed}
         />
       );
@@ -322,9 +324,9 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
 
     return (
       <MinutePicker
-        timeFormat={ this.props.timeFormat }
+        timeFormat={this.props.timeFormat}
         hasHeader
-        { ...pickerProps }
+        {...pickerProps}
         disable={disableParsed}
       />
     );
@@ -351,7 +353,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent,
-                          { value }: BasePickerOnChangeData): void => {
+    { value }: BasePickerOnChangeData): void => {
     tick(this.handleSelectUndelayed, e, { value });
   }
 
@@ -362,11 +364,11 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
   }
 
   private handleSelectUndelayed = (e: React.SyntheticEvent,
-                                   { value }: BasePickerOnChangeData): void => {
+    { value }: BasePickerOnChangeData): void => {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
     }
-    this.setState(( prevState ) => {
+    this.setState((prevState) => {
       const {
         mode,
       } = prevState;

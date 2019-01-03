@@ -90,7 +90,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
   constructor(props) {
     super(props);
     this.state = {
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -109,9 +109,11 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        { ...rest }
+        {...rest}
         value={value}
         onMount={this.onInputViewMount}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
         render={(pickerProps) => (
           <MonthPicker
             {...pickerProps}
@@ -133,7 +135,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent,
-                          { value }: MonthPickerOnChangeData) => {
+    { value }: MonthPickerOnChangeData) => {
     const date = moment({ month: value.month });
     let output = '';
     if (date.isValid()) {

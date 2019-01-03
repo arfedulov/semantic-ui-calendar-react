@@ -1,8 +1,6 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import { Form, FormInputProps, Icon, Popup, SemanticICONS } from 'semantic-ui-react';
-
-import { findHTMLElement } from '../lib';
+import { Form, FormInputProps, Icon, Popup, SemanticICONS, Transition, Input, SemanticTRANSITIONS } from 'semantic-ui-react';
 
 const popupStyle = {
   padding: '0',
@@ -18,20 +16,38 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
       icon,
       clearIcon,
       onClear,
+      innerRef,
+      onFocus,
+      onBlur,
+      onMouseEnter,
       ...rest
     } = this.props;
 
     const ClearIcon = _.isString(clearIcon) ?
       <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
       <clearIcon.type {...clearIcon.props} link onClick={onClear} />
-    ;
-
+      ;
     return (
       <Form.Input
-        { ...rest }
-        value={value}
-        icon={value && clearable ? ClearIcon : icon}
-      />
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onClick={onFocus}
+        onMouseEnter={onMouseEnter}
+        {...rest}
+      >
+        {value && clearable ?
+          ClearIcon
+          :
+          <Icon name={icon} />
+        }
+
+        <input
+          ref={innerRef}
+          value={value}
+        />
+
+
+      </Form.Input>
     );
   }
 }
@@ -47,6 +63,10 @@ interface InputViewProps {
   render?: (props: any) => React.ReactNode;
   /** Called after clear icon has clicked. */
   onClear?: (e: React.SyntheticEvent, data: any) => void;
+
+  closePopup: () => void;
+  openPopup: () => void;
+
   /** Picker. */
   children?: React.ReactNode;
   /** Whether to close a popup when cursor leaves it. */
@@ -67,21 +87,25 @@ interface InputViewProps {
   tabIndex?: string | number;
   /** Whether to display inline picker or picker inside a popup. */
   inline?: boolean;
+
+  duration?: number;
+  animation?: SemanticTRANSITIONS;
   /** Where to display popup. */
   popupPosition?:
-    | 'top left'
-    | 'top right'
-    | 'bottom right'
-    | 'bottom left'
-    | 'right center'
-    | 'left center'
-    | 'top center'
-    | 'bottom center';
+  | 'top left'
+  | 'top right'
+  | 'bottom right'
+  | 'bottom left'
+  | 'right center'
+  | 'left center'
+  | 'top center'
+  | 'bottom center';
   /** Currently selected value. */
   value?: string;
 }
 
 class InputView extends React.Component<InputViewProps, any> {
+  state = { isAnimating: false }
   public static defaultProps = {
     inline: false,
     closeOnMouseLeave: true,
@@ -89,34 +113,13 @@ class InputView extends React.Component<InputViewProps, any> {
     clearable: false,
     icon: 'calendar',
     clearIcon: 'remove',
+    animation: 'scale',
+    duration: 200,
   };
 
-  private initialInputNode: HTMLElement | undefined;
   private inputNode: HTMLElement | undefined;
-
-  public componentDidMount() {
-    if (this.props.onMount) {
-      this.props.onMount(this.inputNode);
-    }
-    this.initialInputNode = this.inputNode;
-  }
-
-  public componentDidUpdate() {
-    // TODO: find actual root of the problem.
-    // Sometimes input node reference passed
-    // to this.props.onMount stales.
-    // this.inputNode referes to
-    // different DOM object than it was after first
-    // component render.
-    // InputView component doesn't unmount it just
-    // gets different underlying input node.
-    // In order to keep input node reference fresh
-    // we make this check.
-    if (this.inputNode !== this.initialInputNode) {
-      this.initialInputNode = this.inputNode;
-      this.props.onMount(this.inputNode);
-    }
-  }
+  private popupNode: HTMLElement | undefined;
+  private mouseLeaveTimeout: number | null;
 
   public render() {
     const {
@@ -133,20 +136,50 @@ class InputView extends React.Component<InputViewProps, any> {
       mountNode,
       tabIndex,
       onMount,
+      closePopup,
+      openPopup,
+      animation,
+      duration,
       ...rest
     } = this.props;
 
+    const onBlur = (e) => {
+      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+        closePopup()
+      }
+    }
+
+    const onMouseLeave = (e) => {
+      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+        if (closeOnMouseLeave) {
+          this.mouseLeaveTimeout = setTimeout(() => {
+            if (this.mouseLeaveTimeout)
+              closePopup()
+          }, 500)
+        }
+      }
+    }
+
+    const onMouseEnter = (e) => {
+      if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
+        if (closeOnMouseLeave) {
+          clearTimeout(this.mouseLeaveTimeout)
+          this.mouseLeaveTimeout = null
+        }
+      }
+    }
+
     const inputElement = (
       <FormInputWithRef
-        { ...rest }
-        ref={(e) => {
-          const node = findHTMLElement(e);
-          this.inputNode = node && node.querySelector('input');
-        }}
+        {...rest}
+        innerRef={(e) => { this.inputNode = e }}
         value={value}
         tabIndex={tabIndex}
         inline={inlineLabel}
         onClear={(e) => (onClear || onChange)(e, { ...rest, value: '' })}
+        onFocus={() => { openPopup() }}
+        onBlur={onBlur}
+        onMouseEnter={onMouseEnter}
         onChange={onChange} />
     );
 
@@ -155,25 +188,43 @@ class InputView extends React.Component<InputViewProps, any> {
         tabIndex,
       });
     }
-
     return (
-      <Popup
-        position={popupPosition}
-        open={popupIsClosed ? false : undefined}
-        trigger={inputElement}
-        hoverable={closeOnMouseLeave}
-        flowing
-        mountNode={mountNode}
-        style={popupStyle}
-        hideOnScroll
-        on='focus'
-      >
-        {
-          render({
-            tabIndex: -1,
-          })
-        }
-      </Popup>
+      <div>
+        {inputElement}
+        <Transition
+          unmountOnHide
+          mountOnShow
+          transitionOnMount
+          visible={!popupIsClosed}
+          animation={animation}
+          duration={duration}
+          onStart={() => this.setState({ isAnimating: true })}
+          onComplete={() => this.setState({ isAnimating: false })}
+        >
+          <Popup
+            position={popupPosition}
+            open={!popupIsClosed || this.state.isAnimating}
+            hoverable={closeOnMouseLeave}
+            flowing
+            style={popupStyle}
+            hideOnScroll
+            context={this.inputNode}
+            on='focus'
+          >
+            <div
+              onBlur={onBlur}
+              onMouseLeave={onMouseLeave}
+              onMouseEnter={onMouseEnter}
+              style={{ outline: 'none' }}
+              tabIndex={0} ref={ref => this.popupNode = ref}>
+              {
+                render({})
+              }
+            </div>
+
+          </Popup>
+        </Transition>
+      </div>
     );
   }
 }

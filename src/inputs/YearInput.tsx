@@ -88,7 +88,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   constructor(props) {
     super(props);
     this.state = {
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -113,7 +113,9 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        { ...rest }
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        {...rest}
         value={value}
         onMount={this.onInputViewMount}
         render={
@@ -139,7 +141,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent,
-                          { value }: YearPickerOnChangeData) => {
+    { value }: YearPickerOnChangeData) => {
     const date = moment({ year: value.year });
     let output = '';
     if (date.isValid()) {

@@ -42,6 +42,7 @@ interface Range {
  */
 function parseDatesRange(inputString: string, dateFormat: string): Range {
   // dates range is "startDate - endDate"
+
   const dates = inputString.split(DATES_SEPARATOR)
     .map((date) => cleanDate(date, dateFormat));
   const result: Range = {};
@@ -125,7 +126,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   constructor(props) {
     super(props);
     this.state = {
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -150,9 +151,11 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         icon={_.isBoolean(icon) && !icon ? undefined : icon}
-        { ...rest }
+        {...rest}
         value={value}
         onMount={this.onInputViewMount}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
         render={(pickerProps) =>
           (<DatesRangePicker
             {...pickerProps}
@@ -174,7 +177,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent,
-                          { value }: DatesRangePickerOnChangeData) => {
+    { value }: DatesRangePickerOnChangeData) => {
     const { dateFormat } = this.props;
     const {
       start,

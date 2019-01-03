@@ -87,7 +87,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     super(props);
     this.state = {
       mode: 'hour',
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -104,7 +104,9 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
-        { ...rest }
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        {...rest}
         value={value}
         render={(pickerProps) => this.getPicker(pickerProps)}
       />
@@ -112,12 +114,12 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent,
-                          { value }: BasePickerOnChangeData) => {
+    { value }: BasePickerOnChangeData) => {
     tick(this.handleSelectUndelayed, e, { value });
   }
 
   private handleSelectUndelayed = (e: React.SyntheticEvent,
-                                   { value }: BasePickerOnChangeData) => {
+    { value }: BasePickerOnChangeData) => {
     const {
       hour,
       minute,
@@ -170,10 +172,10 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       tabIndex,
     };
     if (this.state.mode === 'hour') {
-      return <HourPicker { ...pickerProps } />;
+      return <HourPicker {...pickerProps} />;
     }
 
-    return <MinutePicker { ...pickerProps } />;
+    return <MinutePicker {...pickerProps} />;
   }
 }
 
