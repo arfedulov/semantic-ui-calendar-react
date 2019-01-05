@@ -352,7 +352,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     tick(this.switchToPrevModeUndelayed);
   }
 
-  private handleSelect = (e: React.SyntheticEvent,
+  private handleSelect = (
+    e: React.SyntheticEvent,
     { value }: BasePickerOnChangeData): void => {
     tick(this.handleSelectUndelayed, e, { value });
   }
@@ -363,7 +364,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     }
   }
 
-  private handleSelectUndelayed = (e: React.SyntheticEvent,
+  private handleSelectUndelayed = (
+    e: React.SyntheticEvent,
     { value }: BasePickerOnChangeData): void => {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();

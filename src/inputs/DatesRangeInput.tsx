@@ -176,7 +176,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     );
   }
 
-  private handleSelect = (e: React.SyntheticEvent,
+  private handleSelect = (
+    e: React.SyntheticEvent,
     { value }: DatesRangePickerOnChangeData) => {
     const { dateFormat } = this.props;
     const {

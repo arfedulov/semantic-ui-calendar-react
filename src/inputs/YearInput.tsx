@@ -140,7 +140,8 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     );
   }
 
-  private handleSelect = (e: React.SyntheticEvent,
+  private handleSelect = (
+    e: React.SyntheticEvent,
     { value }: YearPickerOnChangeData) => {
     const date = moment({ year: value.year });
     let output = '';

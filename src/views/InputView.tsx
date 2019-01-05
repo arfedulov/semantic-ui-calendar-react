@@ -1,6 +1,14 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import { Form, FormInputProps, Icon, Popup, SemanticICONS, Transition, Input, SemanticTRANSITIONS } from 'semantic-ui-react';
+import {
+  Form,
+  FormInputProps,
+  Icon,
+  Popup,
+  SemanticICONS,
+  SemanticTRANSITIONS,
+  Transition,
+} from 'semantic-ui-react';
 
 const popupStyle = {
   padding: '0',
@@ -27,6 +35,7 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
       <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
       <clearIcon.type {...clearIcon.props} link onClick={onClear} />
       ;
+
     return (
       <Form.Input
         onFocus={onFocus}
@@ -45,7 +54,6 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
           ref={innerRef}
           value={value}
         />
-
 
       </Form.Input>
     );
@@ -105,7 +113,6 @@ interface InputViewProps {
 }
 
 class InputView extends React.Component<InputViewProps, any> {
-  state = { isAnimating: false }
   public static defaultProps = {
     inline: false,
     closeOnMouseLeave: true,
@@ -117,6 +124,7 @@ class InputView extends React.Component<InputViewProps, any> {
     duration: 200,
   };
 
+  public state = { isAnimating: false };
   private inputNode: HTMLElement | undefined;
   private popupNode: HTMLElement | undefined;
   private mouseLeaveTimeout: number | null;
@@ -145,39 +153,40 @@ class InputView extends React.Component<InputViewProps, any> {
 
     const onBlur = (e) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
-        closePopup()
+        closePopup();
       }
-    }
+    };
 
     const onMouseLeave = (e) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
         if (closeOnMouseLeave) {
-          this.mouseLeaveTimeout = setTimeout(() => {
-            if (this.mouseLeaveTimeout)
-              closePopup()
-          }, 500)
+          this.mouseLeaveTimeout = window.setTimeout(() => {
+            if (this.mouseLeaveTimeout) {
+              closePopup();
+            }
+          }, 500);
         }
       }
-    }
+    };
 
     const onMouseEnter = (e) => {
       if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
         if (closeOnMouseLeave) {
-          clearTimeout(this.mouseLeaveTimeout)
-          this.mouseLeaveTimeout = null
+          clearTimeout(this.mouseLeaveTimeout);
+          this.mouseLeaveTimeout = null;
         }
       }
-    }
+    };
 
     const inputElement = (
       <FormInputWithRef
         {...rest}
-        innerRef={(e) => { this.inputNode = e }}
+        innerRef={(e) => { this.inputNode = e; }}
         value={value}
         tabIndex={tabIndex}
         inline={inlineLabel}
         onClear={(e) => (onClear || onChange)(e, { ...rest, value: '' })}
-        onFocus={() => { openPopup() }}
+        onFocus={() => { openPopup(); }}
         onBlur={onBlur}
         onMouseEnter={onMouseEnter}
         onChange={onChange} />
@@ -188,6 +197,7 @@ class InputView extends React.Component<InputViewProps, any> {
         tabIndex,
       });
     }
+
     return (
       <div>
         {inputElement}
@@ -216,7 +226,7 @@ class InputView extends React.Component<InputViewProps, any> {
               onMouseLeave={onMouseLeave}
               onMouseEnter={onMouseEnter}
               style={{ outline: 'none' }}
-              tabIndex={0} ref={ref => this.popupNode = ref}>
+              tabIndex={0} ref={(ref) => this.popupNode = ref}>
               {
                 render({})
               }
