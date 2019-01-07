@@ -148,7 +148,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     }, this.onModeSwitch);
   }
 
-  private getPicker({ tabIndex }) {
+  private getPicker({ tabIndex, pickerWidth, pickerStyle }) {
     const {
       value,
       timeFormat,
@@ -161,6 +161,8 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
       hasHeader: false,
+      pickerWidth,
+      pickerStyle,
       onHeaderClick: () => undefined,
       closePopup: this.closePopup,
       initializeWith: getInitializer({ initialDate: currentValue, dateFormat: TIME_FORMAT[timeFormat] }),

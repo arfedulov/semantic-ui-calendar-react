@@ -220,7 +220,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     }
   }
 
-  private getPicker = ({ tabIndex }) => {
+  private getPicker = ({ tabIndex, pickerWidth, pickerStyle }) => {
     const {
       value,
       initialDate,
@@ -238,6 +238,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
       tabIndex,
+      pickerWidth,
+      pickerStyle,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
       initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams() }),

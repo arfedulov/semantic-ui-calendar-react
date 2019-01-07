@@ -173,6 +173,8 @@ moment.locale('ru');
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
+| ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
+| ``pickerStyle`` | {object} Optional `style` object for picker. |
 
 ### TimeInput
 
@@ -190,6 +192,8 @@ moment.locale('ru');
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
+| ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
+| ``pickerStyle`` | {object} Optional `style` object for picker. |
 
 ### DateTimeInput
 
@@ -216,6 +220,8 @@ moment.locale('ru');
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
+| ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
+| ``pickerStyle`` | {object} Optional `style` object for picker. |
 
 ### DatesRangeInput
 
@@ -235,6 +241,8 @@ moment.locale('ru');
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
+| ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
+| ``pickerStyle`` | {object} Optional `style` object for picker. |
 
 ### YearInput
 
@@ -250,6 +258,8 @@ moment.locale('ru');
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
+| ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
+| ``pickerStyle`` | {object} Optional `style` object for picker. |
 
 ### MonthInput
 
@@ -269,3 +279,5 @@ moment.locale('ru');
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
+| ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
+| ``pickerStyle`` | {object} Optional `style` object for picker. |

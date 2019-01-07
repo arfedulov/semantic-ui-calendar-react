@@ -47,6 +47,10 @@ export interface BaseInputProps {
   mountNode?: any;
   /** A field can have its label next to instead of above it. */
   inlineLabel?: boolean;
+  /** Picker width (any value that `style.width` can take). */
+  pickerWidth?: string;
+  /** Style object for picker. */
+  pickerStyle?: object;
 }
 
 export interface DateRelatedProps {

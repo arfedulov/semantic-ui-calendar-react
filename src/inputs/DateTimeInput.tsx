@@ -257,7 +257,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
   }
 
-  private getPicker({ tabIndex }): React.ReactNode {
+  private getPicker({ tabIndex, pickerWidth, pickerStyle }): React.ReactNode {
     const {
       value,
       initialDate,
@@ -273,6 +273,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
       inline,
+      pickerWidth,
+      pickerStyle,
       onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
       onChange: this.handleSelect,
