@@ -112,8 +112,9 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     document.removeEventListener('keydown', this.handleKeyPress);
   }
 
-  protected onHoveredCellPositionChange = (e: React.SyntheticEvent,
-                                           { itemPosition }: { itemPosition: number }): void => {
+  protected onHoveredCellPositionChange = (
+    e: React.SyntheticEvent,
+    { itemPosition }: { itemPosition: number }): void => {
     this.setState({
       hoveredCellPosition: itemPosition,
     });
@@ -132,12 +133,16 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       return;
     }
     const key = keyboardKey.getKey(event);
+
     switch (key) {
-    case 'Enter':
-      this.handleEnterKeyPress(event);
-      break;
-    default:
-      this.handleArrowKeyPress(event);
+      case 'Enter':
+        this.handleEnterKeyPress(event);
+        break;
+      case 'Escape':
+        this.props.closePopup();
+        break;
+      default:
+        this.handleArrowKeyPress(event);
     }
   }
 
@@ -168,47 +173,47 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     const nextSelectableCellPositionRight = selectableCells
       .slice(selectableCells.indexOf(this.state.hoveredCellPosition) + 1)[0];
     switch (key) {
-    case 'ArrowLeft':
-      event.preventDefault();
-      if (!isNil(nextSelectableCellPositionLeft)) {
-        this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionLeft });
-      } else {
-        if (this.isPrevPageAvailable()) {
-          this.switchToPrevPage(null, null, () => {
-            const selectableCellsPrevPage = this.getSelectableCellPositions();
-            this.onHoveredCellPositionChange(
-              null, { itemPosition: selectableCellsPrevPage[selectableCellsPrevPage.length - 1] });
-          });
+      case 'ArrowLeft':
+        event.preventDefault();
+        if (!isNil(nextSelectableCellPositionLeft)) {
+          this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionLeft });
+        } else {
+          if (this.isPrevPageAvailable()) {
+            this.switchToPrevPage(null, null, () => {
+              const selectableCellsPrevPage = this.getSelectableCellPositions();
+              this.onHoveredCellPositionChange(
+                null, { itemPosition: selectableCellsPrevPage[selectableCellsPrevPage.length - 1] });
+            });
+          }
         }
-      }
-      break;
-    case 'ArrowRight':
-      event.preventDefault();
-      if (!isNil(nextSelectableCellPositionRight)) {
-        this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionRight });
-      } else {
-        if (this.isNextPageAvailable()) {
-          this.switchToNextPage(null, null, () => {
-            const selectableCellsNextPage = this.getSelectableCellPositions();
-            this.onHoveredCellPositionChange(null, { itemPosition: selectableCellsNextPage[0] });
-          });
+        break;
+      case 'ArrowRight':
+        event.preventDefault();
+        if (!isNil(nextSelectableCellPositionRight)) {
+          this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionRight });
+        } else {
+          if (this.isNextPageAvailable()) {
+            this.switchToNextPage(null, null, () => {
+              const selectableCellsNextPage = this.getSelectableCellPositions();
+              this.onHoveredCellPositionChange(null, { itemPosition: selectableCellsNextPage[0] });
+            });
+          }
         }
-      }
-      break;
-    case 'ArrowUp':
-      event.preventDefault();
-      if (includes(selectableCells, this.state.hoveredCellPosition - this.PAGE_WIDTH)) {
-        this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition - this.PAGE_WIDTH });
-      }
-      break;
-    case 'ArrowDown':
-      event.preventDefault();
-      if (includes(selectableCells, this.state.hoveredCellPosition + this.PAGE_WIDTH)) {
-        this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition + this.PAGE_WIDTH });
-      }
-      break;
-    default:
-      break;
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (includes(selectableCells, this.state.hoveredCellPosition - this.PAGE_WIDTH)) {
+          this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition - this.PAGE_WIDTH });
+        }
+        break;
+      case 'ArrowDown':
+        event.preventDefault();
+        if (includes(selectableCells, this.state.hoveredCellPosition + this.PAGE_WIDTH)) {
+          this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition + this.PAGE_WIDTH });
+        }
+        break;
+      default:
+        break;
     }
   }
 

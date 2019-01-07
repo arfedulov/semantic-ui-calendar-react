@@ -181,7 +181,7 @@ class InputView extends React.Component<InputViewProps, any> {
     const inputElement = (
       <FormInputWithRef
         {...rest}
-        innerRef={(e) => { this.inputNode = e; }}
+        innerRef={(e) => { this.inputNode = e; onMount(e); }}
         value={value}
         tabIndex={tabIndex}
         inline={inlineLabel}
@@ -193,48 +193,42 @@ class InputView extends React.Component<InputViewProps, any> {
     );
 
     if (inline) {
-      return render({
-        tabIndex,
-      });
+      return render({ tabIndex: 0 });
     }
 
-    return (
-      <div>
-        {inputElement}
-        <Transition
-          unmountOnHide
-          mountOnShow
-          transitionOnMount
-          visible={!popupIsClosed}
-          animation={animation}
-          duration={duration}
-          onStart={() => this.setState({ isAnimating: true })}
-          onComplete={() => this.setState({ isAnimating: false })}
+    return (<div>
+      {inputElement}
+      <Transition
+        unmountOnHide
+        mountOnShow
+        transitionOnMount
+        visible={!popupIsClosed}
+        animation={animation}
+        duration={duration}
+        onStart={() => this.setState({ isAnimating: true })}
+        onComplete={() => this.setState({ isAnimating: false })}
+      >
+        <Popup
+          position={popupPosition}
+          open={true}
+          hoverable={closeOnMouseLeave}
+          flowing
+          style={popupStyle}
+          context={this.inputNode}
+          on='focus'
         >
-          <Popup
-            position={popupPosition}
-            open={!popupIsClosed || this.state.isAnimating}
-            hoverable={closeOnMouseLeave}
-            flowing
-            style={popupStyle}
-            hideOnScroll
-            context={this.inputNode}
-            on='focus'
-          >
-            <div
-              onBlur={onBlur}
-              onMouseLeave={onMouseLeave}
-              onMouseEnter={onMouseEnter}
-              style={{ outline: 'none' }}
-              tabIndex={0} ref={(ref) => this.popupNode = ref}>
-              {
-                render({})
-              }
-            </div>
-
-          </Popup>
-        </Transition>
-      </div>
+          <div
+            onBlur={onBlur}
+            onMouseLeave={onMouseLeave}
+            onMouseEnter={onMouseEnter}
+            style={{ outline: 'none' }}
+            tabIndex={0}
+            ref={(ref) => this.popupNode = ref}>
+            {render({})}
+          </div>
+        </Popup>
+      </Transition>
+    </div>
     );
   }
 }
