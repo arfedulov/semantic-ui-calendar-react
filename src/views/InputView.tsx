@@ -223,7 +223,8 @@ class InputView extends React.Component<InputViewProps, any> {
             onMouseEnter={onMouseEnter}
             style={{ outline: 'none' }}
             tabIndex={0}
-            ref={(ref) => this.popupNode = ref}>
+            ref={(ref) => this.popupNode = ref}
+          >
             {render({})}
           </div>
         </Popup>
