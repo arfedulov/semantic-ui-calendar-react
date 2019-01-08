@@ -1,5 +1,8 @@
 import { Moment } from 'moment';
 import * as React from 'react';
+import {
+  SemanticTRANSITIONS,
+} from 'semantic-ui-react';
 
 import {
   TimeFormat,
@@ -51,6 +54,10 @@ export interface BaseInputProps {
   pickerWidth?: string;
   /** Style object for picker. */
   pickerStyle?: object;
+  /** Duration of the CSS transition animation in milliseconds. */
+  duration?: number;
+  /** Named animation event to used. Must be defined in CSS. */
+  animation?: SemanticTRANSITIONS;
 }
 
 export interface DateRelatedProps {

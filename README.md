@@ -175,6 +175,8 @@ moment.locale('ru');
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 | ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
+| ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
+| ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 
 ### TimeInput
 
@@ -194,6 +196,8 @@ moment.locale('ru');
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 | ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
+| ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
+| ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 
 ### DateTimeInput
 
@@ -222,6 +226,8 @@ moment.locale('ru');
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 | ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
+| ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
+| ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 
 ### DatesRangeInput
 
@@ -243,6 +249,8 @@ moment.locale('ru');
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 | ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
+| ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
+| ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 
 ### YearInput
 
@@ -260,6 +268,8 @@ moment.locale('ru');
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 | ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
+| ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
+| ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 
 ### MonthInput
 
@@ -281,3 +291,5 @@ moment.locale('ru');
 | ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
 | ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
+| ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
+| ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |

@@ -95,8 +95,9 @@ interface InputViewProps {
   tabIndex?: string | number;
   /** Whether to display inline picker or picker inside a popup. */
   inline?: boolean;
-
+  /** Duration of the CSS transition animation in milliseconds. */
   duration?: number;
+  /** Named animation event to used. Must be defined in CSS. */
   animation?: SemanticTRANSITIONS;
   /** Where to display popup. */
   popupPosition?:
