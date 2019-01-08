@@ -11,12 +11,10 @@ const hoverCellStyles = {
 
 export interface CellWidthStyle {
   width: string;
-  minWidth?: string;
 }
 
 export const cellStyleWidth3: CellWidthStyle = {
   width: '33.333333%',
-  minWidth: '7em',
 };
 
 export const cellStyleWidth4: CellWidthStyle = {
