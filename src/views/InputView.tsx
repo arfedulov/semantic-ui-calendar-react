@@ -240,14 +240,6 @@ class InputView extends React.Component<InputViewProps, any> {
         </Popup>
       </Transition>
     </div>
-        {
-          render({
-            tabIndex: -1,
-            pickerWidth,
-            pickerStyle,
-          })
-        }
-      </Popup>
     );
   }
 }
