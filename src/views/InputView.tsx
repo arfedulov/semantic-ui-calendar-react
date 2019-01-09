@@ -16,6 +16,11 @@ const popupStyle = {
 };
 
 class FormInputWithRef extends React.Component<FormInputProps, any> {
+
+  public shouldComponentUpdate() {
+    return false;
+  }
+
   public render() {
 
     const {
@@ -201,21 +206,32 @@ class InputView extends React.Component<InputViewProps, any> {
       <Transition
         unmountOnHide
         mountOnShow
-        transitionOnMount
+        // transitionOnMount
         visible={!popupIsClosed}
         animation={animation}
         duration={duration}
-        onStart={() => this.setState({ isAnimating: true })}
-        onComplete={() => this.setState({ isAnimating: false })}
+        onStart={() => {
+          this.setState({ isAnimating: true });
+          if (!popupIsClosed) {
+            this.setScrollListener();
+          }
+        }}
+        onComplete={() => {
+          this.setState({ isAnimating: false });
+          if (popupIsClosed) {
+            this.unsetScrollListener();
+          }
+        }
+        }
       >
         <Popup
           position={popupPosition}
-          open={true}
+          open={this.state.isAnimating || !popupIsClosed}
           hoverable={closeOnMouseLeave}
           flowing
           style={popupStyle}
           context={this.inputNode}
-          on='focus'
+          on='hover'
         >
           <div
             onBlur={onBlur}
@@ -231,6 +247,19 @@ class InputView extends React.Component<InputViewProps, any> {
       </Transition>
     </div>
     );
+  }
+
+  public scrollListener() {
+    const { closePopup } = this.props;
+    closePopup();
+  }
+
+  private setScrollListener() {
+    window.addEventListener('scroll', this.scrollListener.bind(this));
+  }
+
+  private unsetScrollListener() {
+    window.removeEventListener('scroll', this.scrollListener.bind(this));
   }
 }
 
