@@ -134,7 +134,6 @@ class InputView extends React.Component<InputViewProps, any> {
     duration: 200,
   };
 
-  public state = { isAnimating: false };
   private inputNode: HTMLElement | undefined;
   private popupNode: HTMLElement | undefined;
   private mouseLeaveTimeout: number | null;
@@ -217,19 +216,18 @@ class InputView extends React.Component<InputViewProps, any> {
       <Transition
         unmountOnHide
         mountOnShow
-        // transitionOnMount
         visible={!popupIsClosed}
         animation={animation}
         duration={duration}
         onStart={() => {
-          this.setState({ isAnimating: true });
           if (!popupIsClosed) {
+            this.setState({});
             this.setScrollListener();
           }
         }}
         onComplete={() => {
-          this.setState({ isAnimating: false });
           if (popupIsClosed) {
+            this.setState({});
             this.unsetScrollListener();
           }
         }
@@ -237,7 +235,7 @@ class InputView extends React.Component<InputViewProps, any> {
       >
         <Popup
           position={popupPosition}
-          open={this.state.isAnimating || !popupIsClosed}
+          open={true}
           hoverable={closeOnMouseLeave}
           flowing
           style={popupStyle}
