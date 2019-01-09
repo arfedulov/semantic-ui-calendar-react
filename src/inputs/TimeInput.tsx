@@ -81,6 +81,10 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     clearable: PropTypes.bool,
     /** Optional Icon to display inside the clearable Input. */
     clearIcon: PropTypes.any,
+    /** Duration of the CSS transition animation in milliseconds. */
+    duration: PropTypes.number,
+    /** Named animation event to used. Must be defined in CSS. */
+    animation: PropTypes.string,
   };
 
   constructor(props) {
@@ -152,7 +156,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     }, this.onModeSwitch);
   }
 
-  private getPicker({ tabIndex }) {
+  private getPicker({ tabIndex, pickerWidth, pickerStyle }) {
     const {
       value,
       timeFormat,
@@ -165,6 +169,8 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
       hasHeader: false,
+      pickerWidth,
+      pickerStyle,
       onHeaderClick: () => undefined,
       closePopup: this.closePopup,
       initializeWith: getInitializer({ initialDate: currentValue, dateFormat: TIME_FORMAT[timeFormat] }),

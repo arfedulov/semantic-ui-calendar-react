@@ -100,8 +100,9 @@ interface InputViewProps {
   tabIndex?: string | number;
   /** Whether to display inline picker or picker inside a popup. */
   inline?: boolean;
-
+  /** Duration of the CSS transition animation in milliseconds. */
   duration?: number;
+  /** Named animation event to used. Must be defined in CSS. */
   animation?: SemanticTRANSITIONS;
   /** Where to display popup. */
   popupPosition?:
@@ -115,6 +116,10 @@ interface InputViewProps {
   | 'bottom center';
   /** Currently selected value. */
   value?: string;
+  /** Picker width (any value that `style.width` can take). */
+  pickerWidth?: string;
+  /** Style object for picker. */
+  pickerStyle?: object;
 }
 
 class InputView extends React.Component<InputViewProps, any> {
@@ -153,6 +158,8 @@ class InputView extends React.Component<InputViewProps, any> {
       openPopup,
       animation,
       duration,
+      pickerWidth,
+      pickerStyle,
       ...rest
     } = this.props;
 
@@ -198,7 +205,11 @@ class InputView extends React.Component<InputViewProps, any> {
     );
 
     if (inline) {
-      return render({ tabIndex: 0 });
+      return render({
+        tabIndex,
+        pickerWidth,
+        pickerStyle,
+      });
     }
 
     return (<div>
@@ -241,7 +252,7 @@ class InputView extends React.Component<InputViewProps, any> {
             tabIndex={0}
             ref={(ref) => this.popupNode = ref}
           >
-            {render({})}
+            {render({ pickerWidth, pickerStyle })}
           </div>
         </Popup>
       </Transition>
