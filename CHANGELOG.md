@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.13.0 2019-01-12
+
+- feat: added transitions for popup [`65`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/65)
+
+- feat: pickerWidth and pickerStyle props on top level component [`6ed8e76`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/6ed8e76207012c11eae705c6d79de14e4b42623b)
+
+- fix: BasePicker SyntheticEvent generic type [`69`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/69)
+
 ## v0.12.2 2018-12-31
 
 - feat: add clearable props to Input [`#60`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/60)
