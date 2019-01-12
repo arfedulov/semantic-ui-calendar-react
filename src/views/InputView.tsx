@@ -1,8 +1,14 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import { Form, FormInputProps, Icon, Popup, SemanticICONS } from 'semantic-ui-react';
-
-import { findHTMLElement } from '../lib';
+import {
+  Form,
+  FormInputProps,
+  Icon,
+  Popup,
+  SemanticICONS,
+  SemanticTRANSITIONS,
+  Transition,
+} from 'semantic-ui-react';
 
 const popupStyle = {
   padding: '0',
@@ -10,6 +16,7 @@ const popupStyle = {
 };
 
 class FormInputWithRef extends React.Component<FormInputProps, any> {
+
   public render() {
 
     const {
@@ -18,20 +25,38 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
       icon,
       clearIcon,
       onClear,
+      innerRef,
+      onFocus,
+      onBlur,
+      onMouseEnter,
       ...rest
     } = this.props;
 
     const ClearIcon = _.isString(clearIcon) ?
       <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
       <clearIcon.type {...clearIcon.props} link onClick={onClear} />
-    ;
+      ;
 
     return (
       <Form.Input
-        { ...rest }
-        value={value}
-        icon={value && clearable ? ClearIcon : icon}
-      />
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onClick={onFocus}
+        onMouseEnter={onMouseEnter}
+        {...rest}
+      >
+        {value && clearable ?
+          ClearIcon
+          :
+          <Icon name={icon} />
+        }
+
+        <input
+          ref={innerRef}
+          value={value}
+        />
+
+      </Form.Input>
     );
   }
 }
@@ -41,6 +66,8 @@ interface InputViewProps {
   onMount: (e: HTMLElement) => void;
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
+  closePopup: () => void;
+  openPopup: () => void;
   /** Called on input focus. */
   onFocus?: () => void;
   /** Function for rendering component. */
@@ -67,16 +94,20 @@ interface InputViewProps {
   tabIndex?: string | number;
   /** Whether to display inline picker or picker inside a popup. */
   inline?: boolean;
+  /** Duration of the CSS transition animation in milliseconds. */
+  duration?: number;
+  /** Named animation event to used. Must be defined in CSS. */
+  animation?: SemanticTRANSITIONS;
   /** Where to display popup. */
   popupPosition?:
-    | 'top left'
-    | 'top right'
-    | 'bottom right'
-    | 'bottom left'
-    | 'right center'
-    | 'left center'
-    | 'top center'
-    | 'bottom center';
+  | 'top left'
+  | 'top right'
+  | 'bottom right'
+  | 'bottom left'
+  | 'right center'
+  | 'left center'
+  | 'top center'
+  | 'bottom center';
   /** Currently selected value. */
   value?: string;
   /** Picker width (any value that `style.width` can take). */
@@ -93,34 +124,13 @@ class InputView extends React.Component<InputViewProps, any> {
     clearable: false,
     icon: 'calendar',
     clearIcon: 'remove',
+    animation: 'scale',
+    duration: 200,
   };
 
-  private initialInputNode: HTMLElement | undefined;
   private inputNode: HTMLElement | undefined;
-
-  public componentDidMount() {
-    if (this.props.onMount) {
-      this.props.onMount(this.inputNode);
-    }
-    this.initialInputNode = this.inputNode;
-  }
-
-  public componentDidUpdate() {
-    // TODO: find actual root of the problem.
-    // Sometimes input node reference passed
-    // to this.props.onMount stales.
-    // this.inputNode referes to
-    // different DOM object than it was after first
-    // component render.
-    // InputView component doesn't unmount it just
-    // gets different underlying input node.
-    // In order to keep input node reference fresh
-    // we make this check.
-    if (this.inputNode !== this.initialInputNode) {
-      this.initialInputNode = this.inputNode;
-      this.props.onMount(this.inputNode);
-    }
-  }
+  private popupNode: HTMLElement | undefined;
+  private mouseLeaveTimeout: number | null;
 
   public render() {
     const {
@@ -137,22 +147,56 @@ class InputView extends React.Component<InputViewProps, any> {
       mountNode,
       tabIndex,
       onMount,
+      closePopup,
+      openPopup,
+      animation,
+      duration,
       pickerWidth,
       pickerStyle,
       ...rest
     } = this.props;
 
+    const onBlur = (e) => {
+      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+        closePopup();
+      }
+    };
+
+    const onMouseLeave = (e) => {
+      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+        if (closeOnMouseLeave) {
+          this.mouseLeaveTimeout = window.setTimeout(() => {
+            if (this.mouseLeaveTimeout) {
+              closePopup();
+            }
+          }, 500);
+        }
+      }
+    };
+
+    const onMouseEnter = (e) => {
+      if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
+        if (closeOnMouseLeave) {
+          clearTimeout(this.mouseLeaveTimeout);
+          this.mouseLeaveTimeout = null;
+        }
+      }
+    };
+
     const inputElement = (
       <FormInputWithRef
-        { ...rest }
-        ref={(e) => {
-          const node = findHTMLElement(e);
-          this.inputNode = node && node.querySelector('input');
-        }}
+        {...rest}
+        innerRef={(e) => { this.inputNode = e; onMount(e); }}
         value={value}
         tabIndex={tabIndex}
         inline={inlineLabel}
         onClear={(e) => (onClear || onChange)(e, { ...rest, value: '' })}
+        onFocus={(e) => {
+          _.invoke(this.props, 'onFocus', e, this.props);
+          openPopup();
+        }}
+        onBlur={onBlur}
+        onMouseEnter={onMouseEnter}
         onChange={onChange} />
     );
 
@@ -164,27 +208,53 @@ class InputView extends React.Component<InputViewProps, any> {
       });
     }
 
-    return (
-      <Popup
-        position={popupPosition}
-        open={popupIsClosed ? false : undefined}
-        trigger={inputElement}
-        hoverable={closeOnMouseLeave}
-        flowing
-        mountNode={mountNode}
-        style={popupStyle}
-        hideOnScroll
-        on='focus'
+    return (<div>
+      {inputElement}
+      <Transition
+        unmountOnHide
+        mountOnShow
+        visible={!popupIsClosed}
+        animation={animation}
+        duration={duration}
+        onShow={() => this.setScrollListener()}
+        onHide={() => this.unsetScrollListener()}
       >
-        {
-          render({
-            tabIndex: -1,
-            pickerWidth,
-            pickerStyle,
-          })
-        }
-      </Popup>
+        <Popup
+          position={popupPosition}
+          open={!popupIsClosed}
+          hoverable={closeOnMouseLeave}
+          flowing
+          style={popupStyle}
+          context={this.inputNode}
+          on='hover'
+        >
+          <div
+            onBlur={onBlur}
+            onMouseLeave={onMouseLeave}
+            onMouseEnter={onMouseEnter}
+            style={{ outline: 'none' }}
+            tabIndex={0}
+            ref={(ref) => this.popupNode = ref}
+          >
+            {render({ pickerWidth, pickerStyle })}
+          </div>
+        </Popup>
+      </Transition>
+    </div>
     );
+  }
+
+  public scrollListener = () => {
+    const { closePopup } = this.props;
+    closePopup();
+  }
+
+  private setScrollListener() {
+    window.addEventListener('scroll', this.scrollListener);
+  }
+
+  private unsetScrollListener() {
+    window.removeEventListener('scroll', this.scrollListener);
   }
 }
 

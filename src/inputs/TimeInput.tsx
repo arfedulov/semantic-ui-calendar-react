@@ -81,13 +81,17 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     clearable: PropTypes.bool,
     /** Optional Icon to display inside the clearable Input. */
     clearIcon: PropTypes.any,
+    /** Duration of the CSS transition animation in milliseconds. */
+    duration: PropTypes.number,
+    /** Named animation event to used. Must be defined in CSS. */
+    animation: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
     this.state = {
       mode: 'hour',
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -104,7 +108,9 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
-        { ...rest }
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        {...rest}
         value={value}
         render={(pickerProps) => this.getPicker(pickerProps)}
       />
@@ -172,10 +178,10 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       tabIndex,
     };
     if (this.state.mode === 'hour') {
-      return <HourPicker { ...pickerProps } />;
+      return <HourPicker {...pickerProps} />;
     }
 
-    return <MinutePicker { ...pickerProps } />;
+    return <MinutePicker {...pickerProps} />;
   }
 }
 

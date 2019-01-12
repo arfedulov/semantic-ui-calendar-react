@@ -83,12 +83,16 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     clearable: PropTypes.bool,
     /** Optional Icon to display inside the clearable Input. */
     clearIcon: PropTypes.any,
+    /** Duration of the CSS transition animation in milliseconds. */
+    duration: PropTypes.number,
+    /** Named animation event to used. Must be defined in CSS. */
+    animation: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -113,7 +117,9 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        { ...rest }
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        {...rest}
         value={value}
         onMount={this.onInputViewMount}
         render={

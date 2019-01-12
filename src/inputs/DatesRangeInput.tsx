@@ -42,6 +42,7 @@ interface Range {
  */
 function parseDatesRange(inputString: string, dateFormat: string): Range {
   // dates range is "startDate - endDate"
+
   const dates = inputString.split(DATES_SEPARATOR)
     .map((date) => cleanDate(date, dateFormat));
   const result: Range = {};
@@ -120,12 +121,16 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     clearable: PropTypes.bool,
     /** Optional Icon to display inside the clearable Input. */
     clearIcon: PropTypes.any,
+    /** Duration of the CSS transition animation in milliseconds. */
+    duration: PropTypes.number,
+    /** Named animation event to used. Must be defined in CSS. */
+    animation: PropTypes.string,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      popupIsClosed: false,
+      popupIsClosed: true,
     };
   }
 
@@ -150,9 +155,11 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         icon={_.isBoolean(icon) && !icon ? undefined : icon}
-        { ...rest }
+        {...rest}
         value={value}
         onMount={this.onInputViewMount}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
         render={(pickerProps) =>
           (<DatesRangePicker
             {...pickerProps}
