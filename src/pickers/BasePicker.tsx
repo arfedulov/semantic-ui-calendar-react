@@ -38,7 +38,7 @@ export interface BasePickerOnChangeData {
 
 export interface BasePickerProps {
   /** Called after day is selected. */
-  onChange: (e: React.SyntheticEvent, data: BasePickerOnChangeData) => void;
+  onChange: (e: React.SyntheticEvent<HTMLElement>, data: BasePickerOnChangeData) => void;
   /** Currently selected date. */
   value: Moment;
   /** A value for initializing day picker's state. */
@@ -112,9 +112,8 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     document.removeEventListener('keydown', this.handleKeyPress);
   }
 
-  protected onHoveredCellPositionChange = (
-    e: React.SyntheticEvent,
-    { itemPosition }: { itemPosition: number }): void => {
+  protected onHoveredCellPositionChange = (e: React.SyntheticEvent<HTMLElement>,
+                                           { itemPosition }: { itemPosition: number }): void => {
     this.setState({
       hoveredCellPosition: itemPosition,
     });
@@ -224,7 +223,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
   protected abstract buildCalendarValues(): string[];
 
   /** Handles currently selected value change. */
-  protected abstract handleChange(e: React.SyntheticEvent, data: HandleChangeParams): void;
+  protected abstract handleChange(e: React.SyntheticEvent<HTMLElement>, data: HandleChangeParams): void;
 
   /** Return positions of all values on calendar that can be selected. */
   protected abstract getSelectableCellPositions(): number[];
@@ -236,10 +235,10 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
   protected abstract isNextPageAvailable(): boolean;
 
   /** Change currently displayed page (i.e. year, month, day) to previous one. */
-  protected abstract switchToPrevPage(e?: React.SyntheticEvent, data?: any, cb?: () => void): void;
+  protected abstract switchToPrevPage(e?: React.SyntheticEvent<HTMLElement>, data?: any, cb?: () => void): void;
 
   /** Change currently displayed page (i.e. year, month, day) to next one. */
-  protected abstract switchToNextPage(e?: React.SyntheticEvent, data?: any, cb?: () => void): void;
+  protected abstract switchToNextPage(e?: React.SyntheticEvent<HTMLElement>, data?: any, cb?: () => void): void;
 
   /** Return position numbers of cells that should be displayed as disabled */
   protected abstract getDisabledPositions(): number[];

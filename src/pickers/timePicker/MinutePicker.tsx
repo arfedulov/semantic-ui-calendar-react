@@ -186,7 +186,7 @@ class MinutePicker
     return isPrevPageAvailable(this.state.date, this.props.minDate);
   }
 
-  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+  protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
     const data: MinutePickerOnChangeData = {
       ...this.props,
       value: {
@@ -200,7 +200,7 @@ class MinutePicker
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (e: React.SyntheticEvent,
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {
@@ -211,7 +211,7 @@ class MinutePicker
     }, callback);
   }
 
-  protected switchToPrevPage = (e: React.SyntheticEvent,
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {

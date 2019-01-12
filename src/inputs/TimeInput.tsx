@@ -117,15 +117,13 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     );
   }
 
-  private handleSelect = (
-    e: React.SyntheticEvent,
-    { value }: BasePickerOnChangeData) => {
+  private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
+                          { value }: BasePickerOnChangeData) => {
     tick(this.handleSelectUndelayed, e, { value });
   }
 
-  private handleSelectUndelayed = (
-    e: React.SyntheticEvent,
-    { value }: BasePickerOnChangeData) => {
+  private handleSelectUndelayed = (e: React.SyntheticEvent<HTMLElement>,
+                                   { value }: BasePickerOnChangeData) => {
     const {
       hour,
       minute,

@@ -211,7 +211,7 @@ class DatesRangePicker
     return `${start ? start.format(dateFormat) : '- - -'} - ${end ? end.format(dateFormat) : '- - -'}`;
   }
 
-  protected handleChange = (e: React.SyntheticEvent, { itemPosition }) => {
+  protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { itemPosition }) => {
     // call `onChange` with value: { start: moment, end: moment }
     const {
       start,
@@ -236,7 +236,7 @@ class DatesRangePicker
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (e: React.SyntheticEvent,
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {
@@ -247,7 +247,7 @@ class DatesRangePicker
     }, callback);
   }
 
-  protected switchToPrevPage = (e: React.SyntheticEvent,
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {

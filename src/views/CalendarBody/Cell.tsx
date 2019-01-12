@@ -33,9 +33,9 @@ interface CellProps {
   /** Styles for cell width. */
   style: CellWidthStyle;
   /** Called after click on a cell. */
-  onClick: (e: React.SyntheticEvent, data: OnValueClickData) => void;
+  onClick: (e: React.SyntheticEvent<HTMLElement>, data: OnValueClickData) => void;
   /** Called on cell hover. */
-  onHover: (e: React.SyntheticEvent, data: OnValueClickData) => void;
+  onHover: (e: React.SyntheticEvent<HTMLElement>, data: OnValueClickData) => void;
   /** Is cell is hovered. */
   hovered?: boolean;
   /** Is cell active. */
