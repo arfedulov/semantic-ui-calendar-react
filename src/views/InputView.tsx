@@ -215,14 +215,10 @@ class InputView extends React.Component<InputViewProps, any> {
         visible={!popupIsClosed}
         animation={animation}
         duration={duration}
-        onStart={() => {
-          if (!popupIsClosed) {
-            this.setState({});
-            this.setScrollListener();
-          }
-        }}
         onComplete={() => {
-          if (popupIsClosed) {
+          if (!popupIsClosed) {
+            this.setScrollListener();
+          } else {
             this.setState({});
             this.unsetScrollListener();
           }
