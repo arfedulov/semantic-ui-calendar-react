@@ -179,7 +179,7 @@ class HourPicker
     }
   }
 
-  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+  protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
     const data: HourPickerOnChangeData = {
       ...this.props,
       value: {
@@ -192,7 +192,7 @@ class HourPicker
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (e: React.SyntheticEvent,
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {
@@ -203,7 +203,7 @@ class HourPicker
     }, callback);
   }
 
-  protected switchToPrevPage = (e: React.SyntheticEvent,
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {

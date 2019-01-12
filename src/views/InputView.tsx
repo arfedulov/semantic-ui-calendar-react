@@ -40,13 +40,13 @@ interface InputViewProps {
   /** Used for passing input dom node (input field or inline calendar) to parent component. */
   onMount: (e: HTMLElement) => void;
   /** Called after input field value has changed. */
-  onChange: (e: React.SyntheticEvent, data: any) => void;
+  onChange: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
   /** Called on input focus. */
   onFocus?: () => void;
   /** Function for rendering component. */
   render?: (props: any) => React.ReactNode;
   /** Called after clear icon has clicked. */
-  onClear?: (e: React.SyntheticEvent, data: any) => void;
+  onClear?: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
   /** Picker. */
   children?: React.ReactNode;
   /** Whether to close a popup when cursor leaves it. */

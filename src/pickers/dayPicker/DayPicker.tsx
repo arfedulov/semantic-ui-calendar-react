@@ -162,7 +162,7 @@ class DayPicker
     return isPrevPageAvailable(this.state.date, minDate);
   }
 
-  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+  protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
     // `value` is selected date(string) like '31' or '1'
     const data: DayPickerOnChangeData = {
       ...this.props,
@@ -176,7 +176,7 @@ class DayPicker
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (e: React.SyntheticEvent,
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {
@@ -187,7 +187,7 @@ class DayPicker
     }, callback);
   }
 
-  protected switchToPrevPage = (e: React.SyntheticEvent,
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {

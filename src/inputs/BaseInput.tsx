@@ -10,7 +10,7 @@ export interface BaseInputProps {
   /** Currently selected value. */
   value: string;
   /** Called on selected value change. */
-  onChange: (e: React.SyntheticEvent, data: any) => void;
+  onChange: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
   /** If true, popup closes after selecting a value. */
   closable?: boolean;
   /** An input can be formatted to appear inline in other content. */

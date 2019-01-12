@@ -197,7 +197,7 @@ class MonthPicker
     return true;
   }
 
-  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+  protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
     const data: MonthPickerOnChangeData = {
       ...this.props,
       value: {
@@ -208,7 +208,7 @@ class MonthPicker
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (e: React.SyntheticEvent,
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {
@@ -219,7 +219,7 @@ class MonthPicker
     }, callback);
   }
 
-  protected switchToPrevPage = (e: React.SyntheticEvent,
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {
