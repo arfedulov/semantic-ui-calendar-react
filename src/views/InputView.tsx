@@ -216,12 +216,21 @@ class InputView extends React.Component<InputViewProps, any> {
         visible={!popupIsClosed}
         animation={animation}
         duration={duration}
-        onShow={() => this.setScrollListener()}
-        onHide={() => this.unsetScrollListener()}
+        onComplete={() => {
+          if (popupIsClosed) {
+            this.unsetScrollListener();
+            // TODO: for some reason sometimes transition component
+            // doesn't hide even though `popupIsClosed === true`
+            // To hide it we need to rerender component
+            this.forceUpdate();
+          } else {
+            this.setScrollListener();
+          }
+        }}
       >
         <Popup
           position={popupPosition}
-          open={!popupIsClosed}
+          open={true}
           hoverable={closeOnMouseLeave}
           flowing
           style={popupStyle}
