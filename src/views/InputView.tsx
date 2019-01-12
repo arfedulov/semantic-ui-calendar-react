@@ -17,10 +17,6 @@ const popupStyle = {
 
 class FormInputWithRef extends React.Component<FormInputProps, any> {
 
-  public shouldComponentUpdate() {
-    return false;
-  }
-
   public render() {
 
     const {
@@ -258,17 +254,17 @@ class InputView extends React.Component<InputViewProps, any> {
     );
   }
 
-  public scrollListener() {
+  public scrollListener = () => {
     const { closePopup } = this.props;
     closePopup();
   }
 
   private setScrollListener() {
-    window.addEventListener('scroll', this.scrollListener.bind(this));
+    window.addEventListener('scroll', this.scrollListener);
   }
 
   private unsetScrollListener() {
-    window.removeEventListener('scroll', this.scrollListener.bind(this));
+    window.removeEventListener('scroll', this.scrollListener);
   }
 }
 
