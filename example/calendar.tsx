@@ -95,7 +95,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           className='example-calendar-input'
           name='date'
-          closable={true}
+          closable
           clearIcon={(<Icon name='remove' color='red' />)}
           clearable={clearable}
           animation='scale'
@@ -115,6 +115,7 @@ class DateTimeForm extends React.Component<any, any> {
           name='dateStartYear'
           animation='fly left'
           duration={300}
+          closable
           clearable={clearable}
           value={this.state.dateStartYear}
           iconPosition='left'
@@ -130,6 +131,7 @@ class DateTimeForm extends React.Component<any, any> {
           name='time'
           animation='horizontal flip'
           duration={300}
+          closable
           autoComplete='off'
           clearable={clearable}
           value={this.state.time}
@@ -142,6 +144,7 @@ class DateTimeForm extends React.Component<any, any> {
           className='example-calendar-input'
           popupPosition='bottom right'
           name='dateTime'
+          closable
           clearable={clearable}
           value={this.state.dateTime}
           iconPosition='left'
@@ -156,6 +159,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           className='example-calendar-input'
           name='datesRange'
+          closable
           clearable={clearable}
           value={this.state.datesRange}
           iconPosition='left'
@@ -169,6 +173,7 @@ class DateTimeForm extends React.Component<any, any> {
           name='year'
           popupPosition='bottom right'
           clearable={clearable}
+          closable
           value={this.state.year}
           iconPosition='left'
           autoComplete='off'
@@ -181,6 +186,7 @@ class DateTimeForm extends React.Component<any, any> {
           name='month'
           popupPosition='bottom right'
           clearable={clearable}
+          closable
           value={this.state.month}
           iconPosition='left'
           autoComplete='off'

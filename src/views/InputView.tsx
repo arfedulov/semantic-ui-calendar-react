@@ -220,7 +220,7 @@ class InputView extends React.Component<InputViewProps, any> {
       >
         <Popup
           position={popupPosition}
-          open={true}
+          open={!popupIsClosed}
           hoverable={closeOnMouseLeave}
           flowing
           style={popupStyle}
