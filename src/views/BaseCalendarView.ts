@@ -10,9 +10,9 @@ export interface BaseCalendarViewProps {
   /** An array of values to fill a calendar with (dates, or years, or anything like that). */
   values: string[];
   /** Called after clicking on particular value (date, year or anything like that). */
-  onValueClick: (e: React.SyntheticEvent, data: OnValueClickData) => void;
+  onValueClick: (e: React.SyntheticEvent<HTMLElement>, data: OnValueClickData) => void;
   /** Called on calendar cell hover. */
-  onCellHover: (e: React.SyntheticEvent, data: any) => void;
+  onCellHover: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
   /** Index of a cell that should be displayed as hovered. */
   hoveredItemIndex?: number;
   /** An array of cell positions to display as disabled. */
@@ -38,9 +38,9 @@ export interface RangeSelectionCalendarViewProps {
 
 export interface CalendarWithHeaderViewProps {
   /** Called after click on next page button. */
-  onNextPageBtnClick: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
+  onNextPageBtnClick: (e?: React.SyntheticEvent<HTMLElement>, data?: any, cb?: () => void) => void;
   /** Called after click on previous page button. */
-  onPrevPageBtnClick: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
+  onPrevPageBtnClick: (e?: React.SyntheticEvent<HTMLElement>, data?: any, cb?: () => void) => void;
   /** Whether to display previous page button as active or disabled. */
   hasPrevPage: boolean;
   /** Whether to display next page button as active or disabled. */
@@ -63,9 +63,9 @@ export interface CalendarWithOptionalHeaderViewProps {
   /** Whether a calendar has header. */
   hasHeader: boolean;
   /** Called after click on next page button. */
-  onNextPageBtnClick?: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
+  onNextPageBtnClick?: (e?: React.SyntheticEvent<HTMLElement>, data?: any, cb?: () => void) => void;
   /** Called after click on previous page button. */
-  onPrevPageBtnClick?: (e?: React.SyntheticEvent, data?: any, cb?: () => void) => void;
+  onPrevPageBtnClick?: (e?: React.SyntheticEvent<HTMLElement>, data?: any, cb?: () => void) => void;
   /** Whether to display previous page button as active or disabled. */
   hasPrevPage?: boolean;
   /** Whether to display next page button as active or disabled. */

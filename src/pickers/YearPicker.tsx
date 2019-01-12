@@ -198,7 +198,7 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     return firstOnPage > minDate.year();
   }
 
-  protected handleChange = (e: React.SyntheticEvent, { value }): void => {
+  protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
     const data: YearPickerOnChangeData = {
       ...this.props,
       value: { year: parseInt(value, 10) },
@@ -206,7 +206,7 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     this.props.onChange(e, data);
   }
 
-  protected switchToNextPage = (e: React.SyntheticEvent,
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {
@@ -217,7 +217,7 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     }, callback);
   }
 
-  protected switchToPrevPage = (e: React.SyntheticEvent,
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
                                 data: any,
                                 callback: () => void): void => {
     this.setState(({ date }) => {

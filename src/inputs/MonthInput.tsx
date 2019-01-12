@@ -132,7 +132,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     );
   }
 
-  private handleSelect = (e: React.SyntheticEvent,
+  private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
                           { value }: MonthPickerOnChangeData) => {
     const date = moment({ month: value.month });
     let output = '';
