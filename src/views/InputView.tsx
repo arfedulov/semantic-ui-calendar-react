@@ -191,7 +191,10 @@ class InputView extends React.Component<InputViewProps, any> {
         tabIndex={tabIndex}
         inline={inlineLabel}
         onClear={(e) => (onClear || onChange)(e, { ...rest, value: '' })}
-        onFocus={() => { openPopup(); }}
+        onFocus={(e) => {
+          _.invoke(this.props, 'onFocus', e, this.props);
+          openPopup();
+        }}
         onBlur={onBlur}
         onMouseEnter={onMouseEnter}
         onChange={onChange} />
