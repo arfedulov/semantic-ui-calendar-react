@@ -9,7 +9,7 @@ import * as React from 'react';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 
-import MonthPicker from '../../src/pickers/MonthPicker';
+import MonthPicker from '../../src/pickers/monthPicker/MonthPicker';
 
 Enzyme.configure({ adapter: new Adapter() });
 

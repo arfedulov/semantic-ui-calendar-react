@@ -6,7 +6,7 @@ import * as React from 'react';
 import CustomPropTypes from '../lib/CustomPropTypes';
 import MonthPicker, {
   MonthPickerOnChangeData,
-} from '../pickers/MonthPicker';
+} from '../pickers/monthPicker/MonthPicker';
 import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,

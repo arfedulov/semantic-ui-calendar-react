@@ -1,45 +1,33 @@
 import * as _ from 'lodash';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import BaseInput, {BaseInputProps, BaseInputState, DateRelatedProps, MinMaxValueProps} from './BaseInput';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
+import MonthRangePicker, {MonthRangePickerOnChangeData} from '../pickers/monthPicker/MonthRangePicker';
 import InputView from '../views/InputView';
+import {MonthInputProps} from './MonthInput';
 import {
   getInitializer,
   parseDatesRange,
   parseValue,
 } from './parse';
 
-import DatesRangePicker, {
-  DatesRangePickerOnChangeData,
-} from '../pickers/dayPicker/DatesRangePicker';
-import BaseInput, {
-  BaseInputProps,
-  BaseInputState,
-  DateRelatedProps,
-  MinMaxValueProps,
-} from './BaseInput';
-
 const DATES_SEPARATOR = ' - ';
 
-export type DatesRangeInputProps =
+export type MonthRangeInputProps =
   & BaseInputProps
   & DateRelatedProps
   & MinMaxValueProps;
 
-export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
+export interface MonthRangeInputOnChangeData extends MonthInputProps {
   value: string;
+  date: MonthRangePickerOnChangeData;
 }
 
-class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
-  /**
-   * Component responsibility:
-   *  - parse input value (start: Moment, end: Moment)
-   *  - handle DayPicker change (format {start: Moment, end: Moment} into
-   *    string 'start - end')
-   */
+class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   public static readonly defaultProps = {
-    dateFormat: 'DD-MM-YYYY',
+    dateFormat: 'MM-YYYY',
     icon: 'calendar',
     inline: false,
   };
@@ -120,7 +108,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         closePopup={this.closePopup}
         openPopup={this.openPopup}
         render={(pickerProps) =>
-          (<DatesRangePicker
+          (<MonthRangePicker
             {...pickerProps}
             isPickerInFocus={this.isPickerInFocus}
             isTriggerInFocus={this.isTriggerInFocus}
@@ -129,19 +117,19 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
             closePopup={this.closePopup}
             onChange={this.handleSelect}
             dateFormat={dateFormat}
-            initializeWith={getInitializer({ initialDate, dateFormat })}
+            initializeWith={getInitializer({initialDate, dateFormat})}
             start={start}
             end={end}
             minDate={parseValue(minDate, dateFormat)}
-            maxDate={parseValue(maxDate, dateFormat)} />)
+            maxDate={parseValue(maxDate, dateFormat)}/>)
         }
       />
     );
   }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-                          { value }: DatesRangePickerOnChangeData) => {
-    const { dateFormat } = this.props;
+                          {value}: MonthRangePickerOnChangeData) => {
+    const {dateFormat} = this.props;
     const {
       start,
       end,
@@ -152,11 +140,12 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     } else if (start) {
       outputString = `${start.format(dateFormat)}${DATES_SEPARATOR}`;
     }
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: outputString });
+
+    _.invoke(this.props, 'onChange', e, {...this.props, value: outputString, date: value});
     if (this.props.closable && start && end) {
       this.closePopup();
     }
   }
 }
 
-export default DatesRangeInput;
+export default MonthRangeInput;

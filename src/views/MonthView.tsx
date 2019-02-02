@@ -11,7 +11,7 @@ import Header, { HeaderProps } from './CalendarHeader/Header';
 
 import { findHTMLElement } from '../lib';
 
-const MONTH_CALENDAR_ROW_WIDTH = 3;
+export const MONTH_CALENDAR_ROW_WIDTH = 3;
 
 type MonthViewProps =
   BaseCalendarViewProps

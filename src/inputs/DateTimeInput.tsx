@@ -8,7 +8,7 @@ import {
   BasePickerOnChangeData,
 } from '../pickers/BasePicker';
 import DayPicker from '../pickers/dayPicker/DayPicker';
-import MonthPicker from '../pickers/MonthPicker';
+import MonthPicker from '../pickers/monthPicker/MonthPicker';
 import HourPicker from '../pickers/timePicker/HourPicker';
 import MinutePicker from '../pickers/timePicker/MinutePicker';
 import YearPicker from '../pickers/YearPicker';
