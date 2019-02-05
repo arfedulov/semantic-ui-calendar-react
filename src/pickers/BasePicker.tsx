@@ -83,9 +83,6 @@ export interface MinMaxValueProps {
 export interface MarkedValuesProps {
   /** Array of marked dates. */
   marked?: Moment[];
-}
-
-export interface MarkColorValueProps {
   /** String specifying the mark color (Optional). */
   markColor?: SemanticCOLORS;
 }
@@ -253,7 +250,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
 
   /** Return position numbers of cells that should be displayed as disabled */
   protected abstract getDisabledPositions(): number[];
-  
+
 }
 
 export interface ProvideHeadingValue {

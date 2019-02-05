@@ -10,7 +10,6 @@ import {
   EnableValuesProps,
   MinMaxValueProps,
   MarkedValuesProps,
-  MarkColorValueProps,
   ProvideHeadingValue,
   SingleSelectionPicker,
 } from '../BasePicker';
@@ -38,8 +37,7 @@ type DayPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
   & MinMaxValueProps
-  & MarkedValuesProps
-  & MarkColorValueProps;
+  & MarkedValuesProps;
 
 class DayPicker
   extends SingleSelectionPicker<DayPickerProps>
@@ -157,8 +155,10 @@ class DayPicker
     } = this.props;
 
     if (marked) {
-      return getMarkedDays(marked, this.state.date, DAYS_ON_PAGE)
-    } else return []
+      return getMarkedDays(marked, this.state.date, DAYS_ON_PAGE);
+    } else {
+      return [];
+    }
   }
 
   protected isNextPageAvailable = (): boolean => {

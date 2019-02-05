@@ -31,7 +31,8 @@
         "esSpecCompliant": true
       }
     ],
-    "interface-name": [true, "never-prefix"]
+    "interface-name": [true, "never-prefix"],
+    "ordered-imports": false
   },
   "rulesDirectory": []
 }
