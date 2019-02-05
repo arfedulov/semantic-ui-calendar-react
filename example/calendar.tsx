@@ -96,6 +96,8 @@ class DateTimeForm extends React.Component<any, any> {
           className='example-calendar-input'
           name='date'
           closable
+          marked={[new Date('February 17 2019'), new Date('February 8 2019')]}
+          markColor='orange'
           clearIcon={(<Icon name='remove' color='red' />)}
           clearable={clearable}
           animation='scale'
@@ -226,7 +228,7 @@ class DateTimeFormInline extends React.Component<any, any> {
           value={this.state.date}
           name='date'
           onChange={this.handleChange}
-          marked={[new Date('February 5 2019'), new Date('February 8 2019')]}
+          marked={[new Date('February 2 2019'), new Date('February 8 2019')]}
           markColor='orange'
         />
         <br />

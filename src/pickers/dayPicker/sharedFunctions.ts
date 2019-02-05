@@ -102,21 +102,19 @@ export function getDisabledDays(
 export function getMarkedDays(
   marked: Moment[],
   currentDate: Moment,
-  daysOnPage: number,): number[] {
-  const dayPositions = _.range(daysOnPage);
-  const daysInCurrentMonthPositions = getDefaultEnabledDayPositions(buildDays(currentDate, daysOnPage), currentDate);
-  let activeDays = dayPositions.filter((dayPosition) => !_.includes(daysInCurrentMonthPositions, dayPosition));
-  let markedDays = []
+  daysOnPage: number): number[] {
+    if (marked.length === 0) {
+      return [];
+    }
+    const allDates = buildDays(currentDate, daysOnPage);
+    const allDatesNumb = allDates.map((date) => parseInt(date, 10));
+    const activeDayPositions = getDefaultEnabledDayPositions(allDates, currentDate);
+    const markedIndexes = marked
+      .filter((date) => date.isSame(currentDate, 'month'))
+      .map((date) => date.date())
+      .map((date) => allDatesNumb.indexOf(date));
 
-  if (_.isArray(marked)) {
-    activeDays = _.concat(activeDays,
-                            marked
-                              .filter((date) => date.isSame(currentDate, 'month'))
-                              .map((date) => date.date())
-                              .map((date) => markedDays.push(daysInCurrentMonthPositions[date - 1]) ));
-  }
-
-  return _.sortBy(_.uniq(markedDays).filter((day) => !_.isNil(day)));
+    return markedIndexes.filter((index) => _.includes(activeDayPositions, index));
 }
 
 export function isNextPageAvailable(date: Moment, maxDate: Moment): boolean {
