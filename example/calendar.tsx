@@ -147,6 +147,8 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           name='dateTime'
           closable
+          marked={[new Date('February 17 2019'), new Date('February 8 2019')]}
+          markColor='orange'
           clearable={clearable}
           value={this.state.dateTime}
           iconPosition='left'
@@ -162,6 +164,8 @@ class DateTimeForm extends React.Component<any, any> {
           className='example-calendar-input'
           name='datesRange'
           closable
+          marked={[new Date('February 17 2019'), new Date('February 8 2019')]}
+          markColor='orange'
           clearable={clearable}
           value={this.state.datesRange}
           iconPosition='left'

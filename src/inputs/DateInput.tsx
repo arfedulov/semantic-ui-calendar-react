@@ -257,7 +257,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       maxDate: parseValue(maxDate, dateFormat),
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat);
-    const markedParsed = parseArrayOrValue(marked, dateFormat)
+    const markedParsed = parseArrayOrValue(marked, dateFormat);
     const { mode } = this.state;
     if (mode === 'year') {
       return (

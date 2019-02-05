@@ -11,6 +11,7 @@ import {
   MinMaxValueProps,
   ProvideHeadingValue,
   RangeSelectionPicker,
+  MarkedValuesProps,
 } from '../BasePicker';
 import { DAYS_ON_PAGE } from './DayPicker';
 import {
@@ -20,11 +21,12 @@ import {
   getInitialDatePosition,
   isNextPageAvailable,
   isPrevPageAvailable,
+  getMarkedDays,
 } from './sharedFunctions';
 
 const PAGE_WIDTH = 7;
 
-interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps {
+interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, MarkedValuesProps {
   /** Moment date formatting string. */
   dateFormat: string;
   /** Start of currently selected dates range. */
@@ -58,6 +60,8 @@ class DatesRangePicker
       end,
       minDate,
       maxDate,
+      marked,
+      markColor,
       ...rest
     } = this.props;
 
@@ -78,6 +82,8 @@ class DatesRangePicker
         currentHeadingValue={this.getCurrentDate()}
         currentRangeHeadingValue={this.getSelectedRange()}
         activeRange={this.getActiveCellsPositions()}
+        markedItemIndexes={this.getMarkedPositions()}
+        markColor={markColor}
         disabledItemIndexes={this.getDisabledPositions()} />
     );
   }
@@ -85,6 +91,22 @@ class DatesRangePicker
   public getCurrentDate(): string {
     /* Return currently selected year and month(string) to display in calendar header. */
     return this.state.date.format('MMMM YYYY');
+  }
+
+  protected getMarkedPositions(): number[] {
+    /*
+      Return position numbers of dates that should be displayed as marked
+      (position in array returned by `this.buildCalendarValues`).
+    */
+    const {
+      marked,
+    } = this.props;
+
+    if (marked) {
+      return getMarkedDays(marked, this.state.date, DAYS_ON_PAGE);
+    } else {
+      return [];
+    }
   }
 
   protected buildCalendarValues(): string[] {

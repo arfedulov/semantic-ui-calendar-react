@@ -9,6 +9,7 @@ import InputView from '../views/InputView';
 import {
   getInitializer,
   parseValue,
+  parseArrayOrValue,
 } from './parse';
 
 import DatesRangePicker, {
@@ -143,6 +144,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       maxDate,
       minDate,
       closable,
+      marked,
+      markColor,
       ...rest
     } = this.props;
 
@@ -150,6 +153,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       start,
       end,
     } = parseDatesRange(value, dateFormat);
+    const markedParsed = parseArrayOrValue(marked, dateFormat);
 
     return (
       <InputView
@@ -173,6 +177,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
             initializeWith={getInitializer({ initialDate, dateFormat })}
             start={start}
             end={end}
+            marked={markedParsed}
+            markColor={markColor}
             minDate={parseValue(minDate, dateFormat)}
             maxDate={parseValue(maxDate, dateFormat)} />)
         }
