@@ -20,6 +20,7 @@ import BaseInput, {
   BaseInputState,
   DateRelatedProps,
   MinMaxValueProps,
+  MarkedValuesProps,
 } from './BaseInput';
 
 const DATES_SEPARATOR = ' - ';
@@ -67,6 +68,7 @@ function parseDatesRange(inputString: string, dateFormat: string): Range {
 export type DatesRangeInputProps =
   & BaseInputProps
   & DateRelatedProps
+  & MarkedValuesProps
   & MinMaxValueProps;
 
 export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
@@ -126,6 +128,13 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    marked: PropTypes.oneOfType([
+      CustomPropTypes.momentObj,
+      CustomPropTypes.dateObject,
+      PropTypes.arrayOf(CustomPropTypes.momentObj),
+      PropTypes.arrayOf(CustomPropTypes.dateObject),
+    ]),
+    markColor: PropTypes.string,
   };
 
   constructor(props) {
