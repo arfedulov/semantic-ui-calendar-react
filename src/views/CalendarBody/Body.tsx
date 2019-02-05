@@ -28,6 +28,10 @@ interface BodyProps {
   active?: number | number[];
   /** Array of element indexes in `data` array that should be displayed as disabled. */
   disabled?: number[];
+  /** Array of element indexes in `data` array that should be displayed as marked. */
+  marked?: number[];
+  /** The color of the mark that will be displayed on the calendar. */
+  markColor?: string;
 }
 
 function Body(props: BodyProps) {
@@ -39,6 +43,8 @@ function Body(props: BodyProps) {
     disabled,
     hovered,
     onCellHover,
+    marked,
+    markColor,
   } = props;
   const content = buildRows(data, width).map((row, rowIndex) => (
     <Table.Row key={`${rowIndex}${row[0]}`}>
@@ -48,6 +54,8 @@ function Body(props: BodyProps) {
           active={isActive(rowIndex, width, itemIndex, active)}
           hovered={isHovered(rowIndex, width, itemIndex, hovered)}
           disabled={isDisabled(rowIndex, width, itemIndex, disabled)}
+          marked={isMarked(rowIndex, width, itemIndex, marked)}
+          markColor={markColor}
           key={`${rowIndex * width + itemIndex}`}
           itemPosition={rowIndex * width + itemIndex}
           content={item}
@@ -130,6 +138,22 @@ function getCellStyle(width: BodyWidth): CellWidthStyle {
     default:
       break;
   }
+}
+
+function isMarked(rowIndex: number,
+                  rowWidth: number,
+                  colIndex: number,
+                  markedIndexes: number[]): boolean {
+  if (_.isNil(markedIndexes) || markedIndexes.length === 0) {
+    return false;
+  }
+  for (const markedIndex of markedIndexes) {
+    if (rowIndex * rowWidth + colIndex === markedIndex) {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export default Body;

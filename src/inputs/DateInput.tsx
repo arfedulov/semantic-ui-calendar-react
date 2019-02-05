@@ -19,6 +19,7 @@ import BaseInput, {
   EnableValuesProps,
   MinMaxValueProps,
   MultimodeProps,
+  MarkedValuesProps,
 } from './BaseInput';
 
 import {
@@ -65,6 +66,7 @@ export interface DateInputProps extends
   MultimodeProps,
   DisableValuesProps,
   EnableValuesProps,
+  MarkedValuesProps,
   MinMaxValueProps {
   /** Display mode to start. */
   startMode?: CalendarMode;
@@ -165,6 +167,13 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    marked: PropTypes.oneOfType([
+      CustomPropTypes.momentObj,
+      CustomPropTypes.dateObject,
+      PropTypes.arrayOf(CustomPropTypes.momentObj),
+      PropTypes.arrayOf(CustomPropTypes.dateObject),
+    ]),
+    markColor: PropTypes.string,
   };
 
   constructor(props: DateInputProps) {
@@ -192,6 +201,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       preserveViewMode,
       startMode,
       closable,
+      markColor,
+      marked,
       ...rest
     } = this.props;
 
@@ -236,6 +247,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       maxDate,
       enable,
       inline,
+      marked,
+      markColor,
     } = this.props;
     const pickerProps = {
       isPickerInFocus: this.isPickerInFocus,
@@ -255,6 +268,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       maxDate: parseValue(maxDate, dateFormat),
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat);
+    const markedParsed = parseArrayOrValue(marked, dateFormat);
     const { mode } = this.state;
     if (mode === 'year') {
       return (
@@ -274,7 +288,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       );
     }
 
-    return <DayPicker {...pickerProps} disable={disableParsed} />;
+    return <DayPicker {...pickerProps} disable={disableParsed} marked={markedParsed} markColor={markColor} />;
   }
 
   private switchToNextModeUndelayed = (): void => {

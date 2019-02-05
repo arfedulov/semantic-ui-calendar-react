@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as React from 'react';
-import { Table } from 'semantic-ui-react';
+import { Table, Label } from 'semantic-ui-react';
 
 import { OnValueClickData } from '../BaseCalendarView';
 
@@ -42,6 +42,10 @@ interface CellProps {
   active?: boolean;
   /** Is cell disabled. */
   disabled?: boolean;
+  /** Is cell marked. */
+  marked?: boolean;
+  /** Color of the mark. */
+  markColor?: any;
 }
 
 class Cell extends React.Component<CellProps, any> {
@@ -53,6 +57,8 @@ class Cell extends React.Component<CellProps, any> {
       onClick,
       onHover,
       hovered,
+      marked,
+      markColor,
       ...rest
     } = this.props;
 
@@ -67,7 +73,7 @@ class Cell extends React.Component<CellProps, any> {
         style={cellStyle}
         onMouseOver={this.onCellHover}
         onClick={this.onCellClick}>
-        { content }
+        { (marked && !rest.disabled) ? <Label circular color={markColor} key={content}>{content}</Label> : content }
       </Table.Cell>
     );
   }

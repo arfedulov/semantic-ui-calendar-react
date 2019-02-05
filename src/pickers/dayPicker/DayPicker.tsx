@@ -9,12 +9,14 @@ import {
   DisableValuesProps,
   EnableValuesProps,
   MinMaxValueProps,
+  MarkedValuesProps,
   ProvideHeadingValue,
   SingleSelectionPicker,
 } from '../BasePicker';
 import {
   buildDays,
   getDisabledDays,
+  getMarkedDays,
   getInitialDatePosition,
   isNextPageAvailable,
   isPrevPageAvailable,
@@ -34,7 +36,8 @@ export interface DayPickerOnChangeData extends BasePickerOnChangeData {
 type DayPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
-  & MinMaxValueProps;
+  & MinMaxValueProps
+  & MarkedValuesProps;
 
 class DayPicker
   extends SingleSelectionPicker<DayPickerProps>
@@ -58,6 +61,8 @@ class DayPicker
       enable,
       minDate,
       maxDate,
+      marked,
+      markColor,
       ...rest
     } = this.props;
 
@@ -77,7 +82,9 @@ class DayPicker
         onCellHover={this.onHoveredCellPositionChange}
         currentHeadingValue={this.getCurrentDate()}
         disabledItemIndexes={this.getDisabledPositions()}
-        activeItemIndex={this.getActiveCellPosition()} />
+        activeItemIndex={this.getActiveCellPosition()}
+        markedItemIndexes={this.getMarkedPositions()}
+        markColor={markColor} />
     );
   }
 
@@ -136,6 +143,22 @@ class DayPicker
     } = this.props;
 
     return getDisabledDays(disable, maxDate, minDate, this.state.date, DAYS_ON_PAGE, enable);
+  }
+
+  protected getMarkedPositions(): number[] {
+    /*
+      Return position numbers of dates that should be displayed as marked
+      (position in array returned by `this.buildCalendarValues`).
+    */
+    const {
+      marked,
+    } = this.props;
+
+    if (marked) {
+      return getMarkedDays(marked, this.state.date, DAYS_ON_PAGE);
+    } else {
+      return [];
+    }
   }
 
   protected isNextPageAvailable = (): boolean => {

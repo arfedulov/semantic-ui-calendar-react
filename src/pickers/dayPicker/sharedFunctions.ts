@@ -98,6 +98,25 @@ export function getDisabledDays(
   return _.sortBy(_.uniq(disabledDays).filter((day) => !_.isNil(day)));
 }
 
+/** Return day positions that shoud be displayed as marked. */
+export function getMarkedDays(
+  marked: Moment[],
+  currentDate: Moment,
+  daysOnPage: number): number[] {
+    if (marked.length === 0) {
+      return [];
+    }
+    const allDates = buildDays(currentDate, daysOnPage);
+    const allDatesNumb = allDates.map((date) => parseInt(date, 10));
+    const activeDayPositions = getDefaultEnabledDayPositions(allDates, currentDate);
+    const markedIndexes = marked
+      .filter((date) => date.isSame(currentDate, 'month'))
+      .map((date) => date.date())
+      .map((date) => allDatesNumb.indexOf(date));
+
+    return markedIndexes.filter((index) => _.includes(activeDayPositions, index));
+}
+
 export function isNextPageAvailable(date: Moment, maxDate: Moment): boolean {
   if (_.isNil(maxDate)) {
     return true;

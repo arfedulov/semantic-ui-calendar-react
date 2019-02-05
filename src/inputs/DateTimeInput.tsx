@@ -21,6 +21,7 @@ import BaseInput, {
   MinMaxValueProps,
   MultimodeProps,
   TimeRelatedProps,
+  MarkedValuesProps,
 } from './BaseInput';
 
 import { tick } from '../lib';
@@ -73,6 +74,7 @@ export interface DateTimeInputProps extends
   TimeRelatedProps,
   MultimodeProps,
   DisableValuesProps,
+  MarkedValuesProps,
   MinMaxValueProps {
   startMode?: 'year' | 'month' | 'day';
   /** Date and time divider. */
@@ -181,6 +183,13 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    marked: PropTypes.oneOfType([
+      CustomPropTypes.momentObj,
+      CustomPropTypes.dateObject,
+      PropTypes.arrayOf(CustomPropTypes.momentObj),
+      PropTypes.arrayOf(CustomPropTypes.dateObject),
+    ]),
+    markColor: PropTypes.string,
   };
 
   constructor(props: DateTimeInputProps) {
@@ -212,6 +221,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       divider,
       closable,
       icon,
+      markColor,
+      marked,
       ...rest
     } = this.props;
 
@@ -272,6 +283,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       minDate,
       maxDate,
       inline,
+      marked,
+      markColor,
     } = this.props;
     const dateTimeFormat = this.getDateTimeFormat();
     const pickerProps = {
@@ -289,6 +302,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       value: parseValue(chooseValue(value, initialDate), dateTimeFormat),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
+      marked: parseArrayOrValue(marked, dateFormat),
+      markColor,
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat);
     const { mode } = this.state;

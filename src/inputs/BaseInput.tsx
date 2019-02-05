@@ -2,6 +2,7 @@ import { Moment } from 'moment';
 import * as React from 'react';
 import {
   SemanticTRANSITIONS,
+  SemanticCOLORS,
 } from 'semantic-ui-react';
 
 import {
@@ -58,6 +59,13 @@ export interface BaseInputProps {
   duration?: number;
   /** Named animation event to used. Must be defined in CSS. */
   animation?: SemanticTRANSITIONS;
+}
+
+export interface MarkedValuesProps {
+  /** Array of marked dates. */
+  marked?: Moment[] | Date[];
+  /** String specifying the mark color (Optional). */
+  markColor?: SemanticCOLORS;
 }
 
 export interface DateRelatedProps {
