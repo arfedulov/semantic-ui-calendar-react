@@ -226,6 +226,8 @@ class DateTimeFormInline extends React.Component<any, any> {
           value={this.state.date}
           name='date'
           onChange={this.handleChange}
+          marked={[new Date('February 5 2019'), new Date('February 8 2019')]}
+          markColor='orange'
         />
         <br />
         <TimeInput

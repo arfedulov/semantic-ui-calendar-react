@@ -10,6 +10,7 @@ import * as React from 'react';
 import {
   RangeIndexes,
 } from '../views/BaseCalendarView';
+import { SemanticCOLORS } from 'semantic-ui-react';
 
 interface HandleChangeParams {
   value?: string;
@@ -77,6 +78,16 @@ export interface MinMaxValueProps {
   minDate?: Moment;
   /** Maximal date that could be selected. */
   maxDate?: Moment;
+}
+
+export interface MarkedValuesProps {
+  /** Array of marked dates. */
+  marked?: Moment[];
+}
+
+export interface MarkColorValueProps {
+  /** String specifying the mark color (Optional). */
+  markColor?: SemanticCOLORS;
 }
 
 export interface TimePickerProps {
@@ -242,6 +253,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
 
   /** Return position numbers of cells that should be displayed as disabled */
   protected abstract getDisabledPositions(): number[];
+  
 }
 
 export interface ProvideHeadingValue {

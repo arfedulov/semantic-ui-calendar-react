@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { SemanticCOLORS } from 'semantic-ui-react';
 
 export interface BaseCalendarViewProps {
   /** Used for passing calendar dom element to parent component. */
@@ -17,6 +18,10 @@ export interface BaseCalendarViewProps {
   hoveredItemIndex?: number;
   /** An array of cell positions to display as disabled. */
   disabledItemIndexes?: number[];
+  /** An array of cell positions to display as marked. */
+  markedItemIndexes?: number[];
+  /** An array of cell positions to display as marked. */
+  markColor?: SemanticCOLORS;
 }
 
 export interface SingleSelectionCalendarViewProps {

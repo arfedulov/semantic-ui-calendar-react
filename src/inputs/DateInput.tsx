@@ -236,6 +236,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       maxDate,
       enable,
       inline,
+      marked,
+      markColor,
     } = this.props;
     const pickerProps = {
       isPickerInFocus: this.isPickerInFocus,
@@ -255,6 +257,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       maxDate: parseValue(maxDate, dateFormat),
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat);
+    const markedParsed = parseArrayOrValue(marked, dateFormat)
     const { mode } = this.state;
     if (mode === 'year') {
       return (
@@ -274,7 +277,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       );
     }
 
-    return <DayPicker {...pickerProps} disable={disableParsed} />;
+    return <DayPicker {...pickerProps} disable={disableParsed} marked={markedParsed} markColor={markColor} />;
   }
 
   private switchToNextModeUndelayed = (): void => {
