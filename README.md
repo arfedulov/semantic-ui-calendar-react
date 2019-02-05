@@ -177,6 +177,8 @@ moment.locale('ru');
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
+| ``marked`` | {string\|moment\|Date\|string[]\|moment[]\|Date[]} Date or list of dates that are displayed as marked |
+| ``markColor`` | {string\|SemanticCOLORs} String specifying the mark color. Must be one of the Semantic UI colors |
 
 ### TimeInput
 
