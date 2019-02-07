@@ -196,6 +196,7 @@ class DateTimeForm extends React.Component<any, any> {
           autoComplete='off'
           onChange={this.handleChange}
         />
+        <br />
         <MonthRangeInput
           placeholder='MonthRange'
           dateFormat='YYYY-MM'
