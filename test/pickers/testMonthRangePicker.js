@@ -80,6 +80,111 @@ describe('<MonthRangePicker />: getActiveCellPosition', () => {
   });
 });
 
+describe('<MonthRangePicker />: getDisabledPositions', () => {
+  const date = moment('2015-05-01');
+  /* current year 2015 */
+
+  it('works properly if `minDate` prop is provided (which is in current year)', () => {
+    const wrapper = mount(<MonthRangePicker
+      minDate={moment('2015-03-01')}
+      initializeWith={date} />);
+    /* disabled indexes: 0, 1 */
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 2, 'return array of length 2');
+    wrapper.instance().getDisabledPositions().forEach((month) => {
+      assert(_.isNumber(month), 'contains numbers only');
+    });
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 0), 'month in position 0 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 1), 'month in position 1 is disabled');
+  });
+
+  it('works properly if `minDate` prop is provided (which is before the current year)', () => {
+    const wrapper = mount(<MonthRangePicker
+      minDate={moment('2014-03-01')}
+      initializeWith={date} />);
+    /* disabled indexes: none */
+    assert(_.isUndefined(wrapper.instance().getDisabledPositions()), 'return undefined');
+  });
+
+  it('works properly if `minDate` prop is provided (which is after the current year)', () => {
+    const wrapper = mount(<MonthRangePicker
+      minDate={moment('2016-09-01')}
+      initializeWith={date} />);
+    /* disabled indexes: all */
+    const disabledRange = _.range(0, 12);
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 12, 'return array of length 12');
+    wrapper.instance().getDisabledPositions().forEach((month) => {
+      assert(_.isNumber(month), 'contains numbers only');
+    });
+    wrapper.instance().getDisabledPositions().forEach((month) => {
+      assert(_.includes(disabledRange, month), 'includes all months');
+    });
+  });
+
+  it('works properly if `maxDate` prop is provided (which is in current year)', () => {
+    const wrapper = mount(<MonthRangePicker
+      maxDate={moment('2015-09-01')}
+      initializeWith={date} />);
+    /* disabled indexes: 9, 10, 11 */
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 3, 'return array of length 3');
+    wrapper.instance().getDisabledPositions().forEach((month) => {
+      assert(_.isNumber(month), 'contains numbers only');
+    });
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 9), 'month in position 9 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 10), 'month in position 10 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 11), 'month in position 11 is disabled');
+  });
+
+  it('works properly if `maxDate` prop is provided (which is after the current year)', () => {
+    const wrapper = mount(<MonthRangePicker
+      maxDate={moment('2016-03-01')}
+      initializeWith={date} />);
+    /* disabled indexes: none */
+    assert(_.isUndefined(wrapper.instance().getDisabledPositions()), 'return undefined');
+  });
+
+  it('works properly if `maxDate` prop is provided (which is before the current year)', () => {
+    const wrapper = mount(<MonthRangePicker
+      maxDate={moment('2014-09-01')}
+      initializeWith={date} />);
+    /* disabled indexes: all */
+    const disabledRange = _.range(0, 12);
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 12, 'return array of length 12');
+    wrapper.instance().getDisabledPositions().forEach((month) => {
+      assert(_.isNumber(month), 'contains numbers only');
+    });
+    wrapper.instance().getDisabledPositions().forEach((month) => {
+      assert(_.includes(disabledRange, month), 'includes all months');
+    });
+  });
+
+  it('works properly if `maxDate`, `minDate` props are all provided', () => {
+    const wrapper = mount(<MonthRangePicker
+      maxDate={moment('2015-10-01')}
+      minDate={moment('2015-02-01')}
+      initializeWith={date} />);
+    /* disabled indexes: 0, 10, 11 */
+    assert(_.isArray(wrapper.instance().getDisabledPositions()), 'return array');
+    assert.equal(wrapper.instance().getDisabledPositions().length, 3, 'return array of length 4');
+    wrapper.instance().getDisabledPositions().forEach((month) => {
+      assert(_.isNumber(month), 'contains numbers only');
+    });
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 0), 'month at position 0 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 10), 'month at position 10 is disabled');
+    assert(_.includes(wrapper.instance().getDisabledPositions(), 11), 'month at position 11 is disabled');
+  });
+
+  it('works properly if `maxDate`, `minDate`, `disabled` props are all undefined', () => {
+    const wrapper = mount(<MonthRangePicker
+      initializeWith={date} />);
+    /* disabled indexes: none */
+    assert(_.isUndefined(wrapper.instance().getDisabledPositions()), 'return undefined');
+  });
+});
+
 describe('<MonthRangePicker />: isNextPageAvailable', () => {
   const date = moment('2015-05-01');
   /* current year 2015 */
