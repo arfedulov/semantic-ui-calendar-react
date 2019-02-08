@@ -293,3 +293,25 @@ moment.locale('ru');
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
+
+### MonthRangeInput
+
+| Prop | Description |
+| -----| ------------|
+| all that can be used with SUIR Form.Input | |
+| ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
+| ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
+| ``closable`` | {bool} If true, popup closes after selecting a month   |
+| ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
+| ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
+| ``dateFormat`` | {string} Moment date formatting string. Default: ``"MMM"`` |
+| ``maxDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Maximum date that can be selected. |
+| ``minDate`` | {string\|Moment\|Date\|string[]\|Moment[]\|Date[]} Minimum date that can be selected. |
+| ``mountNode`` | {any} The node where the picker should mount. |
+| ``onClear`` | {func} Called after clear icon has clicked. |
+| ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
+| ``clearIcon`` | {any} Optional Icon to display inside the clearable Input. |
+| ``pickerWidth`` | {string} Optional width value for picker (any string value that could be assigned to `style.width`). |
+| ``pickerStyle`` | {object} Optional `style` object for picker. |
+| ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
+| ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
