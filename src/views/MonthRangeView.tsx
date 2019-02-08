@@ -13,7 +13,7 @@ import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
 
-import {MONTH_CALENDAR_ROW_WIDTH} from './MonthView';
+import { MONTH_CALENDAR_ROW_WIDTH } from './MonthView';
 
 type MonthRangeViewProps =
   BaseCalendarViewProps

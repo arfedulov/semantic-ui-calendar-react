@@ -12,7 +12,10 @@ import {
   ProvideHeadingValue,
   RangeSelectionPicker,
 } from '../BasePicker';
-import {MONTHS_IN_YEAR, PAGE_WIDTH} from './MonthPicker';
+import {
+  MONTH_PAGE_WIDTH,
+  MONTHS_IN_YEAR,
+} from './const';
 import {
   buildCalendarValues,
   getDisabledPositions,
@@ -37,7 +40,7 @@ class MonthRangePicker
   implements ProvideHeadingValue {
   constructor(props) {
     super(props);
-    this.PAGE_WIDTH = PAGE_WIDTH;
+    this.PAGE_WIDTH = MONTH_PAGE_WIDTH;
   }
 
   public render() {

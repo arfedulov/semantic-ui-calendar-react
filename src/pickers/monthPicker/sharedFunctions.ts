@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import {MONTHS_IN_YEAR} from './MonthPicker';
+import { MONTHS_IN_YEAR } from './const';
 
 const buildCalendarValues = (): string[] => {
   /*

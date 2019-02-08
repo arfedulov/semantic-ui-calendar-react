@@ -13,15 +13,16 @@ import {
   SingleSelectionPicker,
 } from '../BasePicker';
 import {
+  MONTH_PAGE_WIDTH,
+  MONTHS_IN_YEAR,
+} from './const';
+import {
   buildCalendarValues,
   getDisabledPositions,
   getInitialDatePosition,
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
-
-export const MONTHS_IN_YEAR = 12;
-export const PAGE_WIDTH = 3;
 
 type MonthPickerProps = BasePickerProps
   & DisableValuesProps
@@ -46,7 +47,7 @@ class MonthPicker
   */
   constructor(props) {
     super(props);
-    this.PAGE_WIDTH = PAGE_WIDTH;
+    this.PAGE_WIDTH = MONTH_PAGE_WIDTH;
   }
 
   public render() {
