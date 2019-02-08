@@ -146,14 +146,14 @@ class MinutePicker
           .map((date) => getMinuteCellPosition(date.minute())));
     }
     if (minDate) {
-      if (minDate.isSame(this.state.date, 'day')) {
+      if (minDate.isSame(this.state.date, 'hour')) {
         disabledByMinDate = _.concat(
           disabledByMinDate,
           _.range(0 , minDate.minute()).map((m) => getMinuteCellPosition(m)));
       }
     }
     if (maxDate) {
-      if (maxDate.isSame(this.state.date, 'day')) {
+      if (maxDate.isSame(this.state.date, 'hour')) {
         disabledByMaxDate = _.concat(
           disabledByMaxDate,
           _.range(maxDate.minute() + MINUTES_STEP, 60).map((m) => getMinuteCellPosition(m)));
