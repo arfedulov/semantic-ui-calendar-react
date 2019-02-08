@@ -8,7 +8,7 @@ import {
   BasePickerOnChangeData,
 } from '../pickers/BasePicker';
 import DayPicker from '../pickers/dayPicker/DayPicker';
-import MonthPicker from '../pickers/MonthPicker';
+import MonthPicker from '../pickers/monthPicker/MonthPicker';
 import YearPicker from '../pickers/YearPicker';
 import InputView from '../views/InputView';
 import BaseInput, {

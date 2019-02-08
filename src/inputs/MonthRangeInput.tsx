@@ -1,46 +1,38 @@
 import * as _ from 'lodash';
-import * as moment from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import BaseInput, {BaseInputProps, BaseInputState, DateRelatedProps, MinMaxValueProps} from './BaseInput';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
-import MonthPicker, {
-  MonthPickerOnChangeData,
-} from '../pickers/monthPicker/MonthPicker';
+import MonthRangePicker, {MonthRangePickerOnChangeData} from '../pickers/monthPicker/MonthRangePicker';
 import InputView from '../views/InputView';
-import BaseInput, {
-  BaseInputProps,
-  BaseInputState,
-  DateRelatedProps,
-  DisableValuesProps,
-  MinMaxValueProps,
-} from './BaseInput';
+import {MonthInputProps} from './MonthInput';
 import {
   getInitializer,
-  parseArrayOrValue,
+  parseDatesRange,
   parseValue,
 } from './parse';
 
-export type MonthInputProps =
+const DATES_SEPARATOR = ' - ';
+
+export type MonthRangeInputProps =
   & BaseInputProps
   & DateRelatedProps
-  & DisableValuesProps
   & MinMaxValueProps;
 
-export interface MonthInputOnChangeData extends MonthInputProps {
+export interface MonthRangeInputOnChangeData extends MonthInputProps {
   value: string;
+  date: MonthRangePickerOnChangeData;
 }
 
-class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
+class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   public static readonly defaultProps = {
-    dateFormat: 'MMM',
+    dateFormat: 'MM-YYYY',
     icon: 'calendar',
     inline: false,
   };
 
   public static readonly propTypes = {
-    /** Called on selected value change. */
-    onChange: PropTypes.func.isRequired,
     /** Currently selected value. */
     value: PropTypes.string,
     /** Moment date formatting string. */
@@ -50,15 +42,6 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
       PropTypes.string,
       CustomPropTypes.momentObj,
       PropTypes.instanceOf(Date),
-    ]),
-    /** Date or list of dates that are displayed as disabled. */
-    disable: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      CustomPropTypes.momentObj,
-      PropTypes.arrayOf(CustomPropTypes.momentObj),
-      PropTypes.instanceOf(Date),
-      PropTypes.arrayOf(PropTypes.instanceOf(Date)),
     ]),
     /** Maximum date that can be selected. */
     maxDate: PropTypes.oneOfType([
@@ -101,58 +84,68 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
   public render() {
     const {
       value,
+      icon,
       dateFormat,
       initialDate,
-      disable,
       maxDate,
       minDate,
       closable,
       ...rest
     } = this.props;
 
+    const {
+      start,
+      end,
+    } = parseDatesRange(value, dateFormat);
+
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
+        icon={_.isBoolean(icon) && !icon ? undefined : icon}
         {...rest}
         value={value}
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
-        render={(pickerProps) => (
-          <MonthPicker
+        render={(pickerProps) =>
+          (<MonthRangePicker
             {...pickerProps}
-            inline={this.props.inline}
             isPickerInFocus={this.isPickerInFocus}
             isTriggerInFocus={this.isTriggerInFocus}
+            inline={this.props.inline}
             onCalendarViewMount={this.onCalendarViewMount}
             closePopup={this.closePopup}
-            hasHeader={false}
             onChange={this.handleSelect}
-            initializeWith={getInitializer({ initialDate, dateFormat })}
-            value={parseValue(value, dateFormat)}
-            disable={parseArrayOrValue(disable, dateFormat)}
-            maxDate={parseValue(maxDate, dateFormat)}
-            minDate={parseValue(minDate, dateFormat)} />
-        )}
+            dateFormat={dateFormat}
+            initializeWith={getInitializer({initialDate, dateFormat})}
+            start={start}
+            end={end}
+            minDate={parseValue(minDate, dateFormat)}
+            maxDate={parseValue(maxDate, dateFormat)}/>)
+        }
       />
     );
   }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-                          { value }: MonthPickerOnChangeData) => {
-    const date = moment({ month: value.month });
-    let output = '';
-    if (date.isValid()) {
-      output = date.format(this.props.dateFormat);
+                          {value}: MonthRangePickerOnChangeData) => {
+    const {dateFormat} = this.props;
+    const {
+      start,
+      end,
+    } = value;
+    let outputString = '';
+    if (start && end) {
+      outputString = `${start.format(dateFormat)}${DATES_SEPARATOR}${end.format(dateFormat)}`;
+    } else if (start) {
+      outputString = `${start.format(dateFormat)}${DATES_SEPARATOR}`;
     }
-    _.invoke(
-      this.props,
-      'onChange',
-      e, { ...this.props, value: output });
-    if (this.props.closable) {
+
+    _.invoke(this.props, 'onChange', e, {...this.props, value: outputString, date: value});
+    if (this.props.closable && start && end) {
       this.closePopup();
     }
   }
 }
 
-export default MonthInput;
+export default MonthRangeInput;

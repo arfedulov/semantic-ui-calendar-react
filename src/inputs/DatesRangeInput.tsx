@@ -1,6 +1,4 @@
 import * as _ from 'lodash';
-import * as moment from 'moment';
-import { Moment } from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
@@ -8,6 +6,7 @@ import CustomPropTypes from '../lib/CustomPropTypes';
 import InputView from '../views/InputView';
 import {
   getInitializer,
+  parseDatesRange,
   parseValue,
   parseArrayOrValue,
 } from './parse';
@@ -24,46 +23,6 @@ import BaseInput, {
 } from './BaseInput';
 
 const DATES_SEPARATOR = ' - ';
-
-function cleanDate(inputString: string, dateFormat: string): string {
-  const formattedDateLength = moment().format(dateFormat).length;
-
-  return inputString.trim().slice(0, formattedDateLength);
-}
-
-interface Range {
-  start?: Moment;
-  end?: Moment;
-}
-
-/**
- * Extract start and end dates from input string.
- * Return { start: Moment|undefined, end: Moment|undefined }
- * @param {string} inputString Row input string from user
- * @param {string} dateFormat Moment formatting string
- */
-function parseDatesRange(inputString: string, dateFormat: string): Range {
-  // dates range is "startDate - endDate"
-
-  const dates = inputString.split(DATES_SEPARATOR)
-    .map((date) => cleanDate(date, dateFormat));
-  const result: Range = {};
-  let start;
-  let end;
-
-  start = moment(dates[0], dateFormat);
-  if (dates.length === 2) {
-    end = moment(dates[1], dateFormat);
-  }
-  if (start && start.isValid()) {
-    result.start = start;
-  }
-  if (end && end.isValid()) {
-    result.end = end;
-  }
-
-  return result;
-}
 
 export type DatesRangeInputProps =
   & BaseInputProps

@@ -28,3 +28,8 @@ export {
   MonthInputProps,
   MonthInputOnChangeData,
 } from './inputs/MonthInput';
+export {
+  default as MonthRangeInput,
+  MonthRangeInputProps,
+  MonthRangeInputOnChangeData,
+} from './inputs/MonthRangeInput';

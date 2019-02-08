@@ -1,8 +1,7 @@
 import * as _ from 'lodash';
-import * as moment from 'moment';
 import * as React from 'react';
 
-import MonthView from '../views/MonthView';
+import MonthView from '../../views/MonthView';
 import {
   BasePickerOnChangeData,
   BasePickerProps,
@@ -12,10 +11,18 @@ import {
   OptionalHeaderProps,
   ProvideHeadingValue,
   SingleSelectionPicker,
-} from './BasePicker';
-
-const MONTHS_IN_YEAR = 12;
-const PAGE_WIDTH = 3;
+} from '../BasePicker';
+import {
+  MONTH_PAGE_WIDTH,
+  MONTHS_IN_YEAR,
+} from './const';
+import {
+  buildCalendarValues,
+  getDisabledPositions,
+  getInitialDatePosition,
+  isNextPageAvailable,
+  isPrevPageAvailable,
+} from './sharedFunctions';
 
 type MonthPickerProps = BasePickerProps
   & DisableValuesProps
@@ -40,7 +47,7 @@ class MonthPicker
   */
   constructor(props) {
     super(props);
-    this.PAGE_WIDTH = PAGE_WIDTH;
+    this.PAGE_WIDTH = MONTH_PAGE_WIDTH;
   }
 
   public render() {
@@ -86,11 +93,7 @@ class MonthPicker
   }
 
   protected buildCalendarValues(): string[] {
-    /*
-      Return array of months (strings) like ['Aug', 'Sep', ...]
-      that used to populate calendar's page.
-    */
-    return moment.monthsShort();
+    return buildCalendarValues();
   }
 
   protected getSelectableCellPositions(): number[] {
@@ -102,11 +105,8 @@ class MonthPicker
 
   protected getInitialDatePosition(): number {
     const selectable = this.getSelectableCellPositions();
-    if (selectable.indexOf(this.state.date.month()) < 0) {
-      return selectable[0];
-    }
 
-    return this.state.date.month();
+    return getInitialDatePosition(selectable, this.state.date);
   }
 
   protected getActiveCellPosition(): number {
@@ -122,43 +122,14 @@ class MonthPicker
   }
 
   protected getDisabledPositions(): number[] {
-    /*
-      Return position numbers of months that should be displayed as disabled
-      (position in array returned by `this.buildCalendarValues`).
-    */
-    let disabled = [];
-    if (_.isArray(this.props.enable)) {
-      const enabledMonthPositions = this.props.enable
-        .filter((monthMoment) => monthMoment.isSame(this.state.date, 'year'))
-        .map((monthMoment) => monthMoment.month());
-      disabled = disabled.concat(_.range(0, MONTHS_IN_YEAR)
-        .filter((monthPosition) => !_.includes(enabledMonthPositions, monthPosition)));
-    }
-    if (_.isArray(this.props.disable)) {
-      disabled = disabled.concat(this.props.disable
-        .filter((monthMoment) => monthMoment.year() === this.state.date.year())
-        .map((monthMoment) => monthMoment.month()));
-    }
-    if (!_.isNil(this.props.maxDate)) {
-      if (this.props.maxDate.year() === this.state.date.year()) {
-        disabled = disabled.concat(
-          _.range(this.props.maxDate.month() + 1, MONTHS_IN_YEAR));
-      }
-      if (this.props.maxDate.year() < this.state.date.year()) {
-        disabled = _.range(0, MONTHS_IN_YEAR);
-      }
-    }
-    if (!_.isNil(this.props.minDate)) {
-      if (this.props.minDate.year() === this.state.date.year()) {
-        disabled = disabled.concat(_.range(0, this.props.minDate.month()));
-      }
-      if (this.props.minDate.year() > this.state.date.year()) {
-        disabled = _.range(0, MONTHS_IN_YEAR);
-      }
-    }
-    if (disabled.length > 0) {
-      return _.uniq(disabled);
-    }
+    const {
+      maxDate,
+      minDate,
+      enable,
+      disable,
+    } = this.props;
+
+    return getDisabledPositions(enable, disable, maxDate, minDate, this.state.date);
   }
 
   protected isNextPageAvailable(): boolean {
@@ -166,17 +137,8 @@ class MonthPicker
       maxDate,
       enable,
     } = this.props;
-    if (_.isArray(enable)) {
-      return _.some(enable, (enabledMonth) => enabledMonth.isAfter(this.state.date, 'year'));
-    }
-    if (_.isNil(maxDate)) {
-      return true;
-    }
-    if (this.state.date.year() >= maxDate.year()) {
-      return false;
-    }
 
-    return true;
+    return isNextPageAvailable(maxDate, enable, this.state.date);
   }
 
   protected isPrevPageAvailable(): boolean {
@@ -184,17 +146,8 @@ class MonthPicker
       minDate,
       enable,
     } = this.props;
-    if (_.isArray(enable)) {
-      return _.some(enable, (enabledMonth) => enabledMonth.isBefore(this.state.date, 'year'));
-    }
-    if (_.isNil(minDate)) {
-      return true;
-    }
-    if (this.state.date.year() <= minDate.year()) {
-      return false;
-    }
 
-    return true;
+    return isPrevPageAvailable(minDate, enable, this.state.date);
   }
 
   protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {

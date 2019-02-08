@@ -108,3 +108,46 @@ export function dateValueToString(value: DateValue, dateFormat: string): string 
 
   return moment(value, dateFormat).format(dateFormat);
 }
+
+function cleanDate(inputString: string, dateFormat: string): string {
+  const formattedDateLength = moment().format(dateFormat).length;
+
+  return inputString.trim().slice(0, formattedDateLength);
+}
+
+interface Range {
+  start?: moment.Moment;
+  end?: moment.Moment;
+}
+
+/**
+ * Extract start and end dates from input string.
+ * Return { start: Moment|undefined, end: Moment|undefined }
+ * @param {string} inputString Row input string from user
+ * @param {string} dateFormat Moment formatting string
+ * @param {string} inputSeparator Separator for split inputString
+ */
+export function parseDatesRange(
+  inputString: string = '',
+  dateFormat: string = '',
+  inputSeparator: string = ' - ',
+): Range {
+  const dates = inputString.split(inputSeparator)
+    .map((date) => cleanDate(date, dateFormat));
+  const result: Range = {};
+  let start;
+  let end;
+
+  start = moment(dates[0], dateFormat);
+  if (dates.length === 2) {
+    end = moment(dates[1], dateFormat);
+  }
+  if (start && start.isValid()) {
+    result.start = start;
+  }
+  if (end && end.isValid()) {
+    result.end = end;
+  }
+
+  return result;
+}
