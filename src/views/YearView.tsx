@@ -1,5 +1,7 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import last from 'lodash/last';
+import first from 'lodash/first';
+
+import React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
@@ -37,7 +39,7 @@ class YearView extends BaseCalendarView<YearViewProps, any> {
       inline,
       ...rest
     } = this.props;
-    const headerTitle = `${_.first(values)} - ${_.last(values)}`;
+    const headerTitle = `${first(values)} - ${last(values)}`;
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>

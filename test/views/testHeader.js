@@ -1,6 +1,4 @@
 import { assert } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 import {
   shallow,
 } from 'enzyme';
@@ -17,8 +15,6 @@ import {
   HeaderRange,
   HeaderWeeks,
 } from '../../src/views/CalendarHeader';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('<HeaderWeeks />', () => {
   it('consists of proper elements', () => {

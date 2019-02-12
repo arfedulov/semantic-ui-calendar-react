@@ -1,5 +1,10 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import filter from 'lodash/filter';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import isArray from 'lodash/isArray';
+import some from 'lodash/some';
+
+import React from 'react';
 
 import DayView from '../../views/DayView';
 import { WEEKS_TO_DISPLAY } from '../../views/DayView';
@@ -102,9 +107,9 @@ class DayPicker
   }
 
   protected getSelectableCellPositions(): number[] {
-    return _.filter(
-      _.range(0, DAYS_ON_PAGE),
-      (d) => !_.includes(this.getDisabledPositions(), d),
+    return filter(
+      range(0, DAYS_ON_PAGE),
+      (d) => !includes(this.getDisabledPositions(), d),
     );
   }
 
@@ -122,7 +127,7 @@ class DayPicker
     if (this.props.value && this.props.value.isSame(this.state.date, 'month')) {
       const disabledPositions = this.getDisabledPositions();
       const active = this.buildCalendarValues()
-        .map((day, i) => _.includes(disabledPositions, i) ? undefined : day)
+        .map((day, i) => includes(disabledPositions, i) ? undefined : day)
         .indexOf(this.props.value.date().toString());
       if (active >= 0) {
         return active;
@@ -166,8 +171,8 @@ class DayPicker
       maxDate,
       enable,
     } = this.props;
-    if (_.isArray(enable)) {
-      return _.some(enable, (enabledDate) => enabledDate.isAfter(this.state.date, 'month'));
+    if (isArray(enable)) {
+      return some(enable, (enabledDate) => enabledDate.isAfter(this.state.date, 'month'));
     }
 
     return isNextPageAvailable(this.state.date, maxDate);
@@ -178,8 +183,8 @@ class DayPicker
       minDate,
       enable,
     } = this.props;
-    if (_.isArray(enable)) {
-      return _.some(enable, (enabledDate) => enabledDate.isBefore(this.state.date, 'month'));
+    if (isArray(enable)) {
+      return some(enable, (enabledDate) => enabledDate.isBefore(this.state.date, 'month'));
     }
 
     return isPrevPageAvailable(this.state.date, minDate);

@@ -1,5 +1,7 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import isString from 'lodash/isString';
+import invoke from 'lodash/invoke';
+
+import React from 'react';
 import {
   Form,
   FormInputProps,
@@ -32,7 +34,7 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
       ...rest
     } = this.props;
 
-    const ClearIcon = _.isString(clearIcon) ?
+    const ClearIcon = isString(clearIcon) ?
       <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
       <clearIcon.type {...clearIcon.props} link onClick={onClear} />
       ;
@@ -192,7 +194,7 @@ class InputView extends React.Component<InputViewProps, any> {
         inline={inlineLabel}
         onClear={(e) => (onClear || onChange)(e, { ...rest, value: '' })}
         onFocus={(e) => {
-          _.invoke(this.props, 'onFocus', e, this.props);
+          invoke(this.props, 'onFocus', e, this.props);
           openPopup();
         }}
         onBlur={onBlur}

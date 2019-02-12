@@ -1,7 +1,11 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
+import filter from 'lodash/filter';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import last from 'lodash/last';
+import isNil from 'lodash/isNil';
+import moment from 'moment';
 import { Moment } from 'moment';
-import * as React from 'react';
+import React from 'react';
 
 import { RangeIndexes } from '../../views/BaseCalendarView';
 import DatesRangeView from '../../views/DatesRangeView';
@@ -118,9 +122,9 @@ class DatesRangePicker
   }
 
   protected getSelectableCellPositions(): number[] {
-    return _.filter(
-      _.range(0, DAYS_ON_PAGE),
-      (d) => !_.includes(this.getDisabledPositions(), d),
+    return filter(
+      range(0, DAYS_ON_PAGE),
+      (d) => !includes(this.getDisabledPositions(), d),
     );
   }
 
@@ -146,8 +150,8 @@ class DatesRangePicker
     const fromCurrentMonthDayPositions = getDefaultEnabledDayPositions(allDays, date);
 
     const fromPrevMonthDates = getDatesFromPrevMonth(date, allDays, fromCurrentMonthDayPositions[0]);
-    const fromNextMonthDates = getDatesFromNextMonth(date, allDays, _.last(fromCurrentMonthDayPositions) + 1);
-    const fromCurrentMonthDates = _.range(1, this.state.date.daysInMonth() + 1);
+    const fromNextMonthDates = getDatesFromNextMonth(date, allDays, last(fromCurrentMonthDayPositions) + 1);
+    const fromCurrentMonthDates = range(1, this.state.date.daysInMonth() + 1);
 
     const prevMonth = date.clone();
     prevMonth.subtract(1, 'month');
@@ -244,9 +248,9 @@ class DatesRangePicker
       value: {},
     };
     const firstOnPage = parseInt(this.buildCalendarValues()[0], 10);
-    if (_.isNil(start) && _.isNil(end)) {
+    if (isNil(start) && isNil(end)) {
       data.value = { start: buildMoment(this.state.date, firstOnPage, itemPosition) };
-    } else if (!_.isNil(start) && _.isNil(end)) {
+    } else if (!isNil(start) && isNil(end)) {
       const selectedDate = buildMoment(this.state.date, firstOnPage, itemPosition);
       if (selectedDate.isAfter(start, 'date')) {
         data.value = {

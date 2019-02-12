@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 
 export function momentObj(props, propName, componentName) {
   if (props[propName]) {

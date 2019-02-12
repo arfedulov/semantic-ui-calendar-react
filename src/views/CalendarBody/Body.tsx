@@ -1,5 +1,7 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import isNil from 'lodash/isNil';
+import isArray from 'lodash/isArray';
+
+import React from 'react';
 import { Table } from 'semantic-ui-react';
 
 import { OnValueClickData } from '../BaseCalendarView';
@@ -86,10 +88,10 @@ function isActive(rowIndex: number,
                   rowWidth: number,
                   colIndex: number,
                   active: number | number[]): boolean {
-  if (_.isNil(active)) {
+  if (isNil(active)) {
     return false;
   }
-  if (_.isArray(active)) {
+  if (isArray(active)) {
     for (const activeIndex of (active as number[])) {
       if (rowIndex * rowWidth + colIndex === activeIndex) {
         return true;
@@ -104,7 +106,7 @@ function isHovered(rowIndex: number,
                    rowWidth: number,
                    colIndex: number,
                    hovered: number): boolean {
-  if (_.isNil(hovered)) {
+  if (isNil(hovered)) {
     return false;
   }
 
@@ -115,7 +117,7 @@ function isDisabled(rowIndex: number,
                     rowWidth: number,
                     colIndex: number,
                     disabledIndexes: number[]): boolean {
-  if (_.isNil(disabledIndexes) || disabledIndexes.length === 0) {
+  if (isNil(disabledIndexes) || disabledIndexes.length === 0) {
     return false;
   }
   for (const disabledIndex of disabledIndexes) {
@@ -144,7 +146,7 @@ function isMarked(rowIndex: number,
                   rowWidth: number,
                   colIndex: number,
                   markedIndexes: number[]): boolean {
-  if (_.isNil(markedIndexes) || markedIndexes.length === 0) {
+  if (isNil(markedIndexes) || markedIndexes.length === 0) {
     return false;
   }
   for (const markedIndex of markedIndexes) {

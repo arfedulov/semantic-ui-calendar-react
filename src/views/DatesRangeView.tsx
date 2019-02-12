@@ -1,5 +1,7 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import range from 'lodash/range';
+import isNil from 'lodash/isNil';
+
+import React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
@@ -17,16 +19,16 @@ import {
 
 import { findHTMLElement } from '../lib';
 
-const DAY_POSITIONS = _.range(WEEKS_TO_DISPLAY * 7);
+const DAY_POSITIONS = range(WEEKS_TO_DISPLAY * 7);
 
 function getActive(start: number, end: number): number | number[] | undefined {
-  if (_.isNil(start) && _.isNil(end)) {
+  if (isNil(start) && isNil(end)) {
     return;
   }
-  if (!_.isNil(start) && _.isNil(end)) {
+  if (!isNil(start) && isNil(end)) {
     return start;
   }
-  if (!_.isNil(start) && !_.isNil(end)) {
+  if (!isNil(start) && !isNil(end)) {
     return DAY_POSITIONS.slice(start, end + 1);
   }
 }

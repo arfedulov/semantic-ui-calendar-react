@@ -1,7 +1,7 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
+import invoke from 'lodash/invoke';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
 import MonthPicker, {
@@ -145,7 +145,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     if (date.isValid()) {
       output = date.format(this.props.dateFormat);
     }
-    _.invoke(
+    invoke(
       this.props,
       'onChange',
       e, { ...this.props, value: output });

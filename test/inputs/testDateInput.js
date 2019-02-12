@@ -1,16 +1,12 @@
 import { assert } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 import {
-  mount,
+  mount
 } from 'enzyme';
-import * as sinon from 'sinon';
-import * as React from 'react';
-import * as _ from 'lodash';
+import sinon from 'sinon';
+import React from 'react';
+import _ from 'lodash';
 
 import DateInput from '../../src/inputs/DateInput';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('<DateInput />: handleSelect', () => {
   it('call `onChange` when in `day` mode (default)', () => {
