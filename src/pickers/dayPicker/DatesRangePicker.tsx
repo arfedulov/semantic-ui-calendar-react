@@ -62,6 +62,7 @@ class DatesRangePicker
       maxDate,
       marked,
       markColor,
+      localization,
       ...rest
     } = this.props;
 
@@ -84,7 +85,8 @@ class DatesRangePicker
         activeRange={this.getActiveCellsPositions()}
         markedItemIndexes={this.getMarkedPositions()}
         markColor={markColor}
-        disabledItemIndexes={this.getDisabledPositions()} />
+        disabledItemIndexes={this.getDisabledPositions()}
+        localization={localization} />
     );
   }
 
@@ -238,6 +240,7 @@ class DatesRangePicker
     const {
       start,
       end,
+      localization,
     } = this.props;
     const data: DatesRangePickerOnChangeData = {
       ...this.props,
@@ -245,9 +248,9 @@ class DatesRangePicker
     };
     const firstOnPage = parseInt(this.buildCalendarValues()[0], 10);
     if (_.isNil(start) && _.isNil(end)) {
-      data.value = { start: buildMoment(this.state.date, firstOnPage, itemPosition) };
+      data.value = { start: buildMoment(this.state.date, firstOnPage, itemPosition, localization) };
     } else if (!_.isNil(start) && _.isNil(end)) {
-      const selectedDate = buildMoment(this.state.date, firstOnPage, itemPosition);
+      const selectedDate = buildMoment(this.state.date, firstOnPage, itemPosition, localization);
       if (selectedDate.isAfter(start, 'date')) {
         data.value = {
           start,
@@ -330,13 +333,21 @@ function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
 }
 
 /** Build moment based on current page and date position on that page. */
-function buildMoment(pageReferenceDate: Moment, firstOnPage: number, dateToBuildPosition: number): Moment {
+function buildMoment(pageReferenceDate: Moment, firstOnPage: number, dateToBuildPosition: number, localization: string): Moment {
   let result;
   if (firstOnPage === 1/* page starts from first day in month */) {
-    result = moment({ year: pageReferenceDate.year(), month: pageReferenceDate.month(), date: firstOnPage });
+    result =
+    localization
+    ? moment({ year: pageReferenceDate.year(), month: pageReferenceDate.month(), date: firstOnPage }).locale(localization)
+    : moment({ year: pageReferenceDate.year(), month: pageReferenceDate.month(), date: firstOnPage });
   } else {
     /* page starts from day in previous month */
-    result = moment({ year: pageReferenceDate.month() ? pageReferenceDate.year() : pageReferenceDate.year() - 1,
+    result =
+    localization
+    ? moment({ year: pageReferenceDate.month() ? pageReferenceDate.year() : pageReferenceDate.year() - 1,
+      month: (pageReferenceDate.month() + 11) % 12,
+      date: firstOnPage}).locale(localization)
+    : moment({ year: pageReferenceDate.month() ? pageReferenceDate.year() : pageReferenceDate.year() - 1,
       month: (pageReferenceDate.month() + 11) % 12,
       date: firstOnPage});
   }

@@ -60,6 +60,7 @@ class MonthRangeView extends BaseCalendarView<MonthRangeViewProps, any> {
       onCellHover,
       onMount,
       inline,
+      localization,
       ...rest
     } = this.props;
     const {
@@ -78,7 +79,8 @@ class MonthRangeView extends BaseCalendarView<MonthRangeViewProps, any> {
           hasNextPage={hasNextPage}
           hasPrevPage={hasPrevPage}
           title={currentHeadingValue}
-          onHeaderClick={onHeaderClick}/>
+          onHeaderClick={onHeaderClick}
+          localization={localization}/>
         <Body
           width={MONTH_CALENDAR_ROW_WIDTH}
           data={values}

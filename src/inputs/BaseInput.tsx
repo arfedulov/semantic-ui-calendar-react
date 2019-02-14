@@ -59,6 +59,8 @@ export interface BaseInputProps {
   duration?: number;
   /** Named animation event to used. Must be defined in CSS. */
   animation?: SemanticTRANSITIONS;
+  /** Moment date localization */
+  localization?: string;
 }
 
 export interface MarkedValuesProps {

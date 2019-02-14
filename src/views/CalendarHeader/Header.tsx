@@ -28,6 +28,8 @@ export interface HeaderProps {
   rangeRowContent?: string;
   /** Called after click on calendar header. */
   onHeaderClick?: () => void;
+  /** Moment date localization */
+  localization?: string;
 }
 
 function Header(props: HeaderProps) {
@@ -41,6 +43,7 @@ function Header(props: HeaderProps) {
     onHeaderClick,
     width,
     title,
+    localization,
   } = props;
 
   const cellStyle = {
@@ -86,7 +89,7 @@ function Header(props: HeaderProps) {
             name='chevron right' />
         </Table.HeaderCell>
       </Table.Row>
-      { displayWeeks && <HeaderWeeks /> }
+      { displayWeeks && <HeaderWeeks localization={localization} /> }
     </Table.Header>
   );
 }

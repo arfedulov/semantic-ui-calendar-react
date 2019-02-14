@@ -105,6 +105,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
       initialDate,
       dateFormat,
       closable,
+      localization,
       ...rest
     } = this.props;
 
@@ -112,6 +113,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
       dateParams: { year: parseInt(value, 10) },
       initialDate,
       dateFormat,
+      localization,
     });
 
     return (
@@ -146,7 +148,8 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
                           { value }: YearPickerOnChangeData) => {
-    const date = moment({ year: value.year });
+    const { localization } = this.props;
+    const date = localization ? moment({ year: value.year }).locale(localization) : moment({ year: value.year });
     let output = '';
     if (date.isValid()) {
       output = date.format(this.props.dateFormat);

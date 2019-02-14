@@ -159,6 +159,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       value,
       timeFormat,
       inline,
+      localization,
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat]);
     const pickerProps = {
@@ -171,11 +172,12 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       pickerStyle,
       onHeaderClick: () => undefined,
       closePopup: this.closePopup,
-      initializeWith: getInitializer({ initialDate: currentValue, dateFormat: TIME_FORMAT[timeFormat] }),
+      initializeWith: getInitializer({ initialDate: currentValue, dateFormat: TIME_FORMAT[timeFormat], localization }),
       value: currentValue,
       onChange: this.handleSelect,
       timeFormat,
       tabIndex,
+      localization,
     };
     if (this.state.mode === 'hour') {
       return <HourPicker {...pickerProps} />;

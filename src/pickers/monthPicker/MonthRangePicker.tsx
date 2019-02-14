@@ -58,13 +58,14 @@ class MonthRangePicker
       end,
       minDate,
       maxDate,
+      localization,
       ...rest
     } = this.props;
 
     return (
       <MonthRangeView
         {...rest}
-        values={buildCalendarValues()}
+        values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
         onCellHover={this.onHoveredCellPositionChange}
@@ -78,7 +79,8 @@ class MonthRangePicker
         currentHeadingValue={this.getCurrentDate()}
         currentRangeHeadingValue={this.getSelectedRange()}
         activeRange={this.getActiveCellsPositions()}
-        disabledItemIndexes={this.getDisabledPositions()}/>
+        disabledItemIndexes={this.getDisabledPositions()}
+        localization={localization}/>
     );
   }
 
@@ -88,7 +90,8 @@ class MonthRangePicker
   }
 
   protected buildCalendarValues(): string[] {
-    return buildCalendarValues();
+    const { localization } = this.props;
+    return buildCalendarValues(localization);
   }
 
   protected getSelectableCellPositions(): number[] {
@@ -169,15 +172,25 @@ class MonthRangePicker
     const {
       start,
       end,
+      localization
     } = this.props;
     const data: MonthRangePickerOnChangeData = {
       ...this.props,
       value: {},
     };
     if (_.isNil(start) && _.isNil(end)) {
-      data.value = {start: moment({year: this.state.date.year(), month: itemPosition, date: 1})};
+      data.value =
+      localization
+      ? {start: moment({year: this.state.date.year(), month: itemPosition, date: 1}).locale(localization)}
+      : {start: moment({year: this.state.date.year(), month: itemPosition, date: 1})};
     } else if (!_.isNil(start) && _.isNil(end)) {
-      data.value = {
+      data.value =
+      localization
+      ? {
+        start,
+        end: moment({year: this.state.date.year(), month: itemPosition, date: 1}).locale(localization).endOf('month'),
+      }
+      : {
         start,
         end: moment({year: this.state.date.year(), month: itemPosition, date: 1}).endOf('month'),
       };

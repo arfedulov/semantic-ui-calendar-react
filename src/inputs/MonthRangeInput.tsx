@@ -90,6 +90,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
       maxDate,
       minDate,
       closable,
+      localization,
       ...rest
     } = this.props;
 
@@ -117,11 +118,12 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
             closePopup={this.closePopup}
             onChange={this.handleSelect}
             dateFormat={dateFormat}
-            initializeWith={getInitializer({initialDate, dateFormat})}
+            initializeWith={getInitializer({initialDate, dateFormat, localization})}
             start={start}
             end={end}
             minDate={parseValue(minDate, dateFormat)}
-            maxDate={parseValue(maxDate, dateFormat)}/>)
+            maxDate={parseValue(maxDate, dateFormat)}
+            localization={localization}/>)
         }
       />
     );

@@ -203,6 +203,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       closable,
       markColor,
       marked,
+      localization,
       ...rest
     } = this.props;
 
@@ -249,6 +250,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       inline,
       marked,
       markColor,
+      localization,
     } = this.props;
     const pickerProps = {
       isPickerInFocus: this.isPickerInFocus,
@@ -261,11 +263,12 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       pickerStyle,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams() }),
+      initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams(), localization }),
       value: parseValue(chooseValue(value, initialDate), dateFormat),
       enable: parseArrayOrValue(enable, dateFormat),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
+      localization,
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat);
     const markedParsed = parseArrayOrValue(marked, dateFormat);

@@ -114,6 +114,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       closable,
       marked,
       markColor,
+      localization,
       ...rest
     } = this.props;
 
@@ -142,13 +143,14 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
             closePopup={this.closePopup}
             onChange={this.handleSelect}
             dateFormat={dateFormat}
-            initializeWith={getInitializer({ initialDate, dateFormat })}
+            initializeWith={getInitializer({ initialDate, dateFormat, localization })}
             start={start}
             end={end}
             marked={markedParsed}
             markColor={markColor}
             minDate={parseValue(minDate, dateFormat)}
-            maxDate={parseValue(maxDate, dateFormat)} />)
+            maxDate={parseValue(maxDate, dateFormat)}
+            localization={localization} />)
         }
       />
     );

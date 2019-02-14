@@ -36,6 +36,7 @@ class HourView extends BaseCalendarView<HourViewProps, any> {
       onCellHover,
       onMount,
       inline,
+      localization,
       ...rest
     } = this.props;
     const headerProps: HeaderProps = {
@@ -47,6 +48,7 @@ class HourView extends BaseCalendarView<HourViewProps, any> {
       title: currentHeadingValue,
       width: HOUR_CALENDAR_ROW_WIDTH,
       displayWeeks: false,
+      localization,
     };
 
     return (

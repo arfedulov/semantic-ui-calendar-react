@@ -6,14 +6,13 @@ import { Table } from 'semantic-ui-react';
  *
  * getWeekDays() --> ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Su']
  */
-const getWeekDays = (m) => {
+const getWeekDays = (m, localization) => {
   const weekDays = [];
-  const day = m().startOf('week');
+  const day = localization ? m().locale(localization).startOf('week') : m().startOf('week');
   for (let i = 0; i < 7; i++) {
     weekDays[i] = day.format('dd');
     day.add(1, 'd');
   }
-
   return weekDays;
 };
 
@@ -22,7 +21,7 @@ const cellStyle = {
   borderBottom: '1px solid rgba(34,36,38,.1)',
 };
 
-const getWeekDayCells = (m) => getWeekDays(m).map((weekDay) => (
+const getWeekDayCells = (m, localization) => getWeekDays(m, localization).map((weekDay) => (
   <Table.HeaderCell
     key={weekDay}
     style={cellStyle}
@@ -31,10 +30,19 @@ const getWeekDayCells = (m) => getWeekDays(m).map((weekDay) => (
   </Table.HeaderCell>
 ));
 
-function HeaderWeeks() {
+export interface HeaderWeeksProps {
+  /** Moment date localization */
+  localization?: string;
+}
+
+function HeaderWeeks(props: HeaderWeeksProps) {
+  const {
+    localization,
+  } = props;
+
   return (
     <Table.Row>
-      { getWeekDayCells(moment) }
+      { getWeekDayCells(moment, localization) }
     </Table.Row>
   );
 }
