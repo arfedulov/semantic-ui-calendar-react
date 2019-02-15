@@ -1,4 +1,7 @@
 import { assert } from 'chai';
+import * as Enzyme from 'enzyme';
+import * as Adapter from 'enzyme-adapter-react-16';
+import moment from 'moment';
 import {
   shallow,
 } from 'enzyme';
@@ -22,6 +25,13 @@ describe('<HeaderWeeks />', () => {
     assert(wrapper.is(Table.Row), 'the top node is <Table.Row />');
     assert(wrapper.children().every(Table.HeaderCell), 'top node contains nodes: <Table.HeaderCell />');
     assert.equal(wrapper.children().getElements().length, 7, 'top node contains 7 nodes');
+  });
+
+  it('has proper localization', () => {
+    const wrapper = shallow(<HeaderWeeks localization='ru' />);
+    const weekArray = wrapper.children().getElements().map(element => moment(element.key, 'ddd dddd', 'ru').isValid());
+    assert.notInclude(weekArray, false, 'days of the week parsed correctly');
+    assert.equal(weekArray.length, 7, 'top node contains 7 nodes');
   });
 
   it('has proper styling', () => {

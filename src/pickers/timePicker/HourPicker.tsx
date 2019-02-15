@@ -71,6 +71,7 @@ class HourPicker
       maxDate,
       disable,
       timeFormat,
+      localization,
       ...rest
     } = this.props;
 
@@ -90,7 +91,8 @@ class HourPicker
         onCellHover={this.onHoveredCellPositionChange}
         disabledItemIndexes={this.getDisabledPositions()}
         activeItemIndex={this.getActiveCellPosition()}
-        currentHeadingValue={this.getCurrentDate()} />
+        currentHeadingValue={this.getCurrentDate()}
+        localization={localization}/>
     );
   }
 

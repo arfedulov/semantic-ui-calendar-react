@@ -107,6 +107,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
       maxDate,
       minDate,
       closable,
+      localization,
       ...rest
     } = this.props;
 
@@ -128,11 +129,12 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
             closePopup={this.closePopup}
             hasHeader={false}
             onChange={this.handleSelect}
-            initializeWith={getInitializer({ initialDate, dateFormat })}
+            initializeWith={getInitializer({ initialDate, dateFormat, localization })}
             value={parseValue(value, dateFormat)}
             disable={parseArrayOrValue(disable, dateFormat)}
             maxDate={parseValue(maxDate, dateFormat)}
-            minDate={parseValue(minDate, dateFormat)} />
+            minDate={parseValue(minDate, dateFormat)}
+            localization={localization} />
         )}
       />
     );
@@ -140,7 +142,8 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
                           { value }: MonthPickerOnChangeData) => {
-    const date = moment({ month: value.month });
+    const { localization } = this.props;
+    const date = localization ? moment({ month: value.month }).locale(localization) : moment({ month: value.month });
     let output = '';
     if (date.isValid()) {
       output = date.format(this.props.dateFormat);

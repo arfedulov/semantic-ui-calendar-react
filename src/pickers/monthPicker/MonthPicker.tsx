@@ -68,6 +68,7 @@ class MonthPicker
       enable,
       minDate,
       maxDate,
+      localization,
       ...rest
     } = this.props;
 
@@ -87,7 +88,8 @@ class MonthPicker
         disabledItemIndexes={this.getDisabledPositions()}
         activeItemIndex={this.getActiveCellPosition()}
         hoveredItemIndex={this.state.hoveredCellPosition}
-        currentHeadingValue={this.getCurrentDate()} />
+        currentHeadingValue={this.getCurrentDate()}
+        localization={localization} />
     );
   }
 
@@ -97,7 +99,8 @@ class MonthPicker
   }
 
   protected buildCalendarValues(): string[] {
-    return buildCalendarValues();
+    const { localization } = this.props;
+    return buildCalendarValues(localization);
   }
 
   protected getSelectableCellPositions(): number[] {

@@ -36,6 +36,7 @@ class MonthView extends BaseCalendarView<MonthViewProps, any> {
       hoveredItemIndex,
       onMount,
       inline,
+      localization,
       ...rest
     } = this.props;
     const headerProps: HeaderProps = {
@@ -47,6 +48,7 @@ class MonthView extends BaseCalendarView<MonthViewProps, any> {
       title: currentHeadingValue,
       displayWeeks: false,
       width: MONTH_CALENDAR_ROW_WIDTH,
+      localization,
     };
 
     return (

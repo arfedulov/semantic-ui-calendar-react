@@ -37,6 +37,7 @@ class YearView extends BaseCalendarView<YearViewProps, any> {
       onCellHover,
       onMount,
       inline,
+      localization,
       ...rest
     } = this.props;
     const headerTitle = `${first(values)} - ${last(values)}`;
@@ -51,7 +52,8 @@ class YearView extends BaseCalendarView<YearViewProps, any> {
           hasPrevPage={hasPrevPage}
           onHeaderClick={onHeaderClick}
           width={YEAR_CALENDAR_ROW_WIDTH}
-          displayWeeks={false} />
+          displayWeeks={false}
+          localization={localization} />
         <Body
           width={YEAR_CALENDAR_ROW_WIDTH}
           data={values}

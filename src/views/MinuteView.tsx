@@ -36,6 +36,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       onCellHover,
       onMount,
       inline,
+      localization,
       ...rest
     } = this.props;
     const headerProps: HeaderProps = {
@@ -47,6 +48,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       title: currentHeadingValue,
       width: MINUTE_CALENDAR_ROW_WIDTH,
       displayWeeks: false,
+      localization,
     };
 
     return (

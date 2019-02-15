@@ -71,6 +71,7 @@ class MinutePicker
       maxDate,
       disable,
       timeFormat,
+      localization,
       ...rest
     } = this.props;
 
@@ -90,7 +91,8 @@ class MinutePicker
         hasPrevPage={this.isPrevPageAvailable()}
         disabledItemIndexes={this.getDisabledPositions()}
         currentHeadingValue={this.getCurrentDate()}
-        activeItemIndex={this.getActiveCellPosition()} />
+        activeItemIndex={this.getActiveCellPosition()}
+        localization={localization}/>
     );
   }
 

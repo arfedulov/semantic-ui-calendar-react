@@ -288,6 +288,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       inline,
       marked,
       markColor,
+      localization,
     } = this.props;
     const dateTimeFormat = this.getDateTimeFormat();
     const pickerProps = {
@@ -301,12 +302,13 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: getInitializer({ initialDate, dateFormat: dateTimeFormat, dateParams: this.getDateParams() }),
+      initializeWith: getInitializer({ initialDate, dateFormat: dateTimeFormat, dateParams: this.getDateParams(), localization }),
       value: parseValue(chooseValue(value, initialDate), dateTimeFormat),
       minDate: parseValue(minDate, dateFormat),
       maxDate: parseValue(maxDate, dateFormat),
       marked: parseArrayOrValue(marked, dateFormat),
       markColor,
+      localization,
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat);
     const { mode } = this.state;

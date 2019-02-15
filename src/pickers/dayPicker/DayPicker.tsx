@@ -68,6 +68,7 @@ class DayPicker
       maxDate,
       marked,
       markColor,
+      localization,
       ...rest
     } = this.props;
 
@@ -89,7 +90,8 @@ class DayPicker
         disabledItemIndexes={this.getDisabledPositions()}
         activeItemIndex={this.getActiveCellPosition()}
         markedItemIndexes={this.getMarkedPositions()}
-        markColor={markColor} />
+        markColor={markColor}
+        localization={localization} />
     );
   }
 

@@ -66,6 +66,7 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
       inline,
       markColor,
       markedItemIndexes,
+      localization,
       ...rest
     } = this.props;
     const {
@@ -84,7 +85,8 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
           hasNextPage={hasNextPage}
           hasPrevPage={hasPrevPage}
           title={currentHeadingValue}
-          onHeaderClick={onHeaderClick} />
+          onHeaderClick={onHeaderClick}
+          localization={localization} />
         <Body
           width={DAY_CALENDAR_ROW_WIDTH}
           data={values}

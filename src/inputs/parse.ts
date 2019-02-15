@@ -62,6 +62,7 @@ interface GetInitializerParams {
   initialDate?: ParseValueData;
   dateFormat?: string;
   dateParams?: DateParams;
+  localization?: string;
 }
 
 /** Create moment.
@@ -74,9 +75,10 @@ export function getInitializer(context: GetInitializerParams): moment.Moment {
     dateParams,
     initialDate,
     dateFormat,
+    localization,
   } = context;
   if (dateParams) {
-    const parsedParams = moment(dateParams);
+    const parsedParams = localization ? moment(dateParams).locale(localization) : moment(dateParams);
     if (parsedParams.isValid()) {
       return parsedParams;
     }
@@ -86,7 +88,7 @@ export function getInitializer(context: GetInitializerParams): moment.Moment {
     return parsedInitialDate;
   }
 
-  return moment();
+  return localization ? moment().locale(localization) : moment();
 }
 
 type InitialDate = string | moment.Moment | Date;

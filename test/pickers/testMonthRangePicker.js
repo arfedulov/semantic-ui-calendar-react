@@ -28,6 +28,15 @@ describe('<MonthRangePicker />: buildCalendarValues', () => {
       assert(_.isString(month), 'contains strings');
     });
   });
+
+  it('return array of localized strings', () => {
+    const wrapper = mount(<MonthRangePicker localization='ru' initializeWith={date} />);
+    assert(_.isArray(wrapper.instance().buildCalendarValues()), 'return array');
+    wrapper.instance().buildCalendarValues().forEach((month) => {
+      assert(_.isString(month), 'contains strings');
+      assert.isTrue(moment(month, 'MMM MMMM', 'ru').isValid(), 'localized month parsed correctly');
+    });
+  });
 });
 
 describe('<MonthRangePicker />: getActiveCellPosition', () => {

@@ -40,6 +40,7 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
       inline,
       markedItemIndexes,
       markColor,
+      localization,
       ...rest
     } = this.props;
 
@@ -53,7 +54,8 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
           hasNextPage={hasNextPage}
           hasPrevPage={hasPrevPage}
           title={currentHeadingValue}
-          onHeaderClick={onHeaderClick} />
+          onHeaderClick={onHeaderClick}
+          localization={localization} />
         <Body
           width={DAY_CALENDAR_ROW_WIDTH}
           data={values}

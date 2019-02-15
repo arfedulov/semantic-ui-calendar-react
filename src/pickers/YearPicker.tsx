@@ -61,6 +61,7 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
       enable,
       minDate,
       maxDate,
+      localization,
       ...rest
     } = this.props;
 
@@ -79,7 +80,8 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
         hasPrevPage={this.isPrevPageAvailable()}
         hasNextPage={this.isNextPageAvailable()}
         disabledItemIndexes={this.getDisabledPositions()}
-        activeItemIndex={this.getActiveCellPosition()} />
+        activeItemIndex={this.getActiveCellPosition()}
+        localization={localization} />
     );
   }
 
