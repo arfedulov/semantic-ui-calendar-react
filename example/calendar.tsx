@@ -295,14 +295,6 @@ class DateTimeFormInline extends React.Component<any, any> {
           name='monthRange'
           onChange={this.handleChange}
         />
-        <MonthRangeInput
-          inline
-          className='example-calendar-input'
-          value={this.state.monthRange}
-          name='monthRange'
-          onChange={this.handleChange}
-          localization='ru'
-        />
       </Form>
     );
   }

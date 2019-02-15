@@ -149,6 +149,12 @@ moment.locale('ru');
 
 ```
 
+You can also set locale for *Input component locally using ``localization`` prop.
+
+```jsx
+<DateInput localization='ru' />
+```
+
 # Supported elements
 
 ### DateInput
@@ -179,6 +185,7 @@ moment.locale('ru');
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 | ``marked`` | {moment\|Date\|moment[]\|Date[]} Date or list of dates that are displayed as marked |
 | ``markColor`` | {string\|SemanticCOLORs} String specifying the mark color. Must be one of the Semantic UI colors |
+| ``localization`` | {string} Sets Moment date locale locally for this component. |
 
 ### TimeInput
 
@@ -200,6 +207,7 @@ moment.locale('ru');
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
+| ``localization`` | {string} Sets Moment date locale locally for this component. |
 
 ### DateTimeInput
 
@@ -232,6 +240,7 @@ moment.locale('ru');
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 | ``marked`` | {moment\|Date\|moment[]\|Date[]} Date or list of dates that are displayed as marked |
 | ``markColor`` | {string\|SemanticCOLORs} String specifying the mark color. Must be one of the Semantic UI colors |
+| ``localization`` | {string} Sets Moment date locale locally for this component. |
 
 ### DatesRangeInput
 
@@ -257,6 +266,7 @@ moment.locale('ru');
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 | ``marked`` | {moment\|Date\|moment[]\|Date[]} Date or list of dates that are displayed as marked |
 | ``markColor`` | {string\|SemanticCOLORs} String specifying the mark color. Must be one of the Semantic UI colors |
+| ``localization`` | {string} Sets Moment date locale locally for this component. |
 
 ### YearInput
 
@@ -276,6 +286,7 @@ moment.locale('ru');
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
+| ``localization`` | {string} Sets Moment date locale locally for this component. |
 
 ### MonthInput
 
@@ -299,6 +310,7 @@ moment.locale('ru');
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
+| ``localization`` | {string} Sets Moment date locale locally for this component. |
 
 ### MonthRangeInput
 
@@ -321,3 +333,4 @@ moment.locale('ru');
 | ``pickerStyle`` | {object} Optional `style` object for picker. |
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
+| ``localization`` | {string} Sets Moment date locale locally for this component. |
