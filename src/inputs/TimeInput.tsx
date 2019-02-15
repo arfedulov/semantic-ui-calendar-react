@@ -87,6 +87,8 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    /** Moment date localization. */
+    localization: PropTypes.string,
   };
 
   constructor(props) {

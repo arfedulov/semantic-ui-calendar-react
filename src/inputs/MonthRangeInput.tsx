@@ -73,6 +73,8 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    /** Moment date localization. */
+    localization: PropTypes.string,
   };
 
   constructor(props) {

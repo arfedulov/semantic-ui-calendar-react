@@ -95,6 +95,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       PropTypes.arrayOf(CustomPropTypes.dateObject),
     ]),
     markColor: PropTypes.string,
+    /** Moment date localization. */
+    localization: PropTypes.string,
   };
 
   constructor(props) {
