@@ -236,6 +236,7 @@ class InputView extends React.Component<InputViewProps, any> {
           style={popupStyle}
           context={this.inputNode}
           on='hover'
+          mountNode={mountNode}
         >
           <div
             onBlur={onBlur}
