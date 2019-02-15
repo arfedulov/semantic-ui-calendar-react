@@ -1,17 +1,13 @@
 import { assert } from 'chai';
-import * as Enzyme from 'enzyme';
-import * as Adapter from 'enzyme-adapter-react-16';
 import {
   mount,
 } from 'enzyme';
 import * as sinon from 'sinon';
 import * as React from 'react';
 import * as _ from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 
 import HourPicker from '../../../src/pickers/timePicker/HourPicker';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('<HourPicker />', () => {
   it('initialized with moment', () => {

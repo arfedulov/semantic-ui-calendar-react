@@ -1,7 +1,11 @@
-import * as _ from 'lodash';
+import filter from 'lodash/filter';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import isNil from 'lodash/isNil';
+
 import {Moment} from 'moment';
-import * as moment from 'moment';
-import * as React from 'react';
+import moment from 'moment';
+import React from 'react';
 
 import {RangeIndexes} from '../../views/BaseCalendarView';
 import MonthRangeView from '../../views/MonthRangeView';
@@ -92,9 +96,9 @@ class MonthRangePicker
   }
 
   protected getSelectableCellPositions(): number[] {
-    return _.filter(
-      _.range(0, MONTHS_IN_YEAR),
-      (d) => !_.includes(this.getDisabledPositions(), d),
+    return filter(
+      range(0, MONTHS_IN_YEAR),
+      (d) => !includes(this.getDisabledPositions(), d),
     );
   }
 
@@ -174,9 +178,9 @@ class MonthRangePicker
       ...this.props,
       value: {},
     };
-    if (_.isNil(start) && _.isNil(end)) {
+    if (isNil(start) && isNil(end)) {
       data.value = {start: moment({year: this.state.date.year(), month: itemPosition, date: 1})};
-    } else if (!_.isNil(start) && _.isNil(end)) {
+    } else if (!isNil(start) && isNil(end)) {
       data.value = {
         start,
         end: moment({year: this.state.date.year(), month: itemPosition, date: 1}).endOf('month'),

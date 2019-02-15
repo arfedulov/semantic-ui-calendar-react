@@ -1,7 +1,6 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
 import YearPicker, {

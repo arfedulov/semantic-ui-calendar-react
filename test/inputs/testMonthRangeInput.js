@@ -1,16 +1,12 @@
 import {assert} from "chai";
-import * as Enzyme from "enzyme";
-import * as Adapter from "enzyme-adapter-react-16";
 import {
   mount
 } from "enzyme";
-import * as moment from "moment";
+import moment from "moment";
 import * as sinon from "sinon";
 import * as React from "react";
 import * as _ from "lodash";
 import MonthRangeInput from "../../src/inputs/MonthRangeInput";
-
-Enzyme.configure({adapter: new Adapter()});
 
 describe("<MonthRangeInput />: handleSelect_from", () => {
   it("call `onChange`", () => {

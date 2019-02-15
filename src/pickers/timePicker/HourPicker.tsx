@@ -1,5 +1,12 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import filter from 'lodash/filter';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import isArray from 'lodash/isArray';
+import concat from 'lodash/concat';
+import uniq from 'lodash/uniq';
+import sortBy from 'lodash/sortBy';
+
+import React from 'react';
 
 import HourView from '../../views/HourView';
 import {
@@ -97,15 +104,15 @@ class HourPicker
       Return array of hours (strings) like ['16:00', '17:00', ...]
       that used to populate calendar's page.
     */
-    return _.range(0, 24).map((h) => {
+    return range(0, 24).map((h) => {
       return `${h < 10 ? '0' : ''}${h}`;
     }).map((hour) => buildTimeStringWithSuffix(hour, '00', this.props.timeFormat));
   }
 
   protected getSelectableCellPositions(): number[] {
-    return _.filter(
-      _.range(0, HOURS_ON_PAGE),
-      (h) => !_.includes(this.getDisabledPositions(), h),
+    return filter(
+      range(0, HOURS_ON_PAGE),
+      (h) => !includes(this.getDisabledPositions(), h),
     );
   }
 
@@ -151,29 +158,29 @@ class HourPicker
     let disabledByMaxDate = [];
     let disabledByMinDate = [];
 
-    if (_.isArray(disable)) {
-      disabledByDisable = _.concat(
+    if (isArray(disable)) {
+      disabledByDisable = concat(
         disabledByDisable,
         disable.filter((date) => date.isSame(this.state.date, 'day'))
           .map((date) => date.hour()));
     }
     if (minDate) {
       if (minDate.isSame(this.state.date, 'day')) {
-        disabledByMinDate = _.concat(
+        disabledByMinDate = concat(
           disabledByMinDate,
-          _.range(0 , minDate.hour()));
+          range(0 , minDate.hour()));
       }
     }
     if (maxDate) {
       if (maxDate.isSame(this.state.date, 'day')) {
-        disabledByMaxDate = _.concat(
+        disabledByMaxDate = concat(
           disabledByMaxDate,
-          _.range(maxDate.hour() + 1, 24));
+          range(maxDate.hour() + 1, 24));
       }
     }
-    const result = _.sortBy(
-      _.uniq(
-        _.concat(disabledByDisable, disabledByMaxDate, disabledByMinDate)));
+    const result = sortBy(
+      uniq(
+        concat(disabledByDisable, disabledByMaxDate, disabledByMinDate)));
     if (result.length > 0) {
       return result;
     }
