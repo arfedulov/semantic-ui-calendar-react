@@ -252,8 +252,7 @@ class DatesRangePicker
     };
     const firstOnPage = parseInt(this.buildCalendarValues()[0], 10);
 
-    if (_.
-        (start) && isNil(end)) {
+    if (isNil(start) && isNil(end)) {
       data.value = { start: buildMoment(this.state.date, firstOnPage, itemPosition, localization) };
     } else if (!isNil(start) && isNil(end)) {
       const selectedDate = buildMoment(this.state.date, firstOnPage, itemPosition, localization);
