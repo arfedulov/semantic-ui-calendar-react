@@ -1,5 +1,6 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import isNil from 'lodash/isNil';
+
+import React from 'react';
 import {
   Icon,
   Table,
@@ -62,7 +63,7 @@ function Header(props: HeaderProps) {
 
   return (
     <Table.Header>
-      { !_.isNil(rangeRowContent) && <HeaderRange content={rangeRowContent} /> }
+      { !isNil(rangeRowContent) && <HeaderRange content={rangeRowContent} /> }
       <Table.Row>
         <Table.HeaderCell style={cellStyle} colSpan='1'>
           <Icon

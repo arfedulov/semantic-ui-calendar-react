@@ -1,5 +1,11 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import isNil from 'lodash/isNil';
+import isArray from 'lodash/isArray';
+import uniq from 'lodash/uniq';
+import some from 'lodash/some';
+
+import moment from 'moment';
 import { MONTHS_IN_YEAR } from './const';
 
 const buildCalendarValues = (localization: string): string[] => {
@@ -34,37 +40,37 @@ const getDisabledPositions = (
     (position in array returned by `this.buildCalendarValues`).
   */
   let disabled = [];
-  if (_.isArray(enable)) {
+  if (isArray(enable)) {
     const enabledMonthPositions = enable
       .filter((monthMoment) => monthMoment.isSame(currentDate, 'year'))
       .map((monthMoment) => monthMoment.month());
-    disabled = disabled.concat(_.range(0, MONTHS_IN_YEAR)
-      .filter((monthPosition) => !_.includes(enabledMonthPositions, monthPosition)));
+    disabled = disabled.concat(range(0, MONTHS_IN_YEAR)
+      .filter((monthPosition) => !includes(enabledMonthPositions, monthPosition)));
   }
-  if (_.isArray(disable)) {
+  if (isArray(disable)) {
     disabled = disabled.concat(disable
       .filter((monthMoment) => monthMoment.year() === currentDate.year())
       .map((monthMoment) => monthMoment.month()));
   }
-  if (!_.isNil(maxDate)) {
+  if (!isNil(maxDate)) {
     if (maxDate.year() === currentDate.year()) {
       disabled = disabled.concat(
-        _.range(maxDate.month() + 1, MONTHS_IN_YEAR));
+        range(maxDate.month() + 1, MONTHS_IN_YEAR));
     }
     if (maxDate.year() < currentDate.year()) {
-      disabled = _.range(0, MONTHS_IN_YEAR);
+      disabled = range(0, MONTHS_IN_YEAR);
     }
   }
-  if (!_.isNil(minDate)) {
+  if (!isNil(minDate)) {
     if (minDate.year() === currentDate.year()) {
-      disabled = disabled.concat(_.range(0, minDate.month()));
+      disabled = disabled.concat(range(0, minDate.month()));
     }
     if (minDate.year() > currentDate.year()) {
-      disabled = _.range(0, MONTHS_IN_YEAR);
+      disabled = range(0, MONTHS_IN_YEAR);
     }
   }
   if (disabled.length > 0) {
-    return _.uniq(disabled);
+    return uniq(disabled);
   }
 };
 
@@ -73,10 +79,10 @@ const isNextPageAvailable = (
   enable: moment.Moment[],
   currentDate: moment.Moment,
 ): boolean => {
-  if (_.isArray(enable)) {
-    return _.some(enable, (enabledMonth) => enabledMonth.isAfter(currentDate, 'year'));
+  if (isArray(enable)) {
+    return some(enable, (enabledMonth) => enabledMonth.isAfter(currentDate, 'year'));
   }
-  if (_.isNil(maxDate)) {
+  if (isNil(maxDate)) {
     return true;
   }
 
@@ -88,10 +94,10 @@ const isPrevPageAvailable = (
   enable: moment.Moment[],
   currentDate: moment.Moment,
 ): boolean => {
-  if (_.isArray(enable)) {
-    return _.some(enable, (enabledMonth) => enabledMonth.isBefore(currentDate, 'year'));
+  if (isArray(enable)) {
+    return some(enable, (enabledMonth) => enabledMonth.isBefore(currentDate, 'year'));
   }
-  if (_.isNil(minDate)) {
+  if (isNil(minDate)) {
     return true;
   }
 

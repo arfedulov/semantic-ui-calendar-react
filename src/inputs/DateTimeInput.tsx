@@ -1,7 +1,10 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
+import isBoolean from 'lodash/isBoolean';
+import isNil from 'lodash/isNil';
+import invoke from 'lodash/invoke';
+
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
 import {
@@ -229,7 +232,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        icon={_.isBoolean(icon) && !icon ? undefined : icon}
+        icon={isBoolean(icon) && !icon ? undefined : icon}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
         onFocus={this.onFocus}
@@ -254,11 +257,11 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       hour,
       minute,
     } = this.state;
-    if (!_.isNil(year)
-      || !_.isNil(month)
-      || !_.isNil(date)
-      || !_.isNil(hour)
-      || !_.isNil(minute)) {
+    if (!isNil(year)
+      || !isNil(month)
+      || !isNil(date)
+      || !isNil(hour)
+      || !isNil(minute)) {
       return { year, month, date, hour, minute };
     }
   }
@@ -397,7 +400,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       } = prevState;
       if (mode === 'minute') {
         const outValue = moment(value).format(this.getDateTimeFormat());
-        _.invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
+        invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
 
       return {

@@ -1,7 +1,9 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
+import isNil from 'lodash/isNil';
+import invoke from 'lodash/invoke';
+
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import { tick } from '../lib';
 import {
@@ -134,12 +136,12 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     } = this.props;
 
     let outputTimeString = '';
-    if (this.state.mode === 'hour' && !_.isNil(hour)) {
+    if (this.state.mode === 'hour' && !isNil(hour)) {
       outputTimeString = moment({ hour }).format(TIME_FORMAT[timeFormat]);
-    } else if (!_.isNil(hour) && !_.isNil(minute)) {
+    } else if (!isNil(hour) && !isNil(minute)) {
       outputTimeString = moment({ hour, minute }).format(TIME_FORMAT[timeFormat]);
     }
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: outputTimeString });
+    invoke(this.props, 'onChange', e, { ...this.props, value: outputTimeString });
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
     }

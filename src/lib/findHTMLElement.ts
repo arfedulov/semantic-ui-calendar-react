@@ -1,5 +1,5 @@
 import { ReactInstance } from 'react';
-import * as ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom';
 
 export default function findHTMLElement(e: ReactInstance): HTMLElement | undefined {
   const el = ReactDOM.findDOMNode(e);

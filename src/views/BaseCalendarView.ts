@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { SemanticCOLORS } from 'semantic-ui-react';
 
 export interface BaseCalendarViewProps {

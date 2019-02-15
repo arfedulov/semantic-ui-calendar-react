@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import * as _ from 'lodash';
-import * as moment from 'moment';
+import moment from 'moment';
 
 import {
   getInitializer,
@@ -63,7 +63,7 @@ describe('parseValue', () => {
     it('create moment from input string', () => {
       const value = 'Sep';
       const dateFormat = 'MMM';
-  
+
       assert(moment.isMoment(parseValue(value, dateFormat)), 'return moment instance');
       assert(parseValue(value, dateFormat).isValid(), 'return valid moment instance');
       assert(parseValue(value, dateFormat).isSame(moment('Sep', 'MMM'), 'year'), 'return correct moment');
@@ -73,7 +73,7 @@ describe('parseValue', () => {
   describe('`value` param is not provided', () => {
     it('return undefined', () => {
       const dateFormat = 'MMM';
-  
+
       assert(_.isUndefined(parseValue(undefined, dateFormat)), 'return undefined');
     });
   });

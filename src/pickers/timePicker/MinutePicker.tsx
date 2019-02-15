@@ -1,5 +1,10 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import range from 'lodash/range';
+import isArray from 'lodash/isArray';
+import concat from 'lodash/concat';
+import uniq from 'lodash/uniq';
+import sortBy from 'lodash/sortBy';
+
+import React from 'react';
 
 import MinuteView from '../../views/MinuteView';
 import {
@@ -105,14 +110,14 @@ class MinutePicker
       ? '0' + this.state.date.hour().toString()
       : this.state.date.hour().toString();
 
-    return _.range(0, 60, MINUTES_STEP)
+    return range(0, 60, MINUTES_STEP)
       .map((minute) => `${minute < 10 ? '0' : ''}${minute}`)
       .map((minute) => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat));
   }
 
   protected getSelectableCellPositions(): number[] {
     const disabled = this.getDisabledPositions();
-    const all = _.range(0, MINUTES_ON_PAGE);
+    const all = range(0, MINUTES_ON_PAGE);
     if (disabled) {
       return all.filter((pos) => {
         return disabled.indexOf(pos) < 0;
@@ -141,29 +146,29 @@ class MinutePicker
     let disabledByMaxDate = [];
     let disabledByMinDate = [];
 
-    if (_.isArray(disable)) {
-      disabledByDisable = _.concat(
+    if (isArray(disable)) {
+      disabledByDisable = concat(
         disabledByDisable,
         disable.filter((date) => date.isSame(this.state.date, 'day'))
           .map((date) => getMinuteCellPosition(date.minute())));
     }
     if (minDate) {
       if (minDate.isSame(this.state.date, 'hour')) {
-        disabledByMinDate = _.concat(
+        disabledByMinDate = concat(
           disabledByMinDate,
-          _.range(0 , minDate.minute()).map((m) => getMinuteCellPosition(m)));
+          range(0 , minDate.minute()).map((m) => getMinuteCellPosition(m)));
       }
     }
     if (maxDate) {
       if (maxDate.isSame(this.state.date, 'hour')) {
-        disabledByMaxDate = _.concat(
+        disabledByMaxDate = concat(
           disabledByMaxDate,
-          _.range(maxDate.minute() + MINUTES_STEP, 60).map((m) => getMinuteCellPosition(m)));
+          range(maxDate.minute() + MINUTES_STEP, 60).map((m) => getMinuteCellPosition(m)));
       }
     }
-    const result = _.sortBy(
-      _.uniq(
-        _.concat(disabledByDisable, disabledByMaxDate, disabledByMinDate)));
+    const result = sortBy(
+      uniq(
+        concat(disabledByDisable, disabledByMaxDate, disabledByMinDate)));
     if (result.length > 0) {
       return result;
     }

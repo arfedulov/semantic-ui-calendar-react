@@ -19,8 +19,6 @@ import {
   HeaderWeeks,
 } from '../../src/views/CalendarHeader';
 
-Enzyme.configure({ adapter: new Adapter() });
-
 describe('<HeaderWeeks />', () => {
   it('consists of proper elements', () => {
     const wrapper = shallow(<HeaderWeeks />);

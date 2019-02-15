@@ -1,6 +1,7 @@
-import * as _ from 'lodash';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
+import isBoolean from 'lodash/isBoolean';
+import invoke from 'lodash/invoke';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
 import InputView from '../views/InputView';
@@ -127,7 +128,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        icon={_.isBoolean(icon) && !icon ? undefined : icon}
+        icon={isBoolean(icon) && !icon ? undefined : icon}
         {...rest}
         value={value}
         onMount={this.onInputViewMount}
@@ -169,7 +170,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     } else if (start) {
       outputString = `${start.format(dateFormat)}${DATES_SEPARATOR}`;
     }
-    _.invoke(this.props, 'onChange', e, { ...this.props, value: outputString });
+    invoke(this.props, 'onChange', e, { ...this.props, value: outputString });
     if (this.props.closable && start && end) {
       this.closePopup();
     }

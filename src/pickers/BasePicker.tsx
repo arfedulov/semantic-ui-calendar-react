@@ -1,11 +1,9 @@
-import * as keyboardKey from 'keyboard-key';
-import {
-  includes,
-  isNil,
-  isNumber,
-} from 'lodash';
+import keyboardKey from 'keyboard-key';
+import isNumber from 'lodash/isNumber';
+import isNil from 'lodash/isNil';
+import includes from 'lodash/includes';
 import { Moment } from 'moment';
-import * as React from 'react';
+import React from 'react';
 
 import {
   RangeIndexes,

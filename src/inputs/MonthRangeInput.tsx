@@ -1,6 +1,7 @@
-import * as _ from 'lodash';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
+import isBoolean from 'lodash/isBoolean';
+import invoke from 'lodash/invoke';
+import PropTypes from 'prop-types';
+import React from 'react';
 import BaseInput, {BaseInputProps, BaseInputState, DateRelatedProps, MinMaxValueProps} from './BaseInput';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
@@ -102,7 +103,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        icon={_.isBoolean(icon) && !icon ? undefined : icon}
+        icon={isBoolean(icon) && !icon ? undefined : icon}
         {...rest}
         value={value}
         onMount={this.onInputViewMount}
@@ -143,7 +144,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
       outputString = `${start.format(dateFormat)}${DATES_SEPARATOR}`;
     }
 
-    _.invoke(this.props, 'onChange', e, {...this.props, value: outputString, date: value});
+    invoke(this.props, 'onChange', e, {...this.props, value: outputString, date: value});
     if (this.props.closable && start && end) {
       this.closePopup();
     }

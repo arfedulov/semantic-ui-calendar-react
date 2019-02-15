@@ -1,4 +1,16 @@
-import * as _ from 'lodash';
+import indexOf from 'lodash/indexOf';
+import lastIndexOf from 'lodash/lastIndexOf';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import isNil from 'lodash/isNil';
+import isArray from 'lodash/isArray';
+import concat from 'lodash/concat';
+import uniq from 'lodash/uniq';
+import first from 'lodash/first';
+import sortBy from 'lodash/sortBy';
+import slice from 'lodash/slice';
+import find from 'lodash/find';
+
 import { Moment } from 'moment';
 
 /** Build days to fill page. */
@@ -37,10 +49,10 @@ export function getDefaultEnabledDayPositions(allDays: string[], date: Moment): 
   const dateClone = date.clone();
   const brakepoints = getBrakepoints(dateClone);
   if (brakepoints.length === 1) {
-    return _.range(0, _.indexOf(allDays, brakepoints[0].toString()) + 1);
+    return range(0, indexOf(allDays, brakepoints[0].toString()) + 1);
   } else {
-    return _.range(_.indexOf(allDays, brakepoints[0].toString()) + 1,
-                   _.lastIndexOf(allDays, brakepoints[1].toString()) + 1);
+    return range(indexOf(allDays, brakepoints[0].toString()) + 1,
+                   lastIndexOf(allDays, brakepoints[1].toString()) + 1);
   }
 }
 
@@ -52,50 +64,50 @@ export function getDisabledDays(
   currentDate: Moment,
   daysOnPage: number,
   enable: Moment[]): number[] {
-  const dayPositions = _.range(daysOnPage);
+  const dayPositions = range(daysOnPage);
   const daysInCurrentMonthPositions = getDefaultEnabledDayPositions(buildDays(currentDate, daysOnPage), currentDate);
-  let disabledDays = dayPositions.filter((dayPosition) => !_.includes(daysInCurrentMonthPositions, dayPosition));
-  if (_.isArray(enable)) {
+  let disabledDays = dayPositions.filter((dayPosition) => !includes(daysInCurrentMonthPositions, dayPosition));
+  if (isArray(enable)) {
     const enabledDaysPositions = enable
       .filter((date) => date.isSame(currentDate, 'month'))
       .map((date) => date.date())
       .map((date) => daysInCurrentMonthPositions[date - 1]);
-    disabledDays = _.concat(disabledDays,
+    disabledDays = concat(disabledDays,
                             dayPositions.filter((position) => {
-                              return !_.includes(enabledDaysPositions, position);
+                              return !includes(enabledDaysPositions, position);
                             }));
   }
-  if (_.isArray(disable)) {
-    disabledDays = _.concat(disabledDays,
+  if (isArray(disable)) {
+    disabledDays = concat(disabledDays,
                             disable
                               .filter((date) => date.isSame(currentDate, 'month'))
                               .map((date) => date.date())
                               .map((date) => daysInCurrentMonthPositions[date - 1]));
   }
-  if (!_.isNil(maxDate)) {
+  if (!isNil(maxDate)) {
     if (maxDate.isBefore(currentDate, 'month')) {
       disabledDays = dayPositions;
     }
     if (maxDate.isSame(currentDate, 'month')) {
-      disabledDays = _.concat(disabledDays,
-                              _.range(1, daysInCurrentMonthPositions.length + 1)
+      disabledDays = concat(disabledDays,
+                              range(1, daysInCurrentMonthPositions.length + 1)
                                 .filter((date) => date > maxDate.date())
                                 .map((date) => daysInCurrentMonthPositions[date - 1]));
     }
   }
-  if (!_.isNil(minDate)) {
+  if (!isNil(minDate)) {
     if (minDate.isAfter(currentDate, 'month')) {
       disabledDays = dayPositions;
     }
     if (minDate.isSame(currentDate, 'month')) {
-      disabledDays = _.concat(disabledDays,
-                              _.range(1, daysInCurrentMonthPositions.length + 1)
+      disabledDays = concat(disabledDays,
+                              range(1, daysInCurrentMonthPositions.length + 1)
                                 .filter((date) => date < minDate.date())
                                 .map((date) => daysInCurrentMonthPositions[date - 1]));
     }
   }
 
-  return _.sortBy(_.uniq(disabledDays).filter((day) => !_.isNil(day)));
+  return sortBy(uniq(disabledDays).filter((day) => !isNil(day)));
 }
 
 /** Return day positions that shoud be displayed as marked. */
@@ -114,11 +126,11 @@ export function getMarkedDays(
       .map((date) => date.date())
       .map((date) => allDatesNumb.indexOf(date));
 
-    return markedIndexes.filter((index) => _.includes(activeDayPositions, index));
+    return markedIndexes.filter((index) => includes(activeDayPositions, index));
 }
 
 export function isNextPageAvailable(date: Moment, maxDate: Moment): boolean {
-  if (_.isNil(maxDate)) {
+  if (isNil(maxDate)) {
     return true;
   }
   if (date.isSameOrAfter(maxDate, 'month')) {
@@ -129,7 +141,7 @@ export function isNextPageAvailable(date: Moment, maxDate: Moment): boolean {
 }
 
 export function isPrevPageAvailable(date: Moment, minDate: Moment): boolean {
-  if (_.isNil(minDate)) {
+  if (isNil(minDate)) {
     return true;
   }
   if (date.isSameOrBefore(minDate, 'month')) {
@@ -147,10 +159,10 @@ function getDaysArray(start: number, brakepoints: number[], length: number): num
 
   while (! (days.length === length)) {
     days.push(currentDay);
-    const bp = _.first(brakepointsLeft);
+    const bp = first(brakepointsLeft);
     if (currentDay === bp) {
       currentDay = 1;
-      brakepointsLeft = _.slice(brakepointsLeft, 1);
+      brakepointsLeft = slice(brakepointsLeft, 1);
     } else {
       currentDay = currentDay + 1;
     }
@@ -177,7 +189,7 @@ acc.push({ value: values[pos], position: pos });
 
 return acc;
 }, []);
-const res = _.find(selectable, (item) => item.value === initDate);
+const res = find(selectable, (item) => item.value === initDate);
 if (res) {
 return res.position;
 }

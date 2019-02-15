@@ -1,5 +1,6 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import invoke from 'lodash/invoke';
+
+import React from 'react';
 import { Table, Label } from 'semantic-ui-react';
 
 import { OnValueClickData } from '../BaseCalendarView';
@@ -83,14 +84,14 @@ class Cell extends React.Component<CellProps, any> {
       itemPosition,
       content,
     } = this.props;
-    _.invoke(this.props, 'onClick', event, { ...this.props, itemPosition, value: content });
+    invoke(this.props, 'onClick', event, { ...this.props, itemPosition, value: content });
   }
 
   private onCellHover = (event) => {
     const {
       itemPosition,
     } = this.props;
-    _.invoke(this.props, 'onHover', event, { ...this.props, itemPosition });
+    invoke(this.props, 'onHover', event, { ...this.props, itemPosition });
   }
 }
 

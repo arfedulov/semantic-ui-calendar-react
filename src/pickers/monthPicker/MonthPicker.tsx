@@ -1,5 +1,9 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import filter from 'lodash/filter';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import isNil from 'lodash/isNil';
+
+import React from 'react';
 
 import MonthView from '../../views/MonthView';
 import {
@@ -100,9 +104,9 @@ class MonthPicker
   }
 
   protected getSelectableCellPositions(): number[] {
-    return _.filter(
-      _.range(0, MONTHS_IN_YEAR),
-      (m) => !_.includes(this.getDisabledPositions(), m),
+    return filter(
+      range(0, MONTHS_IN_YEAR),
+      (m) => !includes(this.getDisabledPositions(), m),
     );
   }
 
@@ -117,7 +121,7 @@ class MonthPicker
       Return position of a month that should be displayed as active
       (position in array returned by `this.buildCalendarValues`).
     */
-    if (!_.isNil(this.props.value)) {
+    if (!isNil(this.props.value)) {
       if (this.props.value.year() === this.state.date.year()) {
         return this.props.value.month();
       }

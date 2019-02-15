@@ -1,5 +1,15 @@
-import * as _ from 'lodash';
-import * as React from 'react';
+import range from 'lodash/range';
+import includes from 'lodash/includes';
+import isNil from 'lodash/isNil';
+import isArray from 'lodash/isArray';
+import concat from 'lodash/concat';
+import uniq from 'lodash/uniq';
+import filter from 'lodash/filter';
+import last from 'lodash/last';
+import first from 'lodash/first';
+import some from 'lodash/some';
+
+import React from 'react';
 
 import YearView from '../views/YearView';
 import {
@@ -83,9 +93,9 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     const years = [];
     const date = this.state.date;
     const padd = date.year() % YEARS_ON_PAGE;
-    const first = date.year() - padd;
+    const firstYear = date.year() - padd;
     for (let i = 0; i < YEARS_ON_PAGE; i++) {
-      years[i] = (first + i).toString();
+      years[i] = (firstYear + i).toString();
     }
 
     return years;
@@ -107,7 +117,7 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
       Return position of a year that should be displayed as active
       (position in array returned by `this.buildCalendarValues`).
     */
-    if (!_.isNil(this.props.value)) {
+    if (!isNil(this.props.value)) {
       const years = this.buildCalendarValues();
       const yearIndex = years.indexOf(this.props.value.year().toString());
       if (yearIndex >= 0) {
@@ -117,9 +127,9 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
   }
 
   protected getSelectableCellPositions(): number[] {
-    return _.filter(
-      _.range(0, YEARS_ON_PAGE),
-      (y) => !_.includes(this.getDisabledPositions(), y),
+    return filter(
+      range(0, YEARS_ON_PAGE),
+      (y) => !includes(this.getDisabledPositions(), y),
     );
   }
 
@@ -130,39 +140,39 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
     */
     let disabled = [];
     const years = this.buildCalendarValues();
-    if (_.isArray(this.props.enable)) {
+    if (isArray(this.props.enable)) {
       const enabledYears = this.props.enable.map((yearMoment) => yearMoment.year().toString());
-      disabled = _.concat(disabled,
+      disabled = concat(disabled,
                           years
-                            .filter((year) => !_.includes(enabledYears, year))
+                            .filter((year) => !includes(enabledYears, year))
                             .map((year) => years.indexOf(year)));
     }
-    if (_.isArray(this.props.disable)) {
-      disabled = _.concat(disabled,
+    if (isArray(this.props.disable)) {
+      disabled = concat(disabled,
                           this.props.disable
-                            .filter((yearMoment) => _.includes(years, yearMoment.year().toString()))
+                            .filter((yearMoment) => includes(years, yearMoment.year().toString()))
                             .map((yearMoment) => years.indexOf(yearMoment.year().toString())));
     }
-    if (!_.isNil(this.props.maxDate)) {
-      if (parseInt(_.first(years), 10) > this.props.maxDate.year()) {
-        disabled = _.range(0, years.length);
-      } else if (_.includes(years, this.props.maxDate.year().toString())) {
-        disabled = _.concat(
+    if (!isNil(this.props.maxDate)) {
+      if (parseInt(first(years), 10) > this.props.maxDate.year()) {
+        disabled = range(0, years.length);
+      } else if (includes(years, this.props.maxDate.year().toString())) {
+        disabled = concat(
           disabled,
-          _.range(years.indexOf(this.props.maxDate.year().toString()) + 1, years.length));
+          range(years.indexOf(this.props.maxDate.year().toString()) + 1, years.length));
       }
     }
-    if (!_.isNil(this.props.minDate)) {
-      if (parseInt(_.last(years), 10) < this.props.minDate.year()) {
-        disabled = _.range(0, years.length);
-      } else if (_.includes(years, this.props.minDate.year().toString())) {
-        disabled = _.concat(
+    if (!isNil(this.props.minDate)) {
+      if (parseInt(last(years), 10) < this.props.minDate.year()) {
+        disabled = range(0, years.length);
+      } else if (includes(years, this.props.minDate.year().toString())) {
+        disabled = concat(
           disabled,
-          _.range(0, years.indexOf(this.props.minDate.year().toString())));
+          range(0, years.indexOf(this.props.minDate.year().toString())));
       }
     }
     if (disabled.length > 0) {
-      return _.uniq(disabled);
+      return uniq(disabled);
     }
   }
 
@@ -171,12 +181,12 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
       maxDate,
       enable,
     } = this.props;
-    const lastOnPage = parseInt(_.last(this.buildCalendarValues()), 10);
+    const lastOnPage = parseInt(last(this.buildCalendarValues()), 10);
 
-    if (_.isArray(enable)) {
-      return _.some(enable, (enabledYear) => enabledYear.year() > lastOnPage);
+    if (isArray(enable)) {
+      return some(enable, (enabledYear) => enabledYear.year() > lastOnPage);
     }
-    if (_.isNil(maxDate)) {
+    if (isNil(maxDate)) {
       return true;
     }
 
@@ -188,12 +198,12 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
       minDate,
       enable,
     } = this.props;
-    const firstOnPage = parseInt(_.first(this.buildCalendarValues()), 10);
+    const firstOnPage = parseInt(first(this.buildCalendarValues()), 10);
 
-    if (_.isArray(enable)) {
-      return _.some(enable, (enabledYear) => enabledYear.year() < firstOnPage);
+    if (isArray(enable)) {
+      return some(enable, (enabledYear) => enabledYear.year() < firstOnPage);
     }
-    if (_.isNil(minDate)) {
+    if (isNil(minDate)) {
       return true;
     }
 

@@ -1,5 +1,9 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
+import isNil from 'lodash/isNil';
+import isArray from 'lodash/isArray';
+import isString from 'lodash/isString';
+import compact from 'lodash/compact';
+
+import moment from 'moment';
 
 export const TIME_FORMAT = {
   24: 'HH:mm',
@@ -17,7 +21,7 @@ type ParseValueData =
  * Return unedfined on invalid input.
  */
 export function parseValue(value: ParseValueData, dateFormat: string): moment.Moment {
-  if (!_.isNil(value) && !_.isNil(dateFormat)) {
+  if (!isNil(value) && !isNil(dateFormat)) {
     const date = moment(value, dateFormat);
     if (date.isValid()) {
       return date;
@@ -35,8 +39,8 @@ type ParseArrayOrValueData =
  * Return undefined if none of the input values are valid.
  */
 export function parseArrayOrValue(data: ParseArrayOrValueData, dateFormat: string) {
-  if (_.isArray(data)) {
-    const parsed = _.compact((data as ParseValueData[]).map((item) => parseValue(item, dateFormat)));
+  if (isArray(data)) {
+    const parsed = compact((data as ParseValueData[]).map((item) => parseValue(item, dateFormat)));
     if (parsed.length > 0) {
       return parsed;
     }
@@ -101,7 +105,7 @@ export function chooseValue(value: string,
 }
 
 export function dateValueToString(value: DateValue, dateFormat: string): string {
-  if (_.isString(value)) {
+  if (isString(value)) {
     return value;
   }
   if (moment.isMoment(value)) {

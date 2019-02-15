@@ -1,7 +1,9 @@
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import * as PropTypes from 'prop-types';
-import * as React from 'react';
+import isBoolean from 'lodash/isBoolean';
+import isNil from 'lodash/isNil';
+import invoke from 'lodash/invoke';
+import moment from 'moment';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
 import {
@@ -213,7 +215,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         openPopup={this.openPopup}
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
-        icon={_.isBoolean(icon) && !icon ? undefined : icon}
+        icon={isBoolean(icon) && !icon ? undefined : icon}
         onFocus={this.onFocus}
         {...rest}
         render={(props) => this.getPicker(props)}
@@ -233,7 +235,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       month,
       date,
     } = this.state;
-    if (!_.isNil(year) || !_.isNil(month) || !_.isNil(date)) {
+    if (!isNil(year) || !isNil(month) || !isNil(date)) {
       return { year, month, date };
     }
   }
@@ -330,7 +332,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       } = prevState;
       if (mode === 'day') {
         const outValue = moment(value).format(this.props.dateFormat);
-        _.invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
+        invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
 
       return {
