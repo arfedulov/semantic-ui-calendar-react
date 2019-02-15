@@ -8,12 +8,13 @@ import some from 'lodash/some';
 import moment from 'moment';
 import { MONTHS_IN_YEAR } from './const';
 
-const buildCalendarValues = (localization: string): string[] => {
+const buildCalendarValues = (localization?: string): string[] => {
   /*
     Return array of months (strings) like ['Aug', 'Sep', ...]
     that used to populate calendar's page.
   */
   const localLocale = localization ? moment.localeData(localization) : undefined;
+
   return localLocale ? localLocale.monthsShort() : moment.monthsShort();
 };
 

@@ -95,6 +95,7 @@ class MonthRangePicker
 
   protected buildCalendarValues(): string[] {
     const { localization } = this.props;
+
     return buildCalendarValues(localization);
   }
 
@@ -176,7 +177,7 @@ class MonthRangePicker
     const {
       start,
       end,
-      localization
+      localization,
     } = this.props;
     const data: MonthRangePickerOnChangeData = {
       ...this.props,

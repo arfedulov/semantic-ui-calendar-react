@@ -54,8 +54,8 @@ export interface BasePickerProps {
   onCalendarViewMount: (e: HTMLElement) => void;
   /** Called on calendar's header click. */
   onHeaderClick: () => void;
-    /** Moment date localization */
-    localization?: string;
+  /** Moment date localization */
+  localization?: string;
 }
 
 export interface OptionalHeaderProps {
