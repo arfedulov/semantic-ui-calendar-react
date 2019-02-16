@@ -50,7 +50,6 @@ class MonthRangePicker
   public render() {
     const {
       onChange,
-      value,
       initializeWith,
       closePopup,
       inline,

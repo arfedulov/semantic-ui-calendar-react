@@ -41,13 +41,6 @@ describe('<MonthPicker />: getActiveCellPosition', () => {
     assert.equal(wrapper.instance().getActiveCellPosition(), 1, 'return index 1 (means February)');
   });
 
-  it('return undefined if year of `value` does not equal to year of `date`', () => {
-    const wrapper = mount(<MonthPicker
-      value={moment('2020-02-18')}
-      initializeWith={date} />);
-    assert(_.isUndefined(wrapper.instance().getActiveCellPosition()), 'return undefined');
-  });
-
   it('return undefined `value` is not provided', () => {
     const wrapper = mount(<MonthPicker
       initializeWith={date} />);
