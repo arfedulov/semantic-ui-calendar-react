@@ -167,7 +167,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
 | ``closable`` | {bool} If true, popup closes after selecting a date   |
-| ``initialDate`` | {string\|moment\|Date} Date to display initially when no date is selected |
+| ``initialDate`` | {string\|moment\|Date} Date on which calendar opens. By default it opens on today's date. (Do not be confused by property name. For setting some default value just set into `value` prop). |
 | ``disable`` | {string\|moment\|Date\|string[]\|moment[]\|Date[]} Date or list of dates that are displayed as disabled |
 | ``enable`` | {string[]\|moment[]\|Date[]} Date or list of dates that are enabled (the rest are disabled) |
 | ``maxDate`` | {string\|moment} Maximum date that can be selected |
@@ -222,7 +222,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
 | ``closable`` | {bool} If true, popup closes after selecting a date-time   |
-| ``initialDate`` | {string\|moment\|Date} Date to display initially when no date is selected |
+| ``initialDate`` | {string\|moment\|Date} Date on which calendar opens. By default it opens on today's date. (Do not be confused by property name. For setting some default value just set into `value` prop). |
 | ``disable`` | {string\|moment\|string[]\|moment[]} Date or list of dates that are displayed as disabled |
 | ``maxDate`` | {string\|moment} Maximum date that can be selected |
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
@@ -251,7 +251,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``closable`` | {bool} If true, popup closes after selecting a dates range   |
-| ``initialDate`` | {string\|moment\|Date} Open a calendar on this date |
+| ``initialDate`` | {string\|moment\|Date} Date on which calendar opens. By default it opens on today's date. (Do not be confused by property name. For setting some default value just set into `value` prop). |
 | ``maxDate`` | {string\|moment} Maximum date that can be selected |
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
@@ -278,6 +278,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``closable`` | {bool} If true, popup closes after selecting a year   |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
+| ``initialDate`` | {string\|moment\|Date} Date on which calendar opens. By default it opens on today's date. (Do not be confused by property name. For setting some default value just set into `value` prop). |
 | ``mountNode`` | {any} The node where the picker should mount. |
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |

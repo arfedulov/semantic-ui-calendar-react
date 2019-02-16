@@ -142,7 +142,8 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         onCalendarViewMount={this.onCalendarViewMount}
         closePopup={this.closePopup}
         onChange={this.handleSelect}
-        value={buildValue(value, initialDate, localization, dateFormat)}
+        initializeWith={buildValue(value, initialDate, localization, dateFormat)}
+        value={buildValue(value, null, localization, dateFormat, null)}
         disable={parseArrayOrValue(disable, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}
         minDate={parseValue(minDate, dateFormat, localization)}

@@ -32,7 +32,8 @@
       }
     ],
     "interface-name": [true, "never-prefix"],
-    "ordered-imports": false
+    "ordered-imports": false,
+    "variable-name": [true, "allow-leading-underscore"]
   },
   "rulesDirectory": []
 }

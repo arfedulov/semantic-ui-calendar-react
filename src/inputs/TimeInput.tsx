@@ -181,7 +181,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       onHeaderClick: () => undefined,
       closePopup: this.closePopup,
       initializeWith: buildValue(currentValue, null, localization, TIME_FORMAT[timeFormat]),
-      value: currentValue,
+      value: buildValue(currentValue, null, TIME_FORMAT[timeFormat], localization, null),
       onChange: this.handleSelect,
       timeFormat,
       tabIndex,

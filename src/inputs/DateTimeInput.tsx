@@ -34,6 +34,7 @@ import {
   parseValue,
   TIME_FORMAT,
   buildValue,
+  dateValueToString,
 } from './parse';
 import {
   getDisabledMonths,
@@ -228,6 +229,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       icon,
       markColor,
       marked,
+      localization,
       ...rest
     } = this.props;
 
@@ -240,7 +242,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         onFocus={this.onFocus}
         onMount={this.onInputViewMount}
         {...rest}
-        value={value}
+        value={dateValueToString(value, dateFormat, localization)}
         renderPicker={() => this.getPicker()}
       />
     );
@@ -307,7 +309,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      value: buildValue(value, initialDate, localization, dateFormat),
+      initializeWith: buildValue(value, initialDate, localization, dateFormat),
+      value: buildValue(value, null, localization, dateFormat, null),
       minDate: parseValue(minDate, dateFormat, localization),
       maxDate: parseValue(maxDate, dateFormat, localization),
       marked: parseArrayOrValue(marked, dateFormat, localization),
