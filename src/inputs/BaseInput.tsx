@@ -8,6 +8,7 @@ import {
 import {
   TimeFormat,
 } from '../pickers/BasePicker';
+import moment = require('moment');
 
 export interface BaseInputProps {
   [key: string]: any;
@@ -132,6 +133,7 @@ abstract class BaseInput<P extends BaseInputProps,
   S extends BaseInputState> extends React.Component<P, S> {
   public static defaultProps = {
     inline: false,
+    localization: moment.locale(),
   };
 
   private calendarNode: HTMLElement;

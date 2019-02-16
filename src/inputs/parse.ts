@@ -3,7 +3,7 @@ import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import compact from 'lodash/compact';
 
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 
 export const TIME_FORMAT = {
   24: 'HH:mm',
@@ -20,10 +20,12 @@ type ParseValueData =
  *
  * Return unedfined on invalid input.
  */
-export function parseValue(value: ParseValueData, dateFormat: string): moment.Moment {
+export function parseValue(value: ParseValueData, dateFormat: string, localization: string): moment.Moment {
   if (!isNil(value) && !isNil(dateFormat)) {
     const date = moment(value, dateFormat);
     if (date.isValid()) {
+      date.locale(localization);
+
       return date;
     }
   }
@@ -38,14 +40,14 @@ type ParseArrayOrValueData =
  * Return array of moments. Returned value contains only valid moments.
  * Return undefined if none of the input values are valid.
  */
-export function parseArrayOrValue(data: ParseArrayOrValueData, dateFormat: string) {
+export function parseArrayOrValue(data: ParseArrayOrValueData, dateFormat: string, localization: string) {
   if (isArray(data)) {
-    const parsed = compact((data as ParseValueData[]).map((item) => parseValue(item, dateFormat)));
+    const parsed = compact((data as ParseValueData[]).map((item) => parseValue(item, dateFormat, localization)));
     if (parsed.length > 0) {
       return parsed;
     }
   }
-  const parsedValue = parseValue((data as ParseValueData), dateFormat);
+  const parsedValue = parseValue((data as ParseValueData), dateFormat, localization);
 
   return parsedValue && [parsedValue];
 }
@@ -83,7 +85,7 @@ export function getInitializer(context: GetInitializerParams): moment.Moment {
       return parsedParams;
     }
   }
-  const parsedInitialDate = parseValue(initialDate, dateFormat);
+  const parsedInitialDate = parseValue(initialDate, dateFormat, localization);
   if (parsedInitialDate) {
     return parsedInitialDate;
   }
@@ -102,6 +104,27 @@ export function chooseValue(value: string,
   }
 
   return value;
+}
+
+/** Creates moment instance from provided value or initialDate.
+ *  Creates today by default.
+ */
+export function buildValue(value: ParseValueData,
+                           initialDate: InitialDate,
+                           localization: string,
+                           dateFormat: string): Moment {
+  const valueParsed = parseValue(value, dateFormat, localization);
+  if (valueParsed) {
+    return valueParsed;
+  }
+  const initialDateParsed = parseValue(initialDate, dateFormat, localization);
+  if (initialDateParsed) {
+    return initialDateParsed;
+  }
+  const defaultVal = moment();
+  defaultVal.locale(localization);
+
+  return defaultVal;
 }
 
 export function dateValueToString(value: DateValue, dateFormat: string): string {

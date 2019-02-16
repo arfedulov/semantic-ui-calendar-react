@@ -15,9 +15,9 @@ import BaseInput, {
   MinMaxValueProps,
 } from './BaseInput';
 import {
-  getInitializer,
   parseArrayOrValue,
   parseValue,
+  buildValue,
 } from './parse';
 
 export type YearInputProps =
@@ -32,8 +32,8 @@ export interface YearInputOnChangeData extends YearInputProps {
 
 class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   public static readonly defaultProps = {
+    ...BaseInput.defaultProps,
     dateFormat: 'YYYY',
-    inline: false,
     icon: 'calendar',
   };
 
@@ -133,12 +133,6 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
       dateFormat,
       localization,
     } = this.props;
-    const initializeWith = getInitializer({
-      dateParams: { year: parseInt(value, 10) },
-      initialDate,
-      dateFormat,
-      localization,
-    });
 
     return (
       <YearPicker
@@ -148,11 +142,10 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         onCalendarViewMount={this.onCalendarViewMount}
         closePopup={this.closePopup}
         onChange={this.handleSelect}
-        initializeWith={initializeWith}
-        value={parseValue(value, dateFormat)}
-        disable={parseArrayOrValue(disable, dateFormat)}
-        maxDate={parseValue(maxDate, dateFormat)}
-        minDate={parseValue(minDate, dateFormat)}
+        value={buildValue(value, initialDate, localization, dateFormat)}
+        disable={parseArrayOrValue(disable, dateFormat, localization)}
+        maxDate={parseValue(maxDate, dateFormat, localization)}
+        minDate={parseValue(minDate, dateFormat, localization)}
         onHeaderClick={() => undefined}
       />
     );

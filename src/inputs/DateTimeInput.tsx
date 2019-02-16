@@ -30,10 +30,10 @@ import BaseInput, {
 import { tick } from '../lib';
 import {
   chooseValue,
-  getInitializer,
   parseArrayOrValue,
   parseValue,
   TIME_FORMAT,
+  buildValue,
 } from './parse';
 import {
   getDisabledMonths,
@@ -116,13 +116,13 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
    *  - handle underlying picker change
    */
   public static readonly defaultProps = {
+    ...BaseInput.defaultProps,
     dateFormat: 'DD-MM-YYYY',
     timeFormat: '24',
     startMode: 'day',
     divider: ' ',
     icon: 'calendar',
     preserveViewMode: true,
-    inline: false,
   };
 
   public static readonly propTypes = {
@@ -199,7 +199,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
 
   constructor(props: DateTimeInputProps) {
     super(props);
-    const parsedValue = parseValue(props.value, props.dateFormat);
+    const parsedValue = parseValue(props.value, props.dateFormat, props.localization);
     this.state = {
       mode: props.startMode,
       year: parsedValue ? parsedValue.year() : undefined,
@@ -307,20 +307,14 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: getInitializer({
-        initialDate,
-        dateFormat: dateTimeFormat,
-        dateParams: this.getDateParams(),
-        localization,
-      }),
-      value: parseValue(chooseValue(value, initialDate), dateTimeFormat),
-      minDate: parseValue(minDate, dateFormat),
-      maxDate: parseValue(maxDate, dateFormat),
-      marked: parseArrayOrValue(marked, dateFormat),
+      value: buildValue(value, initialDate, localization, dateFormat),
+      minDate: parseValue(minDate, dateFormat, localization),
+      maxDate: parseValue(maxDate, dateFormat, localization),
+      marked: parseArrayOrValue(marked, dateFormat, localization),
       markColor,
       localization,
     };
-    const disableParsed = parseArrayOrValue(disable, dateFormat);
+    const disableParsed = parseArrayOrValue(disable, dateFormat, localization);
     const { mode } = this.state;
     if (mode === 'year') {
       return (

@@ -44,7 +44,6 @@ describe('<MonthRangePicker />: getActiveCellPosition', () => {
   /* current year 2015 */
   it('return index of start month', () => {
     const wrapper = mount(<MonthRangePicker
-      value='03-2015 - '
       start={moment({year: '2015', month: '03'})}
       initializeWith={date} />);
     const rangeIndexes = wrapper.instance().getActiveCellsPositions();
@@ -55,7 +54,6 @@ describe('<MonthRangePicker />: getActiveCellPosition', () => {
 
   it('return undefined if year of `value` does not equal to year of `date`', () => {
     const wrapper = mount(<MonthRangePicker
-      value='02-2020 - '
       start={moment({year: '2020', month: '02'})}
       initializeWith={date} />);
     const rangeIndexes = wrapper.instance().getActiveCellsPositions();
@@ -65,7 +63,6 @@ describe('<MonthRangePicker />: getActiveCellPosition', () => {
 
   it('return indexes of start and end month', () => {
     const wrapper = mount(<MonthRangePicker
-      value={'03-2015 - 07-2015'}
       start={moment({year: '2015', month: '03'})}
       end={moment({year: '2015', month: '07'})}
       initializeWith={date} />);
@@ -321,7 +318,6 @@ describe('<MonthRangePicker />: handleChange', () => {
     const onChangeFake = sinon.fake();
     const wrapper = mount(<MonthRangePicker
       onChange={onChangeFake}
-      value='03-2015 - '
       start={moment({year: '2015', month: '03'})}
       initializeWith={date} />);
 

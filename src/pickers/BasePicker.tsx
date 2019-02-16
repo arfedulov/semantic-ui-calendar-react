@@ -41,7 +41,7 @@ export interface BasePickerProps {
   /** Currently selected date. */
   value?: Moment;
   /** A value for initializing day picker's state. */
-  initializeWith: Moment;
+  initializeWith?: Moment;
   /** Forse popup to close. */
   closePopup: () => void;
   /** Whether to display picker without a popup or inside a popup. */
@@ -111,7 +111,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     super(props);
     this.state = {
       hoveredCellPosition: undefined,
-      date: props.initializeWith.clone(),
+      date: props.value ? this.props.value.clone() : this.props.initializeWith.clone(),
     };
   }
 

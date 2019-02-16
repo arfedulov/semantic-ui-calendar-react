@@ -9,10 +9,11 @@ import MonthRangePicker, {MonthRangePickerOnChangeData} from '../pickers/monthPi
 import InputView from '../views/InputView';
 import {MonthInputProps} from './MonthInput';
 import {
-  getInitializer,
   parseDatesRange,
   parseValue,
+  buildValue,
 } from './parse';
+import moment = require('moment');
 
 const DATES_SEPARATOR = ' - ';
 
@@ -28,9 +29,9 @@ export interface MonthRangeInputOnChangeData extends MonthInputProps {
 
 class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   public static readonly defaultProps = {
+    ...BaseInput.defaultProps,
     dateFormat: 'MM-YYYY',
     icon: 'calendar',
-    inline: false,
   };
 
   public static readonly propTypes = {
@@ -134,11 +135,11 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         dateFormat={dateFormat}
-        initializeWith={getInitializer({initialDate, dateFormat, localization})}
+        initializeWith={buildValue(start, initialDate, localization, dateFormat)}
         start={start}
         end={end}
-        minDate={parseValue(minDate, dateFormat)}
-        maxDate={parseValue(maxDate, dateFormat)}
+        minDate={parseValue(minDate, dateFormat, localization)}
+        maxDate={parseValue(maxDate, dateFormat, localization)}
         localization={localization}
         onHeaderClick={() => undefined}
       />

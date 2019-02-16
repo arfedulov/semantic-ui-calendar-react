@@ -10,6 +10,7 @@ import {
   parseDatesRange,
   parseValue,
   parseArrayOrValue,
+  buildValue,
 } from './parse';
 
 import DatesRangePicker, {
@@ -44,9 +45,9 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
    *    string 'start - end')
    */
   public static readonly defaultProps = {
+    ...BaseInput.defaultProps,
     dateFormat: 'DD-MM-YYYY',
     icon: 'calendar',
-    inline: false,
   };
 
   public static readonly propTypes = {
@@ -154,7 +155,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       start,
       end,
     } = parseDatesRange(value, dateFormat);
-    const markedParsed = parseArrayOrValue(marked, dateFormat);
+    const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
 
     return (
       <DatesRangePicker
@@ -165,13 +166,13 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         dateFormat={dateFormat}
-        initializeWith={getInitializer({ initialDate, dateFormat, localization })}
+        initializeWith={buildValue(start, initialDate, localization, dateFormat)}
         start={start}
         end={end}
         marked={markedParsed}
         markColor={markColor}
-        minDate={parseValue(minDate, dateFormat)}
-        maxDate={parseValue(maxDate, dateFormat)}
+        minDate={parseValue(minDate, dateFormat, localization)}
+        maxDate={parseValue(maxDate, dateFormat, localization)}
         localization={localization}
         onHeaderClick={() => undefined}
         tabIndex={tabIndex}

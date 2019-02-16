@@ -28,9 +28,7 @@ import {
   tick,
 } from '../lib';
 import {
-  chooseValue,
-  dateValueToString,
-  getInitializer,
+  buildValue,
   parseArrayOrValue,
   parseValue,
 } from './parse';
@@ -98,10 +96,10 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
    *  - handle underlying picker change
    */
   public static readonly defaultProps = {
+    ...BaseInput.defaultProps,
     dateFormat: 'DD-MM-YYYY',
     startMode: 'day',
     preserveViewMode: true,
-    inline: false,
     icon: 'calendar',
   };
 
@@ -182,7 +180,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
 
   constructor(props: DateInputProps) {
     super(props);
-    const parsedValue = parseValue(props.value, props.dateFormat);
+    const parsedValue = parseValue(props.value, props.dateFormat, props.localization);
     this.state = {
       mode: props.startMode,
       popupIsClosed: true,
@@ -270,15 +268,14 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       pickerStyle,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: getInitializer({ initialDate, dateFormat, dateParams: this.getDateParams(), localization }),
-      value: parseValue(chooseValue(value, initialDate), dateFormat),
-      enable: parseArrayOrValue(enable, dateFormat),
-      minDate: parseValue(minDate, dateFormat),
-      maxDate: parseValue(maxDate, dateFormat),
+      value: buildValue(value, initialDate, localization, dateFormat),
+      enable: parseArrayOrValue(enable, dateFormat, localization),
+      minDate: parseValue(minDate, dateFormat, localization),
+      maxDate: parseValue(maxDate, dateFormat, localization),
       localization,
     };
-    const disableParsed = parseArrayOrValue(disable, dateFormat);
-    const markedParsed = parseArrayOrValue(marked, dateFormat);
+    const disableParsed = parseArrayOrValue(disable, dateFormat, localization);
+    const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
     const { mode } = this.state;
     if (mode === 'year') {
       return (

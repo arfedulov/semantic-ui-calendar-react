@@ -16,9 +16,9 @@ import BaseInput, {
   MinMaxValueProps,
 } from './BaseInput';
 import {
-  getInitializer,
   parseArrayOrValue,
   parseValue,
+  buildValue,
 } from './parse';
 
 export type MonthInputProps =
@@ -33,9 +33,9 @@ export interface MonthInputOnChangeData extends MonthInputProps {
 
 class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
   public static readonly defaultProps = {
+    ...BaseInput.defaultProps,
     dateFormat: 'MMM',
     icon: 'calendar',
-    inline: false,
   };
 
   public static readonly propTypes = {
@@ -130,11 +130,11 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     const {
       value,
       dateFormat,
-      initialDate,
       disable,
       maxDate,
       minDate,
       localization,
+      initialDate,
     } = this.props;
 
     return (
@@ -146,11 +146,10 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         closePopup={this.closePopup}
         hasHeader={false}
         onChange={this.handleSelect}
-        initializeWith={getInitializer({ initialDate, dateFormat, localization })}
-        value={parseValue(value, dateFormat)}
-        disable={parseArrayOrValue(disable, dateFormat)}
-        maxDate={parseValue(maxDate, dateFormat)}
-        minDate={parseValue(minDate, dateFormat)}
+        value={buildValue(value, initialDate, localization, dateFormat)}
+        disable={parseArrayOrValue(disable, dateFormat, localization)}
+        maxDate={parseValue(maxDate, dateFormat, localization)}
+        minDate={parseValue(minDate, dateFormat, localization)}
         localization={localization}
         onHeaderClick={() => undefined}
       />
