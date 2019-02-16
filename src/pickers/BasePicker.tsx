@@ -41,7 +41,7 @@ export interface BasePickerProps {
   /** Currently selected date. */
   value?: Moment;
   /** A value for initializing day picker's state. */
-  initializeWith?: Moment;
+  initializeWith: Moment;
   /** Forse popup to close. */
   closePopup: () => void;
   /** Whether to display picker without a popup or inside a popup. */
