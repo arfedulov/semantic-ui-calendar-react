@@ -22,6 +22,7 @@ import {
   getInitializer,
   parseValue,
   TIME_FORMAT,
+  buildValue,
 } from './parse';
 
 function getNextMode(currentMode) {
@@ -55,10 +56,10 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
    *  - handle HourPicker/MinutePicker change (format { hour: number, minute: number } into output time string)
    */
   public static readonly defaultProps = {
+    ...BaseInput.defaultProps,
     icon: 'time',
     timeFormat: '24',
     disableMinute: false,
-    inline: false,
   };
 
   public static readonly propTypes = {
@@ -168,7 +169,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       pickerStyle,
       pickerWidth,
     } = this.props;
-    const currentValue = parseValue(value, TIME_FORMAT[timeFormat]);
+    const currentValue = parseValue(value, TIME_FORMAT[timeFormat], localization);
     const pickerProps = {
       inline,
       onCalendarViewMount: this.onCalendarViewMount,
@@ -179,7 +180,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       pickerStyle,
       onHeaderClick: () => undefined,
       closePopup: this.closePopup,
-      initializeWith: getInitializer({ initialDate: currentValue, dateFormat: TIME_FORMAT[timeFormat], localization }),
+      initializeWith: buildValue(currentValue, null, localization, TIME_FORMAT[timeFormat]),
       value: currentValue,
       onChange: this.handleSelect,
       timeFormat,

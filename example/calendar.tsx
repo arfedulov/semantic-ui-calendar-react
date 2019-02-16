@@ -6,6 +6,7 @@ import {
   Form,
   Header,
   Icon,
+  Button,
 } from 'semantic-ui-react';
 
 import {
@@ -99,6 +100,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           className='example-calendar-input'
           name='date'
+          localization='ru'
           closable
           clearIcon={(<Icon name='remove' color='red' />)}
           clearable={clearable}
@@ -110,6 +112,7 @@ class DateTimeForm extends React.Component<any, any> {
           autoComplete='off'
           onChange={this.handleChange}
         />
+        <Button onClick={() => this.setState({ date: '04-01-2019' })}></Button>
         <br />
         <DateInput
           startMode='year'
@@ -120,6 +123,7 @@ class DateTimeForm extends React.Component<any, any> {
           animation='fly left'
           duration={300}
           closable
+          localization='ru'
           clearable={clearable}
           value={this.state.dateStartYear}
           iconPosition='left'
@@ -152,6 +156,7 @@ class DateTimeForm extends React.Component<any, any> {
           clearable={clearable}
           value={this.state.dateTime}
           iconPosition='left'
+          localization='fr'
           preserveViewMode={false}
           autoComplete='off'
           onChange={this.handleChange}
@@ -164,6 +169,7 @@ class DateTimeForm extends React.Component<any, any> {
           className='example-calendar-input'
           name='datesRange'
           closable
+          localization='de'
           clearable={clearable}
           value={this.state.datesRange}
           iconPosition='left'
@@ -178,6 +184,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           clearable={clearable}
           closable
+          localization='fr'
           value={this.state.year}
           iconPosition='left'
           autoComplete='off'
@@ -191,6 +198,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           clearable={clearable}
           closable
+          localization='ru'
           value={this.state.month}
           iconPosition='left'
           autoComplete='off'
@@ -204,6 +212,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           clearable={clearable}
           closable
+          localization='ru'
           iconPosition='left'
           autoComplete='off'
           value={this.state.monthRange}
