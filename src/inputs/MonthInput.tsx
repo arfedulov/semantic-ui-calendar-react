@@ -121,23 +121,38 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
-        render={(pickerProps) => (
-          <MonthPicker
-            {...pickerProps}
-            inline={this.props.inline}
-            isPickerInFocus={this.isPickerInFocus}
-            isTriggerInFocus={this.isTriggerInFocus}
-            onCalendarViewMount={this.onCalendarViewMount}
-            closePopup={this.closePopup}
-            hasHeader={false}
-            onChange={this.handleSelect}
-            initializeWith={getInitializer({ initialDate, dateFormat, localization })}
-            value={parseValue(value, dateFormat)}
-            disable={parseArrayOrValue(disable, dateFormat)}
-            maxDate={parseValue(maxDate, dateFormat)}
-            minDate={parseValue(minDate, dateFormat)}
-            localization={localization} />
-        )}
+        render={this.getPicker}
+      />
+    );
+  }
+
+  private getPicker = () => {
+    const {
+      value,
+      dateFormat,
+      initialDate,
+      disable,
+      maxDate,
+      minDate,
+      localization,
+    } = this.props;
+
+    return (
+      <MonthPicker
+        inline={this.props.inline}
+        isPickerInFocus={this.isPickerInFocus}
+        isTriggerInFocus={this.isTriggerInFocus}
+        onCalendarViewMount={this.onCalendarViewMount}
+        closePopup={this.closePopup}
+        hasHeader={false}
+        onChange={this.handleSelect}
+        initializeWith={getInitializer({ initialDate, dateFormat, localization })}
+        value={parseValue(value, dateFormat)}
+        disable={parseArrayOrValue(disable, dateFormat)}
+        maxDate={parseValue(maxDate, dateFormat)}
+        minDate={parseValue(minDate, dateFormat)}
+        localization={localization}
+        onHeaderClick={() => undefined}
       />
     );
   }

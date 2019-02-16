@@ -39,7 +39,7 @@ export interface BasePickerProps {
   /** Called after day is selected. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: BasePickerOnChangeData) => void;
   /** Currently selected date. */
-  value: Moment;
+  value?: Moment;
   /** A value for initializing day picker's state. */
   initializeWith: Moment;
   /** Forse popup to close. */
@@ -56,6 +56,9 @@ export interface BasePickerProps {
   onHeaderClick: () => void;
   /** Moment date localization */
   localization?: string;
+  tabIndex?: string;
+  pickerWidth?: string;
+  pickerStyle?: object;
 }
 
 export interface OptionalHeaderProps {

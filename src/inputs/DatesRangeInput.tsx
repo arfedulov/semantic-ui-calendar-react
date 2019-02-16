@@ -22,6 +22,7 @@ import BaseInput, {
   MinMaxValueProps,
   MarkedValuesProps,
 } from './BaseInput';
+import moment = require('moment');
 
 const DATES_SEPARATOR = ' - ';
 
@@ -121,12 +122,6 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       ...rest
     } = this.props;
 
-    const {
-      start,
-      end,
-    } = parseDatesRange(value, dateFormat);
-    const markedParsed = parseArrayOrValue(marked, dateFormat);
-
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
@@ -136,25 +131,52 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
-        render={(pickerProps) =>
-          (<DatesRangePicker
-            {...pickerProps}
-            isPickerInFocus={this.isPickerInFocus}
-            isTriggerInFocus={this.isTriggerInFocus}
-            inline={this.props.inline}
-            onCalendarViewMount={this.onCalendarViewMount}
-            closePopup={this.closePopup}
-            onChange={this.handleSelect}
-            dateFormat={dateFormat}
-            initializeWith={getInitializer({ initialDate, dateFormat, localization })}
-            start={start}
-            end={end}
-            marked={markedParsed}
-            markColor={markColor}
-            minDate={parseValue(minDate, dateFormat)}
-            maxDate={parseValue(maxDate, dateFormat)}
-            localization={localization} />)
-        }
+        render={this.getPicker}
+      />
+    );
+  }
+
+  private getPicker = () => {
+    const {
+      value,
+      dateFormat,
+      markColor,
+      marked,
+      initialDate,
+      localization,
+      minDate,
+      maxDate,
+      tabIndex,
+      pickerWidth,
+      pickerStyle,
+    } = this.props;
+    const {
+      start,
+      end,
+    } = parseDatesRange(value, dateFormat);
+    const markedParsed = parseArrayOrValue(marked, dateFormat);
+
+    return (
+      <DatesRangePicker
+        isPickerInFocus={this.isPickerInFocus}
+        isTriggerInFocus={this.isTriggerInFocus}
+        inline={this.props.inline}
+        onCalendarViewMount={this.onCalendarViewMount}
+        closePopup={this.closePopup}
+        onChange={this.handleSelect}
+        dateFormat={dateFormat}
+        initializeWith={getInitializer({ initialDate, dateFormat, localization })}
+        start={start}
+        end={end}
+        marked={markedParsed}
+        markColor={markColor}
+        minDate={parseValue(minDate, dateFormat)}
+        maxDate={parseValue(maxDate, dateFormat)}
+        localization={localization}
+        onHeaderClick={() => undefined}
+        tabIndex={tabIndex}
+        pickerWidth={pickerWidth}
+        pickerStyle={pickerStyle}
       />
     );
   }

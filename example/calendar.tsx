@@ -6,6 +6,7 @@ import {
   Form,
   Header,
   Icon,
+  Button,
 } from 'semantic-ui-react';
 
 import {
@@ -110,6 +111,9 @@ class DateTimeForm extends React.Component<any, any> {
           autoComplete='off'
           onChange={this.handleChange}
         />
+        <Button onClick={() => {
+          this.setState({ date: '15-01-1999' });
+        }}>set 15-01-1999</Button>
         <br />
         <DateInput
           startMode='year'
@@ -149,7 +153,6 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           name='dateTime'
           closable
-          minDate={new Date()}
           clearable={clearable}
           value={this.state.dateTime}
           iconPosition='left'
