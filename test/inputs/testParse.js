@@ -5,6 +5,7 @@ import moment from 'moment';
 import {
   getInitializer,
   parseValue,
+  dateValueToString,
 } from '../../src/inputs/parse';
 
 describe('getInitializer', () => {
@@ -61,20 +62,81 @@ describe('getInitializer', () => {
 describe('parseValue', () => {
   describe('`value` param provided', () => {
     it('create moment from input string', () => {
-      const value = 'Sep';
-      const dateFormat = 'MMM';
+      const value = 'Sep 2015';
+      const dateFormat = 'MMM YYYY';
+      const locale = 'en';
 
-      assert(moment.isMoment(parseValue(value, dateFormat)), 'return moment instance');
+      assert(moment.isMoment(parseValue(value, dateFormat, locale)), 'return moment instance');
       assert(parseValue(value, dateFormat).isValid(), 'return valid moment instance');
-      assert(parseValue(value, dateFormat).isSame(moment('Sep', 'MMM'), 'year'), 'return correct moment');
+      assert(parseValue(value, dateFormat).isSame(moment('Sep 2015', 'MMM YYYY'), 'month'), 'return correct moment');
+    });
+
+    it('create moment from input Date', () => {
+      const value = new Date('2015-02-15');
+      const dateFormat = 'does not matter if value is Date';
+      const locale = 'en';
+
+      const parsed = parseValue(value, dateFormat, locale);
+
+      assert(moment.isMoment(parsed), 'return moment instance');
+      assert(parsed.isValid(), 'return valid moment instance');
+      assert(parsed.isSame(moment('2015-02-15', 'YYYY-MM-DD'), 'date'), 'return correct moment');
+    });
+
+    it('create moment from input Moment', () => {
+      const value = moment('2015-02-15', 'YYYY-MM-DD');
+      const dateFormat = 'does not matter if value is Moment';
+      const locale = 'en';
+
+      const parsed = parseValue(value, dateFormat, locale);
+
+      assert(moment.isMoment(parsed), 'return moment instance');
+      assert(parsed.isValid(), 'return valid moment instance');
+      assert(parsed.isSame(moment('2015-02-15', 'YYYY-MM-DD'), 'date'), 'return correct moment');
     });
   });
 
   describe('`value` param is not provided', () => {
     it('return undefined', () => {
       const dateFormat = 'MMM';
+      const locale = 'en';
 
-      assert(_.isUndefined(parseValue(undefined, dateFormat)), 'return undefined');
+      assert(_.isUndefined(parseValue(undefined, dateFormat, locale)), 'return undefined');
     });
+  });
+});
+
+describe('dateValueToString()', () => {
+  it('handles string input value', () => {
+    const inputValue = '17-04-2030';
+    const dateFormat = 'DD-MM-YYYY';
+    const locale = 'en';
+
+    const producedValue = dateValueToString(inputValue, dateFormat, locale);
+
+    assert(_.isString(producedValue), 'return string value');
+    assert.equal(producedValue, inputValue, 'return correct string');
+  });
+
+  it('handles Date input value', () => {
+    const inputValue = new Date('2015-08-11');
+    const dateFormat = 'DD-MM-YYYY';
+    const locale = 'en';
+
+    const producedValue = dateValueToString(inputValue, dateFormat, locale);
+
+    assert(_.isString(producedValue), 'return string value');
+    assert.equal(producedValue, '11-08-2015', 'return correct string');
+  });
+
+  it('handles Moment input value', () => {
+    const inputValue = moment('2015-08-11', 'YYYY-MM-DD');
+    const dateFormat = 'DD-MM-YYYY';
+    const locale = 'en';
+
+    const producedValue = dateValueToString(inputValue, dateFormat, locale);
+
+    assert(_.isString(producedValue), 'return string value');
+    assert.equal(producedValue, '11-08-2015', 'return correct string');
   });
 });

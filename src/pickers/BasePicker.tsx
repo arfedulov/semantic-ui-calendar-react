@@ -111,7 +111,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     super(props);
     this.state = {
       hoveredCellPosition: undefined,
-      date: props.value ? this.props.value.clone() : this.props.initializeWith.clone(),
+      date: this.props.initializeWith.clone(),
     };
   }
 

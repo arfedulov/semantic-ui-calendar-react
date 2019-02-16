@@ -31,6 +31,7 @@ import {
   buildValue,
   parseArrayOrValue,
   parseValue,
+  dateValueToString,
 } from './parse';
 import {
   getDisabledMonths, getDisabledYears,
@@ -219,7 +220,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         onFocus={this.onFocus}
         {...rest}
         renderPicker={() => this.getPicker()}
-        value={value}
+        value={dateValueToString(value, dateFormat, localization)}
       />
     );
   }
@@ -268,7 +269,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       pickerStyle,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      value: buildValue(value, initialDate, localization, dateFormat),
+      initializeWith: buildValue(value, initialDate, localization, dateFormat),
+      value: buildValue(value, null, localization, dateFormat, null),
       enable: parseArrayOrValue(enable, dateFormat, localization),
       minDate: parseValue(minDate, dateFormat, localization),
       maxDate: parseValue(maxDate, dateFormat, localization),

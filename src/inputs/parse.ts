@@ -112,7 +112,8 @@ export function chooseValue(value: string,
 export function buildValue(value: ParseValueData,
                            initialDate: InitialDate,
                            localization: string,
-                           dateFormat: string): Moment {
+                           dateFormat: string,
+                           defaultVal = moment()): Moment {
   const valueParsed = parseValue(value, dateFormat, localization);
   if (valueParsed) {
     return valueParsed;
@@ -121,21 +122,33 @@ export function buildValue(value: ParseValueData,
   if (initialDateParsed) {
     return initialDateParsed;
   }
-  const defaultVal = moment();
-  defaultVal.locale(localization);
+  const _defaultVal = defaultVal ? defaultVal.clone() : defaultVal;
+  if (_defaultVal) {
+    _defaultVal.locale(localization);
+  }
 
-  return defaultVal;
+  return _defaultVal;
 }
 
-export function dateValueToString(value: DateValue, dateFormat: string): string {
+export function dateValueToString(value: DateValue, dateFormat: string, locale: string): string {
   if (isString(value)) {
     return value;
   }
   if (moment.isMoment(value)) {
-    return (value as moment.Moment).format(dateFormat);
+    const _value = value.clone();
+    _value.locale(locale);
+
+    return _value.format(dateFormat);
   }
 
-  return moment(value, dateFormat).format(dateFormat);
+  const date = moment(value, dateFormat);
+  if (date.isValid()) {
+    date.locale(locale);
+
+    return date.format(dateFormat);
+  }
+
+  return '';
 }
 
 function cleanDate(inputString: string, dateFormat: string): string {

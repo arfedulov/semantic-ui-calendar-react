@@ -19,6 +19,7 @@ import {
   parseArrayOrValue,
   parseValue,
   buildValue,
+  dateValueToString,
 } from './parse';
 
 export type MonthInputProps =
@@ -117,7 +118,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         {...rest}
-        value={value}
+        value={dateValueToString(value, dateFormat, localization)}
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
@@ -146,7 +147,8 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         closePopup={this.closePopup}
         hasHeader={false}
         onChange={this.handleSelect}
-        value={buildValue(value, initialDate, localization, dateFormat)}
+        initializeWith={buildValue(value, initialDate, localization, dateFormat)}
+        value={buildValue(value, null, localization, dateFormat, null)}
         disable={parseArrayOrValue(disable, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}
         minDate={parseValue(minDate, dateFormat, localization)}

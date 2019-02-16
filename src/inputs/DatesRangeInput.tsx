@@ -11,6 +11,7 @@ import {
   parseValue,
   parseArrayOrValue,
   buildValue,
+  dateValueToString,
 } from './parse';
 
 import DatesRangePicker, {
