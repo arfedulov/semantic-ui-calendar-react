@@ -241,7 +241,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         onMount={this.onInputViewMount}
         {...rest}
         value={value}
-        render={(pickerProps) => this.getPicker(pickerProps)}
+        renderPicker={() => this.getPicker()}
       />
     );
   }
@@ -279,7 +279,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
   }
 
-  private getPicker({ tabIndex, pickerWidth, pickerStyle }): React.ReactNode {
+  private getPicker(): React.ReactNode {
     const {
       value,
       initialDate,
@@ -291,6 +291,9 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       marked,
       markColor,
       localization,
+      tabIndex,
+      pickerStyle,
+      pickerWidth,
     } = this.props;
     const dateTimeFormat = this.getDateTimeFormat();
     const pickerProps = {

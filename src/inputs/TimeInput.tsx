@@ -116,7 +116,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
         openPopup={this.openPopup}
         {...rest}
         value={value}
-        render={(pickerProps) => this.getPicker(pickerProps)}
+        renderPicker={() => this.getPicker()}
       />
     );
   }
@@ -158,12 +158,15 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     }, this.onModeSwitch);
   }
 
-  private getPicker({ tabIndex, pickerWidth, pickerStyle }) {
+  private getPicker() {
     const {
       value,
       timeFormat,
       inline,
       localization,
+      tabIndex,
+      pickerStyle,
+      pickerWidth,
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat]);
     const pickerProps = {
