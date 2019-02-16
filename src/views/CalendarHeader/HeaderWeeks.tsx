@@ -13,6 +13,7 @@ const getWeekDays = (m, localization) => {
     weekDays[i] = day.format('dd');
     day.add(1, 'd');
   }
+
   return weekDays;
 };
 

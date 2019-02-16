@@ -100,6 +100,7 @@ class MonthPicker
 
   protected buildCalendarValues(): string[] {
     const { localization } = this.props;
+
     return buildCalendarValues(localization);
   }
 
