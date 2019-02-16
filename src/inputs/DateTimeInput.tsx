@@ -309,16 +309,15 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(value, initialDate, localization, dateFormat),
-      value: buildValue(value, null, localization, dateFormat, null),
-      minDate: parseValue(minDate, dateFormat, localization),
-      maxDate: parseValue(maxDate, dateFormat, localization),
-      marked: parseArrayOrValue(marked, dateFormat, localization),
-      markColor,
+      initializeWith: buildValue(value, initialDate, localization, dateTimeFormat),
+      value: buildValue(value, null, localization, dateTimeFormat, null),
+      minDate: parseValue(minDate, dateTimeFormat, localization),
+      maxDate: parseValue(maxDate, dateTimeFormat, localization),
       localization,
     };
-    const disableParsed = parseArrayOrValue(disable, dateFormat, localization);
+    const disableParsed = parseArrayOrValue(disable, dateTimeFormat, localization);
     const { mode } = this.state;
+    const markedParsed = parseArrayOrValue(marked, dateTimeFormat, localization);
     if (mode === 'year') {
       return (
         <YearPicker
@@ -340,6 +339,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       return (
         <DayPicker
           {...pickerProps}
+          marked={markedParsed}
+          markColor={markColor}
           disable={disableParsed}
         />
       );
