@@ -33,7 +33,7 @@
     ],
     "interface-name": [true, "never-prefix"],
     "ordered-imports": false,
-    "variable-name": [true, "allow-leading-underscore"]
+    "variable-name": [true, "allow-leading-underscore", "allow-pascal-case"]
   },
   "rulesDirectory": []
 }

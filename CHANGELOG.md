@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.14.0 2019-02-17
+
+- feat: allow to mark specific dates [`#77`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/77)
+
+- feat: MonthRangeInput [`#79`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/79)
+
+- fix(MinutePicker): #78 minDate disables minutes in each hour in the day [`93972b3`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/93972b3077b2957fb3e4d1f9ecd2e087e3fa4b3d)
+
+- fix: #83 pass popup mount node to inputView [`#89`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/86)
+
+- feat: adds localization prop on each component [`#85`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/85)
+
+- fix: #84 initialize picker state with input value [`#88`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/88)
+
 ## v0.13.0 2019-01-12
 
 - feat: added transitions for popup [`65`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/65)
