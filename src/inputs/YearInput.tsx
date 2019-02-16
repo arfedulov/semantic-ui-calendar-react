@@ -118,7 +118,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         {...rest}
         value={value}
         onMount={this.onInputViewMount}
-        render={this.getPicker}
+        renderPicker={this.getPicker}
       />
     );
   }

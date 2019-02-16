@@ -72,12 +72,10 @@ interface InputViewProps {
   openPopup: () => void;
   /** Called on input focus. */
   onFocus?: () => void;
-  /** Function for rendering component. */
-  render?: (props: any) => React.ReactNode;
+  /** Function for rendering picker. */
+  renderPicker: () => React.ReactNode;
   /** Called after clear icon has clicked. */
   onClear?: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
-  /** Picker. */
-  children?: React.ReactNode;
   /** Whether to close a popup when cursor leaves it. */
   closeOnMouseLeave?: boolean;
   /** A field can have its label next to instead of above it. */
@@ -136,7 +134,7 @@ class InputView extends React.Component<InputViewProps, any> {
 
   public render() {
     const {
-      render,
+      renderPicker,
       popupPosition,
       inline,
       value,
@@ -203,11 +201,7 @@ class InputView extends React.Component<InputViewProps, any> {
     );
 
     if (inline) {
-      return render({
-        tabIndex,
-        pickerWidth,
-        pickerStyle,
-      });
+      return renderPicker();
     }
 
     return (<div>
@@ -248,7 +242,7 @@ class InputView extends React.Component<InputViewProps, any> {
             tabIndex={0}
             ref={(ref) => this.popupNode = ref}
           >
-            {render({ pickerWidth, pickerStyle })}
+            {renderPicker()}
           </div>
         </Popup>
       </Transition>

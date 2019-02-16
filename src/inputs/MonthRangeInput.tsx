@@ -106,7 +106,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
-        render={this.getPicker}
+        renderPicker={this.getPicker}
       />
     );
   }

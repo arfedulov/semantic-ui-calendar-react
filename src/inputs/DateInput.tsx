@@ -220,7 +220,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         icon={isBoolean(icon) && !icon ? undefined : icon}
         onFocus={this.onFocus}
         {...rest}
-        render={() => this.getPicker()}
+        renderPicker={() => this.getPicker()}
         value={value}
       />
     );

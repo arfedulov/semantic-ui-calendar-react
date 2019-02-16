@@ -116,7 +116,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
         openPopup={this.openPopup}
         {...rest}
         value={value}
-        render={() => this.getPicker()}
+        renderPicker={() => this.getPicker()}
       />
     );
   }

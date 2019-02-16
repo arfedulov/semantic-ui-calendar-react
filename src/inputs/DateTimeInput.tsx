@@ -241,7 +241,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         onMount={this.onInputViewMount}
         {...rest}
         value={value}
-        render={() => this.getPicker()}
+        renderPicker={() => this.getPicker()}
       />
     );
   }

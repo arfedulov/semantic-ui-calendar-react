@@ -121,7 +121,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
-        render={this.getPicker}
+        renderPicker={this.getPicker}
       />
     );
   }

@@ -131,7 +131,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
-        render={this.getPicker}
+        renderPicker={this.getPicker}
       />
     );
   }
