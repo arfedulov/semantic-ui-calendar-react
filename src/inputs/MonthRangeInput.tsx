@@ -73,6 +73,8 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    /** Moment date localization. */
+    localization: PropTypes.string,
   };
 
   constructor(props) {
@@ -95,11 +97,6 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
       ...rest
     } = this.props;
 
-    const {
-      start,
-      end,
-    } = parseDatesRange(value, dateFormat);
-
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
@@ -109,23 +106,41 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
-        render={(pickerProps) =>
-          (<MonthRangePicker
-            {...pickerProps}
-            isPickerInFocus={this.isPickerInFocus}
-            isTriggerInFocus={this.isTriggerInFocus}
-            inline={this.props.inline}
-            onCalendarViewMount={this.onCalendarViewMount}
-            closePopup={this.closePopup}
-            onChange={this.handleSelect}
-            dateFormat={dateFormat}
-            initializeWith={getInitializer({initialDate, dateFormat, localization})}
-            start={start}
-            end={end}
-            minDate={parseValue(minDate, dateFormat)}
-            maxDate={parseValue(maxDate, dateFormat)}
-            localization={localization}/>)
-        }
+        renderPicker={this.getPicker}
+      />
+    );
+  }
+
+  private getPicker = () => {
+    const {
+      value,
+      dateFormat,
+      initialDate,
+      maxDate,
+      minDate,
+      localization,
+    } = this.props;
+    const {
+      start,
+      end,
+    } = parseDatesRange(value, dateFormat);
+
+    return (
+      <MonthRangePicker
+        isPickerInFocus={this.isPickerInFocus}
+        isTriggerInFocus={this.isTriggerInFocus}
+        inline={this.props.inline}
+        onCalendarViewMount={this.onCalendarViewMount}
+        closePopup={this.closePopup}
+        onChange={this.handleSelect}
+        dateFormat={dateFormat}
+        initializeWith={getInitializer({initialDate, dateFormat, localization})}
+        start={start}
+        end={end}
+        minDate={parseValue(minDate, dateFormat)}
+        maxDate={parseValue(maxDate, dateFormat)}
+        localization={localization}
+        onHeaderClick={() => undefined}
       />
     );
   }

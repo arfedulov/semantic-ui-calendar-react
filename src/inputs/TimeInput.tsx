@@ -87,6 +87,8 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    /** Moment date localization. */
+    localization: PropTypes.string,
   };
 
   constructor(props) {
@@ -114,7 +116,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
         openPopup={this.openPopup}
         {...rest}
         value={value}
-        render={(pickerProps) => this.getPicker(pickerProps)}
+        renderPicker={() => this.getPicker()}
       />
     );
   }
@@ -156,12 +158,15 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     }, this.onModeSwitch);
   }
 
-  private getPicker({ tabIndex, pickerWidth, pickerStyle }) {
+  private getPicker() {
     const {
       value,
       timeFormat,
       inline,
       localization,
+      tabIndex,
+      pickerStyle,
+      pickerWidth,
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat]);
     const pickerProps = {

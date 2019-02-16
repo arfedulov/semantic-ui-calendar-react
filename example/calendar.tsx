@@ -149,7 +149,6 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           name='dateTime'
           closable
-          minDate={new Date()}
           clearable={clearable}
           value={this.state.dateTime}
           iconPosition='left'

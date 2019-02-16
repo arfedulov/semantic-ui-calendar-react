@@ -86,6 +86,8 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     duration: PropTypes.number,
     /** Named animation event to used. Must be defined in CSS. */
     animation: PropTypes.string,
+    /** Moment date localization. */
+    localization: PropTypes.string,
   };
 
   constructor(props) {
@@ -108,13 +110,6 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
       ...rest
     } = this.props;
 
-    const initializeWith = getInitializer({
-      dateParams: { year: parseInt(value, 10) },
-      initialDate,
-      dateFormat,
-      localization,
-    });
-
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
@@ -123,24 +118,42 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         {...rest}
         value={value}
         onMount={this.onInputViewMount}
-        render={
-          (pickerProps) => (
-            <YearPicker
-              {...pickerProps}
-              isPickerInFocus={this.isPickerInFocus}
-              isTriggerInFocus={this.isTriggerInFocus}
-              inline={this.props.inline}
-              onCalendarViewMount={this.onCalendarViewMount}
-              closePopup={this.closePopup}
-              onChange={this.handleSelect}
-              initializeWith={initializeWith}
-              value={parseValue(value, dateFormat)}
-              disable={parseArrayOrValue(disable, dateFormat)}
-              maxDate={parseValue(maxDate, dateFormat)}
-              minDate={parseValue(minDate, dateFormat)}
-            />
-          )
-        }
+        renderPicker={this.getPicker}
+      />
+    );
+  }
+
+  private getPicker = () => {
+    const {
+      value,
+      disable,
+      maxDate,
+      minDate,
+      initialDate,
+      dateFormat,
+      localization,
+    } = this.props;
+    const initializeWith = getInitializer({
+      dateParams: { year: parseInt(value, 10) },
+      initialDate,
+      dateFormat,
+      localization,
+    });
+
+    return (
+      <YearPicker
+        isPickerInFocus={this.isPickerInFocus}
+        isTriggerInFocus={this.isTriggerInFocus}
+        inline={this.props.inline}
+        onCalendarViewMount={this.onCalendarViewMount}
+        closePopup={this.closePopup}
+        onChange={this.handleSelect}
+        initializeWith={initializeWith}
+        value={parseValue(value, dateFormat)}
+        disable={parseArrayOrValue(disable, dateFormat)}
+        maxDate={parseValue(maxDate, dateFormat)}
+        minDate={parseValue(minDate, dateFormat)}
+        onHeaderClick={() => undefined}
       />
     );
   }

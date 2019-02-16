@@ -176,6 +176,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       PropTypes.arrayOf(CustomPropTypes.dateObject),
     ]),
     markColor: PropTypes.string,
+    /** Moment date localization. */
+    localization: PropTypes.string,
   };
 
   constructor(props: DateInputProps) {
@@ -218,8 +220,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         icon={isBoolean(icon) && !icon ? undefined : icon}
         onFocus={this.onFocus}
         {...rest}
-        render={(props) => this.getPicker(props)}
-        value={dateValueToString(chooseValue(value, undefined), dateFormat)}
+        renderPicker={() => this.getPicker()}
+        value={value}
       />
     );
   }
@@ -240,7 +242,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     }
   }
 
-  private getPicker = ({ tabIndex, pickerWidth, pickerStyle }) => {
+  private getPicker = () => {
     const {
       value,
       initialDate,
@@ -253,6 +255,9 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       marked,
       markColor,
       localization,
+      tabIndex,
+      pickerWidth,
+      pickerStyle,
     } = this.props;
     const pickerProps = {
       isPickerInFocus: this.isPickerInFocus,
