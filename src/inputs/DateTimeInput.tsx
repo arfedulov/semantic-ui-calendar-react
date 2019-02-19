@@ -2,7 +2,7 @@ import isBoolean from 'lodash/isBoolean';
 import isNil from 'lodash/isNil';
 import invoke from 'lodash/invoke';
 
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -248,11 +248,12 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     );
   }
 
-  private getDateParams(): DateParams {
+  private parseInternalValue(): Moment {
     /*
-      Return date params that are used for picker initialization.
-      Return undefined if none of [ 'year', 'month', 'date', 'hour', 'minute' ]
-      state fields defined.
+      Creates moment instance from values stored in component's state
+      (year, month, date, hour, minute) in order to pass this moment instance to
+      underlying picker.
+      Return undefined if none of these state fields has value.
     */
     const {
       year,
@@ -266,7 +267,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       || !isNil(date)
       || !isNil(hour)
       || !isNil(minute)) {
-      return { year, month, date, hour, minute };
+      return moment({ year, month, date, hour, minute });
     }
   }
 
@@ -309,7 +310,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(value, initialDate, localization, dateTimeFormat),
+      initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateTimeFormat),
       value: buildValue(value, null, localization, dateTimeFormat, null),
       minDate: parseValue(minDate, dateTimeFormat, localization),
       maxDate: parseValue(maxDate, dateTimeFormat, localization),
