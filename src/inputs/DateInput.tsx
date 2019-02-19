@@ -1,7 +1,7 @@
 import isBoolean from 'lodash/isBoolean';
 import isNil from 'lodash/isNil';
 import invoke from 'lodash/invoke';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -207,6 +207,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       markColor,
       marked,
       localization,
+      onChange,
       ...rest
     } = this.props;
 
@@ -218,6 +219,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         onMount={this.onInputViewMount}
         icon={isBoolean(icon) && !icon ? undefined : icon}
         onFocus={this.onFocus}
+        onChange={this.onInputValueChange}
         {...rest}
         renderPicker={() => this.getPicker()}
         value={dateValueToString(value, dateFormat, localization)}
@@ -225,11 +227,12 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     );
   }
 
-  private getDateParams(): Dateparams {
+  private parseInternalValue(): Moment {
     /*
-      Return date params that are used for picker initialization.
-      Return undefined if none of [ 'year', 'month', 'date' ]
-      state fields defined.
+      Creates moment instance from values stored in component's state
+      (year, month, date) in order to pass this moment instance to
+      underlying picker.
+      Return undefined if none of these state fields has value.
     */
     const {
       year,
@@ -237,7 +240,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       date,
     } = this.state;
     if (!isNil(year) || !isNil(month) || !isNil(date)) {
-      return { year, month, date };
+      return moment({ year, month, date });
     }
   }
 
@@ -269,7 +272,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       pickerStyle,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(value, initialDate, localization, dateFormat),
+      initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateFormat),
       value: buildValue(value, null, localization, dateFormat, null),
       enable: parseArrayOrValue(enable, dateFormat, localization),
       minDate: parseValue(minDate, dateFormat, localization),
@@ -345,6 +348,19 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         date: value.date,
       };
     }, () => this.state.mode !== 'day' && this.switchToNextMode());
+  }
+
+  /** Keeps internal state in sync with input field value. */
+  private onInputValueChange = (e, { value }) => {
+    const parsedValue = moment(value, this.props.dateFormat);
+    if (parsedValue.isValid()) {
+      this.setState({
+        year: parsedValue.year(),
+        month: parsedValue.month(),
+        date: parsedValue.date(),
+      });
+    }
+    invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 }
 

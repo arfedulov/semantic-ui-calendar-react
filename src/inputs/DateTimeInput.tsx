@@ -2,7 +2,7 @@ import isBoolean from 'lodash/isBoolean';
 import isNil from 'lodash/isNil';
 import invoke from 'lodash/invoke';
 
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -29,7 +29,6 @@ import BaseInput, {
 
 import { tick } from '../lib';
 import {
-  chooseValue,
   parseArrayOrValue,
   parseValue,
   TIME_FORMAT,
@@ -230,6 +229,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       markColor,
       marked,
       localization,
+      onChange,
       ...rest
     } = this.props;
 
@@ -241,6 +241,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         openPopup={this.openPopup}
         onFocus={this.onFocus}
         onMount={this.onInputViewMount}
+        onChange={this.onInputValueChange}
         {...rest}
         value={dateValueToString(value, dateFormat, localization)}
         renderPicker={() => this.getPicker()}
@@ -248,11 +249,12 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     );
   }
 
-  private getDateParams(): DateParams {
+  private parseInternalValue(): Moment {
     /*
-      Return date params that are used for picker initialization.
-      Return undefined if none of [ 'year', 'month', 'date', 'hour', 'minute' ]
-      state fields defined.
+      Creates moment instance from values stored in component's state
+      (year, month, date, hour, minute) in order to pass this moment instance to
+      underlying picker.
+      Return undefined if none of these state fields has value.
     */
     const {
       year,
@@ -266,7 +268,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       || !isNil(date)
       || !isNil(hour)
       || !isNil(minute)) {
-      return { year, month, date, hour, minute };
+      return moment({ year, month, date, hour, minute });
     }
   }
 
@@ -309,7 +311,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(value, initialDate, localization, dateTimeFormat),
+      initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateTimeFormat),
       value: buildValue(value, null, localization, dateTimeFormat, null),
       minDate: parseValue(minDate, dateTimeFormat, localization),
       maxDate: parseValue(maxDate, dateTimeFormat, localization),
@@ -419,6 +421,21 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         minute: value.minute,
       };
     }, () => this.state.mode !== 'minute' && this.switchToNextMode());
+  }
+
+  /** Keeps internal state in sync with input field value. */
+  private onInputValueChange = (e, { value }) => {
+    const parsedValue = moment(value, this.getDateTimeFormat());
+    if (parsedValue.isValid()) {
+      this.setState({
+        year: parsedValue.year(),
+        month: parsedValue.month(),
+        date: parsedValue.date(),
+        hour: parsedValue.hour(),
+        minute: parsedValue.minute(),
+      });
+    }
+    invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 }
 
