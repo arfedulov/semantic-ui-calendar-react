@@ -207,6 +207,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       markColor,
       marked,
       localization,
+      onChange,
       ...rest
     } = this.props;
 
@@ -218,6 +219,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         onMount={this.onInputViewMount}
         icon={isBoolean(icon) && !icon ? undefined : icon}
         onFocus={this.onFocus}
+        onChange={this.onInputValueChange}
         {...rest}
         renderPicker={() => this.getPicker()}
         value={dateValueToString(value, dateFormat, localization)}
@@ -346,6 +348,18 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         date: value.date,
       };
     }, () => this.state.mode !== 'day' && this.switchToNextMode());
+  }
+
+  private onInputValueChange = (e, { value }) => {
+    const parsedValue = moment(value, this.props.dateFormat);
+    if (parsedValue.isValid()) {
+      this.setState({
+        year: parsedValue.year(),
+        month: parsedValue.month(),
+        date: parsedValue.date(),
+      });
+    }
+    invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 }
 

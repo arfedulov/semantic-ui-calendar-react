@@ -230,6 +230,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       markColor,
       marked,
       localization,
+      onChange,
       ...rest
     } = this.props;
 
@@ -241,6 +242,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         openPopup={this.openPopup}
         onFocus={this.onFocus}
         onMount={this.onInputViewMount}
+        onChange={this.onInputValueChange}
         {...rest}
         value={dateValueToString(value, dateFormat, localization)}
         renderPicker={() => this.getPicker()}
@@ -420,6 +422,20 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         minute: value.minute,
       };
     }, () => this.state.mode !== 'minute' && this.switchToNextMode());
+  }
+
+  private onInputValueChange = (e, { value }) => {
+    const parsedValue = moment(value, this.getDateTimeFormat());
+    if (parsedValue.isValid()) {
+      this.setState({
+        year: parsedValue.year(),
+        month: parsedValue.month(),
+        date: parsedValue.date(),
+        hour: parsedValue.hour(),
+        minute: parsedValue.minute(),
+      });
+    }
+    invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 }
 
