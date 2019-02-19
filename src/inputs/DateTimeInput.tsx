@@ -29,7 +29,6 @@ import BaseInput, {
 
 import { tick } from '../lib';
 import {
-  chooseValue,
   parseArrayOrValue,
   parseValue,
   TIME_FORMAT,
@@ -424,6 +423,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     }, () => this.state.mode !== 'minute' && this.switchToNextMode());
   }
 
+  /** Keeps internal state in sync with input field value. */
   private onInputValueChange = (e, { value }) => {
     const parsedValue = moment(value, this.getDateTimeFormat());
     if (parsedValue.isValid()) {

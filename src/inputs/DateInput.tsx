@@ -350,6 +350,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     }, () => this.state.mode !== 'day' && this.switchToNextMode());
   }
 
+  /** Keeps internal state in sync with input field value. */
   private onInputValueChange = (e, { value }) => {
     const parsedValue = moment(value, this.props.dateFormat);
     if (parsedValue.isValid()) {

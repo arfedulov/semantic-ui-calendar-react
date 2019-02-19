@@ -96,16 +96,6 @@ export function getInitializer(context: GetInitializerParams): moment.Moment {
 type InitialDate = string | moment.Moment | Date;
 type DateValue = InitialDate;
 
-/** Return initial date if `value` is empty and if `initialDate` provided. */
-export function chooseValue(value: string,
-                            initialDate?: InitialDate): DateValue {
-  if (value === '' && initialDate) {
-    return initialDate;
-  }
-
-  return value;
-}
-
 /** Creates moment instance from provided value or initialDate.
  *  Creates today by default.
  */
