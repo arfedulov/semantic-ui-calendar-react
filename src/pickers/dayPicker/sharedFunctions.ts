@@ -122,10 +122,12 @@ export function getMarkedDays(
     const activeDayPositions = getDefaultEnabledDayPositions(allDates, currentDate);
     let allDatesNumb = allDates.map((date) => parseInt(date, 10));
 
-    // The following will clear all dates before the 1st of the current month.
-    // This is to prevent marking days before the 1st, that shouldn't be marked.
-    // If the incorrect dates are marked, instead of the legitimate ones, the legitimate dates
-    // will not be marked at all.
+    /*
+     * The following will clear all dates before the 1st of the current month.
+     * This is to prevent marking days before the 1st, that shouldn't be marked.
+     * If the incorrect dates are marked, instead of the legitimate ones, the legitimate dates
+     * will not be marked at all.
+    */
     const fillTo = allDatesNumb.indexOf(1);
     for (var i = 0; i < fillTo; i++) {
       if (i <= fillTo) {
