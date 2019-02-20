@@ -130,11 +130,7 @@ export function getMarkedDays(
     */
     const fillTo = allDatesNumb.indexOf(1);
     for (var i = 0; i < fillTo; i++) {
-      if (i <= fillTo) {
-        allDatesNumb[i] = 0;
-      } else {
-        break;
-      }
+      allDatesNumb[i] = 0;
     }
 
     const markedIndexes = marked
