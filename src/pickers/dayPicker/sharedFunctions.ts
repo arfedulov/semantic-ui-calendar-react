@@ -110,7 +110,7 @@ export function getDisabledDays(
   return sortBy(uniq(disabledDays).filter((day) => !isNil(day)));
 }
 
-/** Return day positions that shoud be displayed as marked. */
+/** Return day positions that should be displayed as marked. */
 export function getMarkedDays(
   marked: Moment[],
   currentDate: Moment,
@@ -119,8 +119,22 @@ export function getMarkedDays(
       return [];
     }
     const allDates = buildDays(currentDate, daysOnPage);
-    const allDatesNumb = allDates.map((date) => parseInt(date, 10));
     const activeDayPositions = getDefaultEnabledDayPositions(allDates, currentDate);
+    let allDatesNumb = allDates.map((date) => parseInt(date, 10));
+
+    // The following will clear all dates before the 1st of the current month.
+    // This is to prevent marking days before the 1st, that shouldn't be marked.
+    // If the incorrect dates are marked, instead of the legitimate ones, the legitimate dates
+    // will not be marked at all.
+    const fillTo = allDatesNumb.indexOf(1);
+    for (var i = 0; i < fillTo; i++) {
+      if (i <= fillTo) {
+        allDatesNumb[i] = 0;
+      } else {
+        break;
+      }
+    }
+
     const markedIndexes = marked
       .filter((date) => date.isSame(currentDate, 'month'))
       .map((date) => date.date())
