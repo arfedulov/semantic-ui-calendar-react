@@ -204,7 +204,7 @@ class InputView extends React.Component<InputViewProps, any> {
       return renderPicker();
     }
 
-    return (<div>
+    return (<>
       {inputElement}
       <Transition
         unmountOnHide
@@ -246,7 +246,7 @@ class InputView extends React.Component<InputViewProps, any> {
           </div>
         </Popup>
       </Transition>
-    </div>
+    </>
     );
   }
 
