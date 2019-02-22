@@ -45,6 +45,7 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
         onBlur={onBlur}
         onClick={onFocus}
         onMouseEnter={onMouseEnter}
+        icon
         {...rest}
       >
         {value && clearable ?
