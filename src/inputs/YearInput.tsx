@@ -88,6 +88,8 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     animation: PropTypes.string,
     /** Moment date localization. */
     localization: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    iconPosition: PropTypes.oneOf(['left', 'right']),
   };
 
   constructor(props) {
