@@ -100,6 +100,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     markColor: PropTypes.string,
     /** Moment date localization. */
     localization: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    iconPosition: PropTypes.oneOf(['left', 'right']),
   };
 
   constructor(props) {
@@ -112,7 +114,6 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   public render() {
     const {
       value,
-      icon,
       dateFormat,
       initialDate,
       maxDate,
@@ -127,7 +128,6 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        icon={isBoolean(icon) && !icon ? undefined : icon}
         {...rest}
         value={value}
         onMount={this.onInputViewMount}

@@ -3,6 +3,7 @@ import * as React from 'react';
 import {
   SemanticTRANSITIONS,
   SemanticCOLORS,
+  SemanticICONS,
 } from 'semantic-ui-react';
 
 import {
@@ -21,7 +22,9 @@ export interface BaseInputProps {
   /** An input can be formatted to appear inline in other content. */
   inline?: boolean;
   /** Optional icon to display inside the Input. */
-  icon?: string | false;
+  icon?: SemanticICONS | false;
+  /** Icon position inside Input. Default: 'right'. */
+  iconPosition?: 'right' | 'left';
   /**
    * Called on clear.
    *

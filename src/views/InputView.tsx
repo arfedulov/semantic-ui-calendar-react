@@ -84,7 +84,9 @@ interface InputViewProps {
   /** Using the clearable setting will let users remove their selection from a calendar. */
   clearable?: boolean;
   /** Optional Icon to display inside the Input. */
-  icon?: any;
+  icon?: SemanticICONS | boolean;
+  /** Icon position. Default: 'right'. */
+  iconPosition?: 'left' | 'right';
   /** Optional Icon to display inside the clearable Input. */
   clearIcon?: any;
   /** Whether popup is closed. */
@@ -123,10 +125,10 @@ class InputView extends React.Component<InputViewProps, any> {
     closeOnMouseLeave: true,
     tabIndex: '0',
     clearable: false,
-    icon: 'calendar',
     clearIcon: 'remove',
     animation: 'scale',
     duration: 200,
+    iconPosition: 'right',
   };
 
   private inputNode: HTMLElement | undefined;
@@ -154,6 +156,8 @@ class InputView extends React.Component<InputViewProps, any> {
       duration,
       pickerWidth,
       pickerStyle,
+      iconPosition,
+      icon,
       ...rest
     } = this.props;
 
@@ -187,6 +191,8 @@ class InputView extends React.Component<InputViewProps, any> {
     const inputElement = (
       <FormInputWithRef
         {...rest}
+        icon={icon}
+        iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined }
         innerRef={(e) => { this.inputNode = e; onMount(e); }}
         value={value}
         tabIndex={tabIndex}

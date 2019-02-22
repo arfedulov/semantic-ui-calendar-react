@@ -76,6 +76,8 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     animation: PropTypes.string,
     /** Moment date localization. */
     localization: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    iconPosition: PropTypes.oneOf(['left', 'right']),
   };
 
   constructor(props) {
@@ -88,7 +90,6 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   public render() {
     const {
       value,
-      icon,
       dateFormat,
       initialDate,
       maxDate,
@@ -101,7 +102,6 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        icon={isBoolean(icon) && !icon ? undefined : icon}
         {...rest}
         value={value}
         onMount={this.onInputViewMount}

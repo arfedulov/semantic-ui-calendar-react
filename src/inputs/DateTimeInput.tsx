@@ -195,6 +195,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     markColor: PropTypes.string,
     /** Moment date localization. */
     localization: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    iconPosition: PropTypes.oneOf(['left', 'right']),
   };
 
   constructor(props: DateTimeInputProps) {
@@ -225,7 +227,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       startMode,
       divider,
       closable,
-      icon,
       markColor,
       marked,
       localization,
@@ -236,7 +237,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
-        icon={isBoolean(icon) && !icon ? undefined : icon}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
         onFocus={this.onFocus}

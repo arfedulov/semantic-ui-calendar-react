@@ -177,6 +177,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     markColor: PropTypes.string,
     /** Moment date localization. */
     localization: PropTypes.string,
+    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
+    iconPosition: PropTypes.oneOf(['left', 'right']),
   };
 
   constructor(props: DateInputProps) {
@@ -194,7 +196,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
   public render() {
     const {
       value,
-      icon,
       dateFormat,
       initialDate,
       disable,
@@ -217,7 +218,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         openPopup={this.openPopup}
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
-        icon={isBoolean(icon) && !icon ? undefined : icon}
         onFocus={this.onFocus}
         onChange={this.onInputValueChange}
         {...rest}
