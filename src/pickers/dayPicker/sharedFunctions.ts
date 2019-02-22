@@ -120,7 +120,7 @@ export function getMarkedDays(
     }
     const allDates = buildDays(currentDate, daysOnPage);
     const activeDayPositions = getDefaultEnabledDayPositions(allDates, currentDate);
-    let allDatesNumb = allDates.map((date) => parseInt(date, 10));
+    const allDatesNumb = allDates.map((date) => parseInt(date, 10));
 
     /*
      * The following will clear all dates before the 1st of the current month.
@@ -129,7 +129,7 @@ export function getMarkedDays(
      * will not be marked at all.
     */
     const fillTo = allDatesNumb.indexOf(1);
-    for (var i = 0; i < fillTo; i++) {
+    for (let i = 0; i < fillTo; i++) {
       allDatesNumb[i] = 0;
     }
 
