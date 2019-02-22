@@ -186,6 +186,8 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``marked`` | {moment\|Date\|moment[]\|Date[]} Date or list of dates that are displayed as marked |
 | ``markColor`` | {string\|SemanticCOLORs} String specifying the mark color. Must be one of the Semantic UI colors |
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
+| ``icon`` | {string\|false} icon to display inside Input. |
+| ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 
 ### TimeInput
 
@@ -208,6 +210,8 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
+| ``icon`` | {string\|false} icon to display inside Input. |
+| ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 
 ### DateTimeInput
 
@@ -241,6 +245,8 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``marked`` | {moment\|Date\|moment[]\|Date[]} Date or list of dates that are displayed as marked |
 | ``markColor`` | {string\|SemanticCOLORs} String specifying the mark color. Must be one of the Semantic UI colors |
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
+| ``icon`` | {string\|false} icon to display inside Input. |
+| ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 
 ### DatesRangeInput
 
@@ -267,6 +273,8 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``marked`` | {moment\|Date\|moment[]\|Date[]} Date or list of dates that are displayed as marked |
 | ``markColor`` | {string\|SemanticCOLORs} String specifying the mark color. Must be one of the Semantic UI colors |
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
+| ``icon`` | {string\|false} icon to display inside Input. |
+| ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 
 ### YearInput
 
@@ -288,6 +296,8 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
+| ``icon`` | {string\|false} icon to display inside Input. |
+| ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 
 ### MonthInput
 
@@ -312,6 +322,8 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
+| ``icon`` | {string\|false} icon to display inside Input. |
+| ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 
 ### MonthRangeInput
 
@@ -335,3 +347,5 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``duration`` | {number} Optional duration of the CSS transition animation in milliseconds. Default: `200` |
 | ``animation`` | {string} Optional named animation event to used. Must be defined in CSS. Default: `'scale'` |
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
+| ``icon`` | {string\|false} icon to display inside Input. |
+| ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
