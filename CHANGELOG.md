@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.14.2 2019-02-27
+
+- fix: can mark any date [`#98`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/98)
+
+- fix(InputView): don't wrap field in extra div [`#99`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/99)
+
+- fix: use "ui icon input" for correct styling [`#100`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/100)
+
+- fix: can remove icon from input [`#101`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/101)
+
 ## v0.14.1 2019-02-19
 
 - feat: allow to mark specific dates [`#77`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/77)
