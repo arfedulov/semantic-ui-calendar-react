@@ -41,8 +41,6 @@ export interface RangeSelectionCalendarViewProps {
   currentRangeHeadingValue: string;
   /** Indexes of start and end values of currently selected range (to display as active). */
   activeRange: RangeIndexes;
-  /** Allow end date to be the same as start date */
-  allowSameEndDate?: boolean;
 }
 
 export interface CalendarWithHeaderViewProps {

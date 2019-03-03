@@ -37,7 +37,7 @@ interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, Marke
   start: Moment;
   /** End of currently selected dates range. */
   end: Moment;
-  /** Allow end date to be the same as start date */
+  /** Allow end date to be the same as start date. */
   allowSameEndDate: boolean;
 }
 
@@ -94,7 +94,7 @@ class DatesRangePicker
         markColor={markColor}
         disabledItemIndexes={this.getDisabledPositions()}
         localization={localization}
-        allowSameEndDate={allowSameEndDate}/>
+      />
     );
   }
 

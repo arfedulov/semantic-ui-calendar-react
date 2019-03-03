@@ -34,8 +34,6 @@ interface BodyProps {
   marked?: number[];
   /** The color of the mark that will be displayed on the calendar. */
   markColor?: string;
-  /** Allow end date to be the same as start date */
-  allowSameEndDate?: boolean;
 }
 
 function Body(props: BodyProps) {

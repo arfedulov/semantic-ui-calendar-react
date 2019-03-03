@@ -67,7 +67,6 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
       markColor,
       markedItemIndexes,
       localization,
-      allowSameEndDate,
       ...rest
     } = this.props;
     const {
@@ -96,7 +95,6 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
           hovered={hoveredItemIndex}
           markColor={markColor}
           marked={markedItemIndexes}
-          allowSameEndDate={allowSameEndDate}
           active={getActive(start, end)}
           disabled={disabledItemIndexes} />
       </Calendar>
