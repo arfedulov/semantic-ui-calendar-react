@@ -720,6 +720,61 @@ describe('<DatesRangePicker />: handleChange', () => {
       assert(_.isUndefined(calledWithArgs[1].value.end), 'has undefined in `value.end`');
     });
   });
+
+  describe('`start` prop is provided, `allowSameEndDate` prop is set to `false`, click on the same date', () => {
+    it('call onChangeFake with { start: undefined, end: undefined }', () => {
+      /*
+        [
+        '29', '30', '31', '1', '2', '3', '4',
+        '5', '6', '7', '8', '9', '10', '11',
+        '12', '13', '14', '15', '16', '17', '18',
+        '19', '20', '21', '22', '23', '24', '25',
+        '26', '27', '28', '29', '30', '31', '1',
+        '2', '3', '4', '5', '6', '7', '8',
+      ]
+      */
+      const onChangeFake = sinon.fake();
+      const wrapper = mount(<DatesRangePicker
+        onChange={onChangeFake}
+        initializeWith={date}
+        start={moment('2018-08-06')}
+        allowSameEndDate={false} />);
+      wrapper.instance().handleChange('click', { itemPosition: 8 });
+      const calledWithArgs = onChangeFake.args[0];
+
+      assert(onChangeFake.calledOnce, 'onChangeFake called once');
+      assert.equal(calledWithArgs[0], 'click', 'correct first argument');
+      assert(_.isUndefined(calledWithArgs[1].value.start), 'has undefined in `value.start`');
+      assert(_.isUndefined(calledWithArgs[1].value.end), 'has undefined in `value.end`');
+    });
+  });
+
+  describe('`start` prop is provided, `allowSameEndDate` prop is set to `true`, click on the same date', () => {
+    it('call onChangeFake with { start: Moment, end: Moment }', () => {
+      /*
+        [
+        '29', '30', '31', '1', '2', '3', '4',
+        '5', '6', '7', '8', '9', '10', '11',
+        '12', '13', '14', '15', '16', '17', '18',
+        '19', '20', '21', '22', '23', '24', '25',
+        '26', '27', '28', '29', '30', '31', '1',
+        '2', '3', '4', '5', '6', '7', '8',
+      ]
+      */
+      const onChangeFake = sinon.fake();
+      const wrapper = mount(<DatesRangePicker
+        onChange={onChangeFake}
+        initializeWith={date}
+        start={moment('2018-08-06')}
+        allowSameEndDate={true} />);
+      wrapper.instance().handleChange('click', { itemPosition: 8 });
+      const calledWithArgs = onChangeFake.args[0];
+
+      assert(onChangeFake.calledOnce, 'onChangeFake called once');
+      assert.equal(calledWithArgs[0], 'click', 'correct first argument');
+      assert(calledWithArgs[1].value.end.isSame(moment('2018-08-06'), 'date'), 'has correct moment instance in `value.end`');
+    });
+  });
 });
 
 describe('<DatesRangePicker />: switchToNextPage', () => {
