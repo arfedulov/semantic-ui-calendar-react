@@ -151,6 +151,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       tabIndex,
       pickerWidth,
       pickerStyle,
+      allowSameEndDate,
     } = this.props;
     const {
       start,
@@ -179,6 +180,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         tabIndex={tabIndex}
         pickerWidth={pickerWidth}
         pickerStyle={pickerStyle}
+        allowSameEndDate={allowSameEndDate}
       />
     );
   }

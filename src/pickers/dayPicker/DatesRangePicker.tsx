@@ -37,6 +37,8 @@ interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, Marke
   start: Moment;
   /** End of currently selected dates range. */
   end: Moment;
+  /** Allow end date to be the same as start date */
+  allowSameEndDate: boolean;
 }
 
 export type DatesRangePickerOnChangeData = BasePickerOnChangeData;
@@ -67,6 +69,7 @@ class DatesRangePicker
       marked,
       markColor,
       localization,
+      allowSameEndDate,
       ...rest
     } = this.props;
 
@@ -90,7 +93,8 @@ class DatesRangePicker
         markedItemIndexes={this.getMarkedPositions()}
         markColor={markColor}
         disabledItemIndexes={this.getDisabledPositions()}
-        localization={localization} />
+        localization={localization}
+        allowSameEndDate={allowSameEndDate}/>
     );
   }
 
@@ -245,6 +249,7 @@ class DatesRangePicker
       start,
       end,
       localization,
+      allowSameEndDate,
     } = this.props;
     const data: DatesRangePickerOnChangeData = {
       ...this.props,
@@ -256,7 +261,7 @@ class DatesRangePicker
       data.value = { start: buildMoment(this.state.date, firstOnPage, itemPosition, localization) };
     } else if (!isNil(start) && isNil(end)) {
       const selectedDate = buildMoment(this.state.date, firstOnPage, itemPosition, localization);
-      if (selectedDate.isAfter(start, 'date')) {
+      if (selectedDate.isAfter(start, 'date') || (allowSameEndDate && selectedDate.isSame(start, 'date'))) {
         data.value = {
           start,
           end: selectedDate,
