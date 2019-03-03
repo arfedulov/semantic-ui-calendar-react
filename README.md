@@ -275,6 +275,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
+| ``allowSameEndDate`` | {boolean} Allow end date to be the same as start date. |
 
 ### YearInput
 

@@ -128,6 +128,11 @@ export interface MultimodeProps {
   preserveViewMode?: boolean;
 }
 
+export interface RangeRelatedProps {
+  /** Allow end date to be the same as start date. */
+  allowSameEndDate?: boolean;
+}
+
 export interface BaseInputState {
   popupIsClosed: boolean;
 }

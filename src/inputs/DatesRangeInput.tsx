@@ -23,6 +23,7 @@ import BaseInput, {
   DateRelatedProps,
   MinMaxValueProps,
   MarkedValuesProps,
+  RangeRelatedProps,
 } from './BaseInput';
 import moment = require('moment');
 
@@ -32,7 +33,8 @@ export type DatesRangeInputProps =
   & BaseInputProps
   & DateRelatedProps
   & MarkedValuesProps
-  & MinMaxValueProps;
+  & MinMaxValueProps
+  & RangeRelatedProps;
 
 export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
   value: string;
@@ -102,6 +104,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     localization: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     iconPosition: PropTypes.oneOf(['left', 'right']),
+    allowSameEndDate: PropTypes.bool,
   };
 
   constructor(props) {
@@ -122,6 +125,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       marked,
       markColor,
       localization,
+      allowSameEndDate,
       ...rest
     } = this.props;
 
@@ -151,6 +155,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       tabIndex,
       pickerWidth,
       pickerStyle,
+      allowSameEndDate,
     } = this.props;
     const {
       start,
@@ -179,6 +184,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         tabIndex={tabIndex}
         pickerWidth={pickerWidth}
         pickerStyle={pickerStyle}
+        allowSameEndDate={allowSameEndDate}
       />
     );
   }
