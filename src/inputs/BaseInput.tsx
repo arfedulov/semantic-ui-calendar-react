@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import { default as moment, Moment } from 'moment';
 import * as React from 'react';
 import {
   SemanticTRANSITIONS,
@@ -9,7 +9,6 @@ import {
 import {
   TimeFormat,
 } from '../pickers/BasePicker';
-import moment = require('moment');
 
 export interface BaseInputProps {
   [key: string]: any;

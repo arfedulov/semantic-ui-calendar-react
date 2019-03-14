@@ -1,4 +1,3 @@
-import isBoolean from 'lodash/isBoolean';
 import invoke from 'lodash/invoke';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -13,7 +12,6 @@ import {
   parseValue,
   buildValue,
 } from './parse';
-import moment = require('moment');
 
 const DATES_SEPARATOR = ' - ';
 
