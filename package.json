@@ -2,12 +2,15 @@
   "name": "semantic-ui-calendar-react",
   "version": "0.14.3",
   "description": "date/time picker built from semantic-ui elements",
-  "main": "dist/index.js",
+  "main": "dist/commonjs/index.js",
   "scripts": {
     "test": "npx cross-env TS_NODE_COMPILER_OPTIONS=\"{\"\"allowJs\"\":true}\" npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
     "start": "npx webpack-dev-server",
     "prebuild": "npm run test && npm run lint && npx rimraf dist/*",
-    "build": "npx tsc --declaration",
+    "build": "npm run build:commonjs && npm run build:es6 && npm run build:amd",
+    "build:commonjs": "npx tsc --declaration --module commonjs --outDir ./dist/commonjs",
+    "build:es6": "npx tsc --declaration --module es6 --outDir ./dist/es6",
+    "build:amd": "npx tsc --declaration --module amd --outDir ./dist/amd",
     "publish-npm": "npm run test && npm run build && npm publish",
     "build:example": "npm run test && npm run lint && npx webpack --production",
     "lint": "npx tslint src/**"

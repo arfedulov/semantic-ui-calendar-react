@@ -1,4 +1,3 @@
-import isBoolean from 'lodash/isBoolean';
 import invoke from 'lodash/invoke';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -6,12 +5,10 @@ import React from 'react';
 import CustomPropTypes from '../lib/CustomPropTypes';
 import InputView from '../views/InputView';
 import {
-  getInitializer,
   parseDatesRange,
   parseValue,
   parseArrayOrValue,
   buildValue,
-  dateValueToString,
 } from './parse';
 
 import DatesRangePicker, {
@@ -25,7 +22,6 @@ import BaseInput, {
   MarkedValuesProps,
   RangeRelatedProps,
 } from './BaseInput';
-import moment = require('moment');
 
 const DATES_SEPARATOR = ' - ';
 

@@ -12,6 +12,7 @@
       "es2015",
       "dom"
     ],
+    "module": "commonjs",
     "paths": {
       "react": [
         "node_modules/@types/react"
