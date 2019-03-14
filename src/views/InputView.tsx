@@ -117,6 +117,8 @@ interface InputViewProps {
   pickerWidth?: string;
   /** Style object for picker. */
   pickerStyle?: object;
+  /** Do not display popup if true. */
+  readOnly?: boolean;
 }
 
 class InputView extends React.Component<InputViewProps, any> {
@@ -158,6 +160,7 @@ class InputView extends React.Component<InputViewProps, any> {
       pickerStyle,
       iconPosition,
       icon,
+      readOnly,
       ...rest
     } = this.props;
 
@@ -191,6 +194,7 @@ class InputView extends React.Component<InputViewProps, any> {
     const inputElement = (
       <FormInputWithRef
         {...rest}
+        readOnly={readOnly}
         icon={icon}
         iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined }
         innerRef={(e) => { this.inputNode = e; onMount(e); }}
@@ -213,46 +217,50 @@ class InputView extends React.Component<InputViewProps, any> {
 
     return (<>
       {inputElement}
-      <Transition
-        unmountOnHide
-        mountOnShow
-        visible={!popupIsClosed}
-        animation={animation}
-        duration={duration}
-        onComplete={() => {
-          if (popupIsClosed) {
-            this.unsetScrollListener();
-            // TODO: for some reason sometimes transition component
-            // doesn't hide even though `popupIsClosed === true`
-            // To hide it we need to rerender component
-            this.forceUpdate();
-          } else {
-            this.setScrollListener();
-          }
-        }}
-      >
-        <Popup
-          position={popupPosition}
-          open={true}
-          hoverable={closeOnMouseLeave}
-          flowing
-          style={popupStyle}
-          context={this.inputNode}
-          on='hover'
-          mountNode={mountNode}
+      {
+        !readOnly
+        &&
+        <Transition
+          unmountOnHide
+          mountOnShow
+          visible={!popupIsClosed}
+          animation={animation}
+          duration={duration}
+          onComplete={() => {
+            if (popupIsClosed) {
+              this.unsetScrollListener();
+              // TODO: for some reason sometimes transition component
+              // doesn't hide even though `popupIsClosed === true`
+              // To hide it we need to rerender component
+              this.forceUpdate();
+            } else {
+              this.setScrollListener();
+            }
+          }}
         >
-          <div
-            onBlur={onBlur}
-            onMouseLeave={onMouseLeave}
-            onMouseEnter={onMouseEnter}
-            style={{ outline: 'none' }}
-            tabIndex={0}
-            ref={(ref) => this.popupNode = ref}
+          <Popup
+            position={popupPosition}
+            open={true}
+            hoverable={closeOnMouseLeave}
+            flowing
+            style={popupStyle}
+            context={this.inputNode}
+            on='hover'
+            mountNode={mountNode}
           >
-            {renderPicker()}
-          </div>
-        </Popup>
-      </Transition>
+            <div
+              onBlur={onBlur}
+              onMouseLeave={onMouseLeave}
+              onMouseEnter={onMouseEnter}
+              style={{ outline: 'none' }}
+              tabIndex={0}
+              ref={(ref) => this.popupNode = ref}
+            >
+              {renderPicker()}
+            </div>
+          </Popup>
+        </Transition>
+      }
     </>
     );
   }
