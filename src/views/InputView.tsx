@@ -162,10 +162,16 @@ class InputView extends React.Component<InputViewProps, any> {
     } = this.props;
 
     const onBlur = (e) => {
-      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
         closePopup();
       }
     };
+    const checkIE = () => {
+      if (navigator.appName == 'Microsoft Internet Explorer' || !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/))) {
+        return true;
+      }
+      return false;
+    }
 
     const onMouseLeave = (e) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
@@ -192,7 +198,7 @@ class InputView extends React.Component<InputViewProps, any> {
       <FormInputWithRef
         {...rest}
         icon={icon}
-        iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined }
+        iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined}
         innerRef={(e) => { this.inputNode = e; onMount(e); }}
         value={value}
         tabIndex={tabIndex}
