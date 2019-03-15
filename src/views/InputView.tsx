@@ -11,6 +11,7 @@ import {
   SemanticTRANSITIONS,
   Transition,
 } from 'semantic-ui-react';
+import checkIE from '../lib/checkIE';
 
 const popupStyle = {
   padding: '0',
@@ -166,12 +167,6 @@ class InputView extends React.Component<InputViewProps, any> {
         closePopup();
       }
     };
-    const checkIE = () => {
-      if (navigator.appName == 'Microsoft Internet Explorer' || !!(navigator.userAgent.match(/Trident/) || navigator.userAgent.match(/rv:11/))) {
-        return true;
-      }
-      return false;
-    }
 
     const onMouseLeave = (e) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
