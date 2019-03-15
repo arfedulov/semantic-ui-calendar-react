@@ -11,6 +11,7 @@ import {
   SemanticTRANSITIONS,
   Transition,
 } from 'semantic-ui-react';
+import checkIE from '../lib/checkIE';
 
 const popupStyle = {
   padding: '0',
@@ -165,7 +166,7 @@ class InputView extends React.Component<InputViewProps, any> {
     } = this.props;
 
     const onBlur = (e) => {
-      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
         closePopup();
       }
     };
@@ -196,7 +197,7 @@ class InputView extends React.Component<InputViewProps, any> {
         {...rest}
         readOnly={readOnly}
         icon={icon}
-        iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined }
+        iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined}
         innerRef={(e) => { this.inputNode = e; onMount(e); }}
         value={value}
         tabIndex={tabIndex}
