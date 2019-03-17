@@ -7,10 +7,11 @@
     "test": "npx cross-env TS_NODE_COMPILER_OPTIONS=\"{\"\"allowJs\"\":true}\" npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
     "start": "npx webpack-dev-server",
     "prebuild": "npm run test && npm run lint && npx rimraf dist/*",
-    "build": "npm run build:commonjs && npm run build:es6 && npm run build:amd",
+    "build": "npm run build:commonjs && npm run build:es6 && npm run build:amd && npm run build:umd",
     "build:commonjs": "npx tsc --declaration --module commonjs --outDir ./dist/commonjs",
     "build:es6": "npx tsc --declaration --module es6 --outDir ./dist/es6",
     "build:amd": "npx tsc --declaration --module amd --outDir ./dist/amd",
+    "build:umd": "npx webpack --config webpack.umd.config.js",
     "publish-npm": "npm run test && npm run build && npm publish",
     "build:example": "npm run test && npm run lint && npx webpack --production",
     "lint": "npx tslint src/**"
