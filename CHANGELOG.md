@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.14.3 2019-03-17
+
+- feat(DatesRangeInput): allow same start/end date selection when using [`#104`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/104)
+
+- fix: readOnly prop in InputView [`fe63e3d`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/fe63e3d35c22b62ef23511afba47f56346d03187)
+
+- fix: #95 #55 can't change years and months in IE [`#110`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/110)
+
+- chore: build for multiple module systems [`ef32ca7`](https://github.com/arfedulov/semantic-ui-calendar-react/commit/ef32ca7b900a6d83245f84a6be06c1eb84c4a13f)
+
+- chore: add umd build [`#111`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/111)
+
 ## v0.14.2 2019-02-27
 
 - fix: can mark any date [`#98`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/98)
