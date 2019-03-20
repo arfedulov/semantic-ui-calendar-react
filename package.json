@@ -22,7 +22,7 @@
     "calendar",
     "datepicker"
   ],
-  "types": "./dist/index.d.ts",
+  "types": "./dist/commonjs/index.d.ts",
   "author": "Artem Fedulov <arfedulov@gmail.com>",
   "homepage": "https://github.com/arfedulov/semantic-ui-calendar-react#readme",
   "bugs": {
