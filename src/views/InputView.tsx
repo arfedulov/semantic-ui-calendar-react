@@ -1,5 +1,3 @@
-import * as _ from 'lodash';
-import * as React from 'react';
 import isString from 'lodash/isString';
 import invoke from 'lodash/invoke';
 
@@ -37,7 +35,6 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
       ...rest
     } = this.props;
 
-    const ClearIcon = _.isString(clearIcon) ?
     const ClearIcon = isString(clearIcon) ?
       <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
       <clearIcon.type {...clearIcon.props} link onClick={onClear} />
@@ -77,14 +74,10 @@ interface InputViewProps {
   openPopup: () => void;
   /** Called on input focus. */
   onFocus?: () => void;
-  /** Function for rendering component. */
-  render?: (props: any) => React.ReactNode;
   /** Function for rendering picker. */
   renderPicker: () => React.ReactNode;
   /** Called after clear icon has clicked. */
   onClear?: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
-  /** Picker. */
-  children?: React.ReactNode;
   /** Whether to close a popup when cursor leaves it. */
   closeOnMouseLeave?: boolean;
   /** A field can have its label next to instead of above it. */
@@ -92,7 +85,6 @@ interface InputViewProps {
   /** Using the clearable setting will let users remove their selection from a calendar. */
   clearable?: boolean;
   /** Optional Icon to display inside the Input. */
-  icon?: any;
   icon?: SemanticICONS | boolean;
   /** Icon position. Default: 'right'. */
   iconPosition?: 'left' | 'right';
@@ -136,7 +128,6 @@ class InputView extends React.Component<InputViewProps, any> {
     closeOnMouseLeave: true,
     tabIndex: '0',
     clearable: false,
-    icon: 'calendar',
     clearIcon: 'remove',
     animation: 'scale',
     duration: 200,
@@ -149,7 +140,6 @@ class InputView extends React.Component<InputViewProps, any> {
 
   public render() {
     const {
-      render,
       renderPicker,
       popupPosition,
       inline,
@@ -176,7 +166,6 @@ class InputView extends React.Component<InputViewProps, any> {
     } = this.props;
 
     const onBlur = (e) => {
-      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
         closePopup();
       }
@@ -215,7 +204,6 @@ class InputView extends React.Component<InputViewProps, any> {
         inline={inlineLabel}
         onClear={(e) => (onClear || onChange)(e, { ...rest, value: '' })}
         onFocus={(e) => {
-          _.invoke(this.props, 'onFocus', e, this.props);
           invoke(this.props, 'onFocus', e, this.props);
           openPopup();
         }}
@@ -225,43 +213,11 @@ class InputView extends React.Component<InputViewProps, any> {
     );
 
     if (inline) {
-      return render({
-        tabIndex,
-        pickerWidth,
-        pickerStyle,
-      });
       return renderPicker();
     }
 
-    return (<div>
     return (<>
       {inputElement}
-      <Transition
-        unmountOnHide
-        mountOnShow
-        visible={!popupIsClosed}
-        animation={animation}
-        duration={duration}
-        onComplete={() => {
-          if (popupIsClosed) {
-            this.unsetScrollListener();
-            // TODO: for some reason sometimes transition component
-            // doesn't hide even though `popupIsClosed === true`
-            // To hide it we need to rerender component
-            this.forceUpdate();
-          } else {
-            this.setScrollListener();
-          }
-        }}
-      >
-        <Popup
-          position={popupPosition}
-          open={true}
-          hoverable={closeOnMouseLeave}
-          flowing
-          style={popupStyle}
-          context={this.inputNode}
-          on='hover'
       {
         !readOnly
         &&
@@ -283,13 +239,6 @@ class InputView extends React.Component<InputViewProps, any> {
             }
           }}
         >
-          <div
-            onBlur={onBlur}
-            onMouseLeave={onMouseLeave}
-            onMouseEnter={onMouseEnter}
-            style={{ outline: 'none' }}
-            tabIndex={0}
-            ref={(ref) => this.popupNode = ref}
           <Popup
             position={popupPosition}
             open={true}
@@ -300,11 +249,6 @@ class InputView extends React.Component<InputViewProps, any> {
             on='hover'
             mountNode={mountNode}
           >
-            {render({ pickerWidth, pickerStyle })}
-          </div>
-        </Popup>
-      </Transition>
-    </div>
             <div
               onBlur={onBlur}
               onMouseLeave={onMouseLeave}
