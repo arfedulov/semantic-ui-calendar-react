@@ -138,15 +138,11 @@ class ClearableDateTimeForm extends React.Component {
 # Locales support
 
 Since ``semantic-ui-calendar-react`` uses moment.js it supports locales.
-To change locale you need to set ``moment``'s locale in a scope that contains ``semantic-ui-calendar-react`` components:
+You can set locale globally:
 
 ```javascript
-import * as moment from 'moment';
-
-moment.locale('ru');
-
-// code that uses ``semantic-ui-calendar-react`` components
-
+import moment from 'moment';
+import 'moment/locale/ru';
 ```
 
 You can also set locale for *Input component locally using ``localization`` prop.

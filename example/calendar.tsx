@@ -1,4 +1,5 @@
 import moment from 'moment';
+// import 'moment/locale/ru';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {
@@ -24,8 +25,6 @@ import {
   YearInput,
   YearInputOnChangeData,
 } from '../src/inputs';
-
-moment.locale('en');
 
 type DateTimeFormHandleChangeData = DateInputOnChangeData
   | DatesRangeInputOnChangeData
