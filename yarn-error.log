@@ -1,37 +1,37 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js install
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js upgrade
 
 PATH: 
-  C:\ProgramData\Oracle\Java\javapath;C:\windows\system32;C:\windows;C:\windows\System32\Wbem;C:\windows\System32\WindowsPowerShell\v1.0\;C:\Program Files\WinZip\;C:\Program Files (x86)\IBM\Notes\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\110\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\Tools\Binn\;C:\Program Files\Microsoft SQL Server\120\DTS\Binn\;C:\Program Files (x86)\ConfigMgr 2012 Toolkit R2\ClientTools;C:\Program Files\Citrix\System32\;C:\Program Files\Citrix\ICAService\;C:\Program Files\Citrix\Virtual Desktop Agent\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\dotnet\;C:\Program Files (x86)\Webex\Webex\Applications;C:\Users\pbellikoth001\AppData\Local\Microsoft\WindowsApps;\\usatlkilne01-ctxcifs\ctxprofiles\FolderRedirW10\pbellikoth001\AppData\Roaming\npm;C:\Users\pbellikoth001\AppData\Local\Yarn\bin;C:\Program Files\MongoDB\Server\3.6\bin;C:\Program Files\Microsoft VS Code\bin;C:\Users\pbellikoth001\AppData\Local\Programs\Microsoft VS Code Insiders\bin
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;c:\Program Files (x86)\Intel\iCLS Client\;c:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Windows Live\Shared;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files (x86)\Yarn\bin\;C:\MinGW\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Users\M.video\AppData\Roaming\npm;C:\Users\M.video\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\M.video\AppData\Local\Yarn\bin;C:\Users\M.video\.dotnet\tools;C:\Windows\Microsoft.NET\Framework64\v4.0.30319;C:\Program Files (x86)\NUnit.org\nunit-console
 
 Yarn version: 
-  1.6.0
+  1.12.3
 
 Node version: 
-  8.11.1
+  10.15.0
 
 Platform: 
   win32 x64
 
 Trace: 
-  Error: self signed certificate in certificate chain
-      at TLSSocket.<anonymous> (_tls_wrap.js:1105:38)
-      at emitNone (events.js:106:13)
-      at TLSSocket.emit (events.js:208:7)
-      at TLSSocket._finishInit (_tls_wrap.js:639:8)
-      at TLSWrap.ssl.onhandshakedone (_tls_wrap.js:469:38)
+  Error: getaddrinfo ENOTFOUND registry.npmjs.org registry.npmjs.org:443
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:57:26)
 
 npm manifest: 
   {
     "name": "semantic-ui-calendar-react",
-    "version": "0.14.2",
+    "version": "0.14.4",
     "description": "date/time picker built from semantic-ui elements",
-    "main": "dist/index.js",
+    "main": "dist/commonjs/index.js",
     "scripts": {
       "test": "npx cross-env TS_NODE_COMPILER_OPTIONS=\"{\"\"allowJs\"\":true}\" npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
       "start": "npx webpack-dev-server",
       "prebuild": "npm run test && npm run lint && npx rimraf dist/*",
-      "build": "npx tsc --declaration",
+      "build": "npm run build:commonjs && npm run build:es6 && npm run build:amd && npm run build:umd",
+      "build:commonjs": "npx tsc --declaration --module commonjs --outDir ./dist/commonjs",
+      "build:es6": "npx tsc --declaration --module es6 --outDir ./dist/es6",
+      "build:amd": "npx tsc --declaration --module amd --outDir ./dist/amd",
+      "build:umd": "npx webpack --config webpack.umd.config.js",
       "publish-npm": "npm run test && npm run build && npm publish",
       "build:example": "npm run test && npm run lint && npx webpack --production",
       "lint": "npx tslint src/**"
@@ -42,7 +42,7 @@ npm manifest:
       "calendar",
       "datepicker"
     ],
-    "types": "./dist/index.d.ts",
+    "types": "./dist/commonjs/index.d.ts",
     "author": "Artem Fedulov <arfedulov@gmail.com>",
     "homepage": "https://github.com/arfedulov/semantic-ui-calendar-react#readme",
     "bugs": {
@@ -92,7 +92,7 @@ npm manifest:
       "react-dom": "^16.6.0",
       "rimraf": "^2.6.2",
       "semantic-ui-css": "^2.4.1",
-      "semantic-ui-react": "^0.85.0",
+      "semantic-ui-react": "^0.86.0",
       "sinon": "^7.2.2",
       "ts-loader": "^5.3.1",
       "ts-node": "^7.0.1",
@@ -892,10 +892,10 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
     integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
   
-  "@semantic-ui-react/event-stack@^3.0.1":
-    version "3.0.1"
-    resolved "https://registry.yarnpkg.com/@semantic-ui-react/event-stack/-/event-stack-3.0.1.tgz#41d0b095ac94cc5e1607a4fed4d0f8860d0d2e60"
-    integrity sha512-9YNRr0z9GEvk/yvIzAzv0sbYa/FPrtWTYibu+chJ0CEMQjYDjUdRSqtxXOvP0eM6kZjD1G/Oy1LhPiHG7DRHsg==
+  "@semantic-ui-react/event-stack@^3.1.0":
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/@semantic-ui-react/event-stack/-/event-stack-3.1.0.tgz#aadbe4a28b0dd7703c5f451640d0fefe66dd9208"
+    integrity sha512-WHtU9wutZByZtFZxzj4BVEk+rvWldZpZhRcyv6d84+XLSolm83zLHYJLTACGuSl6Xa/xpgVXquvm9GyMudkJYg==
     dependencies:
       exenv "^1.2.2"
       prop-types "^15.6.2"
@@ -5496,13 +5496,13 @@ Lockfile:
     dependencies:
       jquery x.*
   
-  semantic-ui-react@^0.85.0:
-    version "0.85.0"
-    resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.85.0.tgz#64ff420e6432e61bc798baf27d368f73cf0cad28"
-    integrity sha512-rroRoux+MMmLaZCZfFX9xZfTo1cy+JiM55fVaaqbfPq0s0RupraBhamJhvTDz7idl3ionaXPW7knJyZAz4XMGg==
+  semantic-ui-react@^0.86.0:
+    version "0.86.0"
+    resolved "https://registry.yarnpkg.com/semantic-ui-react/-/semantic-ui-react-0.86.0.tgz#f3c6a27250f2e9e07a975d0a3399ffd3a48861b5"
+    integrity sha512-t/psK15zX9bEaezpRDwoXAZovp+I083SgsicAnMig/mxqaRI2FHZpr/G+lfzizrTpmYjgi4/Th6/QAol8pa7JQ==
     dependencies:
       "@babel/runtime" "^7.1.2"
-      "@semantic-ui-react/event-stack" "^3.0.1"
+      "@semantic-ui-react/event-stack" "^3.1.0"
       classnames "^2.2.6"
       keyboard-key "^1.0.4"
       lodash "^4.17.11"
