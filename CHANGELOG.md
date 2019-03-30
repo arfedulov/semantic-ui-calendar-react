@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.14.4 2019-03-30
+
+- fix(package): set proper types path [`#115`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/115)
+
 ## v0.14.3 2019-03-17
 
 - feat(DatesRangeInput): allow same start/end date selection when using [`#104`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/104)
