@@ -45,6 +45,7 @@ function Header(props: HeaderProps) {
     width,
     title,
     localization,
+    className
   } = props;
 
   const cellStyle = {
@@ -62,7 +63,7 @@ function Header(props: HeaderProps) {
   };
 
   return (
-    <Table.Header>
+    <Table.Header className={className}>
       { !isNil(rangeRowContent) && <HeaderRange content={rangeRowContent} /> }
       <Table.Row>
         <Table.HeaderCell style={cellStyle} colSpan='1'>
