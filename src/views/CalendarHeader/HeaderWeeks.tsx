@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import { Table } from 'semantic-ui-react';
+import nanoid from 'nanoid';
 
 /** Return array of week day names.
  *
@@ -24,7 +25,7 @@ const cellStyle = {
 
 const getWeekDayCells = (m, localization) => getWeekDays(m, localization).map((weekDay) => (
   <Table.HeaderCell
-    key={weekDay}
+    key={nanoid()}
     style={cellStyle}
     colSpan='1'>
     {weekDay}

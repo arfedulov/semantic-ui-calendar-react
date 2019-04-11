@@ -2,6 +2,7 @@ import invoke from 'lodash/invoke';
 
 import React from 'react';
 import { Table, Label } from 'semantic-ui-react';
+import nanoid from 'nanoid';
 
 import { OnValueClickData } from '../BaseCalendarView';
 
@@ -74,7 +75,7 @@ class Cell extends React.Component<CellProps, any> {
         style={cellStyle}
         onMouseOver={this.onCellHover}
         onClick={this.onCellClick}>
-        { (marked && !rest.disabled) ? <Label circular color={markColor} key={content}>{content}</Label> : content }
+        { (marked && !rest.disabled) ? <Label circular color={markColor} key={nanoid()}>{content}</Label> : content }
       </Table.Cell>
     );
   }

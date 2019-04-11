@@ -3,6 +3,7 @@ import isArray from 'lodash/isArray';
 
 import React from 'react';
 import { Table } from 'semantic-ui-react';
+import nanoid from 'nanoid';
 
 import { OnValueClickData } from '../BaseCalendarView';
 import Cell from './Cell';
@@ -49,7 +50,7 @@ function Body(props: BodyProps) {
     markColor,
   } = props;
   const content = buildRows(data, width).map((row, rowIndex) => (
-    <Table.Row key={`${rowIndex}${row[0]}`}>
+    <Table.Row key={nanoid()}>
       { row.map((item, itemIndex) => (
         <Cell
           style={getCellStyle(width)}
@@ -58,7 +59,7 @@ function Body(props: BodyProps) {
           disabled={isDisabled(rowIndex, width, itemIndex, disabled)}
           marked={isMarked(rowIndex, width, itemIndex, marked)}
           markColor={markColor}
-          key={`${rowIndex * width + itemIndex}`}
+          key={nanoid()}
           itemPosition={rowIndex * width + itemIndex}
           content={item}
           onHover={onCellHover}
