@@ -5,7 +5,7 @@ import isArray from 'lodash/isArray';
 import uniq from 'lodash/uniq';
 import some from 'lodash/some';
 
-import moment from 'moment';
+import moment from 'moment-mini';
 import { MONTHS_IN_YEAR } from './const';
 
 const buildCalendarValues = (localization?: string): string[] => {

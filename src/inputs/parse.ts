@@ -3,7 +3,7 @@ import isArray from 'lodash/isArray';
 import isString from 'lodash/isString';
 import compact from 'lodash/compact';
 
-import moment, { Moment } from 'moment';
+import moment, { Moment } from 'moment-mini';
 
 export const TIME_FORMAT = {
   24: 'HH:mm',

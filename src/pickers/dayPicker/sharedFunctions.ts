@@ -11,7 +11,7 @@ import sortBy from 'lodash/sortBy';
 import slice from 'lodash/slice';
 import find from 'lodash/find';
 
-import { Moment } from 'moment';
+import { Moment } from 'moment-mini';
 
 /** Build days to fill page. */
 export function buildDays(date: Moment, daysOnPage: number) {

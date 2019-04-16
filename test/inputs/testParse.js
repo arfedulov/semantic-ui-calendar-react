@@ -1,6 +1,6 @@
 import { assert } from 'chai';
 import * as _ from 'lodash';
-import moment from 'moment';
+import moment from 'moment-mini';
 
 import {
   getInitializer,

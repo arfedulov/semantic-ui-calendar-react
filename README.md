@@ -141,7 +141,7 @@ Since ``semantic-ui-calendar-react`` uses moment.js it supports locales.
 You can set locale globally:
 
 ```javascript
-import moment from 'moment';
+import moment from 'moment-mini';
 import 'moment/locale/ru';
 ```
 

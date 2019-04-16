@@ -5,7 +5,7 @@ import {
 import * as sinon from 'sinon';
 import * as React from 'react';
 import * as _ from 'lodash';
-import moment from 'moment';
+import moment from 'moment-mini';
 
 import DatesRangePicker from '../../../src/pickers/dayPicker/DatesRangePicker';
 

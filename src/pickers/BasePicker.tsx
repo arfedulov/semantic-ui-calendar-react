@@ -2,7 +2,7 @@ import keyboardKey from 'keyboard-key';
 import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import includes from 'lodash/includes';
-import { Moment } from 'moment';
+import { Moment } from 'moment-mini';
 import React from 'react';
 
 import {

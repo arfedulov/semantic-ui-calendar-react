@@ -1,5 +1,5 @@
 import { JSDOM } from 'jsdom';
-import * as moment from 'moment';
+import * as moment from 'moment-mini';
 
 import { configure } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';

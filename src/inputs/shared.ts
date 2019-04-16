@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import { Moment } from 'moment-mini';
 
 /**
  * Filter out all moments that don't have

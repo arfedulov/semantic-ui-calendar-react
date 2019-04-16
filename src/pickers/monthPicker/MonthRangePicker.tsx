@@ -3,8 +3,8 @@ import range from 'lodash/range';
 import includes from 'lodash/includes';
 import isNil from 'lodash/isNil';
 
-import {Moment} from 'moment';
-import moment from 'moment';
+import {Moment} from 'moment-mini';
+import moment from 'moment-mini';
 import React from 'react';
 
 import {RangeIndexes} from '../../views/BaseCalendarView';

@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-mini';
 
 export function momentObj(props, propName, componentName) {
   if (props[propName]) {
@@ -6,10 +6,10 @@ export function momentObj(props, propName, componentName) {
 
     if (moment.isMoment(value)) {
       if (!value.isValid()) {
-        return new Error(`${propName} in ${componentName} is invalid 'moment' object`);
+        return new Error(`${propName} in ${componentName} is invalid 'moment-mini' object`);
       }
     } else {
-      return new Error(`${propName} in ${componentName} is not 'moment' object`);
+      return new Error(`${propName} in ${componentName} is not 'moment-mini' object`);
     }
   }
 

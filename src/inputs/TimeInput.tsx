@@ -1,7 +1,7 @@
 import isNil from 'lodash/isNil';
 import invoke from 'lodash/invoke';
 
-import moment from 'moment';
+import moment from 'moment-mini';
 import PropTypes from 'prop-types';
 import React from 'react';
 

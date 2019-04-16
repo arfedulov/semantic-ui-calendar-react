@@ -1,4 +1,4 @@
-import { default as moment, Moment } from 'moment';
+import { default as moment, Moment } from 'moment-mini';
 import * as React from 'react';
 import {
   SemanticTRANSITIONS,
