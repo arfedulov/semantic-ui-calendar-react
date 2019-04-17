@@ -184,6 +184,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     const nextSelectableCellPositionRight = selectableCells
       .slice(selectableCells.indexOf(this.state.hoveredCellPosition) + 1)[0];
     switch (key) {
+      case 'Left':
       case 'ArrowLeft':
         event.preventDefault();
         if (!isNil(nextSelectableCellPositionLeft)) {
@@ -198,6 +199,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
           }
         }
         break;
+      case 'Right':
       case 'ArrowRight':
         event.preventDefault();
         if (!isNil(nextSelectableCellPositionRight)) {
@@ -211,12 +213,14 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
           }
         }
         break;
+      case 'Up':
       case 'ArrowUp':
         event.preventDefault();
         if (includes(selectableCells, this.state.hoveredCellPosition - this.PAGE_WIDTH)) {
           this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition - this.PAGE_WIDTH });
         }
         break;
+      case 'Down':
       case 'ArrowDown':
         event.preventDefault();
         if (includes(selectableCells, this.state.hoveredCellPosition + this.PAGE_WIDTH)) {
