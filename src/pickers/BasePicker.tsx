@@ -186,7 +186,6 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     switch (key) {
       case 'Left':
       case 'ArrowLeft':
-        event.preventDefault();
         if (!isNil(nextSelectableCellPositionLeft)) {
           this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionLeft });
         } else {
@@ -201,7 +200,6 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
         break;
       case 'Right':
       case 'ArrowRight':
-        event.preventDefault();
         if (!isNil(nextSelectableCellPositionRight)) {
           this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionRight });
         } else {
