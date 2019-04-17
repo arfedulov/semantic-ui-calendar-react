@@ -148,6 +148,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       case 'Enter':
         this.handleEnterKeyPress(event);
         break;
+      case 'Esc':
       case 'Escape':
         this.props.closePopup();
         break;
