@@ -47,6 +47,7 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         <Header
+          className='suicr-day-view-header'
           width={DAY_CALENDAR_ROW_WIDTH}
           displayWeeks
           onNextPageBtnClick={onNextPageBtnClick}

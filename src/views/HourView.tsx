@@ -40,6 +40,7 @@ class HourView extends BaseCalendarView<HourViewProps, any> {
       ...rest
     } = this.props;
     const headerProps: HeaderProps = {
+      className: 'suicr-hour-view-header',
       onNextPageBtnClick,
       onPrevPageBtnClick,
       hasPrevPage,

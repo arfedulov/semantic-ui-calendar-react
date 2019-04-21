@@ -40,6 +40,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       ...rest
     } = this.props;
     const headerProps: HeaderProps = {
+      className: 'suicr-minute-view-header',
       onHeaderClick,
       onNextPageBtnClick,
       onPrevPageBtnClick,

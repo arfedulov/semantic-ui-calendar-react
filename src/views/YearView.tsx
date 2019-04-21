@@ -45,6 +45,7 @@ class YearView extends BaseCalendarView<YearViewProps, any> {
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         <Header
+          className='suicr-year-view-header'
           title={headerTitle}
           onNextPageBtnClick={onNextPageBtnClick}
           onPrevPageBtnClick={onPrevPageBtnClick}

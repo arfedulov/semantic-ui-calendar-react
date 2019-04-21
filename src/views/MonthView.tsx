@@ -40,6 +40,7 @@ class MonthView extends BaseCalendarView<MonthViewProps, any> {
       ...rest
     } = this.props;
     const headerProps: HeaderProps = {
+      className: 'suicr-month-view-header',
       onNextPageBtnClick,
       onPrevPageBtnClick,
       hasPrevPage,
