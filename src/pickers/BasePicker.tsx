@@ -148,6 +148,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       case 'Enter':
         this.handleEnterKeyPress(event);
         break;
+      case 'Esc':
       case 'Escape':
         this.props.closePopup();
         break;
@@ -183,8 +184,8 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     const nextSelectableCellPositionRight = selectableCells
       .slice(selectableCells.indexOf(this.state.hoveredCellPosition) + 1)[0];
     switch (key) {
+      case 'Left':
       case 'ArrowLeft':
-        event.preventDefault();
         if (!isNil(nextSelectableCellPositionLeft)) {
           this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionLeft });
         } else {
@@ -197,8 +198,8 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
           }
         }
         break;
+      case 'Right':
       case 'ArrowRight':
-        event.preventDefault();
         if (!isNil(nextSelectableCellPositionRight)) {
           this.onHoveredCellPositionChange(null, { itemPosition: nextSelectableCellPositionRight });
         } else {
@@ -210,12 +211,14 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
           }
         }
         break;
+      case 'Up':
       case 'ArrowUp':
         event.preventDefault();
         if (includes(selectableCells, this.state.hoveredCellPosition - this.PAGE_WIDTH)) {
           this.onHoveredCellPositionChange(null, { itemPosition: this.state.hoveredCellPosition - this.PAGE_WIDTH });
         }
         break;
+      case 'Down':
       case 'ArrowDown':
         event.preventDefault();
         if (includes(selectableCells, this.state.hoveredCellPosition + this.PAGE_WIDTH)) {
