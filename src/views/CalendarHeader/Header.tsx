@@ -31,6 +31,7 @@ export interface HeaderProps {
   onHeaderClick?: () => void;
   /** Moment date localization */
   localization?: string;
+  className?: string;
 }
 
 function Header(props: HeaderProps) {
@@ -45,7 +46,7 @@ function Header(props: HeaderProps) {
     width,
     title,
     localization,
-    className
+    className,
   } = props;
 
   const cellStyle = {

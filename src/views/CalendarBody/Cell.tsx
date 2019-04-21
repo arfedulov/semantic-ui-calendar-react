@@ -75,7 +75,7 @@ class Cell extends React.Component<CellProps, any> {
         onMouseOver={this.onCellHover}
         onClick={this.onCellClick}>
         { (marked && !rest.disabled) ? <Label circular color={markColor} key={content}>{content}</Label>
-          : <span className = "content-item">{content}</span> }
+          : <span className = 'suicr-content-item'>{content}</span> }
       </Table.Cell>
     );
   }

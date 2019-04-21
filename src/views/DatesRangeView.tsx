@@ -78,6 +78,7 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
+          className='suicr-dates-range-view-header'
           displayWeeks
           rangeRowContent={currentRangeHeadingValue}
           onNextPageBtnClick={onNextPageBtnClick}

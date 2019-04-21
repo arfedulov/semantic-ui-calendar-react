@@ -74,6 +74,7 @@ class MonthRangeView extends BaseCalendarView<MonthRangeViewProps, any> {
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         <Header
           width={MONTH_CALENDAR_ROW_WIDTH}
+          className='suicr-month-range-view-header'
           displayWeeks={false}
           rangeRowContent={currentRangeHeadingValue}
           onNextPageBtnClick={onNextPageBtnClick}
