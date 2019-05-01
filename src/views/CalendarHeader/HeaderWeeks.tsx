@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
 /** Return array of week day names.

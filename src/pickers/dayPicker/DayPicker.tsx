@@ -4,7 +4,7 @@ import includes from 'lodash/includes';
 import isArray from 'lodash/isArray';
 import some from 'lodash/some';
 
-import React from 'react';
+import * as React from 'react';
 
 import DayView from '../../views/DayView';
 import { WEEKS_TO_DISPLAY } from '../../views/DayView';

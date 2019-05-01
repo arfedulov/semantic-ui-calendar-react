@@ -6,7 +6,7 @@ import concat from 'lodash/concat';
 import uniq from 'lodash/uniq';
 import sortBy from 'lodash/sortBy';
 
-import React from 'react';
+import * as React from 'react';
 
 import HourView from '../../views/HourView';
 import {

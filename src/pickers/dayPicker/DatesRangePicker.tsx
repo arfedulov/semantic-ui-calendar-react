@@ -5,7 +5,7 @@ import last from 'lodash/last';
 import isNil from 'lodash/isNil';
 import moment from 'moment';
 import { Moment } from 'moment';
-import React from 'react';
+import * as React from 'react';
 
 import { RangeIndexes } from '../../views/BaseCalendarView';
 import DatesRangeView from '../../views/DatesRangeView';

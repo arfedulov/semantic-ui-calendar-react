@@ -1,7 +1,7 @@
 import last from 'lodash/last';
 import first from 'lodash/first';
 
-import React from 'react';
+import * as React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,

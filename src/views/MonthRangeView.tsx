@@ -1,7 +1,7 @@
 import range from 'lodash/range';
 import isNil from 'lodash/isNil';
 
-import React from 'react';
+import * as React from 'react';
 import {findHTMLElement} from '../lib';
 
 import BaseCalendarView, {

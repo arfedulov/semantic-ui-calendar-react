@@ -3,7 +3,7 @@ import isNumber from 'lodash/isNumber';
 import isNil from 'lodash/isNil';
 import includes from 'lodash/includes';
 import { Moment } from 'moment';
-import React from 'react';
+import * as React from 'react';
 
 import {
   RangeIndexes,

@@ -1,6 +1,6 @@
 import invoke from 'lodash/invoke';
-import PropTypes from 'prop-types';
-import React from 'react';
+import * as PropTypes from 'prop-types';
+import * as React from 'react';
 
 import CustomPropTypes from '../lib/CustomPropTypes';
 import InputView from '../views/InputView';

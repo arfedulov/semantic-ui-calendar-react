@@ -1,7 +1,7 @@
 import isString from 'lodash/isString';
 import invoke from 'lodash/invoke';
 
-import React from 'react';
+import * as React from 'react';
 import {
   Form,
   FormInputProps,
