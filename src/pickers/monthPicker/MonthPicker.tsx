@@ -3,7 +3,7 @@ import range from 'lodash/range';
 import includes from 'lodash/includes';
 import isNil from 'lodash/isNil';
 
-import React from 'react';
+import * as React from 'react';
 
 import MonthView from '../../views/MonthView';
 import {

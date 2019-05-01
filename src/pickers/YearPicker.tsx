@@ -9,7 +9,7 @@ import last from 'lodash/last';
 import first from 'lodash/first';
 import some from 'lodash/some';
 
-import React from 'react';
+import * as React from 'react';
 
 import YearView from '../views/YearView';
 import {

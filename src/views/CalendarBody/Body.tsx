@@ -1,7 +1,7 @@
 import isNil from 'lodash/isNil';
 import isArray from 'lodash/isArray';
 
-import React from 'react';
+import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
 import { OnValueClickData } from '../BaseCalendarView';
