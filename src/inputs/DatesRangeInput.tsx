@@ -157,7 +157,18 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       start,
       end,
     } = parseDatesRange(value, dateFormat);
+
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
+    const minDateParsed = parseValue(minDate, dateFormat, localization);
+    const maxDateParsed = parseValue(maxDate, dateFormat, localization);
+    
+    let initializeWith;
+    
+    if (!initialDate && minDateParsed || maxDateParsed) {
+      initializeWith = minDateParsed || maxDateParsed;
+    } else {
+      initializeWith = buildValue(start, initialDate, localization, dateFormat);
+    }
 
     return (
       <DatesRangePicker
@@ -168,7 +179,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         dateFormat={dateFormat}
-        initializeWith={buildValue(start, initialDate, localization, dateFormat)}
+        initializeWith={initializeWith}
         start={start}
         end={end}
         marked={markedParsed}
