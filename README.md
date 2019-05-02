@@ -228,7 +228,6 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``minDate`` | {string\|moment} Minimum date that can be selected |
 | ``inlineLabel`` | {bool} A field can have its label next to instead of above it. |
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
-| ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 | ``preserveViewMode`` | {bool} Preserve last mode (`day`, `hour`, `minute`) each time user opens dialog. Default ``true`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
 | ``onClear`` | {func} Called after clear icon has clicked. |

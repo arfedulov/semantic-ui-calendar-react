@@ -201,7 +201,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
 
   constructor(props: DateTimeInputProps) {
     super(props);
-    const parsedValue = parseValue(props.value, props.dateFormat, props.localization);
+    const parsedValue = parseValue(props.value, this.getDateTimeFormat(), props.localization);
     this.state = {
       mode: props.startMode,
       year: parsedValue ? parsedValue.year() : undefined,
@@ -211,6 +211,22 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       minute: parsedValue ? parsedValue.minute() : undefined,
       popupIsClosed: true,
     };
+  }
+
+  public componentDidUpdate = (prevProps: DateTimeInputProps) => {
+    // update internal date if ``value`` prop changed and successuffly parsed
+    if (prevProps.value !== this.props.value) {
+      const parsed = parseValue(this.props.value, this.getDateTimeFormat(), this.props.localization);
+      if (parsed) {
+        this.setState({
+          year: parsed.year(),
+          month: parsed.month(),
+          date: parsed.date(),
+          hour: parsed.hour(),
+          minute: parsed.minute(),
+        });
+      }
+    }
   }
 
   public render() {

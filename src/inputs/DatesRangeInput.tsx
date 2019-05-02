@@ -161,9 +161,9 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
     const minDateParsed = parseValue(minDate, dateFormat, localization);
     const maxDateParsed = parseValue(maxDate, dateFormat, localization);
-    
+     
     let initializeWith;
-    
+
     if (!initialDate && minDateParsed || maxDateParsed) {
       initializeWith = minDateParsed || maxDateParsed;
     } else {
