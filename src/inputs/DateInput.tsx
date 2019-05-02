@@ -193,7 +193,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     };
   }
 
-  componentDidUpdate = (prevProps: DateInputProps) => {
+  public componentDidUpdate = (prevProps: DateInputProps) => {
     // update internal date if ``value`` prop changed and successuffly parsed
     if (prevProps.value !== this.props.value) {
       const parsed = parseValue(this.props.value, this.props.dateFormat, this.props.localization);
