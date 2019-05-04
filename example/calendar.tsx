@@ -103,6 +103,7 @@ class DateTimeForm extends React.Component<any, any> {
           clearable={clearable}
           animation='scale'
           duration={200}
+          hideMobileKeyboard
           value={this.state.date}
           iconPosition='left'
           preserveViewMode={false}
@@ -119,6 +120,7 @@ class DateTimeForm extends React.Component<any, any> {
           animation='fly left'
           duration={300}
           closable
+          hideMobileKeyboard
           clearable={clearable}
           value={this.state.dateStartYear}
           iconPosition='left'
@@ -136,6 +138,7 @@ class DateTimeForm extends React.Component<any, any> {
           duration={300}
           closable
           autoComplete='off'
+          hideMobileKeyboard
           clearable={clearable}
           value={this.state.time}
           iconPosition='left'
@@ -149,6 +152,7 @@ class DateTimeForm extends React.Component<any, any> {
           name='dateTime'
           closable
           clearable={clearable}
+          hideMobileKeyboard
           value={this.state.dateTime}
           iconPosition='left'
           preserveViewMode={false}
@@ -163,6 +167,7 @@ class DateTimeForm extends React.Component<any, any> {
           className='example-calendar-input'
           name='datesRange'
           closable
+          hideMobileKeyboard
           clearable={clearable}
           value={this.state.datesRange}
           iconPosition='left'
@@ -177,6 +182,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           clearable={clearable}
           closable
+          hideMobileKeyboard
           value={this.state.year}
           iconPosition='left'
           autoComplete='off'
@@ -190,6 +196,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           clearable={clearable}
           closable
+          hideMobileKeyboard
           value={this.state.month}
           iconPosition='left'
           autoComplete='off'
@@ -203,6 +210,7 @@ class DateTimeForm extends React.Component<any, any> {
           popupPosition='bottom right'
           clearable={clearable}
           closable
+          hideMobileKeyboard
           iconPosition='left'
           autoComplete='off'
           value={this.state.monthRange}

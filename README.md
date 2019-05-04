@@ -184,6 +184,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
+| ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
 
 ### TimeInput
 
@@ -208,6 +209,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
+| ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
 
 ### DateTimeInput
 
@@ -242,6 +244,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
+| ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
 
 ### DatesRangeInput
 
@@ -271,6 +274,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 | ``allowSameEndDate`` | {boolean} Allow end date to be the same as start date. |
+| ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
 
 ### YearInput
 
@@ -294,6 +298,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
+| ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
 
 ### MonthInput
 
@@ -320,6 +325,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
+| ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
 
 ### MonthRangeInput
 
@@ -345,3 +351,4 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``localization`` | {string} Sets Moment date locale locally for this component. |
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
+| ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
