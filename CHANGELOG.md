@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.15.0 2019-05-04
+
+- feat: add ``hideMobileKeyboard`` prop [`#143`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/143)
+
+- feat: add ``className``'s to headers and wrap table cell content in span [`#139`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/139)
+
+- fix: Esc and Arrow keys fixes for Internet Explorer. And removed prevent default on arrow left/right events [`#137`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/137)
+
+- fix(DatesRangeInput): error when allowed range doesn't contain today [`#140`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/140)
+
+- fix (DateInput, DateTimeInput): update internal *Input date when value changed [`#142`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/142)
+
 ## v0.14.4 2019-03-30
 
 - fix(package): set proper types path [`#115`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/115)
