@@ -101,6 +101,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     iconPosition: PropTypes.oneOf(['left', 'right']),
     allowSameEndDate: PropTypes.bool,
+    hideMobileKeyboard: PropTypes.bool,
   };
 
   constructor(props) {

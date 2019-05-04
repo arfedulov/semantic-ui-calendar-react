@@ -64,6 +64,8 @@ export interface BaseInputProps {
   animation?: SemanticTRANSITIONS;
   /** Moment date localization. */
   localization?: string;
+  /** Try to prevent mobile keyboard appearing. */
+  hideMobileKeyboard?: boolean;
 }
 
 export interface MarkedValuesProps {

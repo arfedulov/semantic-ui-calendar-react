@@ -92,6 +92,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     localization: PropTypes.string,
     icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
     iconPosition: PropTypes.oneOf(['left', 'right']),
+    hideMobileKeyboard: PropTypes.bool,
   };
 
   constructor(props) {

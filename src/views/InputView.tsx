@@ -12,6 +12,7 @@ import {
   Transition,
 } from 'semantic-ui-react';
 import checkIE from '../lib/checkIE';
+import checkMobile from '../lib/checkMobile';
 
 const popupStyle = {
   padding: '0',
@@ -120,6 +121,8 @@ interface InputViewProps {
   pickerStyle?: object;
   /** Do not display popup if true. */
   readOnly?: boolean;
+  /** Try to prevent mobile keyboard appearing. */
+  hideMobileKeyboard?: boolean;
 }
 
 class InputView extends React.Component<InputViewProps, any> {
@@ -162,6 +165,7 @@ class InputView extends React.Component<InputViewProps, any> {
       iconPosition,
       icon,
       readOnly,
+      hideMobileKeyboard,
       ...rest
     } = this.props;
 
@@ -195,7 +199,8 @@ class InputView extends React.Component<InputViewProps, any> {
     const inputElement = (
       <FormInputWithRef
         {...rest}
-        readOnly={readOnly}
+        // trying to use this hack https://stackoverflow.com/a/7610923 for hiding mobile keyboard
+        readOnly={(checkMobile() && hideMobileKeyboard) || readOnly}
         icon={icon}
         iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined}
         innerRef={(e) => { this.inputNode = e; onMount(e); }}
