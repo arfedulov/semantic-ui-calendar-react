@@ -1,11 +1,9 @@
-import isBoolean from 'lodash/isBoolean';
 import isNil from 'lodash/isNil';
 import invoke from 'lodash/invoke';
 import moment, { Moment } from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import CustomPropTypes from '../lib/CustomPropTypes';
 import {
   BasePickerOnChangeData,
 } from '../pickers/BasePicker';
@@ -80,18 +78,10 @@ export interface DateInputProps extends
   startMode?: CalendarMode;
 }
 
-export interface DateInputOnChangeData extends DateInputProps {
-  value: string;
-}
+export type DateInputOnChangeData = DateInputProps;
 
 interface DateInputState extends BaseInputState {
   mode: CalendarMode;
-  year: number;
-  month: number;
-  date: number;
-}
-
-interface Dateparams {
   year: number;
   month: number;
   date: number;

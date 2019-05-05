@@ -1,8 +1,6 @@
 import invoke from 'lodash/invoke';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import CustomPropTypes from '../lib/CustomPropTypes';
 import InputView from '../views/InputView';
 import {
   parseDatesRange,
@@ -37,9 +35,7 @@ export type DatesRangeInputProps =
   & MinMaxValueProps
   & RangeRelatedProps;
 
-export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
-  value: string;
-}
+export type DatesRangeInputOnChangeData = DatesRangeInputProps;
 
 class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   /**

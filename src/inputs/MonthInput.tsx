@@ -1,9 +1,7 @@
 import invoke from 'lodash/invoke';
 import moment from 'moment';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import CustomPropTypes from '../lib/CustomPropTypes';
 import MonthPicker, {
   MonthPickerOnChangeData,
 } from '../pickers/monthPicker/MonthPicker';
@@ -32,9 +30,7 @@ export type MonthInputProps =
   & DisableValuesProps
   & MinMaxValueProps;
 
-export interface MonthInputOnChangeData extends MonthInputProps {
-  value: string;
-}
+export type MonthInputOnChangeData = MonthInputProps;
 
 class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
   public static readonly defaultProps = {

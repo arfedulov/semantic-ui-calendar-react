@@ -1,8 +1,6 @@
 import moment from 'moment';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import CustomPropTypes from '../lib/CustomPropTypes';
 import YearPicker, {
   YearPickerOnChangeData,
 } from '../pickers/YearPicker';
@@ -30,9 +28,7 @@ export type YearInputProps =
   & MinMaxValueProps
   & DisableValuesProps;
 
-export interface YearInputOnChangeData extends YearInputProps {
-  value: string;
-}
+export type YearInputOnChangeData = YearInputProps;
 
 class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   public static readonly defaultProps = {

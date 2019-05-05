@@ -1,5 +1,4 @@
 import invoke from 'lodash/invoke';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 import BaseInput, {
   BaseInputProps,
@@ -11,15 +10,14 @@ import BaseInput, {
   MinMaxValuePropTypes,
 } from './BaseInput';
 
-import CustomPropTypes from '../lib/CustomPropTypes';
-import MonthRangePicker, {MonthRangePickerOnChangeData} from '../pickers/monthPicker/MonthRangePicker';
+import MonthRangePicker from '../pickers/monthPicker/MonthRangePicker';
 import InputView from '../views/InputView';
-import {MonthInputProps} from './MonthInput';
 import {
   parseDatesRange,
   parseValue,
   buildValue,
 } from './parse';
+import { BasePickerOnChangeData } from 'src/pickers/BasePicker';
 
 const DATES_SEPARATOR = ' - ';
 
@@ -28,10 +26,7 @@ export type MonthRangeInputProps =
   & DateRelatedProps
   & MinMaxValueProps;
 
-export interface MonthRangeInputOnChangeData extends MonthInputProps {
-  value: string;
-  date: MonthRangePickerOnChangeData;
-}
+export type MonthRangeInputOnChangeData = MonthRangeInputProps;
 
 class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   public static readonly defaultProps = {
@@ -113,7 +108,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-                          {value}: MonthRangePickerOnChangeData) => {
+                          {value}: BasePickerOnChangeData) => {
     const {dateFormat} = this.props;
     const {
       start,

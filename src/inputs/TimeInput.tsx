@@ -2,7 +2,6 @@ import isNil from 'lodash/isNil';
 import invoke from 'lodash/invoke';
 
 import moment from 'moment';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
 import { tick } from '../lib';
@@ -22,7 +21,6 @@ import BaseInput, {
   TimeRelatedPropTypes,
 } from './BaseInput';
 import {
-  getInitializer,
   parseValue,
   TIME_FORMAT,
   buildValue,
@@ -43,9 +41,7 @@ export type TimeInputProps =
   & MultimodeProps
   & TimeRelatedProps;
 
-export interface TimeInputOnChangeData extends TimeInputProps {
-  value: string;
-}
+export type TimeInputOnChangeData = TimeInputProps;
 
 interface TimeInputState extends BaseInputState {
   mode: CalendarMode;
