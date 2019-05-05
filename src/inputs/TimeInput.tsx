@@ -14,9 +14,12 @@ import MinutePicker from '../pickers/timePicker/MinutePicker';
 import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
+  BaseInputPropTypes,
   BaseInputState,
   MultimodeProps,
+  MultimodePropTypes,
   TimeRelatedProps,
+  TimeRelatedPropTypes,
 } from './BaseInput';
 import {
   getInitializer,
@@ -62,38 +65,11 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     disableMinute: false,
   };
 
-  public static readonly propTypes = {
-    /** Currently selected value. */
-    value: PropTypes.string,
-    /** One of ["24", "AMPM", "ampm"] */
-    timeFormat: PropTypes.oneOf([
-      '24', 'AMPM', 'ampm',
-    ]),
-    /** If true, popup closes after selecting a date-time. */
-    closable: PropTypes.bool,
-    /** If true, minutes picker won't be shown after picking the hour. */
-    disableMinute: PropTypes.bool,
-    /**
-     * Called on clear.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
-    onClear: PropTypes.func,
-    /** Using the clearable setting will let users remove their selection from a calendar. */
-    clearable: PropTypes.bool,
-    /** Optional Icon to display inside the clearable Input. */
-    clearIcon: PropTypes.any,
-    /** Duration of the CSS transition animation in milliseconds. */
-    duration: PropTypes.number,
-    /** Named animation event to used. Must be defined in CSS. */
-    animation: PropTypes.string,
-    /** Moment date localization. */
-    localization: PropTypes.string,
-    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    iconPosition: PropTypes.oneOf(['left', 'right']),
-    hideMobileKeyboard: PropTypes.bool,
-  };
+  public static readonly propTypes = Object.assign({},
+    BaseInputPropTypes,
+    MultimodePropTypes,
+    TimeRelatedPropTypes,
+  );
 
   constructor(props) {
     super(props);

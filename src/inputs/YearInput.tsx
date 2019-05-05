@@ -9,10 +9,14 @@ import YearPicker, {
 import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
+  BaseInputPropTypes,
   BaseInputState,
   DateRelatedProps,
+  DateRelatedPropTypes,
   DisableValuesProps,
+  DisableValuesPropTypes,
   MinMaxValueProps,
+  MinMaxValuePropTypes,
 } from './BaseInput';
 import {
   parseArrayOrValue,
@@ -37,61 +41,12 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     icon: 'calendar',
   };
 
-  public static readonly propTypes = {
-    /** Currently selected value. */
-    value: PropTypes.string,
-    /** Moment date formatting string. */
-    dateFormat: PropTypes.string,
-    /** Date to display initially when no date is selected. */
-    initialDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** Date or list of dates that are displayed as disabled. */
-    disable: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      CustomPropTypes.momentObj,
-      PropTypes.arrayOf(CustomPropTypes.momentObj),
-      PropTypes.instanceOf(Date),
-      PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-    ]),
-    /** Maximum date that can be selected. */
-    maxDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** Minimum date that can be selected. */
-    minDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** If true, popup closes after selecting a date-time. */
-    closable: PropTypes.bool,
-    /**
-     * Called on clear.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
-    onClear: PropTypes.func,
-    /** Using the clearable setting will let users remove their selection from a calendar. */
-    clearable: PropTypes.bool,
-    /** Optional Icon to display inside the clearable Input. */
-    clearIcon: PropTypes.any,
-    /** Duration of the CSS transition animation in milliseconds. */
-    duration: PropTypes.number,
-    /** Named animation event to used. Must be defined in CSS. */
-    animation: PropTypes.string,
-    /** Moment date localization. */
-    localization: PropTypes.string,
-    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    iconPosition: PropTypes.oneOf(['left', 'right']),
-    hideMobileKeyboard: PropTypes.bool,
-  };
+  public static readonly propTypes = Object.assign({},
+    BaseInputPropTypes,
+    DateRelatedPropTypes,
+    MinMaxValuePropTypes,
+    DisableValuesPropTypes,
+  );
 
   constructor(props) {
     super(props);
