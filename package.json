@@ -9,10 +9,11 @@
     "start": "npx webpack-dev-server",
     "prebuild": "npm run test && npm run lint && npx rimraf dist/*",
     "build": "npm run build:commonjs && npm run build:es6 && npm run build:amd && npm run build:umd",
-    "build:commonjs": "npx tsc --declaration --module commonjs --outDir ./dist/commonjs",
-    "build:es6": "npx tsc --declaration --module es6 --outDir ./dist/es6",
-    "build:amd": "npx tsc --declaration --module amd --outDir ./dist/amd",
+    "build:commonjs": "npx tsc --module commonjs --outDir ./dist/commonjs",
+    "build:es6": "npx tsc --module es6 --outDir ./dist/es6",
+    "build:amd": "npx tsc --module amd --outDir ./dist/amd",
     "build:umd": "npx webpack --config webpack.umd.config.js",
+    "build:declarations": "npx tsc --declaration --emitDeclarationOnly --outDir ./dist/types",
     "publish-npm": "npm run test && npm run build && npm publish",
     "build:example": "npm run test && npm run lint && npx webpack --production",
     "lint": "npx tslint src/**"
@@ -23,7 +24,7 @@
     "calendar",
     "datepicker"
   ],
-  "types": "./dist/commonjs/index.d.ts",
+  "types": "./dist/types/index.d.ts",
   "author": "Artem Fedulov <arfedulov@gmail.com>",
   "homepage": "https://github.com/arfedulov/semantic-ui-calendar-react#readme",
   "bugs": {
