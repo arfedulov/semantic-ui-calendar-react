@@ -2,29 +2,29 @@ export {
   default as DateInput,
   DateInputProps,
   DateInputOnChangeData
-} from './dist/inputs/DateInput';
+} from './dist/types/inputs/DateInput';
 export {
   default as DateTimeInput,
   DateTimeInputProps,
   DateTimeInputOnChangeData
-} from './dist/inputs/DateTimeInput';
+} from './dist/types/inputs/DateTimeInput';
 export {
   default as DatesRangeInput,
   DatesRangeInputProps,
   DatesRangeInputOnChangeData
-} from './dist/inputs/DatesRangeInput';
+} from './dist/types/inputs/DatesRangeInput';
 export {
   default as TimeInput,
   TimeInputProps,
   TimeInputOnChangeData
-} from './dist/inputs/TimeInput';
+} from './dist/types/inputs/TimeInput';
 export {
   default as YearInput,
   YearInputProps,
   YearInputOnChangeData
-} from './dist/inputs/YearInput';
+} from './dist/types/inputs/YearInput';
 export {
   default as MonthInput,
   MonthInputProps,
   MonthInputOnChangeData
-} from './dist/inputs/MonthInput';
+} from './dist/types/inputs/MonthInput';
