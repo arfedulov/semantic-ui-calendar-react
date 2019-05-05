@@ -1,8 +1,6 @@
 import invoke from 'lodash/invoke';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import CustomPropTypes from '../lib/CustomPropTypes';
 import InputView from '../views/InputView';
 import {
   parseDatesRange,
@@ -16,11 +14,16 @@ import DatesRangePicker, {
 } from '../pickers/dayPicker/DatesRangePicker';
 import BaseInput, {
   BaseInputProps,
+  BaseInputPropTypes,
   BaseInputState,
   DateRelatedProps,
+  DateRelatedPropTypes,
   MinMaxValueProps,
+  MinMaxValuePropTypes,
   MarkedValuesProps,
+  MarkedValuesPropTypes,
   RangeRelatedProps,
+  RangeRelatedPropTypes,
 } from './BaseInput';
 
 const DATES_SEPARATOR = ' - ';
@@ -32,9 +35,7 @@ export type DatesRangeInputProps =
   & MinMaxValueProps
   & RangeRelatedProps;
 
-export interface DatesRangeInputOnChangeData extends DatesRangeInputProps {
-  value: string;
-}
+export type DatesRangeInputOnChangeData = DatesRangeInputProps;
 
 class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   /**
@@ -49,60 +50,13 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     icon: 'calendar',
   };
 
-  public static readonly propTypes = {
-    /** Currently selected value. */
-    value: PropTypes.string,
-    /** Moment date formatting string. */
-    dateFormat: PropTypes.string,
-    /** Date to display initially when no date is selected. */
-    initialDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** Maximum date that can be selected. */
-    maxDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** Minimum date that can be selected. */
-    minDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** If true, popup closes after selecting a date-time. */
-    closable: PropTypes.bool,
-    /**
-     * Called on clear.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
-    onClear: PropTypes.func,
-    /** Using the clearable setting will let users remove their selection from a calendar. */
-    clearable: PropTypes.bool,
-    /** Optional Icon to display inside the clearable Input. */
-    clearIcon: PropTypes.any,
-    /** Duration of the CSS transition animation in milliseconds. */
-    duration: PropTypes.number,
-    /** Named animation event to used. Must be defined in CSS. */
-    animation: PropTypes.string,
-    marked: PropTypes.oneOfType([
-      CustomPropTypes.momentObj,
-      CustomPropTypes.dateObject,
-      PropTypes.arrayOf(CustomPropTypes.momentObj),
-      PropTypes.arrayOf(CustomPropTypes.dateObject),
-    ]),
-    markColor: PropTypes.string,
-    /** Moment date localization. */
-    localization: PropTypes.string,
-    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    iconPosition: PropTypes.oneOf(['left', 'right']),
-    allowSameEndDate: PropTypes.bool,
-    hideMobileKeyboard: PropTypes.bool,
-  };
+  public static readonly propTypes = Object.assign({},
+    BaseInputPropTypes,
+    DateRelatedPropTypes,
+    MarkedValuesPropTypes,
+    MinMaxValuePropTypes,
+    RangeRelatedPropTypes,
+  );
 
   constructor(props) {
     super(props);

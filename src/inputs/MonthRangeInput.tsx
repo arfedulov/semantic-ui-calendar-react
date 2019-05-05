@@ -1,17 +1,23 @@
 import invoke from 'lodash/invoke';
-import * as PropTypes from 'prop-types';
 import * as React from 'react';
-import BaseInput, {BaseInputProps, BaseInputState, DateRelatedProps, MinMaxValueProps} from './BaseInput';
+import BaseInput, {
+  BaseInputProps,
+  BaseInputPropTypes,
+  BaseInputState,
+  DateRelatedProps,
+  DateRelatedPropTypes,
+  MinMaxValueProps,
+  MinMaxValuePropTypes,
+} from './BaseInput';
 
-import CustomPropTypes from '../lib/CustomPropTypes';
-import MonthRangePicker, {MonthRangePickerOnChangeData} from '../pickers/monthPicker/MonthRangePicker';
+import MonthRangePicker from '../pickers/monthPicker/MonthRangePicker';
 import InputView from '../views/InputView';
-import {MonthInputProps} from './MonthInput';
 import {
   parseDatesRange,
   parseValue,
   buildValue,
 } from './parse';
+import { BasePickerOnChangeData } from 'src/pickers/BasePicker';
 
 const DATES_SEPARATOR = ' - ';
 
@@ -20,10 +26,7 @@ export type MonthRangeInputProps =
   & DateRelatedProps
   & MinMaxValueProps;
 
-export interface MonthRangeInputOnChangeData extends MonthInputProps {
-  value: string;
-  date: MonthRangePickerOnChangeData;
-}
+export type MonthRangeInputOnChangeData = MonthRangeInputProps;
 
 class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   public static readonly defaultProps = {
@@ -32,52 +35,11 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     icon: 'calendar',
   };
 
-  public static readonly propTypes = {
-    /** Currently selected value. */
-    value: PropTypes.string,
-    /** Moment date formatting string. */
-    dateFormat: PropTypes.string,
-    /** Date to display initially when no date is selected. */
-    initialDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** Maximum date that can be selected. */
-    maxDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** Minimum date that can be selected. */
-    minDate: PropTypes.oneOfType([
-      PropTypes.string,
-      CustomPropTypes.momentObj,
-      PropTypes.instanceOf(Date),
-    ]),
-    /** If true, popup closes after selecting a date-time. */
-    closable: PropTypes.bool,
-    /**
-     * Called on clear.
-     *
-     * @param {SyntheticEvent} event - React's original SyntheticEvent.
-     * @param {object} data - All props and proposed value.
-     */
-    onClear: PropTypes.func,
-    /** Using the clearable setting will let users remove their selection from a calendar. */
-    clearable: PropTypes.bool,
-    /** Optional Icon to display inside the clearable Input. */
-    clearIcon: PropTypes.any,
-    /** Duration of the CSS transition animation in milliseconds. */
-    duration: PropTypes.number,
-    /** Named animation event to used. Must be defined in CSS. */
-    animation: PropTypes.string,
-    /** Moment date localization. */
-    localization: PropTypes.string,
-    icon: PropTypes.oneOfType([PropTypes.string, PropTypes.bool]),
-    iconPosition: PropTypes.oneOf(['left', 'right']),
-    hideMobileKeyboard: PropTypes.bool,
-  };
+  public static readonly propTypes = Object.assign({},
+    BaseInputPropTypes,
+    DateRelatedPropTypes,
+    MinMaxValuePropTypes,
+  );
 
   constructor(props) {
     super(props);
@@ -146,7 +108,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-                          {value}: MonthRangePickerOnChangeData) => {
+                          {value}: BasePickerOnChangeData) => {
     const {dateFormat} = this.props;
     const {
       start,
