@@ -5,18 +5,18 @@
   "description": "date/time picker built from semantic-ui elements",
   "main": "dist/commonjs/index.js",
   "scripts": {
-    "test": "npx env-cmd ./test/.env npx mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
-    "start": "npx webpack-dev-server",
-    "prebuild": "npm run test && npm run lint && npx rimraf dist/*",
+    "test": "yarn env-cmd ./test/.env yarn mocha -r ts-node/register ./test/setup.js ./test/**/*.{js,jsx,ts,tsx}",
+    "start": "yarn webpack-dev-server",
+    "prebuild": "npm run test && npm run lint && yarn rimraf dist/*",
     "build": "npm run build:commonjs && npm run build:es6 && npm run build:amd && npm run build:umd",
-    "build:commonjs": "npx tsc --module commonjs --outDir ./dist/commonjs",
-    "build:es6": "npx tsc --module es6 --outDir ./dist/es6",
-    "build:amd": "npx tsc --module amd --outDir ./dist/amd",
-    "build:umd": "npx webpack --config webpack.umd.config.js",
-    "build:declarations": "npx tsc --declaration --emitDeclarationOnly --outDir ./dist/types",
+    "build:commonjs": "yarn tsc --module commonjs --outDir ./dist/commonjs",
+    "build:es6": "yarn tsc --module es6 --outDir ./dist/es6",
+    "build:amd": "yarn tsc --module amd --outDir ./dist/amd",
+    "build:umd": "yarn webpack --config webpack.umd.config.js",
+    "build:declarations": "yarn tsc --declaration --emitDeclarationOnly --outDir ./dist/types",
     "publish-npm": "npm run test && npm run build && npm publish",
-    "build:example": "npm run test && npm run lint && npx webpack --production",
-    "lint": "npx tslint src/**"
+    "build:example": "npm run test && npm run lint && yarn webpack --production",
+    "lint": "yarn tslint src/**"
   },
   "keywords": [
     "semantic",
