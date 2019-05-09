@@ -9,6 +9,7 @@ import BaseInput, {
   MinMaxValueProps,
   MinMaxValuePropTypes,
 } from './BaseInput';
+import { Moment } from 'moment';
 
 import MonthRangePicker from '../pickers/monthPicker/MonthRangePicker';
 import InputView from '../views/InputView';
@@ -16,6 +17,7 @@ import {
   parseDatesRange,
   parseValue,
   buildValue,
+  pickInitialDate,
 } from './parse';
 import { BasePickerOnChangeData } from 'src/pickers/BasePicker';
 
@@ -73,6 +75,18 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     );
   }
 
+  protected parseInternalValue(): Moment {
+    const {
+      value,
+      initialDate,
+      localization,
+      dateFormat,
+    } = this.props;
+    const { start } = parseDatesRange(value, dateFormat);
+
+    return buildValue(start, initialDate, localization, dateFormat);
+  }
+
   private getPicker = () => {
     const {
       value,
@@ -96,7 +110,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         dateFormat={dateFormat}
-        initializeWith={buildValue(start, initialDate, localization, dateFormat)}
+        initializeWith={pickInitialDate({ ...this.props, value: this.parseInternalValue() })}
         start={start}
         end={end}
         minDate={parseValue(minDate, dateFormat, localization)}

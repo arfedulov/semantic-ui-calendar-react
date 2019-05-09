@@ -5,6 +5,10 @@ import compact from 'lodash/compact';
 
 import moment, { Moment } from 'moment';
 
+import {
+  BaseInputProps,
+} from './BaseInput';
+
 export const TIME_FORMAT = {
   24: 'HH:mm',
   AMPM: 'hh:mm A',
@@ -183,3 +187,38 @@ export function parseDatesRange(
 
   return result;
 }
+
+/** Return reasonable date for initializing picker. */
+export const pickInitialDate = (params: {
+  dateFormat?: any,
+  localization?: any,
+  minDate?: any,
+  maxDate?: any,
+  initialDate?: any,
+  value?: any,
+}): Moment => {
+  const {
+    dateFormat,
+    localization,
+    minDate,
+    maxDate,
+    initialDate,
+    value,
+  } = params;
+
+  const minDateParsed = parseValue(minDate, dateFormat, localization);
+  const maxDateParsed = parseValue(maxDate, dateFormat, localization);
+
+  const initializeWith = buildValue(value, initialDate, localization, dateFormat);
+
+  if (!initialDate && minDateParsed || maxDateParsed) {
+    if (minDateParsed && minDateParsed.isAfter(initializeWith, 'date')) {
+      return minDateParsed;
+    }
+    if (maxDateParsed && maxDateParsed.isBefore(initializeWith, 'date')) {
+      return maxDateParsed;
+    }
+  }
+
+  return initializeWith;
+};

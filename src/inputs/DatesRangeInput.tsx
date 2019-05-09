@@ -1,5 +1,6 @@
 import invoke from 'lodash/invoke';
 import * as React from 'react';
+import { Moment } from 'moment';
 
 import InputView from '../views/InputView';
 import {
@@ -7,6 +8,7 @@ import {
   parseValue,
   parseArrayOrValue,
   buildValue,
+  pickInitialDate,
 } from './parse';
 
 import DatesRangePicker, {
@@ -93,6 +95,17 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     );
   }
 
+  protected parseInternalValue(): Moment {
+    const {
+      value,
+      dateFormat,
+    } = this.props;
+
+    const { start } = parseDatesRange(value, dateFormat);
+
+    return start;
+  }
+
   private getPicker = () => {
     const {
       value,
@@ -114,16 +127,6 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     } = parseDatesRange(value, dateFormat);
 
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
-    const minDateParsed = parseValue(minDate, dateFormat, localization);
-    const maxDateParsed = parseValue(maxDate, dateFormat, localization);
-     
-    let initializeWith;
-
-    if (!initialDate && minDateParsed || maxDateParsed) {
-      initializeWith = minDateParsed || maxDateParsed;
-    } else {
-      initializeWith = buildValue(start, initialDate, localization, dateFormat);
-    }
 
     return (
       <DatesRangePicker
@@ -134,7 +137,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         dateFormat={dateFormat}
-        initializeWith={initializeWith}
+        initializeWith={pickInitialDate({ ...this.props, value: this.parseInternalValue()})}
         start={start}
         end={end}
         marked={markedParsed}

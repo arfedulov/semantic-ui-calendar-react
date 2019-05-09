@@ -37,6 +37,7 @@ import {
   parseArrayOrValue,
   parseValue,
   dateValueToString,
+  pickInitialDate,
 } from './parse';
 import {
   getDisabledMonths, getDisabledYears,
@@ -175,7 +176,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     );
   }
 
-  private parseInternalValue(): Moment {
+  protected parseInternalValue(): Moment {
     /*
       Creates moment instance from values stored in component's state
       (year, month, date) in order to pass this moment instance to
@@ -220,7 +221,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       pickerStyle,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateFormat),
+      initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
       value: buildValue(value, null, localization, dateFormat, null),
       enable: parseArrayOrValue(enable, dateFormat, localization),
       minDate: parseValue(minDate, dateFormat, localization),

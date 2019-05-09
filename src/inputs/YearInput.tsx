@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import * as React from 'react';
 
 import YearPicker, {
@@ -20,6 +20,7 @@ import {
   parseArrayOrValue,
   parseValue,
   buildValue,
+  pickInitialDate,
 } from './parse';
 
 export type YearInputProps =
@@ -77,6 +78,16 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     );
   }
 
+  protected parseInternalValue(): Moment {
+    const {
+      value,
+      localization,
+      dateFormat,
+    } = this.props;
+
+    return buildValue(value, null, localization, dateFormat, null);
+  }
+
   private getPicker = () => {
     const {
       value,
@@ -96,7 +107,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         onCalendarViewMount={this.onCalendarViewMount}
         closePopup={this.closePopup}
         onChange={this.handleSelect}
-        initializeWith={buildValue(value, initialDate, localization, dateFormat)}
+        initializeWith={pickInitialDate({ ...this.props, value: this.parseInternalValue() })}
         value={buildValue(value, null, localization, dateFormat, null)}
         disable={parseArrayOrValue(disable, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}

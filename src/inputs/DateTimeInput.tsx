@@ -39,6 +39,7 @@ import {
   TIME_FORMAT,
   buildValue,
   dateValueToString,
+  pickInitialDate,
 } from './parse';
 import {
   getDisabledMonths,
@@ -203,7 +204,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     );
   }
 
-  private parseInternalValue(): Moment {
+  protected parseInternalValue(): Moment {
     /*
       Creates moment instance from values stored in component's state
       (year, month, date, hour, minute) in order to pass this moment instance to
@@ -265,7 +266,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateTimeFormat),
+      initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
       value: buildValue(value, null, localization, dateTimeFormat, null),
       minDate: parseValue(minDate, dateTimeFormat, localization),
       maxDate: parseValue(maxDate, dateTimeFormat, localization),

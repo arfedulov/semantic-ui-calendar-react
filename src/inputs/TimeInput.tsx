@@ -1,7 +1,7 @@
 import isNil from 'lodash/isNil';
 import invoke from 'lodash/invoke';
 
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import * as React from 'react';
 
 import { tick } from '../lib';
@@ -24,6 +24,7 @@ import {
   parseValue,
   TIME_FORMAT,
   buildValue,
+  pickInitialDate,
 } from './parse';
 
 function getNextMode(currentMode) {
@@ -97,6 +98,16 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     );
   }
 
+  protected parseInternalValue(): Moment {
+    const {
+      value,
+      localization,
+      timeFormat,
+    } = this.props;
+
+    return parseValue(value, TIME_FORMAT[timeFormat], localization);
+  }
+
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
                           { value }: BasePickerOnChangeData) => {
     tick(this.handleSelectUndelayed, e, { value });
@@ -155,7 +166,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       pickerStyle,
       onHeaderClick: () => undefined,
       closePopup: this.closePopup,
-      initializeWith: buildValue(currentValue, null, localization, TIME_FORMAT[timeFormat]),
+      initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
       value: buildValue(currentValue, null, TIME_FORMAT[timeFormat], localization, null),
       onChange: this.handleSelect,
       timeFormat,

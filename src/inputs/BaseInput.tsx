@@ -323,6 +323,12 @@ abstract class BaseInput<P extends BaseInputProps,
   protected onInputViewMount = (inputNode: HTMLElement): void => {
     this.inputNode = inputNode;
   }
+
+  /*
+    Creates moment instance from current value.
+    Return undefined if value cannot be parsed.
+  */
+  protected abstract parseInternalValue(): Moment;
 }
 
 export default BaseInput;
