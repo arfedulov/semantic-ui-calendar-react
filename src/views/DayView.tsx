@@ -21,7 +21,7 @@ type DayViewProps =
   & SingleSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
 
-class DayView extends BaseCalendarView<DayViewProps, any> {
+class DayView extends BaseCalendarView<DayViewProps, {}> {
   public render() {
     const {
       values,

@@ -18,7 +18,7 @@ type MonthViewProps =
   & SingleSelectionCalendarViewProps
   & CalendarWithOptionalHeaderViewProps;
 
-class MonthView extends BaseCalendarView<MonthViewProps, any> {
+class MonthView extends BaseCalendarView<MonthViewProps, {}> {
   public render() {
     const {
       values,

@@ -24,8 +24,7 @@ describe('<DateInput />: handleSelect', () => {
     assert.equal(calledWithArgs[1].value, '2030-05-03', 'correct value');
   });
 
-  // TODO: skipped because now mode switches in callback
-  it.skip('switch to next mode if not in day mode', () => {
+  it('switch to next mode if not in day mode', async () => {
     const onChangeFake = sinon.fake();
     const wrapper = mount(<DateInput
       dateFormat="YYYY-MM-DD"
@@ -33,12 +32,15 @@ describe('<DateInput />: handleSelect', () => {
       onChange={onChangeFake} />);
 
     assert.equal(wrapper.state('mode'), 'year', 'mode not switched yet');
-    wrapper.instance().handleSelect('click', { value: { year: 2030 } });
+    // mode switches in React.Component#setState's callback
+    await new Promise((done) => {
+      wrapper.instance().handleSelect('click', { value: { year: 2030 } });
+      setTimeout(done, 0);
+    });
     assert.equal(wrapper.state('mode'), 'month', 'switched to next mode');
   });
 
-  // TODO: skipped because now mode switches in callback
-  it.skip('does not switch to next mode if in day mode', () => {
+  it('does not switch to next mode if in day mode', async () => {
     const onChangeFake = sinon.fake();
     const wrapper = mount(<DateInput
       dateFormat="YYYY-MM-DD"
@@ -46,7 +48,11 @@ describe('<DateInput />: handleSelect', () => {
       onChange={onChangeFake} />);
 
     assert.equal(wrapper.state('mode'), 'day', 'mode not switched yet');
-    wrapper.instance().handleSelect('click', { value: { year: 2030 } });
+    // mode switches in React.Component#setState's callback
+    await new Promise((done) => {
+      wrapper.instance().handleSelect('click', { value: { year: 2030 } });
+      setTimeout(done, 0);
+    });
     assert.equal(wrapper.state('mode'), 'day', 'mode still not switched');
   });
 

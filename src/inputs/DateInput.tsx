@@ -170,6 +170,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         onFocus={this.onFocus}
         onChange={this.onInputValueChange}
         {...rest}
+        // TODO: use children instead
         renderPicker={() => this.getPicker()}
         value={dateValueToString(value, dateFormat, localization)}
       />

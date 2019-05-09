@@ -125,7 +125,7 @@ interface InputViewProps {
   hideMobileKeyboard?: boolean;
 }
 
-class InputView extends React.Component<InputViewProps, any> {
+class InputView extends React.Component<InputViewProps, {}> {
   public static defaultProps = {
     inline: false,
     closeOnMouseLeave: true,

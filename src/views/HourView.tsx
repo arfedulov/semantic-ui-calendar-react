@@ -18,7 +18,7 @@ type HourViewProps =
   & SingleSelectionCalendarViewProps
   & CalendarWithOptionalHeaderViewProps;
 
-class HourView extends BaseCalendarView<HourViewProps, any> {
+class HourView extends BaseCalendarView<HourViewProps, {}> {
   public render() {
     const {
       values,

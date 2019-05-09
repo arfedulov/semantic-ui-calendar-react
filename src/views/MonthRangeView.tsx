@@ -37,7 +37,7 @@ function getActive(start: number, end: number): number | number[] | undefined {
   }
 }
 
-class MonthRangeView extends BaseCalendarView<MonthRangeViewProps, any> {
+class MonthRangeView extends BaseCalendarView<MonthRangeViewProps, {}> {
   public static defaultProps = {
     active: {
       start: undefined,

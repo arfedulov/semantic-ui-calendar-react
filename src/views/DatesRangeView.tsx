@@ -39,7 +39,7 @@ type DatesRangeViewProps =
   & RangeSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
 
-class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
+class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, {}> {
   public static defaultProps = {
     active: {
       start: undefined,

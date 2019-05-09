@@ -21,7 +21,7 @@ type YearViewProps =
   & SingleSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
 
-class YearView extends BaseCalendarView<YearViewProps, any> {
+class YearView extends BaseCalendarView<YearViewProps, {}> {
   public render() {
     const {
       values,

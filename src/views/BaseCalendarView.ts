@@ -61,11 +61,6 @@ export interface HeadingValueProps {
   currentHeadingValue: string;
 }
 
-// export interface CalendarWithHeaderViewProps extends CalendarWithHeaderViewPropsBase {
-//   /** A value (date, year or anything like that) that is displayed in calendar header. */
-//   currentHeadingValue: string;
-// }
-
 export interface CalendarWithOptionalHeaderViewProps {
   /** Whether a calendar has header. */
   hasHeader: boolean;

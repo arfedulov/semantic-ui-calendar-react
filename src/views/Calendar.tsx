@@ -1,12 +1,6 @@
 import * as React from 'react';
 import { Table } from 'semantic-ui-react';
 
-// interface PickerStyle {
-//   [key: string]: any;
-//   width?: string;
-//   minWidth?: string;
-// }
-
 interface CalendarProps {
   /** Table content. */
   children: React.ReactNode[];
