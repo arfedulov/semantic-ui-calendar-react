@@ -15,7 +15,7 @@ import { findHTMLElement } from '../lib';
 export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
 
-type DayViewProps =
+export type DayViewProps =
   BaseCalendarViewProps
   & HeadingValueProps
   & SingleSelectionCalendarViewProps

@@ -30,6 +30,15 @@ import BaseInput, {
 } from './BaseInput';
 
 import {
+  YearView,
+  YearViewProps,
+  MonthView,
+  MonthViewProps,
+  DayView,
+  DayViewProps,
+} from '../views';
+
+import {
   tick,
 } from '../lib';
 import {
@@ -146,32 +155,19 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     const {
       value,
       dateFormat,
-      initialDate,
-      disable,
-      enable,
-      maxDate,
-      minDate,
-      preserveViewMode,
-      startMode,
-      closable,
-      markColor,
-      marked,
       localization,
-      onChange,
-      ...rest
     } = this.props;
 
     return (
       <InputView
+        { ...this.getUnusedProps() }
         closePopup={this.closePopup}
         openPopup={this.openPopup}
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
         onFocus={this.onFocus}
         onChange={this.onInputValueChange}
-        {...rest}
-        // TODO: use children instead
-        renderPicker={() => this.getPicker()}
+        renderPicker={this.getPicker}
         value={dateValueToString(value, dateFormat, localization)}
       />
     );
@@ -194,10 +190,32 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     }
   }
 
+  protected getUnusedProps = (): object => {
+    // TODO: automate unused props extraction
+    const {
+      value,
+      dateFormat,
+      initialDate,
+      disable,
+      enable,
+      maxDate,
+      minDate,
+      preserveViewMode,
+      startMode,
+      closable,
+      markColor,
+      marked,
+      localization,
+      onChange,
+      ...rest
+    } = this.props;
+
+    return rest;
+  }
+
   private getPicker = () => {
     const {
       value,
-      initialDate,
       dateFormat,
       disable,
       minDate,
@@ -237,6 +255,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         <YearPicker
           {...pickerProps}
           disable={getDisabledYears(disableParsed)}
+          renderView={this.getYearView}
         />
       );
     }
@@ -246,11 +265,50 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
           {...pickerProps}
           hasHeader
           disable={getDisabledMonths(disableParsed)}
+          renderView={this.getMonthView}
         />
       );
     }
 
-    return <DayPicker {...pickerProps} disable={disableParsed} marked={markedParsed} markColor={markColor} />;
+    return (
+      <DayPicker
+        {...pickerProps}
+        disable={disableParsed}
+        marked={markedParsed}
+        markColor={markColor}
+        renderView={this.getDayView}
+      />
+    );
+  }
+
+  private getYearView = (yearViewProps: YearViewProps) => {
+
+    return (
+      <YearView
+        { ...this.getUnusedProps() }
+        { ...yearViewProps }
+        localization={this.props.localization} />
+    );
+  }
+
+  private getMonthView = (monthViewProps: MonthViewProps) => {
+
+    return (
+      <MonthView
+        { ...this.getUnusedProps() }
+        { ...monthViewProps }
+        localization={this.props.localization} />
+    );
+  }
+
+  private getDayView = (dayViewProps: DayViewProps) => {
+    return (
+      <DayView
+        { ...this.getUnusedProps() }
+        { ...dayViewProps }
+        localization={this.props.localization}
+      />
+    );
   }
 
   private switchToNextModeUndelayed = (): void => {

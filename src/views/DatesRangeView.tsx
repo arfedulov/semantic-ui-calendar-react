@@ -33,7 +33,7 @@ function getActive(start: number, end: number): number | number[] | undefined {
   }
 }
 
-type DatesRangeViewProps =
+export type DatesRangeViewProps =
   BaseCalendarViewProps
   & HeadingValueProps
   & RangeSelectionCalendarViewProps

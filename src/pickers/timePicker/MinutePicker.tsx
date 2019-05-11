@@ -58,42 +58,26 @@ class MinutePicker
   }
 
   public render() {
-    const {
-      onChange,
-      value,
-      initializeWith,
-      closePopup,
-      inline,
-      isPickerInFocus,
-      isTriggerInFocus,
-      onCalendarViewMount,
-      minDate,
-      maxDate,
-      disable,
-      timeFormat,
-      localization,
-      ...rest
-    } = this.props;
+    const { renderView } = this.props;
 
-    return (
-      <MinuteView
-        { ...rest }
-        values={this.buildCalendarValues()}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        onValueClick={this.handleChange}
-        hoveredItemIndex={this.state.hoveredCellPosition}
-        onCellHover={this.onHoveredCellPositionChange}
-        onBlur={this.handleBlur}
-        inline={this.props.inline}
-        onMount={this.props.onCalendarViewMount}
-        hasNextPage={this.isNextPageAvailable()}
-        hasPrevPage={this.isPrevPageAvailable()}
-        disabledItemIndexes={this.getDisabledPositions()}
-        currentHeadingValue={this.getCurrentDate()}
-        activeItemIndex={this.getActiveCellPosition()}
-        localization={localization}/>
-    );
+    const minuteViewProps = {
+      values: this.buildCalendarValues(),
+      onNextPageBtnClick: this.switchToNextPage,
+      onPrevPageBtnClick: this.switchToPrevPage,
+      onValueClick: this.handleChange,
+      hoveredItemIndex: this.state.hoveredCellPosition,
+      onCellHover: this.onHoveredCellPositionChange,
+      onBlur: this.handleBlur,
+      inline: this.props.inline,
+      onMount: this.props.onCalendarViewMount,
+      hasNextPage: this.isNextPageAvailable(),
+      hasPrevPage: this.isPrevPageAvailable(),
+      disabledItemIndexes: this.getDisabledPositions(),
+      currentHeadingValue: this.getCurrentDate(),
+      activeItemIndex: this.getActiveCellPosition(),
+    };
+
+    return renderView(minuteViewProps);
   }
 
   public getCurrentDate(): string {

@@ -48,41 +48,25 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
   }
 
   public render() {
-    const {
-      onChange,
-      value,
-      initializeWith,
-      closePopup,
-      inline,
-      isPickerInFocus,
-      isTriggerInFocus,
-      onCalendarViewMount,
-      disable,
-      enable,
-      minDate,
-      maxDate,
-      localization,
-      ...rest
-    } = this.props;
+    const { renderView } = this.props;
 
-    return (
-      <YearView
-        { ...rest }
-        values={this.buildCalendarValues()}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        onValueClick={this.handleChange}
-        onBlur={this.handleBlur}
-        inline={this.props.inline}
-        onMount={this.props.onCalendarViewMount}
-        hoveredItemIndex={this.state.hoveredCellPosition}
-        onCellHover={this.onHoveredCellPositionChange}
-        hasPrevPage={this.isPrevPageAvailable()}
-        hasNextPage={this.isNextPageAvailable()}
-        disabledItemIndexes={this.getDisabledPositions()}
-        activeItemIndex={this.getActiveCellPosition()}
-        localization={localization} />
-    );
+    const yearViewProps = {
+      values: this.buildCalendarValues(),
+      onNextPageBtnClick: this.switchToNextPage,
+      onPrevPageBtnClick: this.switchToPrevPage,
+      onValueClick: this.handleChange,
+      onBlur: this.handleBlur,
+      inline: this.props.inline,
+      onMount: this.props.onCalendarViewMount,
+      hoveredItemIndex: this.state.hoveredCellPosition,
+      onCellHover: this.onHoveredCellPositionChange,
+      hasPrevPage: this.isPrevPageAvailable(),
+      hasNextPage: this.isNextPageAvailable(),
+      disabledItemIndexes: this.getDisabledPositions(),
+      activeItemIndex: this.getActiveCellPosition(),
+    };
+
+    return renderView(yearViewProps);
   }
 
   protected buildCalendarValues(): string[] {

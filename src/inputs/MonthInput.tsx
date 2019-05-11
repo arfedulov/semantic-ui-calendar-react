@@ -25,6 +25,11 @@ import {
   pickInitialDate,
 } from './parse';
 
+import {
+  MonthView,
+  MonthViewProps,
+} from '../views';
+
 export type MonthInputProps =
   & BaseInputProps
   & DateRelatedProps
@@ -58,6 +63,27 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     const {
       value,
       dateFormat,
+      localization,
+    } = this.props;
+
+    return (
+      <InputView
+        { ...this.getUnusedProps() }
+        popupIsClosed={this.state.popupIsClosed}
+        value={dateValueToString(value, dateFormat, localization)}
+        onMount={this.onInputViewMount}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        renderPicker={this.getPicker}
+      />
+    );
+  }
+
+  protected getUnusedProps = () => {
+    // TODO: automate unused props extraction
+    const {
+      value,
+      dateFormat,
       initialDate,
       disable,
       maxDate,
@@ -67,17 +93,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
       ...rest
     } = this.props;
 
-    return (
-      <InputView
-        popupIsClosed={this.state.popupIsClosed}
-        {...rest}
-        value={dateValueToString(value, dateFormat, localization)}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        renderPicker={this.getPicker}
-      />
-    );
+    return rest;
   }
 
   protected parseInternalValue(): Moment {
@@ -98,7 +114,6 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
       maxDate,
       minDate,
       localization,
-      initialDate,
     } = this.props;
 
     return (
@@ -117,7 +132,18 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         minDate={parseValue(minDate, dateFormat, localization)}
         localization={localization}
         onHeaderClick={() => undefined}
+        renderView={this.getMonthView}
       />
+    );
+  }
+
+  private getMonthView = (monthViewProps: MonthViewProps) => {
+
+    return (
+      <MonthView
+        { ...this.getUnusedProps() }
+        { ...monthViewProps }
+        localization={this.props.localization} />
     );
   }
 

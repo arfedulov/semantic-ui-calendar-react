@@ -23,6 +23,11 @@ import {
   pickInitialDate,
 } from './parse';
 
+import {
+  YearView,
+  YearViewProps,
+} from '../views';
+
 export type YearInputProps =
   & BaseInputProps
   & DateRelatedProps
@@ -53,6 +58,23 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   }
 
   public render() {
+    const { value } = this.props;
+
+    return (
+      <InputView
+        { ...this.getUnusedProps() }
+        popupIsClosed={this.state.popupIsClosed}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        value={value}
+        onMount={this.onInputViewMount}
+        renderPicker={ this.getPicker }
+      />
+    );
+  }
+
+  protected getUnusedProps = () => {
+    // TODO: automate unused props extraction
     const {
       value,
       disable,
@@ -65,17 +87,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
       ...rest
     } = this.props;
 
-    return (
-      <InputView
-        popupIsClosed={this.state.popupIsClosed}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        {...rest}
-        value={value}
-        onMount={this.onInputViewMount}
-        renderPicker={this.getPicker}
-      />
-    );
+    return rest;
   }
 
   protected parseInternalValue(): Moment {
@@ -86,6 +98,16 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     } = this.props;
 
     return buildValue(value, null, localization, dateFormat, null);
+  }
+
+  private getYearView = (yearViewProps: YearViewProps) => {
+
+    return (
+      <YearView
+        { ...this.getUnusedProps() }
+        { ...yearViewProps }
+        localization={this.props.localization} />
+    );
   }
 
   private getPicker = () => {
@@ -113,6 +135,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         maxDate={parseValue(maxDate, dateFormat, localization)}
         minDate={parseValue(minDate, dateFormat, localization)}
         onHeaderClick={() => undefined}
+        renderView={ this.getYearView }
       />
     );
   }

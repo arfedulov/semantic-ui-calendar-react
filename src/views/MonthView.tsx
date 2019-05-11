@@ -13,7 +13,7 @@ import { findHTMLElement } from '../lib';
 
 export const MONTH_CALENDAR_ROW_WIDTH = 3;
 
-type MonthViewProps =
+export type MonthViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
   & CalendarWithOptionalHeaderViewProps;

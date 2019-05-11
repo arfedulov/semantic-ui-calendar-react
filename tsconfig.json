@@ -8,6 +8,7 @@
     "allowJs": false,
     "target": "es5",
     "jsx": "react",
+    "sourceMap": true,
     "lib": [
       "es2015",
       "dom"

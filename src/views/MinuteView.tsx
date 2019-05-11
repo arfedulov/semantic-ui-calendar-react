@@ -13,7 +13,7 @@ import { findHTMLElement } from '../lib';
 
 const MINUTE_CALENDAR_ROW_WIDTH = 3;
 
-type MinuteViewProps =
+export type MinuteViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
   & CalendarWithOptionalHeaderViewProps;

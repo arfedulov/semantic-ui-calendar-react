@@ -329,6 +329,9 @@ abstract class BaseInput<P extends BaseInputProps,
     Return undefined if value cannot be parsed.
   */
   protected abstract parseInternalValue(): Moment;
+
+  /** Return all props that aren't included in component's props ts declarations. */
+  protected abstract getUnusedProps(): object;
 }
 
 export default BaseInput;

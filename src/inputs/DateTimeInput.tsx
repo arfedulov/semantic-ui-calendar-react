@@ -32,6 +32,19 @@ import BaseInput, {
   MarkedValuesPropTypes,
 } from './BaseInput';
 
+import {
+  YearView,
+  YearViewProps,
+  MonthView,
+  MonthViewProps,
+  DayView,
+  DayViewProps,
+  HourView,
+  HourViewProps,
+  MinuteView,
+  MinuteViewProps,
+} from '../views';
+
 import { tick } from '../lib';
 import {
   parseArrayOrValue,
@@ -171,6 +184,29 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
   public render() {
     const {
       value,
+      dateFormat,
+      localization,
+    } = this.props;
+
+    return (
+      <InputView
+        { ...this.getUnusedProps() }
+        popupIsClosed={this.state.popupIsClosed}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        onFocus={this.onFocus}
+        onMount={this.onInputViewMount}
+        onChange={this.onInputValueChange}
+        value={dateValueToString(value, dateFormat, localization)}
+        renderPicker={this.getPicker}
+      />
+    );
+  }
+
+  protected getUnusedProps = () => {
+    // TODO: automate unused props extraction
+    const {
+      value,
       dateTimeFormat,
       dateFormat,
       timeFormat,
@@ -189,19 +225,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       ...rest
     } = this.props;
 
-    return (
-      <InputView
-        popupIsClosed={this.state.popupIsClosed}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        onFocus={this.onFocus}
-        onMount={this.onInputViewMount}
-        onChange={this.onInputValueChange}
-        {...rest}
-        value={dateValueToString(value, dateFormat, localization)}
-        renderPicker={() => this.getPicker()}
-      />
-    );
+    return rest;
   }
 
   protected parseInternalValue(): Moment {
@@ -238,7 +262,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
   }
 
-  private getPicker(): React.ReactNode {
+  private getPicker = (): React.ReactNode => {
     const {
       value,
       initialDate,
@@ -280,6 +304,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         <YearPicker
           {...pickerProps}
           disable={getDisabledYears(disableParsed)}
+          renderView={this.getYearView}
         />
       );
     }
@@ -289,6 +314,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
           {...pickerProps}
           hasHeader
           disable={getDisabledMonths(disableParsed)}
+          renderView={this.getMonthView}
         />
       );
     }
@@ -299,27 +325,78 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
           marked={markedParsed}
           markColor={markColor}
           disable={disableParsed}
+          renderView={this.getDayView}
         />
       );
     }
     if (mode === 'hour') {
       return (
         <HourPicker
+          {...pickerProps}
           timeFormat={this.props.timeFormat}
           hasHeader
-          {...pickerProps}
           disable={disableParsed}
+          renderView={this.getHourView}
         />
       );
     }
 
     return (
       <MinutePicker
+        {...pickerProps}
         timeFormat={this.props.timeFormat}
         hasHeader
-        {...pickerProps}
         disable={disableParsed}
+        renderView={this.getMinuteView}
       />
+    );
+  }
+
+  private getYearView = (yearViewProps: YearViewProps) => {
+
+    return (
+      <YearView
+        { ...this.getUnusedProps() }
+        { ...yearViewProps }
+        localization={this.props.localization} />
+    );
+  }
+
+  private getMonthView = (monthViewProps: MonthViewProps) => {
+
+    return (
+      <MonthView
+        { ...this.getUnusedProps() }
+        { ...monthViewProps }
+        localization={this.props.localization} />
+    );
+  }
+
+  private getDayView = (dayViewProps: DayViewProps) => {
+    return (
+      <DayView
+        { ...this.getUnusedProps() }
+        { ...dayViewProps }
+        localization={this.props.localization}
+      />
+    );
+  }
+
+  private getHourView = (hourViewProps: HourViewProps) => {
+    return (
+      <HourView
+        { ...this.getUnusedProps() }
+        { ...hourViewProps }
+        localization={this.props.localization}/>
+    );
+  }
+
+  private getMinuteView = (minuteViewProps: MinuteViewProps) => {
+    return (
+      <MinuteView
+        { ...this.getUnusedProps() }
+        { ...minuteViewProps }
+        localization={this.props.localization}/>
     );
   }
 

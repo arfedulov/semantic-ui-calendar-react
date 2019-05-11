@@ -66,7 +66,7 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
   }
 }
 
-interface InputViewProps {
+export interface InputViewProps {
   /** Used for passing input dom node (input field or inline calendar) to parent component. */
   onMount: (e: HTMLElement) => void;
   /** Called after input field value has changed. */

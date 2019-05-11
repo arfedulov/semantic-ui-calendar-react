@@ -16,7 +16,7 @@ import { findHTMLElement } from '../lib';
 
 const YEAR_CALENDAR_ROW_WIDTH = 3;
 
-type YearViewProps =
+export type YearViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;

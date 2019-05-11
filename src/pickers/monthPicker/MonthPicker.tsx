@@ -55,42 +55,26 @@ class MonthPicker
   }
 
   public render() {
-    const {
-      onChange,
-      value,
-      initializeWith,
-      closePopup,
-      inline,
-      isPickerInFocus,
-      isTriggerInFocus,
-      onCalendarViewMount,
-      disable,
-      enable,
-      minDate,
-      maxDate,
-      localization,
-      ...rest
-    } = this.props;
+    const { renderView } = this.props;
+    
+    const monthViewProps = {
+      values: this.buildCalendarValues(),
+      onValueClick: this.handleChange,
+      onCellHover: this.onHoveredCellPositionChange,
+      onNextPageBtnClick: this.switchToNextPage,
+      onPrevPageBtnClick: this.switchToPrevPage,
+      hasPrevPage: this.isPrevPageAvailable(),
+      hasNextPage: this.isNextPageAvailable(),
+      onBlur: this.handleBlur,
+      inline: this.props.inline,
+      onMount: this.props.onCalendarViewMount,
+      disabledItemIndexes: this.getDisabledPositions(),
+      activeItemIndex: this.getActiveCellPosition(),
+      hoveredItemIndex: this.state.hoveredCellPosition,
+      currentHeadingValue: this.getCurrentDate(),
+    };
 
-    return (
-      <MonthView
-        { ...rest }
-        values={this.buildCalendarValues()}
-        onValueClick={this.handleChange}
-        onCellHover={this.onHoveredCellPositionChange}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        hasPrevPage={this.isPrevPageAvailable()}
-        hasNextPage={this.isNextPageAvailable()}
-        onBlur={this.handleBlur}
-        inline={this.props.inline}
-        onMount={this.props.onCalendarViewMount}
-        disabledItemIndexes={this.getDisabledPositions()}
-        activeItemIndex={this.getActiveCellPosition()}
-        hoveredItemIndex={this.state.hoveredCellPosition}
-        currentHeadingValue={this.getCurrentDate()}
-        localization={localization} />
-    );
+    return renderView(monthViewProps);
   }
 
   public getCurrentDate(): string {

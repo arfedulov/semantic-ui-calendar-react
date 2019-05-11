@@ -38,6 +38,7 @@ export interface BasePickerOnChangeData {
 export interface BasePickerProps {
   /** Called after day is selected. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: BasePickerOnChangeData) => void;
+  renderView: (props: any) => React.ReactElement;
   /** Currently selected date. */
   value?: Moment;
   /** A value for initializing day picker's state. */
@@ -256,7 +257,6 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
 
   /** Return position numbers of cells that should be displayed as disabled */
   protected abstract getDisabledPositions(): number[];
-
 }
 
 export interface ProvideHeadingValue {

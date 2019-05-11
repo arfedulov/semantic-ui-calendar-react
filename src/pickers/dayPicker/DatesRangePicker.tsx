@@ -52,50 +52,28 @@ class DatesRangePicker
   }
 
   public render() {
-    const {
-      onChange,
-      value,
-      initializeWith,
-      closePopup,
-      inline,
-      isPickerInFocus,
-      isTriggerInFocus,
-      onCalendarViewMount,
-      dateFormat,
-      start,
-      end,
-      minDate,
-      maxDate,
-      marked,
-      markColor,
-      localization,
-      allowSameEndDate,
-      ...rest
-    } = this.props;
+    const { renderView } = this.props;
 
-    return (
-      <DatesRangeView
-        { ...rest }
-        values={this.buildCalendarValues()}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        onCellHover={this.onHoveredCellPositionChange}
-        hoveredItemIndex={this.state.hoveredCellPosition}
-        onValueClick={this.handleChange}
-        inline={this.props.inline}
-        hasPrevPage={this.isPrevPageAvailable()}
-        hasNextPage={this.isNextPageAvailable()}
-        onBlur={this.handleBlur}
-        onMount={this.props.onCalendarViewMount}
-        currentHeadingValue={this.getCurrentDate()}
-        currentRangeHeadingValue={this.getSelectedRange()}
-        activeRange={this.getActiveCellsPositions()}
-        markedItemIndexes={this.getMarkedPositions()}
-        markColor={markColor}
-        disabledItemIndexes={this.getDisabledPositions()}
-        localization={localization}
-      />
-    );
+    const datesRangeViewProps = {
+      values: this.buildCalendarValues(),
+      onNextPageBtnClick: this.switchToNextPage,
+      onPrevPageBtnClick: this.switchToPrevPage,
+      onCellHover: this.onHoveredCellPositionChange,
+      hoveredItemIndex: this.state.hoveredCellPosition,
+      onValueClick: this.handleChange,
+      inline: this.props.inline,
+      hasPrevPage: this.isPrevPageAvailable(),
+      hasNextPage: this.isNextPageAvailable(),
+      onBlur: this.handleBlur,
+      onMount: this.props.onCalendarViewMount,
+      currentHeadingValue: this.getCurrentDate(),
+      currentRangeHeadingValue: this.getSelectedRange(),
+      activeRange: this.getActiveCellsPositions(),
+      markedItemIndexes: this.getMarkedPositions(),
+      disabledItemIndexes: this.getDisabledPositions(),
+    };
+
+    return renderView(datesRangeViewProps);
   }
 
   public getCurrentDate(): string {

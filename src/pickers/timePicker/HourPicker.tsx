@@ -58,42 +58,26 @@ class HourPicker
   }
 
   public render() {
-    const {
-      onChange,
-      value,
-      initializeWith,
-      closePopup,
-      inline,
-      isPickerInFocus,
-      isTriggerInFocus,
-      onCalendarViewMount,
-      minDate,
-      maxDate,
-      disable,
-      timeFormat,
-      localization,
-      ...rest
-    } = this.props;
+    const { renderView } = this.props;
 
-    return (
-      <HourView
-        { ...rest }
-        values={this.buildCalendarValues()}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        hasPrevPage={this.isPrevPageAvailable()}
-        hasNextPage={this.isNextPageAvailable()}
-        onValueClick={this.handleChange}
-        onBlur={this.handleBlur}
-        inline={this.props.inline}
-        onMount={this.props.onCalendarViewMount}
-        hoveredItemIndex={this.state.hoveredCellPosition}
-        onCellHover={this.onHoveredCellPositionChange}
-        disabledItemIndexes={this.getDisabledPositions()}
-        activeItemIndex={this.getActiveCellPosition()}
-        currentHeadingValue={this.getCurrentDate()}
-        localization={localization}/>
-    );
+    const hourViewProps = {
+      values: this.buildCalendarValues(),
+      onNextPageBtnClick: this.switchToNextPage,
+      onPrevPageBtnClick: this.switchToPrevPage,
+      hasPrevPage: this.isPrevPageAvailable(),
+      hasNextPage: this.isNextPageAvailable(),
+      onValueClick: this.handleChange,
+      onBlur: this.handleBlur,
+      inline: this.props.inline,
+      onMount: this.props.onCalendarViewMount,
+      hoveredItemIndex: this.state.hoveredCellPosition,
+      onCellHover: this.onHoveredCellPositionChange,
+      disabledItemIndexes: this.getDisabledPositions(),
+      activeItemIndex: this.getActiveCellPosition(),
+      currentHeadingValue: this.getCurrentDate(),
+    };
+
+    return renderView(hourViewProps);
   }
 
   public getCurrentDate(): string {

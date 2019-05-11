@@ -21,6 +21,11 @@ import {
 } from './parse';
 import { BasePickerOnChangeData } from 'src/pickers/BasePicker';
 
+import {
+  MonthRangeView,
+  MonthRangeViewProps,
+} from '../views';
+
 const DATES_SEPARATOR = ' - ';
 
 export type MonthRangeInputProps =
@@ -51,6 +56,22 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   }
 
   public render() {
+    const { value } = this.props;
+
+    return (
+      <InputView
+        { ...this.getUnusedProps() }
+        popupIsClosed={this.state.popupIsClosed}
+        value={value}
+        onMount={this.onInputViewMount}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        renderPicker={this.getPicker}
+      />
+    );
+  }
+
+  protected getUnusedProps = () => {
     const {
       value,
       dateFormat,
@@ -62,17 +83,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
       ...rest
     } = this.props;
 
-    return (
-      <InputView
-        popupIsClosed={this.state.popupIsClosed}
-        {...rest}
-        value={value}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        renderPicker={this.getPicker}
-      />
-    );
+    return rest;
   }
 
   protected parseInternalValue(): Moment {
@@ -117,7 +128,17 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
         maxDate={parseValue(maxDate, dateFormat, localization)}
         localization={localization}
         onHeaderClick={() => undefined}
+        renderView={ this.getMonthRangeView }
       />
+    );
+  }
+
+  private getMonthRangeView = (monthRangeViewProps: MonthRangeViewProps) => {
+    return (
+      <MonthRangeView
+        { ...this.getUnusedProps() }
+        { ...monthRangeViewProps }
+        localization={ this.props.localization }/>
     );
   }
 

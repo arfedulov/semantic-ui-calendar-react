@@ -28,6 +28,11 @@ import BaseInput, {
   RangeRelatedPropTypes,
 } from './BaseInput';
 
+import {
+  DatesRangeView,
+  DatesRangeViewProps,
+} from '../views';
+
 const DATES_SEPARATOR = ' - ';
 
 export type DatesRangeInputProps =
@@ -68,6 +73,23 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   }
 
   public render() {
+    const { value } = this.props;
+
+    return (
+      <InputView
+        { ...this.getUnusedProps() }
+        popupIsClosed={this.state.popupIsClosed}
+        value={value}
+        onMount={this.onInputViewMount}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        renderPicker={this.getPicker}
+      />
+    );
+  }
+
+  protected getUnusedProps = () => {
+    // TODO: automate unused props extraction
     const {
       value,
       dateFormat,
@@ -82,17 +104,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       ...rest
     } = this.props;
 
-    return (
-      <InputView
-        popupIsClosed={this.state.popupIsClosed}
-        {...rest}
-        value={value}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        renderPicker={this.getPicker}
-      />
-    );
+    return rest;
   }
 
   protected parseInternalValue(): Moment {
@@ -112,7 +124,6 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       dateFormat,
       markColor,
       marked,
-      initialDate,
       localization,
       minDate,
       maxDate,
@@ -150,6 +161,23 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         pickerWidth={pickerWidth}
         pickerStyle={pickerStyle}
         allowSameEndDate={allowSameEndDate}
+        renderView={this.getDatesRangeView}
+      />
+    );
+  }
+
+  private getDatesRangeView = (datesRangeViewProps: DatesRangeViewProps) => {
+    const {
+      markColor,
+      localization,
+    } = this.props;
+
+    return (
+      <DatesRangeView
+        { ...this.getUnusedProps() }
+        { ...datesRangeViewProps }
+        markColor={markColor}
+        localization={localization}
       />
     );
   }

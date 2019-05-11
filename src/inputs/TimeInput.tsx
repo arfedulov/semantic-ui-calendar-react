@@ -27,6 +27,13 @@ import {
   pickInitialDate,
 } from './parse';
 
+import {
+  HourView,
+  HourViewProps,
+  MinuteView,
+  MinuteViewProps,
+} from '../views';
+
 function getNextMode(currentMode) {
   if (currentMode === 'hour') {
     return 'minute';
@@ -77,6 +84,23 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
   }
 
   public render() {
+    const { value } = this.props;
+
+    return (
+      <InputView
+        { ...this.getUnusedProps() }
+        popupIsClosed={this.state.popupIsClosed}
+        onMount={this.onInputViewMount}
+        closePopup={this.closePopup}
+        openPopup={this.openPopup}
+        value={value}
+        renderPicker={ this.getPicker }
+      />
+    );
+  }
+
+  protected getUnusedProps = () => {
+    // TODO: automate unused props extraction
     const {
       value,
       timeFormat,
@@ -85,17 +109,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       ...rest
     } = this.props;
 
-    return (
-      <InputView
-        popupIsClosed={this.state.popupIsClosed}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        {...rest}
-        value={value}
-        renderPicker={() => this.getPicker()}
-      />
-    );
+    return rest;
   }
 
   protected parseInternalValue(): Moment {
@@ -145,7 +159,25 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     }, this.onModeSwitch);
   }
 
-  private getPicker() {
+  private getHourView = (hourViewProps: HourViewProps) => {
+    return (
+      <HourView
+        { ...this.getUnusedProps() }
+        { ...hourViewProps }
+        localization={this.props.localization}/>
+    );
+  }
+
+  private getMinuteView = (minuteViewProps: MinuteViewProps) => {
+    return (
+      <MinuteView
+        { ...this.getUnusedProps() }
+        { ...minuteViewProps }
+        localization={this.props.localization}/>
+    );
+  }
+
+  private getPicker = () => {
     const {
       value,
       timeFormat,
@@ -155,7 +187,9 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       pickerStyle,
       pickerWidth,
     } = this.props;
+
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat], localization);
+
     const pickerProps = {
       inline,
       onCalendarViewMount: this.onCalendarViewMount,
@@ -174,10 +208,10 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       localization,
     };
     if (this.state.mode === 'hour') {
-      return <HourPicker {...pickerProps} />;
+      return <HourPicker { ...pickerProps } renderView={ this.getHourView } />;
     }
 
-    return <MinutePicker {...pickerProps} />;
+    return <MinutePicker { ...pickerProps } renderView={ this.getMinuteView } />;
   }
 }
 

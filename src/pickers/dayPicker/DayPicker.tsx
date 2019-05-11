@@ -53,46 +53,27 @@ class DayPicker
   }
 
   public render() {
-    const {
-      onChange,
-      value,
-      initializeWith,
-      closePopup,
-      inline,
-      isPickerInFocus,
-      isTriggerInFocus,
-      onCalendarViewMount,
-      disable,
-      enable,
-      minDate,
-      maxDate,
-      marked,
-      markColor,
-      localization,
-      ...rest
-    } = this.props;
+    const { renderView } = this.props;
 
-    return (
-      <DayView
-        { ...rest }
-        values={this.buildCalendarValues()}
-        hasNextPage={this.isNextPageAvailable()}
-        hasPrevPage={this.isPrevPageAvailable()}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        onValueClick={this.handleChange}
-        onBlur={this.handleBlur}
-        inline={this.props.inline}
-        onMount={this.props.onCalendarViewMount}
-        hoveredItemIndex={this.state.hoveredCellPosition}
-        onCellHover={this.onHoveredCellPositionChange}
-        currentHeadingValue={this.getCurrentDate()}
-        disabledItemIndexes={this.getDisabledPositions()}
-        activeItemIndex={this.getActiveCellPosition()}
-        markedItemIndexes={this.getMarkedPositions()}
-        markColor={markColor}
-        localization={localization} />
-    );
+    const dayViewProps = {
+      values: this.buildCalendarValues(),
+      hasNextPage: this.isNextPageAvailable(),
+      hasPrevPage: this.isPrevPageAvailable(),
+      onNextPageBtnClick: this.switchToNextPage,
+      onPrevPageBtnClick: this.switchToPrevPage,
+      onValueClick: this.handleChange,
+      onBlur: this.handleBlur,
+      inline: this.props.inline,
+      onMount: this.props.onCalendarViewMount,
+      hoveredItemIndex: this.state.hoveredCellPosition,
+      onCellHover: this.onHoveredCellPositionChange,
+      currentHeadingValue: this.getCurrentDate(),
+      disabledItemIndexes: this.getDisabledPositions(),
+      activeItemIndex: this.getActiveCellPosition(),
+      markedItemIndexes: this.getMarkedPositions(),
+    };
+
+    return renderView(dayViewProps);
   }
 
   public getCurrentDate(): string {

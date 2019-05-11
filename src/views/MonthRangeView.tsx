@@ -17,7 +17,7 @@ import Header from './CalendarHeader/Header';
 
 import { MONTH_CALENDAR_ROW_WIDTH } from './MonthView';
 
-type MonthRangeViewProps =
+export type MonthRangeViewProps =
   BaseCalendarViewProps
   & HeadingValueProps
   & RangeSelectionCalendarViewProps

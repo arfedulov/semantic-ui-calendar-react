@@ -48,43 +48,27 @@ class MonthRangePicker
   }
 
   public render() {
-    const {
-      onChange,
-      initializeWith,
-      closePopup,
-      inline,
-      isPickerInFocus,
-      isTriggerInFocus,
-      onCalendarViewMount,
-      dateFormat,
-      start,
-      end,
-      minDate,
-      maxDate,
-      localization,
-      ...rest
-    } = this.props;
+    const { renderView } = this.props;
 
-    return (
-      <MonthRangeView
-        {...rest}
-        values={this.buildCalendarValues()}
-        onNextPageBtnClick={this.switchToNextPage}
-        onPrevPageBtnClick={this.switchToPrevPage}
-        onCellHover={this.onHoveredCellPositionChange}
-        hoveredItemIndex={this.state.hoveredCellPosition}
-        onValueClick={this.handleChange}
-        inline={this.props.inline}
-        hasPrevPage={this.isPrevPageAvailable()}
-        hasNextPage={this.isNextPageAvailable()}
-        onBlur={this.handleBlur}
-        onMount={this.props.onCalendarViewMount}
-        currentHeadingValue={this.getCurrentDate()}
-        currentRangeHeadingValue={this.getSelectedRange()}
-        activeRange={this.getActiveCellsPositions()}
-        disabledItemIndexes={this.getDisabledPositions()}
-        localization={localization}/>
-    );
+    const monthRangeViewProps = {
+      values: this.buildCalendarValues(),
+      onNextPageBtnClick: this.switchToNextPage,
+      onPrevPageBtnClick: this.switchToPrevPage,
+      onCellHover: this.onHoveredCellPositionChange,
+      hoveredItemIndex: this.state.hoveredCellPosition,
+      onValueClick: this.handleChange,
+      inline: this.props.inline,
+      hasPrevPage: this.isPrevPageAvailable(),
+      hasNextPage: this.isNextPageAvailable(),
+      onBlur: this.handleBlur,
+      onMount: this.props.onCalendarViewMount,
+      currentHeadingValue: this.getCurrentDate(),
+      currentRangeHeadingValue: this.getSelectedRange(),
+      activeRange: this.getActiveCellsPositions(),
+      disabledItemIndexes: this.getDisabledPositions(),
+    };
+
+    return renderView(monthRangeViewProps);
   }
 
   public getCurrentDate(): string {
