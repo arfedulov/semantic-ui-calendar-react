@@ -3,11 +3,14 @@ import * as React from 'react';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
+  BaseInputPropsNames,
   BaseInputState,
   DateRelatedProps,
   DateRelatedPropTypes,
+  DateRelatedPropsNames,
   MinMaxValueProps,
   MinMaxValuePropTypes,
+  MinMaxValuePropsNames,
 } from './BaseInput';
 import { Moment } from 'moment';
 
@@ -20,6 +23,7 @@ import {
   pickInitialDate,
 } from './parse';
 import { BasePickerOnChangeData } from 'src/pickers/BasePicker';
+import { getRestProps } from '../lib';
 
 import {
   MonthRangeView,
@@ -72,18 +76,12 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   }
 
   protected getUnusedProps = () => {
-    const {
-      value,
-      dateFormat,
-      initialDate,
-      maxDate,
-      minDate,
-      closable,
-      localization,
-      ...rest
-    } = this.props;
-
-    return rest;
+    // Return props which do not exist in MonthRangeInputProps type
+    return getRestProps(this.props, [
+      ...BaseInputPropsNames,
+      ...DateRelatedPropsNames,
+      ...MinMaxValuePropsNames,
+    ]);
   }
 
   protected parseInternalValue(): Moment {

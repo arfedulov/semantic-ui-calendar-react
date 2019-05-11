@@ -8,13 +8,17 @@ import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
+  BaseInputPropsNames,
   BaseInputState,
   DateRelatedProps,
   DateRelatedPropTypes,
+  DateRelatedPropsNames,
   DisableValuesProps,
   DisableValuesPropTypes,
+  DisableValuesPropsNames,
   MinMaxValueProps,
   MinMaxValuePropTypes,
+  MinMaxValuePropsNames,
 } from './BaseInput';
 import {
   parseArrayOrValue,
@@ -22,6 +26,7 @@ import {
   buildValue,
   pickInitialDate,
 } from './parse';
+import { getRestProps } from '../lib';
 
 import {
   YearView,
@@ -74,20 +79,13 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   }
 
   protected getUnusedProps = () => {
-    // TODO: automate unused props extraction
-    const {
-      value,
-      disable,
-      maxDate,
-      minDate,
-      initialDate,
-      dateFormat,
-      closable,
-      localization,
-      ...rest
-    } = this.props;
-
-    return rest;
+    // Return props which do not exist in YearInputProps type
+    return getRestProps(this.props, [
+      ...BaseInputPropsNames,
+      ...DateRelatedPropsNames,
+      ...DisableValuesPropsNames,
+      ...MinMaxValuePropsNames,
+    ]);
   }
 
   protected parseInternalValue(): Moment {

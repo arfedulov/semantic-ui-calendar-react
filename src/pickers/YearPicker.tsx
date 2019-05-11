@@ -11,7 +11,6 @@ import some from 'lodash/some';
 
 import * as React from 'react';
 
-import YearView from '../views/YearView';
 import {
   BasePickerOnChangeData,
   BasePickerProps,
@@ -48,7 +47,11 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
   }
 
   public render() {
-    const { renderView } = this.props;
+    const {
+      renderView,
+      inline,
+      onCalendarViewMount,
+    } = this.props;
 
     const yearViewProps = {
       values: this.buildCalendarValues(),
@@ -56,8 +59,8 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
       onPrevPageBtnClick: this.switchToPrevPage,
       onValueClick: this.handleChange,
       onBlur: this.handleBlur,
-      inline: this.props.inline,
-      onMount: this.props.onCalendarViewMount,
+      inline,
+      onMount: onCalendarViewMount,
       hoveredItemIndex: this.state.hoveredCellPosition,
       onCellHover: this.onHoveredCellPositionChange,
       hasPrevPage: this.isPrevPageAvailable(),

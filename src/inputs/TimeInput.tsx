@@ -4,7 +4,7 @@ import invoke from 'lodash/invoke';
 import moment, { Moment } from 'moment';
 import * as React from 'react';
 
-import { tick } from '../lib';
+import { tick, getRestProps } from '../lib';
 import {
   BasePickerOnChangeData,
 } from '../pickers/BasePicker';
@@ -14,11 +14,14 @@ import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
+  BaseInputPropsNames,
   BaseInputState,
   MultimodeProps,
   MultimodePropTypes,
+  MultimodePropsNames,
   TimeRelatedProps,
   TimeRelatedPropTypes,
+  TimeRelatedPropsNames,
 } from './BaseInput';
 import {
   parseValue,
@@ -100,17 +103,12 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
   }
 
   protected getUnusedProps = () => {
-    // TODO: automate unused props extraction
-    const {
-      value,
-      timeFormat,
-      closable,
-      disableMinute,
-      popupPosition,
-      ...rest
-    } = this.props;
-
-    return rest;
+    // Return props which do not exist in TimeInputProps type
+    return getRestProps(this.props, [
+      ...BaseInputPropsNames,
+      ...TimeRelatedPropsNames,
+      ...MultimodePropsNames,
+    ]);
   }
 
   protected parseInternalValue(): Moment {

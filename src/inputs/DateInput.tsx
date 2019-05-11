@@ -232,7 +232,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
       inline,
-      onCalendarViewMount: this.onCalendarViewMount,
+      // onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
       tabIndex,
       pickerWidth,
@@ -286,6 +286,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       <YearView
         { ...this.getUnusedProps() }
         { ...yearViewProps }
+        onMount={ this.onCalendarViewMount }
         localization={this.props.localization} />
     );
   }
