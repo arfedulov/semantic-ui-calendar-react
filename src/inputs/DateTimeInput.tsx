@@ -17,19 +17,26 @@ import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
+  BaseInputPropsNames,
   BaseInputState,
   DateRelatedProps,
   DateRelatedPropTypes,
+  DateRelatedPropsNames,
   DisableValuesProps,
   DisableValuesPropTypes,
+  DisableValuesPropsNames,
   MinMaxValueProps,
   MinMaxValuePropTypes,
+  MinMaxValuePropsNames,
   MultimodeProps,
   MultimodePropTypes,
+  MultimodePropsNames,
   TimeRelatedProps,
   TimeRelatedPropTypes,
+  TimeRelatedPropsNames,
   MarkedValuesProps,
   MarkedValuesPropTypes,
+  MarkedValuesPropsNames,
 } from './BaseInput';
 
 import {
@@ -45,7 +52,7 @@ import {
   MinuteViewProps,
 } from '../views';
 
-import { tick } from '../lib';
+import { tick, getRestProps } from '../lib';
 import {
   parseArrayOrValue,
   parseValue,
@@ -204,28 +211,20 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
   }
 
   protected getUnusedProps = () => {
-    // TODO: automate unused props extraction
-    const {
-      value,
-      dateTimeFormat,
-      dateFormat,
-      timeFormat,
-      initialDate,
-      disable,
-      maxDate,
-      minDate,
-      preserveViewMode,
-      startMode,
-      divider,
-      closable,
-      markColor,
-      marked,
-      localization,
-      onChange,
-      ...rest
-    } = this.props;
-
-    return rest;
+    // Return props which do not exist in DateTimeInputProps type
+    return getRestProps(this.props, [
+      ...BaseInputPropsNames,
+      ...DateRelatedPropsNames,
+      ...TimeRelatedPropsNames,
+      ...MultimodePropsNames,
+      ...DisableValuesPropsNames,
+      ...MarkedValuesPropsNames,
+      ...MinMaxValuePropsNames,
+      'startMode',
+      'divider',
+      'preserveViewMode',
+      'dateTimeFormat',
+    ]);
   }
 
   protected parseInternalValue(): Moment {

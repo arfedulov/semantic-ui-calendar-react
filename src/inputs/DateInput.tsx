@@ -14,19 +14,26 @@ import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
+  BaseInputPropsNames,
   BaseInputState,
   DateRelatedProps,
   DateRelatedPropTypes,
+  DateRelatedPropsNames,
   DisableValuesProps,
   DisableValuesPropTypes,
+  DisableValuesPropsNames,
   EnableValuesProps,
   EnableValuesPropTypes,
+  EnableValuesPropsNames,
   MinMaxValueProps,
   MinMaxValuePropTypes,
+  MinMaxValuePropsNames,
   MultimodeProps,
   MultimodePropTypes,
+  MultimodePropsNames,
   MarkedValuesProps,
   MarkedValuesPropTypes,
+  MarkedValuesPropsNames,
 } from './BaseInput';
 
 import {
@@ -40,6 +47,7 @@ import {
 
 import {
   tick,
+  getRestProps,
 } from '../lib';
 import {
   buildValue,
@@ -191,26 +199,17 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
   }
 
   protected getUnusedProps = (): object => {
-    // TODO: automate unused props extraction
-    const {
-      value,
-      dateFormat,
-      initialDate,
-      disable,
-      enable,
-      maxDate,
-      minDate,
-      preserveViewMode,
-      startMode,
-      closable,
-      markColor,
-      marked,
-      localization,
-      onChange,
-      ...rest
-    } = this.props;
-
-    return rest;
+    // Return props which do not exist in DateInputProps type
+    return getRestProps(this.props, [
+      ...BaseInputPropsNames,
+      ...DateRelatedPropsNames,
+      ...MultimodePropsNames,
+      ...DisableValuesPropsNames,
+      ...EnableValuesPropsNames,
+      ...MarkedValuesPropsNames,
+      ...MinMaxValuePropsNames,
+      'startMode',
+    ]);
   }
 
   private getPicker = () => {

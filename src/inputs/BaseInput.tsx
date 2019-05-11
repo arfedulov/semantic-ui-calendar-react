@@ -12,6 +12,8 @@ import {
 } from '../pickers/BasePicker';
 import CustomPropTypes from '../lib/CustomPropTypes';
 
+/////////////////////////////////////////////// BaseInputProps /////////////////////////////////////////////////////
+
 export interface BaseInputProps {
   [key: string]: any;
   /** Currently selected value. */
@@ -70,6 +72,7 @@ export interface BaseInputProps {
   hideMobileKeyboard?: boolean;
 }
 
+// Keep it in sync with BaseInputProps type
 export const BaseInputPropTypes = {
   /** Currently selected value. */
   value: PropTypes.string.isRequired,
@@ -128,6 +131,33 @@ export const BaseInputPropTypes = {
   hideMobileKeyboard: PropTypes.bool,
 };
 
+// Keep it in sync with BaseInputProps type
+export const BaseInputPropsNames = [
+  'value',
+  'onChange',
+  'closable',
+  'inline',
+  'icon',
+  'iconPosition',
+  'onClear',
+  'clearable',
+  'clearIcon',
+  'popupPosition',
+  'closeOnMouseLeave',
+  'mountNode',
+  'inlineLabel',
+  'pickerWidth',
+  'pickerStyle',
+  'duration',
+  'animation',
+  'localization',
+  'hideMobileKeyboard',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////// MarkedValuesProps //////////////////////////////////////////////////
+
 export interface MarkedValuesProps {
   /** Array of marked dates. */
   marked?: Moment[] | Date[];
@@ -135,6 +165,7 @@ export interface MarkedValuesProps {
   markColor?: SemanticCOLORS;
 }
 
+// Keep it in sync with MarkedValuesProps type
 export const MarkedValuesPropTypes = {
   /** Array of marked dates. */
   marked: PropTypes.oneOfType([
@@ -145,6 +176,16 @@ export const MarkedValuesPropTypes = {
   markColor: PropTypes.string,
 };
 
+// Keep it in sync with MarkedValuesProps type
+export const MarkedValuesPropsNames = [
+  'marked',
+  'markColor',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////// DateRelatedProps /////////////////////////////////////////////////
+
 export interface DateRelatedProps {
   /** Moment date formatting string. */
   dateFormat?: string;
@@ -152,6 +193,7 @@ export interface DateRelatedProps {
   initialDate?: string | Date | Moment;
 }
 
+// Keep it in sync with DateRelatedProps type
 export const DateRelatedPropTypes = {
   /** Moment date formatting string. */
   dateFormat: PropTypes.string,
@@ -163,6 +205,16 @@ export const DateRelatedPropTypes = {
   ]),
 };
 
+// Keep it in sync with DateRelatedProps type
+export const DateRelatedPropsNames = [
+  'dateFormat',
+  'initialDate',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////// TimeRelatedProps ///////////////////////////////////////////////////
+
 export interface TimeRelatedProps {
   /** Time format. */
   timeFormat?: TimeFormat;
@@ -170,12 +222,23 @@ export interface TimeRelatedProps {
   disableMinute?: boolean;
 }
 
+// Keep it in sync with TimeRelatedProps type
 export const TimeRelatedPropTypes = {
   /** Time format. */
   timeFormat: PropTypes.oneOf([ 'ampm', 'AMPM', '24']),
   /** If true, minutes picker won't be shown after picking the hour. */
   disableMinute: PropTypes.bool,
 };
+
+// Keep it in sync with TimeRelatedProps type
+export const TimeRelatedPropsNames = [
+  'timeFormat',
+  'disableMinute',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////// DisableValuesProps //////////////////////////////////////////////////
 
 export interface DisableValuesProps {
   /** Date or list of dates that are displayed as disabled. */
@@ -188,6 +251,7 @@ export interface DisableValuesProps {
   | Date[];
 }
 
+// Keep it in sync with DisableValuesProps type
 export const DisableValuesPropTypes = {
   /** Date or list of dates that are displayed as disabled. */
   disable: PropTypes.oneOfType([
@@ -200,6 +264,15 @@ export const DisableValuesPropTypes = {
   ]),
 };
 
+// Keep it in sync with DisableValuesProps type
+export const DisableValuesPropsNames = [
+  'disable',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////// EnableValuesProps //////////////////////////////////////////////////
+
 export interface EnableValuesProps {
   /** Date or list of dates that are enabled (the rest are disabled). */
   enable?:
@@ -211,6 +284,7 @@ export interface EnableValuesProps {
   | Date[];
 }
 
+// Keep it in sync with EnableValuesProps type
 export const EnableValuesPropTypes = {
   /** Date or list of dates that are enabled (the rest are disabled). */
   enable: PropTypes.oneOfType([
@@ -222,6 +296,15 @@ export const EnableValuesPropTypes = {
     PropTypes.arrayOf(CustomPropTypes.dateObject),
   ]),
 };
+
+// Keep it in sync with EnableValuesProps type
+export const EnableValuesPropsNames = [
+  'enable',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////// MinMaxValuesProps /////////////////////////////////////////////////
 
 export interface MinMaxValueProps {
   /** Maximum date that can be selected. */
@@ -236,6 +319,7 @@ export interface MinMaxValueProps {
   | Date;
 }
 
+// Keep it in sync with MinMaxValueProps type
 export const MinMaxValuePropTypes = {
   /** Maximum date that can be selected. */
   maxDate: PropTypes.oneOfType([
@@ -251,25 +335,53 @@ export const MinMaxValuePropTypes = {
   ]),
 };
 
+// Keep it in sync with MinMaxValueProps type
+export const MinMaxValuePropsNames = [
+  'maxDate',
+  'minDate',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////// MultimodeProps //////////////////////////////////////////////////
+
 export interface MultimodeProps {
   /** Preserve viewmode on focus? */
   preserveViewMode?: boolean;
 }
 
+// Keep it in sync with MultimodeProps type
 export const MultimodePropTypes = {
   /** Preserve viewmode on focus? */
   preserveViewMode: PropTypes.bool,
 };
+
+// Keep it in sync with MultimodeProps type
+export const MultimodePropsNames = [
+  'preserveViewMode',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////// RangeRelatedProps ////////////////////////////////////////////////
 
 export interface RangeRelatedProps {
   /** Allow end date to be the same as start date. */
   allowSameEndDate?: boolean;
 }
 
+// Keep it in sync with RangeRelatedProps type
 export const RangeRelatedPropTypes = {
   /** Allow end date to be the same as start date. */
   allowSameEndDate: PropTypes.bool,
 };
+
+// Keep it in sync with RangeRelatedProps type
+export const RangeRelatedPropsNames = [
+  'allowSameEndDate',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export interface BaseInputState {
   popupIsClosed: boolean;

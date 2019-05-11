@@ -11,21 +11,28 @@ import {
   pickInitialDate,
 } from './parse';
 
+import { getRestProps } from '../lib';
+
 import DatesRangePicker, {
   DatesRangePickerOnChangeData,
 } from '../pickers/dayPicker/DatesRangePicker';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
+  BaseInputPropsNames,
   BaseInputState,
   DateRelatedProps,
   DateRelatedPropTypes,
+  DateRelatedPropsNames,
   MinMaxValueProps,
   MinMaxValuePropTypes,
+  MinMaxValuePropsNames,
   MarkedValuesProps,
   MarkedValuesPropTypes,
+  MarkedValuesPropsNames,
   RangeRelatedProps,
   RangeRelatedPropTypes,
+  RangeRelatedPropsNames,
 } from './BaseInput';
 
 import {
@@ -89,22 +96,14 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   }
 
   protected getUnusedProps = () => {
-    // TODO: automate unused props extraction
-    const {
-      value,
-      dateFormat,
-      initialDate,
-      maxDate,
-      minDate,
-      closable,
-      marked,
-      markColor,
-      localization,
-      allowSameEndDate,
-      ...rest
-    } = this.props;
-
-    return rest;
+    // Return props which do not exist in DatesRangeInputProps type
+    return getRestProps(this.props, [
+      ...BaseInputPropsNames,
+      ...DateRelatedPropsNames,
+      ...MarkedValuesPropsNames,
+      ...MinMaxValuePropsNames,
+      ...RangeRelatedPropsNames,
+    ]);
   }
 
   protected parseInternalValue(): Moment {

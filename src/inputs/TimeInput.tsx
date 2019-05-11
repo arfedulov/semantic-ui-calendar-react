@@ -106,6 +106,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       timeFormat,
       closable,
       disableMinute,
+      popupPosition,
       ...rest
     } = this.props;
 
