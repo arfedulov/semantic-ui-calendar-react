@@ -27,11 +27,18 @@ describe('<HeaderWeeks />', () => {
     assert.equal(wrapper.children().getElements().length, 7, 'top node contains 7 nodes');
   });
 
-  it('has proper localization', () => {
+  it('has proper localization: en', () => {
+    const wrapper = shallow(<HeaderWeeks localization='en' />);
+    const expectedContent = [ 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa' ];
+
+    wrapper.children().map((ch, i) => assert(ch.contains(expectedContent[i]), `cell contains ${expectedContent[i]}`));
+  });
+
+  it('has proper localization: ru', () => {
     const wrapper = shallow(<HeaderWeeks localization='ru' />);
-    const weekArray = wrapper.children().getElements().map(element => moment(element.key, 'ddd dddd', 'ru').isValid());
-    assert.notInclude(weekArray, false, 'days of the week parsed correctly');
-    assert.equal(weekArray.length, 7, 'top node contains 7 nodes');
+    const expectedContent = [ 'пн', 'вт', 'ср', 'чт', 'пт', 'сб', 'вс' ];
+
+    wrapper.children().map((ch, i) => assert(ch.contains(expectedContent[i]), `cell contains ${expectedContent[i]}`));
   });
 
   it('has proper styling', () => {
