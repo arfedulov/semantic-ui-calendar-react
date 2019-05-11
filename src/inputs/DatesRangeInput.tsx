@@ -80,11 +80,15 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
   }
 
   public render() {
-    const { value } = this.props;
+    const {
+      value,
+      onChange,
+    } = this.props;
 
     return (
       <InputView
         { ...this.getUnusedProps() }
+        onChange={onChange}
         popupIsClosed={this.state.popupIsClosed}
         value={value}
         onMount={this.onInputViewMount}
@@ -130,6 +134,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       pickerWidth,
       pickerStyle,
       allowSameEndDate,
+      inline,
     } = this.props;
     const {
       start,
@@ -142,8 +147,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       <DatesRangePicker
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
-        inline={this.props.inline}
-        onCalendarViewMount={this.onCalendarViewMount}
+        inline={inline}
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         dateFormat={dateFormat}
@@ -165,16 +169,19 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     );
   }
 
-  private getDatesRangeView = (datesRangeViewProps: DatesRangeViewProps) => {
+  private getDatesRangeView = (datesRangeViewProps) => {
     const {
       markColor,
       localization,
+      inline,
     } = this.props;
 
     return (
       <DatesRangeView
         { ...this.getUnusedProps() }
         { ...datesRangeViewProps }
+        inline={ inline }
+        onMount={ this.onCalendarViewMount }
         markColor={markColor}
         localization={localization}
       />

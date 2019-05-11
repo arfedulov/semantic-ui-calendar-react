@@ -49,8 +49,6 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
   public render() {
     const {
       renderView,
-      inline,
-      onCalendarViewMount,
     } = this.props;
 
     const yearViewProps = {
@@ -59,8 +57,6 @@ class YearPicker extends SingleSelectionPicker<YearPickerProps> {
       onPrevPageBtnClick: this.switchToPrevPage,
       onValueClick: this.handleChange,
       onBlur: this.handleBlur,
-      inline,
-      onMount: onCalendarViewMount,
       hoveredItemIndex: this.state.hoveredCellPosition,
       onCellHover: this.onHoveredCellPositionChange,
       hasPrevPage: this.isPrevPageAvailable(),

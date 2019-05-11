@@ -58,7 +58,9 @@ class MinutePicker
   }
 
   public render() {
-    const { renderView } = this.props;
+    const {
+      renderView,
+    } = this.props;
 
     const minuteViewProps = {
       values: this.buildCalendarValues(),
@@ -68,8 +70,6 @@ class MinutePicker
       hoveredItemIndex: this.state.hoveredCellPosition,
       onCellHover: this.onHoveredCellPositionChange,
       onBlur: this.handleBlur,
-      inline: this.props.inline,
-      onMount: this.props.onCalendarViewMount,
       hasNextPage: this.isNextPageAvailable(),
       hasPrevPage: this.isPrevPageAvailable(),
       disabledItemIndexes: this.getDisabledPositions(),

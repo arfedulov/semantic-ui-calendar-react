@@ -60,11 +60,15 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
   }
 
   public render() {
-    const { value } = this.props;
+    const {
+      value,
+      onChange,
+    } = this.props;
 
     return (
       <InputView
         { ...this.getUnusedProps() }
+        onChange={ onChange }
         popupIsClosed={this.state.popupIsClosed}
         value={value}
         onMount={this.onInputViewMount}
@@ -115,7 +119,6 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
         inline={this.props.inline}
-        onCalendarViewMount={this.onCalendarViewMount}
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         dateFormat={dateFormat}
@@ -131,11 +134,17 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     );
   }
 
-  private getMonthRangeView = (monthRangeViewProps: MonthRangeViewProps) => {
+  private getMonthRangeView = (monthRangeViewProps) => {
+    const {
+      inline,
+    } = this.props;
+
     return (
       <MonthRangeView
         { ...this.getUnusedProps() }
         { ...monthRangeViewProps }
+        inline={ inline }
+        onMount={ this.onCalendarViewMount }
         localization={ this.props.localization }/>
     );
   }

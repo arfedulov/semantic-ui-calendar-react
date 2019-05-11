@@ -63,8 +63,6 @@ class DayPicker
       onPrevPageBtnClick: this.switchToPrevPage,
       onValueClick: this.handleChange,
       onBlur: this.handleBlur,
-      inline: this.props.inline,
-      onMount: this.props.onCalendarViewMount,
       hoveredItemIndex: this.state.hoveredCellPosition,
       onCellHover: this.onHoveredCellPositionChange,
       currentHeadingValue: this.getCurrentDate(),

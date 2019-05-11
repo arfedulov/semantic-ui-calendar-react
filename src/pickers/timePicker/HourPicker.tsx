@@ -58,7 +58,9 @@ class HourPicker
   }
 
   public render() {
-    const { renderView } = this.props;
+    const {
+      renderView,
+    } = this.props;
 
     const hourViewProps = {
       values: this.buildCalendarValues(),
@@ -68,8 +70,6 @@ class HourPicker
       hasNextPage: this.isNextPageAvailable(),
       onValueClick: this.handleChange,
       onBlur: this.handleBlur,
-      inline: this.props.inline,
-      onMount: this.props.onCalendarViewMount,
       hoveredItemIndex: this.state.hoveredCellPosition,
       onCellHover: this.onHoveredCellPositionChange,
       disabledItemIndexes: this.getDisabledPositions(),

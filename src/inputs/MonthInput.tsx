@@ -69,11 +69,13 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
       value,
       dateFormat,
       localization,
+      onChange,
     } = this.props;
 
     return (
       <InputView
         { ...this.getUnusedProps() }
+        onChange={ onChange }
         popupIsClosed={this.state.popupIsClosed}
         value={dateValueToString(value, dateFormat, localization)}
         onMount={this.onInputViewMount}
@@ -119,7 +121,6 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         inline={this.props.inline}
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
-        onCalendarViewMount={this.onCalendarViewMount}
         closePopup={this.closePopup}
         hasHeader={false}
         onChange={this.handleSelect}
@@ -135,12 +136,17 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     );
   }
 
-  private getMonthView = (monthViewProps: MonthViewProps) => {
+  private getMonthView = (monthViewProps) => {
+    const {
+      inline,
+    } = this.props;
 
     return (
       <MonthView
         { ...this.getUnusedProps() }
         { ...monthViewProps }
+        inline={ inline }
+        onMount={ this.onCalendarViewMount }
         localization={this.props.localization} />
     );
   }

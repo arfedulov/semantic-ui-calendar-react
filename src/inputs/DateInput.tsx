@@ -232,7 +232,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
       inline,
-      // onCalendarViewMount: this.onCalendarViewMount,
       closePopup: this.closePopup,
       tabIndex,
       pickerWidth,
@@ -280,32 +279,47 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     );
   }
 
-  private getYearView = (yearViewProps: YearViewProps) => {
+  private getYearView = (yearViewProps) => {
+    const {
+      inline,
+    } = this.props;
 
     return (
       <YearView
         { ...this.getUnusedProps() }
         { ...yearViewProps }
+        inline={ inline }
         onMount={ this.onCalendarViewMount }
         localization={this.props.localization} />
     );
   }
 
-  private getMonthView = (monthViewProps: MonthViewProps) => {
+  private getMonthView = (monthViewProps) => {
+    const {
+      inline,
+    } = this.props;
 
     return (
       <MonthView
         { ...this.getUnusedProps() }
         { ...monthViewProps }
+        inline={inline}
+        onMount={ this.onCalendarViewMount }
         localization={this.props.localization} />
     );
   }
 
-  private getDayView = (dayViewProps: DayViewProps) => {
+  private getDayView = (dayViewProps) => {
+    const {
+      inline,
+    } = this.props;
+
     return (
       <DayView
         { ...this.getUnusedProps() }
         { ...dayViewProps }
+        inline={inline}
+        onMount={ this.onCalendarViewMount }
         localization={this.props.localization}
       />
     );

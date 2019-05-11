@@ -55,7 +55,9 @@ class MonthPicker
   }
 
   public render() {
-    const { renderView } = this.props;
+    const {
+      renderView,
+    } = this.props;
     
     const monthViewProps = {
       values: this.buildCalendarValues(),
@@ -66,8 +68,6 @@ class MonthPicker
       hasPrevPage: this.isPrevPageAvailable(),
       hasNextPage: this.isNextPageAvailable(),
       onBlur: this.handleBlur,
-      inline: this.props.inline,
-      onMount: this.props.onCalendarViewMount,
       disabledItemIndexes: this.getDisabledPositions(),
       activeItemIndex: this.getActiveCellPosition(),
       hoveredItemIndex: this.state.hoveredCellPosition,

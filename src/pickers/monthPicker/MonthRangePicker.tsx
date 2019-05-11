@@ -48,7 +48,9 @@ class MonthRangePicker
   }
 
   public render() {
-    const { renderView } = this.props;
+    const {
+      renderView,
+    } = this.props;
 
     const monthRangeViewProps = {
       values: this.buildCalendarValues(),
@@ -57,11 +59,9 @@ class MonthRangePicker
       onCellHover: this.onHoveredCellPositionChange,
       hoveredItemIndex: this.state.hoveredCellPosition,
       onValueClick: this.handleChange,
-      inline: this.props.inline,
       hasPrevPage: this.isPrevPageAvailable(),
       hasNextPage: this.isNextPageAvailable(),
       onBlur: this.handleBlur,
-      onMount: this.props.onCalendarViewMount,
       currentHeadingValue: this.getCurrentDate(),
       currentRangeHeadingValue: this.getSelectedRange(),
       activeRange: this.getActiveCellsPositions(),

@@ -63,11 +63,15 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   }
 
   public render() {
-    const { value } = this.props;
+    const {
+      value,
+      onChange,
+    } = this.props;
 
     return (
       <InputView
         { ...this.getUnusedProps() }
+        onChange={ onChange }
         popupIsClosed={this.state.popupIsClosed}
         closePopup={this.closePopup}
         openPopup={this.openPopup}
@@ -99,11 +103,16 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
   }
 
   private getYearView = (yearViewProps: YearViewProps) => {
+    const {
+      inline,
+    } = this.props;
 
     return (
       <YearView
         { ...this.getUnusedProps() }
         { ...yearViewProps }
+        inline={ inline }
+        onMount={ this.onCalendarViewMount }
         localization={this.props.localization} />
     );
   }
@@ -124,7 +133,6 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
         inline={this.props.inline}
-        onCalendarViewMount={this.onCalendarViewMount}
         closePopup={this.closePopup}
         onChange={this.handleSelect}
         initializeWith={pickInitialDate({ ...this.props, value: this.parseInternalValue() })}

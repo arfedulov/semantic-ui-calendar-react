@@ -87,11 +87,15 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
   }
 
   public render() {
-    const { value } = this.props;
+    const {
+      value,
+      onChange,
+    } = this.props;
 
     return (
       <InputView
         { ...this.getUnusedProps() }
+        onChange={ onChange }
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
@@ -158,20 +162,32 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     }, this.onModeSwitch);
   }
 
-  private getHourView = (hourViewProps: HourViewProps) => {
+  private getHourView = (hourViewProps) => {
+    const {
+      inline,
+    } = this.props;
+
     return (
       <HourView
         { ...this.getUnusedProps() }
         { ...hourViewProps }
+        inline={ inline }
+        onMount={ this.onCalendarViewMount }
         localization={this.props.localization}/>
     );
   }
 
-  private getMinuteView = (minuteViewProps: MinuteViewProps) => {
+  private getMinuteView = (minuteViewProps) => {
+    const {
+      inline,
+    } = this.props;
+
     return (
       <MinuteView
         { ...this.getUnusedProps() }
         { ...minuteViewProps }
+        inline={ inline }
+        onMount={ this.onCalendarViewMount }
         localization={this.props.localization}/>
     );
   }

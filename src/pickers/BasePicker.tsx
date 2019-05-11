@@ -51,8 +51,6 @@ export interface BasePickerProps {
   isPickerInFocus: () => boolean;
   /** Whether popup-trigger in focus. */
   isTriggerInFocus: () => boolean;
-  /** Used to pass underlying picker's html element to parent component. */
-  onCalendarViewMount: (e: HTMLElement) => void;
   /** Called on calendar's header click. */
   onHeaderClick: () => void;
   /** Moment date localization */
