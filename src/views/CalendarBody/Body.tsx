@@ -23,7 +23,7 @@ interface BodyProps {
   /** Called after a click on calendar's cell. */
   onCellClick: (e: React.SyntheticEvent<HTMLElement>, data: OnValueClickData) => void;
   /** Called on cell hover. */
-  onCellHover: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
+  onCellHover: (e: React.SyntheticEvent<HTMLElement>, data: { itemPosition: number }) => void;
   /** Index of an element in `data` array that should be displayed as hovered. */
   hovered?: number;
   /** Index of an element (or array of indexes) in `data` array that should be displayed as active. */
