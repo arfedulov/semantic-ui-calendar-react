@@ -7,6 +7,7 @@ import * as sinon from 'sinon';
 import * as React from 'react';
 import {
   Table,
+  Label,
 } from 'semantic-ui-react';
 import * as _ from 'lodash';
 
@@ -106,6 +107,216 @@ describe('<Body>', () => {
             assert.isTrue(onHoverCallback.calledOnce, 'onClick callback called once');
 
             assert.equal(onHoverCallback.lastCall.args[1].itemPosition, 6, 'clicked 6th cell');
+        });
+    });
+
+    describe('<Body ... hovered = { n } />', () => {
+        const outlineRegEx = /style=".*outline/;
+        it('only n-th cell has ``outline`` in its ``style`` attribute', () => {
+            const n = 12;
+            const width = 7;
+            const height = 6;
+
+            const bodyProps = {
+                width: width,
+                data: _.fill(new Array(height * width), 'cell content'),
+                onCellClick: () => {},
+                onCellHover: () => {},
+                hovered: n,
+            };
+            const wrapper = shallow(<Body { ...bodyProps } />);
+
+            wrapper.find(Table.Body).find(Table.Row).forEach((row, rowIndex) => {
+                row.find(Cell).forEach((cell, cellIndex) => {
+                    const match = ( rowIndex * width + cellIndex ) === n;
+                    if (match) {
+                        assert(
+                            cell.html().search(outlineRegEx),
+                            `${n}-th cell has "outline" in its "style" attribute`,
+                        );
+                    } else {
+                        assert(
+                            cell.html().search(outlineRegEx) === -1,
+                            `other cells dont have "outline" in its "style" attribute`,
+                        );
+                    }
+                });
+            });
+        });
+    });
+
+    describe('<Body ... active = { n } />', () => {
+        it('only n-th cell has "active" prop', () => {
+            const n = 12;
+            const width = 7;
+            const height = 6;
+
+            const bodyProps = {
+                width: width,
+                data: _.fill(new Array(height * width), 'cell content'),
+                onCellClick: () => {},
+                onCellHover: () => {},
+                active: n,
+            };
+            const wrapper = shallow(<Body { ...bodyProps } />);
+
+            wrapper.find(Table.Body).find(Table.Row).forEach((row, rowIndex) => {
+                row.find(Cell).forEach((cell, cellIndex) => {
+                    const match = ( rowIndex * width + cellIndex ) === n;
+                    if (match) {
+                        assert(
+                            cell.prop('active'),
+                            `${n}-th cell has "active" prop`,
+                        );
+                    } else {
+                        assert.isFalse(
+                            cell.prop('active'),
+                            `other cells dont have "active" prop`,
+                        );
+                    }
+                });
+            });
+        });
+    });
+
+    describe('<Body ... active = { [ ...numbers ] } />', () => {
+        it('only cells with provided indexes has "active" prop', () => {
+            const numbers = [ 2, 5, 14, 15, 16 ];
+            const width = 7;
+            const height = 6;
+
+            const bodyProps = {
+                width: width,
+                data: _.fill(new Array(height * width), 'cell content'),
+                onCellClick: () => {},
+                onCellHover: () => {},
+                active: numbers,
+            };
+            const wrapper = shallow(<Body { ...bodyProps } />);
+
+            wrapper.find(Table.Body).find(Table.Row).forEach((row, rowIndex) => {
+                row.find(Cell).forEach((cell, cellIndex) => {
+                    const match = numbers.indexOf( rowIndex * width + cellIndex ) >= 0;
+                    if (match) {
+                        assert(
+                            cell.prop('active'),
+                            `${ rowIndex * width + cellIndex }-th cell has "active" prop`,
+                        );
+                    } else {
+                        assert.isFalse(
+                            cell.prop('active'),
+                            `other cells dont have "active" prop`,
+                        );
+                    }
+                });
+            });
+        });
+    });
+
+    describe('<Body ... disabled = { [ ...numbers ] } />', () => {
+        it('only cells with provided indexes has "disabled" prop', () => {
+            const numbers = [ 0, 1, 2, 3, 10, 15 ];
+            const width = 7;
+            const height = 6;
+
+            const bodyProps = {
+                width: width,
+                data: _.fill(new Array(height * width), 'cell content'),
+                onCellClick: () => {},
+                onCellHover: () => {},
+                disabled: numbers,
+            };
+            const wrapper = shallow(<Body { ...bodyProps } />);
+
+            wrapper.find(Table.Body).find(Table.Row).forEach((row, rowIndex) => {
+                row.find(Cell).forEach((cell, cellIndex) => {
+                    const match = numbers.indexOf( rowIndex * width + cellIndex ) >= 0;
+                    if (match) {
+                        assert(
+                            cell.prop('disabled'),
+                            `${ rowIndex * width + cellIndex }-th cell has "disabled" prop`,
+                        );
+                    } else {
+                        assert.isFalse(
+                            cell.prop('disabled'),
+                            `other cells dont have "disabled" prop`,
+                        );
+                    }
+                });
+            });
+        });
+    });
+
+    describe('<Body ... marked = { [ ...numbers ] } markColor = { string } />', () => {
+        it('only cells with provided indexes has element with "label" class inside', () => {
+            const labelRegEx = /class=".*label/;
+
+            const numbers = [ 9, 12, 14 ];
+            const width = 7;
+            const height = 6;
+
+            const bodyProps = {
+                width: width,
+                data: _.fill(new Array(height * width), 'cell content'),
+                onCellClick: () => {},
+                onCellHover: () => {},
+                marked: numbers,
+            };
+            const wrapper = shallow(<Body { ...bodyProps } />);
+
+            wrapper.find(Table.Body).find(Table.Row).forEach((row, rowIndex) => {
+                row.find(Cell).forEach((cell, cellIndex) => {
+                    const match = numbers.indexOf( rowIndex * width + cellIndex ) >= 0;
+                    if (match) {
+                        assert(
+                            cell.html().search(labelRegEx),
+                            `${ rowIndex * width + cellIndex }-th cell has node with "label" class inside`,
+                        );
+                    } else {
+                        assert(
+                            cell.html().search(labelRegEx) === -1,
+                            `other cells dont have node with "label" class inside`,
+                        );
+                    }
+                });
+            });
+        });
+
+        it('each node with "label" class has also "green" class', () => {
+            const labelRegEx = /class=".*label/;
+            const colorRegEx = /class=".*green/;
+
+            const numbers = [ 9, 12, 14 ];
+            const width = 7;
+            const height = 6;
+            const color = 'green';
+
+            const bodyProps = {
+                width: width,
+                data: _.fill(new Array(height * width), 'cell content'),
+                onCellClick: () => {},
+                onCellHover: () => {},
+                marked: numbers,
+                markColor: color,
+            };
+            const wrapper = shallow(<Body { ...bodyProps } />);
+
+            wrapper.find(Table.Body).find(Table.Row).forEach((row, rowIndex) => {
+                row.find(Cell).forEach((cell, cellIndex) => {
+                    const match = numbers.indexOf( rowIndex * width + cellIndex ) >= 0;
+                    if (match) {
+                        assert(
+                            cell.html().search(labelRegEx) && cell.html().search(colorRegEx),
+                            `${ rowIndex * width + cellIndex }-th cell has node with "${ color }" class inside`,
+                        );
+                    } else {
+                        assert(
+                            (cell.html().search(labelRegEx) === -1) && (cell.html().search(colorRegEx) === -1),
+                            `other cells dont have node with "${ color }" class inside`,
+                        );
+                    }
+                });
+            });
         });
     });
 });
