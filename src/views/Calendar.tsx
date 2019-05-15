@@ -12,8 +12,7 @@ interface CalendarProps {
   pickerStyle?: object;
 }
 
-class Calendar extends React.Component<CalendarProps, any> {
-  public static readonly propTypes: object;
+class Calendar extends React.Component<CalendarProps, {}> {
   public static readonly defaultProps = {
     pickerWidth: '100%',
   };
@@ -26,6 +25,7 @@ class Calendar extends React.Component<CalendarProps, any> {
       pickerStyle,
       ...rest
     } = this.props;
+
     const style = {
       width: pickerWidth,
       minWidth: '22em',
@@ -37,11 +37,12 @@ class Calendar extends React.Component<CalendarProps, any> {
 
     return (
       <Table
+        { ...rest }
         style={style}
         unstackable
         celled
-        {...rest}
-        textAlign='center'>
+        textAlign='center'
+      >
         { children }
       </Table>
     );
