@@ -131,28 +131,7 @@ export const BaseInputPropTypes = {
   hideMobileKeyboard: PropTypes.bool,
 };
 
-// Keep it in sync with BaseInputProps type
-export const BaseInputPropsNames = [
-  'value',
-  'onChange',
-  'closable',
-  'inline',
-  'icon',
-  'iconPosition',
-  'onClear',
-  'clearable',
-  'clearIcon',
-  'popupPosition',
-  'closeOnMouseLeave',
-  'mountNode',
-  'inlineLabel',
-  'pickerWidth',
-  'pickerStyle',
-  'duration',
-  'animation',
-  'localization',
-  'hideMobileKeyboard',
-];
+export const BaseInputPropsNames = Object.keys(BaseInputPropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -176,11 +155,7 @@ export const MarkedValuesPropTypes = {
   markColor: PropTypes.string,
 };
 
-// Keep it in sync with MarkedValuesProps type
-export const MarkedValuesPropsNames = [
-  'marked',
-  'markColor',
-];
+export const MarkedValuesPropsNames = Object.keys(MarkedValuesPropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -205,11 +180,7 @@ export const DateRelatedPropTypes = {
   ]),
 };
 
-// Keep it in sync with DateRelatedProps type
-export const DateRelatedPropsNames = [
-  'dateFormat',
-  'initialDate',
-];
+export const DateRelatedPropsNames = Object.keys(DateRelatedPropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -230,11 +201,7 @@ export const TimeRelatedPropTypes = {
   disableMinute: PropTypes.bool,
 };
 
-// Keep it in sync with TimeRelatedProps type
-export const TimeRelatedPropsNames = [
-  'timeFormat',
-  'disableMinute',
-];
+export const TimeRelatedPropsNames = Object.keys(TimeRelatedPropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -264,10 +231,7 @@ export const DisableValuesPropTypes = {
   ]),
 };
 
-// Keep it in sync with DisableValuesProps type
-export const DisableValuesPropsNames = [
-  'disable',
-];
+export const DisableValuesPropsNames = Object.keys(DisableValuesPropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -297,10 +261,7 @@ export const EnableValuesPropTypes = {
   ]),
 };
 
-// Keep it in sync with EnableValuesProps type
-export const EnableValuesPropsNames = [
-  'enable',
-];
+export const EnableValuesPropsNames = Object.keys(EnableValuesPropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -335,11 +296,7 @@ export const MinMaxValuePropTypes = {
   ]),
 };
 
-// Keep it in sync with MinMaxValueProps type
-export const MinMaxValuePropsNames = [
-  'maxDate',
-  'minDate',
-];
+export const MinMaxValuePropsNames = Object.keys(MinMaxValuePropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -356,10 +313,7 @@ export const MultimodePropTypes = {
   preserveViewMode: PropTypes.bool,
 };
 
-// Keep it in sync with MultimodeProps type
-export const MultimodePropsNames = [
-  'preserveViewMode',
-];
+export const MultimodePropsNames = Object.keys(MultimodePropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -376,10 +330,7 @@ export const RangeRelatedPropTypes = {
   allowSameEndDate: PropTypes.bool,
 };
 
-// Keep it in sync with RangeRelatedProps type
-export const RangeRelatedPropsNames = [
-  'allowSameEndDate',
-];
+export const RangeRelatedPropsNames = Object.keys(RangeRelatedPropTypes);
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
