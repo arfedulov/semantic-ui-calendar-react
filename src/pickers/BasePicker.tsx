@@ -39,8 +39,6 @@ export interface BasePickerProps {
   /** Called after day is selected. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: BasePickerOnChangeData) => void;
   renderView: (props: any) => React.ReactElement;
-  /** Currently selected date. */
-  value?: Moment;
   /** A value for initializing day picker's state. */
   initializeWith: Moment;
   /** Forse popup to close. */
@@ -53,6 +51,8 @@ export interface BasePickerProps {
   isTriggerInFocus: () => boolean;
   /** Called on calendar's header click. */
   onHeaderClick: () => void;
+  /** Currently selected date. */
+  value?: Moment;
   /** Moment date localization */
   localization?: string;
   tabIndex?: string;

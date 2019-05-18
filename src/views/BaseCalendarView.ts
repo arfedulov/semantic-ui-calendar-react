@@ -79,7 +79,6 @@ export interface CalendarWithOptionalHeaderViewProps {
 }
 
 export interface OnValueClickData {
-  [key: string]: any;
   /** Position of the clicked cell. */
   itemPosition: number;
   /** Text content of the clicked cell. */
