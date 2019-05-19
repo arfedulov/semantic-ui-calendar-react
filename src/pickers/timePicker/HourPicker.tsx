@@ -14,7 +14,6 @@ import {
   BasePickerProps,
   DisableValuesProps,
   MinMaxValueProps,
-  OptionalHeaderProps,
   ProvideHeadingValue,
   SingleSelectionPicker,
   TimeFormat,
@@ -33,8 +32,7 @@ const PAGE_WIDTH = 4;
 type HourPickerProps = BasePickerProps
   & MinMaxValueProps
   & DisableValuesProps
-  & TimePickerProps
-  & OptionalHeaderProps;
+  & TimePickerProps;
 
 export interface HourPickerOnChangeData extends BasePickerOnChangeData {
   value: {

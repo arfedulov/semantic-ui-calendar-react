@@ -24,11 +24,7 @@ import {
 } from './parse';
 import { BasePickerOnChangeData } from 'src/pickers/BasePicker';
 import { getRestProps } from '../lib';
-
-import {
-  MonthRangeView,
-  MonthRangeViewProps,
-} from '../views';
+import { getMonthRangeView } from './shared';
 
 const DATES_SEPARATOR = ' - ';
 
@@ -52,11 +48,15 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     MinMaxValuePropTypes,
   );
 
+  private getMonthRangeView: (props: any) => React.ReactElement;
+
   constructor(props) {
     super(props);
     this.state = {
       popupIsClosed: true,
     };
+
+    this.getMonthRangeView = getMonthRangeView.bind(this);
   }
 
   public render() {
@@ -128,24 +128,8 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
         minDate={parseValue(minDate, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}
         localization={localization}
-        onHeaderClick={() => undefined}
         renderView={ this.getMonthRangeView }
       />
-    );
-  }
-
-  private getMonthRangeView = (monthRangeViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <MonthRangeView
-        { ...this.getUnusedProps() }
-        { ...monthRangeViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={ this.props.localization }/>
     );
   }
 

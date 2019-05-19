@@ -27,11 +27,7 @@ import {
   pickInitialDate,
 } from './parse';
 import { getRestProps } from '../lib';
-
-import {
-  YearView,
-  YearViewProps,
-} from '../views';
+import { getYearView } from './shared';
 
 export type YearInputProps =
   & BaseInputProps
@@ -55,11 +51,15 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     DisableValuesPropTypes,
   );
 
+  private getYearView: (props: any) => React.ReactElement;
+
   constructor(props) {
     super(props);
     this.state = {
       popupIsClosed: true,
     };
+
+    this.getYearView = getYearView.bind(this);
   }
 
   public render() {
@@ -102,21 +102,6 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     return buildValue(value, null, localization, dateFormat, null);
   }
 
-  private getYearView = (yearViewProps: YearViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <YearView
-        { ...this.getUnusedProps() }
-        { ...yearViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization} />
-    );
-  }
-
   private getPicker = () => {
     const {
       value,
@@ -140,7 +125,6 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         disable={parseArrayOrValue(disable, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}
         minDate={parseValue(minDate, dateFormat, localization)}
-        onHeaderClick={() => undefined}
         renderView={ this.getYearView }
       />
     );

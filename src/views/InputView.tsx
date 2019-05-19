@@ -20,7 +20,7 @@ const popupStyle = {
   filter: 'none', // prevents bluring popup when used inside Modal with dimmer="bluring" #28 #26
 };
 
-class FormInputWithRef extends React.Component<FormInputProps, any> {
+class FormInputWithRef extends React.Component<FormInputProps, {}> {
 
   public render() {
 
@@ -184,7 +184,6 @@ class InputView extends React.Component<InputViewProps, {}> {
       closeOnMouseLeave,
       onChange,
       onClear,
-      children,
       inlineLabel,
       popupIsClosed,
       mountNode,
@@ -194,12 +193,11 @@ class InputView extends React.Component<InputViewProps, {}> {
       openPopup,
       animation,
       duration,
-      pickerWidth,
-      pickerStyle,
       iconPosition,
       icon,
       readOnly,
       hideMobileKeyboard,
+      clearIcon,
     } = this.props;
 
     const rest = this.getUnusedProps();
@@ -237,6 +235,7 @@ class InputView extends React.Component<InputViewProps, {}> {
         // trying to use this hack https://stackoverflow.com/a/7610923 for hiding mobile keyboard
         readOnly={(checkMobile() && hideMobileKeyboard) || readOnly}
         icon={icon}
+        clearIcon={ clearIcon }
         iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined}
         innerRef={(e) => { this.inputNode = e; onMount(e); }}
         value={value}

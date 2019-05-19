@@ -8,7 +8,6 @@ import * as React from 'react';
 import {
   RangeIndexes,
 } from '../views/BaseCalendarView';
-import { SemanticCOLORS } from 'semantic-ui-react';
 
 interface HandleChangeParams {
   value?: string;
@@ -40,6 +39,7 @@ export interface BasePickerOnChangeData {
 export interface BasePickerProps {
   /** Called after day is selected. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: BasePickerOnChangeData) => void;
+  /** Return calendar view element. */
   renderView: (props: any) => React.ReactElement;
   /** A value for initializing day picker's state. */
   initializeWith: Moment;
@@ -51,15 +51,10 @@ export interface BasePickerProps {
   isPickerInFocus: () => boolean;
   /** Whether popup-trigger in focus. */
   isTriggerInFocus: () => boolean;
-  /** Called on calendar's header click. */
-  onHeaderClick: () => void;
   /** Currently selected date. */
   value?: Moment;
   /** Moment date localization */
   localization?: string;
-  tabIndex?: string;
-  pickerWidth?: string;
-  pickerStyle?: object;
 }
 
 // IMPORTANT: keep it in sync with BasePickerProps
@@ -71,26 +66,8 @@ export const BasePickerPropsNames = [
   'inline',
   'isPickerInFocus',
   'isTriggerInFocus',
-  'onHeaderClick',
   'value',
   'localization',
-  'tabIndex',
-  'pickerWidth',
-  'pickerStyle',
-];
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////// OptionalHeaderProps ///////////////////////////////////////////////
-
-export interface OptionalHeaderProps {
-  /** Whether to display calendar's header. */
-  hasHeader: boolean;
-}
-
-// IMPORTANT: keep it in sync with OptionalHeaderProps
-export const OptionalHeaderPropsNames = [
-  'hasHeader',
 ];
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,14 +120,11 @@ export const MinMaxValuePropsNames = [
 export interface MarkedValuesProps {
   /** Array of marked dates. */
   marked?: Moment[];
-  /** String specifying the mark color (Optional). */
-  markColor?: SemanticCOLORS;
 }
 
 // IMPORTANT: keep it in sync with MarkedValuesProps
 export const MarkedValuesPropsNames = [
   'marked',
-  'markColor',
 ];
 
 ///////////////////////////////////////////////// TimePickerProps ///////////////////////////////////////////////////

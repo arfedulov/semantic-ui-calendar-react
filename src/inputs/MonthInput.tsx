@@ -29,11 +29,7 @@ import {
   pickInitialDate,
 } from './parse';
 import { getRestProps } from '../lib';
-
-import {
-  MonthView,
-  MonthViewProps,
-} from '../views';
+import { getMonthView } from './shared';
 
 export type MonthInputProps =
   & BaseInputProps
@@ -57,11 +53,15 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     MinMaxValuePropTypes,
   );
 
+  private getMonthView: (props: any) => React.ReactElement;
+
   constructor(props) {
     super(props);
     this.state = {
       popupIsClosed: true,
     };
+
+    this.getMonthView = getMonthView.bind(this);
   }
 
   public render() {
@@ -122,7 +122,6 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
         closePopup={this.closePopup}
-        hasHeader={false}
         onChange={this.handleSelect}
         initializeWith={pickInitialDate({ ...this.props, value: this.parseInternalValue() })}
         value={buildValue(value, null, localization, dateFormat, null)}
@@ -130,24 +129,8 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         maxDate={parseValue(maxDate, dateFormat, localization)}
         minDate={parseValue(minDate, dateFormat, localization)}
         localization={localization}
-        onHeaderClick={() => undefined}
         renderView={this.getMonthView}
       />
-    );
-  }
-
-  private getMonthView = (monthViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <MonthView
-        { ...this.getUnusedProps() }
-        { ...monthViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization} />
     );
   }
 

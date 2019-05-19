@@ -12,6 +12,7 @@ import {
 } from './parse';
 
 import { getRestProps } from '../lib';
+import { getDatesRangeView } from './shared';
 
 import DatesRangePicker, {
   DatesRangePickerOnChangeData,
@@ -34,11 +35,6 @@ import BaseInput, {
   RangeRelatedPropTypes,
   RangeRelatedPropsNames,
 } from './BaseInput';
-
-import {
-  DatesRangeView,
-  DatesRangeViewProps,
-} from '../views';
 
 const DATES_SEPARATOR = ' - ';
 
@@ -72,11 +68,15 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     RangeRelatedPropTypes,
   );
 
+  private getDatesRangeView: (props: any) => React.ReactElement;
+
   constructor(props) {
     super(props);
     this.state = {
       popupIsClosed: true,
     };
+
+    this.getDatesRangeView = getDatesRangeView.bind(this);
   }
 
   public render() {
@@ -125,14 +125,10 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     const {
       value,
       dateFormat,
-      markColor,
       marked,
       localization,
       minDate,
       maxDate,
-      tabIndex,
-      pickerWidth,
-      pickerStyle,
       allowSameEndDate,
       inline,
     } = this.props;
@@ -155,35 +151,11 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         start={start}
         end={end}
         marked={markedParsed}
-        markColor={markColor}
         minDate={parseValue(minDate, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}
         localization={localization}
-        onHeaderClick={() => undefined}
-        tabIndex={tabIndex}
-        pickerWidth={pickerWidth}
-        pickerStyle={pickerStyle}
         allowSameEndDate={allowSameEndDate}
         renderView={this.getDatesRangeView}
-      />
-    );
-  }
-
-  private getDatesRangeView = (datesRangeViewProps) => {
-    const {
-      markColor,
-      localization,
-      inline,
-    } = this.props;
-
-    return (
-      <DatesRangeView
-        { ...this.getUnusedProps() }
-        { ...datesRangeViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        markColor={markColor}
-        localization={localization}
       />
     );
   }

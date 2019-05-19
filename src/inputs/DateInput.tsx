@@ -37,15 +37,6 @@ import BaseInput, {
 } from './BaseInput';
 
 import {
-  YearView,
-  YearViewProps,
-  MonthView,
-  MonthViewProps,
-  DayView,
-  DayViewProps,
-} from '../views';
-
-import {
   tick,
   getRestProps,
 } from '../lib';
@@ -57,7 +48,11 @@ import {
   pickInitialDate,
 } from './parse';
 import {
-  getDisabledMonths, getDisabledYears,
+  getDisabledMonths,
+  getDisabledYears,
+  getYearView,
+  getMonthView,
+  getDayView,
 } from './shared';
 
 type CalendarMode = 'year' | 'month' | 'day';
@@ -133,6 +128,10 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     },
   );
 
+  private getYearView: (props: any) => React.ReactElement;
+  private getMonthView: (props: any) => React.ReactElement;
+  private getDayView: (props: any) => React.ReactElement;
+
   constructor(props: DateInputProps) {
     super(props);
     const parsedValue = parseValue(props.value, props.dateFormat, props.localization);
@@ -143,6 +142,10 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       month: parsedValue ? parsedValue.month() : undefined,
       date: parsedValue ? parsedValue.date() : undefined,
     };
+
+    this.getYearView = getYearView.bind(this);
+    this.getMonthView = getMonthView.bind(this);
+    this.getDayView = getDayView.bind(this);
   }
 
   public componentDidUpdate = (prevProps: DateInputProps) => {
@@ -222,7 +225,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       enable,
       inline,
       marked,
-      markColor,
       localization,
       tabIndex,
       pickerWidth,
@@ -261,7 +263,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       return (
         <MonthPicker
           {...pickerProps}
-          hasHeader
           disable={getDisabledMonths(disableParsed)}
           renderView={this.getMonthView}
         />
@@ -273,54 +274,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         {...pickerProps}
         disable={disableParsed}
         marked={markedParsed}
-        markColor={markColor}
         renderView={this.getDayView}
-      />
-    );
-  }
-
-  private getYearView = (yearViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <YearView
-        { ...this.getUnusedProps() }
-        { ...yearViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization} />
-    );
-  }
-
-  private getMonthView = (monthViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <MonthView
-        { ...this.getUnusedProps() }
-        { ...monthViewProps }
-        inline={inline}
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization} />
-    );
-  }
-
-  private getDayView = (dayViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <DayView
-        { ...this.getUnusedProps() }
-        { ...dayViewProps }
-        inline={inline}
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization}
       />
     );
   }

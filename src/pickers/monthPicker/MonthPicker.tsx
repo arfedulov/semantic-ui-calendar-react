@@ -12,7 +12,6 @@ import {
   DisableValuesProps,
   EnableValuesProps,
   MinMaxValueProps,
-  OptionalHeaderProps,
   ProvideHeadingValue,
   SingleSelectionPicker,
 } from '../BasePicker';
@@ -31,8 +30,7 @@ import {
 type MonthPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
-  & MinMaxValueProps
-  & OptionalHeaderProps;
+  & MinMaxValueProps;
 
 export interface MonthPickerOnChangeData extends BasePickerOnChangeData {
   value: {

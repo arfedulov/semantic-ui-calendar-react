@@ -39,19 +39,6 @@ import BaseInput, {
   MarkedValuesPropsNames,
 } from './BaseInput';
 
-import {
-  YearView,
-  YearViewProps,
-  MonthView,
-  MonthViewProps,
-  DayView,
-  DayViewProps,
-  HourView,
-  HourViewProps,
-  MinuteView,
-  MinuteViewProps,
-} from '../views';
-
 import { tick, getRestProps } from '../lib';
 import {
   parseArrayOrValue,
@@ -64,6 +51,11 @@ import {
 import {
   getDisabledMonths,
   getDisabledYears,
+  getYearView,
+  getMonthView,
+  getDayView,
+  getHourView,
+  getMinuteView,
 } from './shared';
 
 type CalendarMode =
@@ -158,6 +150,12 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     },
   );
 
+  private getYearView: (props: any) => React.ReactElement;
+  private getMonthView: (props: any) => React.ReactElement;
+  private getDayView: (props: any) => React.ReactElement;
+  private getHourView: (props: any) => React.ReactElement;
+  private getMinuteView: (props: any) => React.ReactElement;
+
   constructor(props: DateTimeInputProps) {
     super(props);
     const parsedValue = parseValue(props.value, this.getDateTimeFormat(), props.localization);
@@ -170,6 +168,12 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       minute: parsedValue ? parsedValue.minute() : undefined,
       popupIsClosed: true,
     };
+
+    this.getYearView = getYearView.bind(this);
+    this.getMonthView = getMonthView.bind(this);
+    this.getDayView = getDayView.bind(this);
+    this.getHourView = getHourView.bind(this);
+    this.getMinuteView = getMinuteView.bind(this);
   }
 
   public componentDidUpdate = (prevProps: DateTimeInputProps) => {
@@ -271,7 +275,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       maxDate,
       inline,
       marked,
-      markColor,
       localization,
       tabIndex,
       pickerStyle,
@@ -310,7 +313,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       return (
         <MonthPicker
           {...pickerProps}
-          hasHeader
           disable={getDisabledMonths(disableParsed)}
           renderView={this.getMonthView}
         />
@@ -321,7 +323,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         <DayPicker
           {...pickerProps}
           marked={markedParsed}
-          markColor={markColor}
           disable={disableParsed}
           renderView={this.getDayView}
         />
@@ -332,7 +333,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         <HourPicker
           {...pickerProps}
           timeFormat={this.props.timeFormat}
-          hasHeader
           disable={disableParsed}
           renderView={this.getHourView}
         />
@@ -343,81 +343,9 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       <MinutePicker
         {...pickerProps}
         timeFormat={this.props.timeFormat}
-        hasHeader
         disable={disableParsed}
         renderView={this.getMinuteView}
       />
-    );
-  }
-
-  private getYearView = (yearViewProps) => {
-
-    return (
-      <YearView
-        { ...this.getUnusedProps() }
-        { ...yearViewProps }
-        localization={this.props.localization} />
-    );
-  }
-
-  private getMonthView = (monthViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <MonthView
-        { ...this.getUnusedProps() }
-        { ...monthViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization} />
-    );
-  }
-
-  private getDayView = (dayViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <DayView
-        { ...this.getUnusedProps() }
-        { ...dayViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization}
-      />
-    );
-  }
-
-  private getHourView = (hourViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <HourView
-        { ...this.getUnusedProps() }
-        { ...hourViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization}/>
-    );
-  }
-
-  private getMinuteView = (minuteViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <MinuteView
-        { ...this.getUnusedProps() }
-        { ...minuteViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization}/>
     );
   }
 

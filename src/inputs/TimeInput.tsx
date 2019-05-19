@@ -29,13 +29,10 @@ import {
   buildValue,
   pickInitialDate,
 } from './parse';
-
 import {
-  HourView,
-  HourViewProps,
-  MinuteView,
-  MinuteViewProps,
-} from '../views';
+  getHourView,
+  getMinuteView,
+} from './shared';
 
 function getNextMode(currentMode) {
   if (currentMode === 'hour') {
@@ -78,12 +75,18 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     TimeRelatedPropTypes,
   );
 
+  private getHourView: (props: any) => React.ReactElement;
+  private getMinuteView: (props: any) => React.ReactElement;
+
   constructor(props) {
     super(props);
     this.state = {
       mode: 'hour',
       popupIsClosed: true,
     };
+
+    this.getHourView = getHourView.bind(this);
+    this.getMinuteView = getMinuteView.bind(this);
   }
 
   public render() {
@@ -160,36 +163,6 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
     }, this.onModeSwitch);
-  }
-
-  private getHourView = (hourViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <HourView
-        { ...this.getUnusedProps() }
-        { ...hourViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization}/>
-    );
-  }
-
-  private getMinuteView = (minuteViewProps) => {
-    const {
-      inline,
-    } = this.props;
-
-    return (
-      <MinuteView
-        { ...this.getUnusedProps() }
-        { ...minuteViewProps }
-        inline={ inline }
-        onMount={ this.onCalendarViewMount }
-        localization={this.props.localization}/>
-    );
   }
 
   private getPicker = () => {
