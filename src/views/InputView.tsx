@@ -67,19 +67,20 @@ class FormInputWithRef extends React.Component<FormInputProps, {}> {
   }
 }
 
-//////////////////////////////////////////////////// InputViewProps /////////////////////////////////////////////////////////
+/////////////////////////////////////////// InputViewProps ///////////////////////////////////////////////
 
 export interface InputViewProps {
+  [ key: string ]: any;
   /** Used for passing input dom node (input field or inline calendar) to parent component. */
   onMount: (e: HTMLElement) => void;
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
   closePopup: () => void;
   openPopup: () => void;
-  /** Called on input focus. */
-  onFocus?: () => void;
   /** Function for rendering picker. */
   renderPicker: () => React.ReactNode;
+  /** Called on input focus. */
+  onFocus?: () => void;
   /** Called after clear icon has clicked. */
   onClear?: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
   /** Whether to close a popup when cursor leaves it. */
@@ -157,7 +158,7 @@ export const InputViewPropsNames = [
   'hideMobileKeyboard',
 ];
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 class InputView extends React.Component<InputViewProps, {}> {
   public static defaultProps = {

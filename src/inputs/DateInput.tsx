@@ -39,6 +39,7 @@ import BaseInput, {
 import {
   tick,
   getRestProps,
+  extractPropsByNames,
 } from '../lib';
 import {
   buildValue,
@@ -54,6 +55,8 @@ import {
   getMonthView,
   getDayView,
 } from './shared';
+
+import { InputViewPropsNames } from '../views/InputView';
 
 type CalendarMode = 'year' | 'month' | 'day';
 
@@ -167,13 +170,18 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       value,
       dateFormat,
       localization,
+      inlineLabel,
     } = this.props;
+
+    const inputViewProps = extractPropsByNames(this.props, InputViewPropsNames);
 
     return (
       <InputView
         { ...this.getUnusedProps() }
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
+        { ...inputViewProps }
+        closePopup={ this.closePopup }
+        openPopup={ this.openPopup }
+        inlineLabel={ inlineLabel }
         popupIsClosed={this.state.popupIsClosed}
         onMount={this.onInputViewMount}
         onFocus={this.onFocus}
