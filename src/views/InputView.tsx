@@ -13,6 +13,7 @@ import {
 } from 'semantic-ui-react';
 import checkIE from '../lib/checkIE';
 import checkMobile from '../lib/checkMobile';
+import getRestProps from '../lib/getRestProps';
 
 const popupStyle = {
   padding: '0',
@@ -65,6 +66,8 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
     );
   }
 }
+
+//////////////////////////////////////////////////// InputViewProps /////////////////////////////////////////////////////////
 
 export interface InputViewProps {
   /** Used for passing input dom node (input field or inline calendar) to parent component. */
@@ -125,6 +128,37 @@ export interface InputViewProps {
   hideMobileKeyboard?: boolean;
 }
 
+// IMPORTANT: keep it in sync with InputViewProps
+export const InputViewPropsNames = [
+  'onMount',
+  'onChange',
+  'closePopup',
+  'openPopup',
+  'onFocus',
+  'renderPicker',
+  'onClear',
+  'closeOnMouseLeave',
+  'inlineLabel',
+  'clearable',
+  'icon',
+  'iconPosition',
+  'clearIcon',
+  'popupIsClosed',
+  'mountNode',
+  'tabIndex',
+  'inline',
+  'duration',
+  'animation',
+  'popupPosition',
+  'value',
+  'pickerWidth',
+  'pickerStyle',
+  'readOnly',
+  'hideMobileKeyboard',
+];
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 class InputView extends React.Component<InputViewProps, {}> {
   public static defaultProps = {
     inline: false,
@@ -166,8 +200,9 @@ class InputView extends React.Component<InputViewProps, {}> {
       icon,
       readOnly,
       hideMobileKeyboard,
-      ...rest
     } = this.props;
+
+    const rest = this.getUnusedProps();
 
     const onBlur = (e) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
@@ -198,7 +233,7 @@ class InputView extends React.Component<InputViewProps, {}> {
 
     const inputElement = (
       <FormInputWithRef
-        {...rest}
+        { ...rest }
         // trying to use this hack https://stackoverflow.com/a/7610923 for hiding mobile keyboard
         readOnly={(checkMobile() && hideMobileKeyboard) || readOnly}
         icon={icon}
@@ -282,6 +317,12 @@ class InputView extends React.Component<InputViewProps, {}> {
 
   private unsetScrollListener() {
     window.removeEventListener('scroll', this.scrollListener);
+  }
+
+  private getUnusedProps(): object {
+    return getRestProps(this.props, [
+      ...InputViewPropsNames,
+    ]);
   }
 }
 

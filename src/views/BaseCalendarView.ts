@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { SemanticCOLORS } from 'semantic-ui-react';
 
+///////////////////////////////////////////////// BaseCalendarViewProps //////////////////////////////////////////////
+
 export interface BaseCalendarViewProps {
   /** Used for passing calendar dom element to parent component. */
   onMount: (e: HTMLElement) => void;
@@ -26,15 +28,43 @@ export interface BaseCalendarViewProps {
   localization?: string;
 }
 
+// IMPORTANT: keep it in sync with BaseCalendarViewProps
+export const BaseCalendarViewPropsNames = [
+  'onMount',
+  'onBlur',
+  'inline',
+  'values',
+  'onValueClick',
+  'onCellHover',
+  'hoveredItemIndex',
+  'disabledItemIndexes',
+  'markedItemIndexes',
+  'markColor',
+  'localization',
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////////// SingleSelectionCalendarViewProps ///////////////////////////////////
+
 export interface SingleSelectionCalendarViewProps {
   /** Position of a cell to display as active. */
   activeItemIndex?: number;
 }
 
+// IMPORTANT: keep it in sync with SingleSelectionCalendarViewProps
+export const SingleSelectionCalendarViewPropsNames = [
+  'activeItemIndex',
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 export interface RangeIndexes {
   start: number | undefined;
   end: number | undefined;
 }
+
+/////////////////////////////////////////////// RangeSelectionCalendarViewProps //////////////////////////////////////
 
 export interface RangeSelectionCalendarViewProps {
   /** Currently selected range value (from - to) that is displayed in calendar header. */
@@ -42,6 +72,16 @@ export interface RangeSelectionCalendarViewProps {
   /** Indexes of start and end values of currently selected range (to display as active). */
   activeRange: RangeIndexes;
 }
+
+// IMPORTANT: keep it in sync with RangeSelectionCalendarViewProps
+export const RangeSelectionCalendarViewPropsNames = [
+  'currentRangeHeadingValue',
+  'activeRange',
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////// CalendarWithHeaderViewProps ///////////////////////////////////////////
 
 export interface CalendarWithHeaderViewProps {
   /** Called after click on next page button. */
@@ -56,10 +96,32 @@ export interface CalendarWithHeaderViewProps {
   onHeaderClick: () => void;
 }
 
+// IMPORTANT: keep it in sync with CalendarWithHeaderViewProps
+export const CalendarWithHeaderViewPropsNames = [
+  'onNextPageBtnClick',
+  'onPrevPageBtnClick',
+  'hasPrevPage',
+  'hasNextPage',
+  'onHeaderClick',
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////// HeadingValueProps /////////////////////////////////////////////////////
+
 export interface HeadingValueProps {
   /** A value (date, year or anything like that) that is displayed in calendar header. */
   currentHeadingValue: string;
 }
+
+// IMPORTANT: keep it in sync with HeadingValueProps
+export const HeadingValuePropsNames = [
+  'currentHeadingValue',
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////// CalendarWithOptionalHeaderViewProps ///////////////////////////////////////
 
 export interface CalendarWithOptionalHeaderViewProps {
   /** Whether a calendar has header. */
@@ -77,6 +139,19 @@ export interface CalendarWithOptionalHeaderViewProps {
   /** Called after click on calendar header. */
   onHeaderClick?: () => void;
 }
+
+// IMPORTANT: keep it in sync with CalendarWithOptionalHeaderViewProps
+export const CalendarWithOptionalHeaderViewPropsNames = [
+  'hasHeader',
+  'onNextPageBtnClick',
+  'onPrevPageBtnClick',
+  'hasPrevPage',
+  'hasNextPage',
+  'currentHeadingValue',
+  'onHeaderClick',
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export interface OnValueClickData {
   /** Position of the clicked cell. */

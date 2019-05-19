@@ -35,6 +35,8 @@ export interface BasePickerOnChangeData {
   };
 }
 
+/////////////////////////////////////////////////////// BasePickerProps //////////////////////////////////////////
+
 export interface BasePickerProps {
   /** Called after day is selected. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: BasePickerOnChangeData) => void;
@@ -60,20 +62,66 @@ export interface BasePickerProps {
   pickerStyle?: object;
 }
 
+// IMPORTANT: keep it in sync with BasePickerProps
+export const BasePickerPropsNames = [
+  'onChange',
+  'renderView',
+  'initializeWith',
+  'closePopup',
+  'inline',
+  'isPickerInFocus',
+  'isTriggerInFocus',
+  'onHeaderClick',
+  'value',
+  'localization',
+  'tabIndex',
+  'pickerWidth',
+  'pickerStyle',
+];
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////////////////////// OptionalHeaderProps ///////////////////////////////////////////////
+
 export interface OptionalHeaderProps {
   /** Whether to display calendar's header. */
   hasHeader: boolean;
 }
+
+// IMPORTANT: keep it in sync with OptionalHeaderProps
+export const OptionalHeaderPropsNames = [
+  'hasHeader',
+];
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////// DisableValuesProps ////////////////////////////////////////////
 
 export interface DisableValuesProps {
   /** Array of disabled dates. */
   disable?: Moment[];
 }
 
+// IMPORTANT: keep it in sync with DisableValuesProps
+export const DisableValuesPropsNames = [
+  'disable',
+];
+
+////////////////////////////////////////////////// EnableValuesProps /////////////////////////////////////////////
+
 export interface EnableValuesProps {
   /** Array of enabled dates. */
   enable?: Moment[];
 }
+
+// IMPORTANT: keep it in sync with EnableValuesProps
+export const EnableValuesPropsNames = [
+  'enable',
+];
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////// MinMaxValueProps ///////////////////////////////////////////////
 
 export interface MinMaxValueProps {
   /** Minimal date that could be selected. */
@@ -82,6 +130,16 @@ export interface MinMaxValueProps {
   maxDate?: Moment;
 }
 
+// IMPORTANT: keep it in sync with MinMaxValueProps
+export const MinMaxValuePropsNames = [
+  'minDate',
+  'maxDate',
+];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+////////////////////////////////////////////////// MarkedValuesProps ///////////////////////////////////////////////
+
 export interface MarkedValuesProps {
   /** Array of marked dates. */
   marked?: Moment[];
@@ -89,9 +147,24 @@ export interface MarkedValuesProps {
   markColor?: SemanticCOLORS;
 }
 
+// IMPORTANT: keep it in sync with MarkedValuesProps
+export const MarkedValuesPropsNames = [
+  'marked',
+  'markColor',
+];
+
+///////////////////////////////////////////////// TimePickerProps ///////////////////////////////////////////////////
+
 export interface TimePickerProps {
   timeFormat: TimeFormat;
 }
+
+// IMPORTANT: keep it in sync with TimePickerProps
+export const TimePickerPropsNames = [
+  'timeFormat',
+];
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export type TimeFormat = 'ampm' | 'AMPM' | '24';
 
