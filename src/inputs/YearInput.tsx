@@ -4,7 +4,6 @@ import * as React from 'react';
 import YearPicker, {
   YearPickerOnChangeData,
 } from '../pickers/YearPicker';
-import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -62,24 +61,18 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     this.getYearView = getYearView.bind(this);
   }
 
-  public render() {
-    const {
-      value,
-      onChange,
-    } = this.props;
+  protected getInputViewValue = () => {
+    const { value } = this.props;
 
-    return (
-      <InputView
-        { ...this.getUnusedProps() }
-        onChange={ onChange }
-        popupIsClosed={this.state.popupIsClosed}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        value={value}
-        onMount={this.onInputViewMount}
-        renderPicker={ this.getPicker }
-      />
-    );
+    return value;
+  }
+
+  protected onInputValueChange = () => {
+    return;
+  }
+
+  protected onFocus = () => {
+    return;
   }
 
   protected getUnusedProps = () => {
@@ -102,13 +95,12 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     return buildValue(value, null, localization, dateFormat, null);
   }
 
-  private getPicker = () => {
+  protected getPicker = () => {
     const {
       value,
       disable,
       maxDate,
       minDate,
-      initialDate,
       dateFormat,
       localization,
     } = this.props;

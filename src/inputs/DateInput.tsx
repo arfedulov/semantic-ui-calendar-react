@@ -10,7 +10,6 @@ import {
 import DayPicker from '../pickers/dayPicker/DayPicker';
 import MonthPicker from '../pickers/monthPicker/MonthPicker';
 import YearPicker from '../pickers/YearPicker';
-import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -165,31 +164,14 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     }
   }
 
-  public render() {
+  protected getInputViewValue(): string {
     const {
       value,
       dateFormat,
       localization,
-      inlineLabel,
     } = this.props;
 
-    const inputViewProps = extractPropsByNames(this.props, InputViewPropsNames);
-
-    return (
-      <InputView
-        { ...this.getUnusedProps() }
-        { ...inputViewProps }
-        closePopup={ this.closePopup }
-        openPopup={ this.openPopup }
-        inlineLabel={ inlineLabel }
-        popupIsClosed={this.state.popupIsClosed}
-        onMount={this.onInputViewMount}
-        onFocus={this.onFocus}
-        onChange={this.onInputValueChange}
-        renderPicker={this.getPicker}
-        value={dateValueToString(value, dateFormat, localization)}
-      />
-    );
+    return dateValueToString(value, dateFormat, localization);
   }
 
   protected parseInternalValue(): Moment {
@@ -223,7 +205,26 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     ]);
   }
 
-  private getPicker = () => {
+  /** Keeps internal state in sync with input field value. */
+  protected onInputValueChange = (e, { value }) => {
+    const parsedValue = moment(value, this.props.dateFormat);
+    if (parsedValue.isValid()) {
+      this.setState({
+        year: parsedValue.year(),
+        month: parsedValue.month(),
+        date: parsedValue.date(),
+      });
+    }
+    invoke(this.props, 'onChange', e, { ...this.props, value });
+  }
+
+  protected onFocus = (): void => {
+    if (!this.props.preserveViewMode) {
+      this.setState({ mode: this.props.startMode });
+    }
+  }
+
+  protected getPicker = () => {
     const {
       value,
       dateFormat,
@@ -307,12 +308,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     tick(this.switchToPrevModeUndelayed);
   }
 
-  private onFocus = (): void => {
-    if (!this.props.preserveViewMode) {
-      this.setState({ mode: this.props.startMode });
-    }
-  }
-
   private handleSelect = (e, { value }: BasePickerOnChangeData) => {
     if (this.state.mode === 'day' && this.props.closable) {
       this.closePopup();
@@ -332,19 +327,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         date: value.date,
       };
     }, () => this.state.mode !== 'day' && this.switchToNextMode());
-  }
-
-  /** Keeps internal state in sync with input field value. */
-  private onInputValueChange = (e, { value }) => {
-    const parsedValue = moment(value, this.props.dateFormat);
-    if (parsedValue.isValid()) {
-      this.setState({
-        year: parsedValue.year(),
-        month: parsedValue.month(),
-        date: parsedValue.date(),
-      });
-    }
-    invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 }
 

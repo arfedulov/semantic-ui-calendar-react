@@ -10,7 +10,14 @@ import * as PropTypes from 'prop-types';
 import {
   TimeFormat,
 } from '../pickers/BasePicker';
-import CustomPropTypes from '../lib/CustomPropTypes';
+import {
+  default as InputView,
+  InputViewPropsNames,
+} from '../views/InputView';
+import {
+  CustomPropTypes,
+  extractPropsByNames,
+} from '../lib';
 
 /////////////////////////////////////////////// BaseInputProps /////////////////////////////////////////////////////
 
@@ -349,6 +356,25 @@ abstract class BaseInput<P extends BaseInputProps,
 
   private inputNode: HTMLElement;
 
+  public render(): React.ReactElement {
+    const inputViewProps = extractPropsByNames(this.props, InputViewPropsNames);
+  
+    return (
+      <InputView
+        { ...this.getUnusedProps() }
+        { ...inputViewProps }
+        closePopup={ this.closePopup }
+        openPopup={ this.openPopup }
+        popupIsClosed={ this.state.popupIsClosed }
+        onMount={ this.onInputViewMount }
+        onFocus={ this.onFocus }
+        onChange={ this.onInputValueChange }
+        renderPicker={ this.getPicker }
+        value={ this.getInputViewValue() }
+      />
+    );
+  }
+
   protected closePopup = (): void => {
     this.setState({ popupIsClosed: true });
   }
@@ -395,6 +421,15 @@ abstract class BaseInput<P extends BaseInputProps,
 
   /** Return all props that aren't included in component's props ts declarations. */
   protected abstract getUnusedProps(): object;
+
+  /** Return a value for input element. */
+  protected abstract getInputViewValue(): string;
+
+  protected abstract onFocus(): void;
+
+  protected abstract onInputValueChange(e: React.SyntheticEvent<HTMLElement>, data: any): void;
+
+  protected abstract getPicker(): React.ReactElement;
 }
 
 export default BaseInput;

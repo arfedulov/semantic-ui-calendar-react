@@ -10,7 +10,6 @@ import {
 } from '../pickers/BasePicker';
 import HourPicker from '../pickers/timePicker/HourPicker';
 import MinutePicker from '../pickers/timePicker/MinutePicker';
-import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -89,24 +88,18 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     this.getMinuteView = getMinuteView.bind(this);
   }
 
-  public render() {
-    const {
-      value,
-      onChange,
-    } = this.props;
+  protected onFocus = () => {
+    return;
+  }
 
-    return (
-      <InputView
-        { ...this.getUnusedProps() }
-        onChange={ onChange }
-        popupIsClosed={this.state.popupIsClosed}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        value={value}
-        renderPicker={ this.getPicker }
-      />
-    );
+  protected onInputValueChange = () => {
+    return;
+  }
+
+  protected getInputViewValue = () => {
+    const { value } = this.props;
+
+    return value;
   }
 
   protected getUnusedProps = () => {
@@ -126,6 +119,43 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     } = this.props;
 
     return parseValue(value, TIME_FORMAT[timeFormat], localization);
+  }
+
+  protected getPicker = () => {
+    const {
+      value,
+      timeFormat,
+      inline,
+      localization,
+      tabIndex,
+      pickerStyle,
+      pickerWidth,
+    } = this.props;
+
+    const currentValue = parseValue(value, TIME_FORMAT[timeFormat], localization);
+
+    const pickerProps = {
+      inline,
+      onCalendarViewMount: this.onCalendarViewMount,
+      isPickerInFocus: this.isPickerInFocus,
+      isTriggerInFocus: this.isTriggerInFocus,
+      hasHeader: false,
+      pickerWidth,
+      pickerStyle,
+      onHeaderClick: () => undefined,
+      closePopup: this.closePopup,
+      initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
+      value: buildValue(currentValue, null, TIME_FORMAT[timeFormat], localization, null),
+      onChange: this.handleSelect,
+      timeFormat,
+      tabIndex,
+      localization,
+    };
+    if (this.state.mode === 'hour') {
+      return <HourPicker { ...pickerProps } renderView={ this.getHourView } />;
+    }
+
+    return <MinutePicker { ...pickerProps } renderView={ this.getMinuteView } />;
   }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
@@ -163,43 +193,6 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
     }, this.onModeSwitch);
-  }
-
-  private getPicker = () => {
-    const {
-      value,
-      timeFormat,
-      inline,
-      localization,
-      tabIndex,
-      pickerStyle,
-      pickerWidth,
-    } = this.props;
-
-    const currentValue = parseValue(value, TIME_FORMAT[timeFormat], localization);
-
-    const pickerProps = {
-      inline,
-      onCalendarViewMount: this.onCalendarViewMount,
-      isPickerInFocus: this.isPickerInFocus,
-      isTriggerInFocus: this.isTriggerInFocus,
-      hasHeader: false,
-      pickerWidth,
-      pickerStyle,
-      onHeaderClick: () => undefined,
-      closePopup: this.closePopup,
-      initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
-      value: buildValue(currentValue, null, TIME_FORMAT[timeFormat], localization, null),
-      onChange: this.handleSelect,
-      timeFormat,
-      tabIndex,
-      localization,
-    };
-    if (this.state.mode === 'hour') {
-      return <HourPicker { ...pickerProps } renderView={ this.getHourView } />;
-    }
-
-    return <MinutePicker { ...pickerProps } renderView={ this.getMinuteView } />;
   }
 }
 

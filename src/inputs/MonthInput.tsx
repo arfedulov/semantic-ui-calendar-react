@@ -5,7 +5,6 @@ import * as React from 'react';
 import MonthPicker, {
   MonthPickerOnChangeData,
 } from '../pickers/monthPicker/MonthPicker';
-import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -64,26 +63,22 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     this.getMonthView = getMonthView.bind(this);
   }
 
-  public render() {
+  protected getInputViewValue = () => {
     const {
       value,
       dateFormat,
       localization,
-      onChange,
     } = this.props;
 
-    return (
-      <InputView
-        { ...this.getUnusedProps() }
-        onChange={ onChange }
-        popupIsClosed={this.state.popupIsClosed}
-        value={dateValueToString(value, dateFormat, localization)}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        renderPicker={this.getPicker}
-      />
-    );
+    return dateValueToString(value, dateFormat, localization);
+  }
+
+  protected onFocus = () => {
+    return;
+  }
+
+  protected onInputValueChange = () => {
+    return;
   }
 
   protected getUnusedProps = () => {
@@ -106,7 +101,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     return buildValue(value, null, localization, dateFormat, null);
   }
 
-  private getPicker = () => {
+  protected getPicker = () => {
     const {
       value,
       dateFormat,

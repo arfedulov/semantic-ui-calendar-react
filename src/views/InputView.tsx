@@ -78,7 +78,7 @@ export interface InputViewProps {
   closePopup: () => void;
   openPopup: () => void;
   /** Function for rendering picker. */
-  renderPicker: () => React.ReactNode;
+  renderPicker: () => React.ReactElement;
   /** Called on input focus. */
   onFocus?: () => void;
   /** Called after clear icon has clicked. */

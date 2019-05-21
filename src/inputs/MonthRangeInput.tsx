@@ -15,7 +15,6 @@ import BaseInput, {
 import { Moment } from 'moment';
 
 import MonthRangePicker from '../pickers/monthPicker/MonthRangePicker';
-import InputView from '../views/InputView';
 import {
   parseDatesRange,
   parseValue,
@@ -59,24 +58,18 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     this.getMonthRangeView = getMonthRangeView.bind(this);
   }
 
-  public render() {
-    const {
-      value,
-      onChange,
-    } = this.props;
+  protected getInputViewValue = () => {
+    const { value } = this.props;
 
-    return (
-      <InputView
-        { ...this.getUnusedProps() }
-        onChange={ onChange }
-        popupIsClosed={this.state.popupIsClosed}
-        value={value}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        renderPicker={this.getPicker}
-      />
-    );
+    return value;
+  }
+
+  protected onFocus = () => {
+    return;
+  }
+
+  protected onInputValueChange = () => {
+    return;
   }
 
   protected getUnusedProps = () => {
@@ -100,7 +93,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
     return buildValue(start, initialDate, localization, dateFormat);
   }
 
-  private getPicker = () => {
+  protected getPicker = () => {
     const {
       value,
       dateFormat,

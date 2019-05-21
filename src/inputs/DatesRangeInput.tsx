@@ -2,12 +2,10 @@ import invoke from 'lodash/invoke';
 import * as React from 'react';
 import { Moment } from 'moment';
 
-import InputView from '../views/InputView';
 import {
   parseDatesRange,
   parseValue,
   parseArrayOrValue,
-  buildValue,
   pickInitialDate,
 } from './parse';
 
@@ -79,24 +77,18 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     this.getDatesRangeView = getDatesRangeView.bind(this);
   }
 
-  public render() {
-    const {
-      value,
-      onChange,
-    } = this.props;
+  protected onInputValueChange = () => {
+    return;
+  }
 
-    return (
-      <InputView
-        { ...this.getUnusedProps() }
-        onChange={onChange}
-        popupIsClosed={this.state.popupIsClosed}
-        value={value}
-        onMount={this.onInputViewMount}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        renderPicker={this.getPicker}
-      />
-    );
+  protected getInputViewValue = () => {
+    const { value } = this.props;
+
+    return value;
+  }
+
+  protected onFocus = () => {
+    return;
   }
 
   protected getUnusedProps = () => {
@@ -121,7 +113,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     return start;
   }
 
-  private getPicker = () => {
+  protected getPicker = () => {
     const {
       value,
       dateFormat,

@@ -13,7 +13,6 @@ import MonthPicker from '../pickers/monthPicker/MonthPicker';
 import HourPicker from '../pickers/timePicker/HourPicker';
 import MinutePicker from '../pickers/timePicker/MinutePicker';
 import YearPicker from '../pickers/YearPicker';
-import InputView from '../views/InputView';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -192,26 +191,35 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     }
   }
 
-  public render() {
+  protected getInputViewValue = () => {
     const {
       value,
       dateFormat,
       localization,
     } = this.props;
 
-    return (
-      <InputView
-        { ...this.getUnusedProps() }
-        popupIsClosed={this.state.popupIsClosed}
-        closePopup={this.closePopup}
-        openPopup={this.openPopup}
-        onFocus={this.onFocus}
-        onMount={this.onInputViewMount}
-        onChange={this.onInputValueChange}
-        value={dateValueToString(value, dateFormat, localization)}
-        renderPicker={this.getPicker}
-      />
-    );
+    return dateValueToString(value, dateFormat, localization);
+  }
+
+  protected onFocus = (): void => {
+    if (!this.props.preserveViewMode) {
+      this.setState({ mode: this.props.startMode });
+    }
+  }
+
+  /** Keeps internal state in sync with input field value. */
+  protected onInputValueChange = (e, { value }) => {
+    const parsedValue = moment(value, this.getDateTimeFormat());
+    if (parsedValue.isValid()) {
+      this.setState({
+        year: parsedValue.year(),
+        month: parsedValue.month(),
+        date: parsedValue.date(),
+        hour: parsedValue.hour(),
+        minute: parsedValue.minute(),
+      });
+    }
+    invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 
   protected getUnusedProps = () => {
@@ -254,22 +262,9 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     }
   }
 
-  private getDateTimeFormat(): string {
-    const {
-      dateFormat,
-      divider,
-      timeFormat,
-      dateTimeFormat,
-    } = this.props;
-
-    return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
-  }
-
-  private getPicker = (): React.ReactNode => {
+  protected getPicker = () => {
     const {
       value,
-      initialDate,
-      dateFormat,
       disable,
       minDate,
       maxDate,
@@ -349,6 +344,17 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     );
   }
 
+  private getDateTimeFormat(): string {
+    const {
+      dateFormat,
+      divider,
+      timeFormat,
+      dateTimeFormat,
+    } = this.props;
+
+    return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
+  }
+
   private switchToNextModeUndelayed = (): void => {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
@@ -374,12 +380,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     tick(this.handleSelectUndelayed, e, { value });
   }
 
-  private onFocus = (): void => {
-    if (!this.props.preserveViewMode) {
-      this.setState({ mode: this.props.startMode });
-    }
-  }
-
   private handleSelectUndelayed = (e: React.SyntheticEvent<HTMLElement>,
                                    { value }: BasePickerOnChangeData): void => {
     if (this.props.closable && this.state.mode === 'minute') {
@@ -402,21 +402,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         minute: value.minute,
       };
     }, () => this.state.mode !== 'minute' && this.switchToNextMode());
-  }
-
-  /** Keeps internal state in sync with input field value. */
-  private onInputValueChange = (e, { value }) => {
-    const parsedValue = moment(value, this.getDateTimeFormat());
-    if (parsedValue.isValid()) {
-      this.setState({
-        year: parsedValue.year(),
-        month: parsedValue.month(),
-        date: parsedValue.date(),
-        hour: parsedValue.hour(),
-        minute: parsedValue.minute(),
-      });
-    }
-    invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 }
 
