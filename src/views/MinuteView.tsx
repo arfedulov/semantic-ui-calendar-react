@@ -12,7 +12,7 @@ import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header, { HeaderProps } from './CalendarHeader/Header';
 
-import { findHTMLElement } from '../lib';
+import { findHTMLElement, getRestProps } from '../lib';
 
 const MINUTE_CALENDAR_ROW_WIDTH = 3;
 
@@ -44,11 +44,10 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, {}> {
       hoveredItemIndex,
       disabledItemIndexes,
       onCellHover,
-      onMount,
       inline,
       localization,
-      ...rest
     } = this.props;
+    
     const headerProps: HeaderProps = {
       className: 'suicr-minute-view-header',
       onHeaderClick,
@@ -61,6 +60,8 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, {}> {
       displayWeeks: false,
       localization,
     };
+
+    const rest = getRestProps(this.props, MinuteViewPropsNames);
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>

@@ -21,7 +21,7 @@ import {
   WEEKS_TO_DISPLAY,
 } from './DayView';
 
-import { findHTMLElement } from '../lib';
+import { findHTMLElement, getRestProps } from '../lib';
 
 const DAY_POSITIONS = range(WEEKS_TO_DISPLAY * 7);
 
@@ -74,17 +74,18 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, {}> {
       currentRangeHeadingValue,
       hoveredItemIndex,
       onCellHover,
-      onMount,
       inline,
       markColor,
       markedItemIndexes,
       localization,
-      ...rest
     } = this.props;
+
     const {
       start,
       end,
     } = activeRange;
+
+    const rest = getRestProps(this.props, DatesRangeViewPropsNames);
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>

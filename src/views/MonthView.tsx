@@ -12,7 +12,7 @@ import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header, { HeaderProps } from './CalendarHeader/Header';
 
-import { findHTMLElement } from '../lib';
+import { findHTMLElement, getRestProps } from '../lib';
 
 export const MONTH_CALENDAR_ROW_WIDTH = 3;
 
@@ -44,11 +44,10 @@ class MonthView extends BaseCalendarView<MonthViewProps, {}> {
       currentHeadingValue,
       onCellHover,
       hoveredItemIndex,
-      onMount,
       inline,
       localization,
-      ...rest
     } = this.props;
+
     const headerProps: HeaderProps = {
       className: 'suicr-month-view-header',
       onNextPageBtnClick,
@@ -61,6 +60,8 @@ class MonthView extends BaseCalendarView<MonthViewProps, {}> {
       width: MONTH_CALENDAR_ROW_WIDTH,
       localization,
     };
+
+    const rest = getRestProps(this.props, MonthViewPropsNames);
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>

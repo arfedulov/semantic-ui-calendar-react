@@ -36,6 +36,7 @@ export interface BasePickerOnChangeData {
 
 /////////////////////////////////////////////////////// BasePickerProps //////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with BasePickerPropsNames
 export interface BasePickerProps {
   /** Called after day is selected. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: BasePickerOnChangeData) => void;
@@ -57,7 +58,6 @@ export interface BasePickerProps {
   localization?: string;
 }
 
-// IMPORTANT: keep it in sync with BasePickerProps
 export const BasePickerPropsNames = [
   'onChange',
   'renderView',
@@ -74,24 +74,24 @@ export const BasePickerPropsNames = [
 
 ////////////////////////////////////////////////// DisableValuesProps ////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with DisableValuesPropsNames
 export interface DisableValuesProps {
   /** Array of disabled dates. */
   disable?: Moment[];
 }
 
-// IMPORTANT: keep it in sync with DisableValuesProps
 export const DisableValuesPropsNames = [
   'disable',
 ];
 
 ////////////////////////////////////////////////// EnableValuesProps /////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with EnableValuesPropsNames
 export interface EnableValuesProps {
   /** Array of enabled dates. */
   enable?: Moment[];
 }
 
-// IMPORTANT: keep it in sync with EnableValuesProps
 export const EnableValuesPropsNames = [
   'enable',
 ];
@@ -100,6 +100,7 @@ export const EnableValuesPropsNames = [
 
 ////////////////////////////////////////////////// MinMaxValueProps ///////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with MinMaxValuePropsNames
 export interface MinMaxValueProps {
   /** Minimal date that could be selected. */
   minDate?: Moment;
@@ -107,7 +108,6 @@ export interface MinMaxValueProps {
   maxDate?: Moment;
 }
 
-// IMPORTANT: keep it in sync with MinMaxValueProps
 export const MinMaxValuePropsNames = [
   'minDate',
   'maxDate',
@@ -117,23 +117,23 @@ export const MinMaxValuePropsNames = [
 
 ////////////////////////////////////////////////// MarkedValuesProps ///////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with MarkedValuesPropsNames
 export interface MarkedValuesProps {
   /** Array of marked dates. */
   marked?: Moment[];
 }
 
-// IMPORTANT: keep it in sync with MarkedValuesProps
 export const MarkedValuesPropsNames = [
   'marked',
 ];
 
 ///////////////////////////////////////////////// TimePickerProps ///////////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with TimePickerPropsNames
 export interface TimePickerProps {
   timeFormat: TimeFormat;
 }
 
-// IMPORTANT: keep it in sync with TimePickerProps
 export const TimePickerPropsNames = [
   'timeFormat',
 ];

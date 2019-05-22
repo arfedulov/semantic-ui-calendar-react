@@ -14,7 +14,7 @@ import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
 
-import { findHTMLElement } from '../lib';
+import { findHTMLElement, getRestProps } from '../lib';
 
 export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
@@ -48,13 +48,13 @@ class DayView extends BaseCalendarView<DayViewProps, {}> {
       activeItemIndex,
       hoveredItemIndex,
       onCellHover,
-      onMount,
       inline,
       markedItemIndexes,
       markColor,
       localization,
-      ...rest
     } = this.props;
+
+    const rest = getRestProps(this.props, DayViewPropsNames);
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>

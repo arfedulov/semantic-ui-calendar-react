@@ -15,7 +15,7 @@ import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
 
-import { findHTMLElement } from '../lib';
+import { findHTMLElement, getRestProps } from '../lib';
 
 const YEAR_CALENDAR_ROW_WIDTH = 3;
 
@@ -45,12 +45,12 @@ class YearView extends BaseCalendarView<YearViewProps, {}> {
       activeItemIndex,
       hoveredItemIndex,
       onCellHover,
-      onMount,
       inline,
       localization,
-      ...rest
     } = this.props;
     const headerTitle = `${first(values)} - ${last(values)}`;
+
+    const rest = getRestProps(this.props, YearViewPropsNames);
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>

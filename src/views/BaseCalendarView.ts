@@ -3,6 +3,7 @@ import { SemanticCOLORS } from 'semantic-ui-react';
 
 ///////////////////////////////////////////////// BaseCalendarViewProps //////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with BaseCalendarViewPropsNames
 export interface BaseCalendarViewProps {
   /** Used for passing calendar dom element to parent component. */
   onMount: (e: HTMLElement) => void;
@@ -28,7 +29,6 @@ export interface BaseCalendarViewProps {
   localization?: string;
 }
 
-// IMPORTANT: keep it in sync with BaseCalendarViewProps
 export const BaseCalendarViewPropsNames = [
   'onMount',
   'onBlur',
@@ -47,12 +47,12 @@ export const BaseCalendarViewPropsNames = [
 
 ///////////////////////////////////////////////// SingleSelectionCalendarViewProps ///////////////////////////////////
 
+// IMPORTANT: keep it in sync with SingleSelectionCalendarViewPropsNames
 export interface SingleSelectionCalendarViewProps {
   /** Position of a cell to display as active. */
   activeItemIndex?: number;
 }
 
-// IMPORTANT: keep it in sync with SingleSelectionCalendarViewProps
 export const SingleSelectionCalendarViewPropsNames = [
   'activeItemIndex',
 ];
@@ -66,6 +66,7 @@ export interface RangeIndexes {
 
 /////////////////////////////////////////////// RangeSelectionCalendarViewProps //////////////////////////////////////
 
+// IMPORTANT: keep it in sync with RangeSelectionCalendarViewPropsNames
 export interface RangeSelectionCalendarViewProps {
   /** Currently selected range value (from - to) that is displayed in calendar header. */
   currentRangeHeadingValue: string;
@@ -73,7 +74,6 @@ export interface RangeSelectionCalendarViewProps {
   activeRange: RangeIndexes;
 }
 
-// IMPORTANT: keep it in sync with RangeSelectionCalendarViewProps
 export const RangeSelectionCalendarViewPropsNames = [
   'currentRangeHeadingValue',
   'activeRange',
@@ -83,6 +83,7 @@ export const RangeSelectionCalendarViewPropsNames = [
 
 ////////////////////////////////////////////// CalendarWithHeaderViewProps ///////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with CalendarWithHeaderViewPropsNames
 export interface CalendarWithHeaderViewProps {
   /** Whether a calendar has header. */
   hasHeader: boolean;
@@ -98,8 +99,8 @@ export interface CalendarWithHeaderViewProps {
   onHeaderClick: () => void;
 }
 
-// IMPORTANT: keep it in sync with CalendarWithHeaderViewProps
 export const CalendarWithHeaderViewPropsNames = [
+  'hasHeader',
   'onNextPageBtnClick',
   'onPrevPageBtnClick',
   'hasPrevPage',
@@ -111,12 +112,12 @@ export const CalendarWithHeaderViewPropsNames = [
 
 ////////////////////////////////////////////// HeadingValueProps /////////////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with HeadingValuePropsNames
 export interface HeadingValueProps {
   /** A value (date, year or anything like that) that is displayed in calendar header. */
   currentHeadingValue: string;
 }
 
-// IMPORTANT: keep it in sync with HeadingValueProps
 export const HeadingValuePropsNames = [
   'currentHeadingValue',
 ];
@@ -125,6 +126,7 @@ export const HeadingValuePropsNames = [
 
 ////////////////////////////////////////// CalendarWithOptionalHeaderViewProps ///////////////////////////////////////
 
+// IMPORTANT: keep it in sync with CalendarWithOptionalHeaderViewPropsNames
 export interface CalendarWithOptionalHeaderViewProps {
   /** Whether a calendar has header. */
   hasHeader: boolean;
@@ -142,7 +144,6 @@ export interface CalendarWithOptionalHeaderViewProps {
   onHeaderClick?: () => void;
 }
 
-// IMPORTANT: keep it in sync with CalendarWithOptionalHeaderViewProps
 export const CalendarWithOptionalHeaderViewPropsNames = [
   'hasHeader',
   'onNextPageBtnClick',

@@ -69,6 +69,7 @@ class FormInputWithRef extends React.Component<FormInputProps, {}> {
 
 /////////////////////////////////////////// InputViewProps ///////////////////////////////////////////////
 
+// IMPORTANT: keep it in sync with InputViewPropsNames
 export interface InputViewProps {
   [ key: string ]: any;
   /** Used for passing input dom node (input field or inline calendar) to parent component. */
@@ -129,7 +130,6 @@ export interface InputViewProps {
   hideMobileKeyboard?: boolean;
 }
 
-// IMPORTANT: keep it in sync with InputViewProps
 export const InputViewPropsNames = [
   'onMount',
   'onChange',

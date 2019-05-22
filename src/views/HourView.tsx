@@ -12,7 +12,7 @@ import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header, { HeaderProps } from './CalendarHeader/Header';
 
-import { findHTMLElement } from '../lib';
+import { findHTMLElement, getRestProps } from '../lib';
 
 const HOUR_CALENDAR_ROW_WIDTH = 4;
 
@@ -44,11 +44,10 @@ class HourView extends BaseCalendarView<HourViewProps, {}> {
       currentHeadingValue,
       hoveredItemIndex,
       onCellHover,
-      onMount,
       inline,
       localization,
-      ...rest
     } = this.props;
+
     const headerProps: HeaderProps = {
       className: 'suicr-hour-view-header',
       onNextPageBtnClick,
@@ -61,6 +60,8 @@ class HourView extends BaseCalendarView<HourViewProps, {}> {
       displayWeeks: false,
       localization,
     };
+
+    const rest = getRestProps(this.props, HourViewPropsNames);
 
     return (
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
