@@ -2,8 +2,11 @@ import * as React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
+  BaseCalendarViewPropsNames,
   CalendarWithOptionalHeaderViewProps,
+  CalendarWithOptionalHeaderViewPropsNames,
   SingleSelectionCalendarViewProps,
+  SingleSelectionCalendarViewPropsNames,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
@@ -13,10 +16,17 @@ import { findHTMLElement } from '../lib';
 
 const HOUR_CALENDAR_ROW_WIDTH = 4;
 
+// IMPORTANT: keep in sync with HourViewPropsNames
 export type HourViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
   & CalendarWithOptionalHeaderViewProps;
+
+export const HourViewPropsNames = [
+  ...BaseCalendarViewPropsNames,
+  ...SingleSelectionCalendarViewPropsNames,
+  ...CalendarWithOptionalHeaderViewPropsNames,
+];
 
 class HourView extends BaseCalendarView<HourViewProps, {}> {
   public render() {

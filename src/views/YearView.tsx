@@ -5,8 +5,11 @@ import * as React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
+  BaseCalendarViewPropsNames,
   CalendarWithHeaderViewProps,
+  CalendarWithHeaderViewPropsNames,
   SingleSelectionCalendarViewProps,
+  SingleSelectionCalendarViewPropsNames,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
@@ -16,10 +19,17 @@ import { findHTMLElement } from '../lib';
 
 const YEAR_CALENDAR_ROW_WIDTH = 3;
 
+// IMPORTANT: keep it in sync with YearViewPropsNames
 export type YearViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
+
+export const YearViewPropsNames = [
+  ...BaseCalendarViewPropsNames,
+  ...SingleSelectionCalendarViewPropsNames,
+  ...CalendarWithHeaderViewPropsNames,
+];
 
 class YearView extends BaseCalendarView<YearViewProps, {}> {
   public render() {

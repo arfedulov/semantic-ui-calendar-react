@@ -6,9 +6,13 @@ import {findHTMLElement} from '../lib';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
+  BaseCalendarViewPropsNames,
   CalendarWithHeaderViewProps,
+  CalendarWithHeaderViewPropsNames,
   HeadingValueProps,
+  HeadingValuePropsNames,
   RangeSelectionCalendarViewProps,
+  RangeSelectionCalendarViewPropsNames,
 } from './BaseCalendarView';
 
 import Calendar from './Calendar';
@@ -17,11 +21,19 @@ import Header from './CalendarHeader/Header';
 
 import { MONTH_CALENDAR_ROW_WIDTH } from './MonthView';
 
+// IMPORTANT: keep it in sync with MonthRangeViewPropsNames
 export type MonthRangeViewProps =
   BaseCalendarViewProps
   & HeadingValueProps
   & RangeSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
+
+export const MonthRangeViewPropsNames = [
+  ...BaseCalendarViewPropsNames,
+  ...HeadingValuePropsNames,
+  ...RangeSelectionCalendarViewPropsNames,
+  ...CalendarWithHeaderViewPropsNames,
+];
 
 const MONTH_POSITIONS = range(12);
 

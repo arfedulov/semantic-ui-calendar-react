@@ -2,9 +2,13 @@ import * as React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
+  BaseCalendarViewPropsNames,
   CalendarWithHeaderViewProps,
+  CalendarWithHeaderViewPropsNames,
   HeadingValueProps,
+  HeadingValuePropsNames,
   SingleSelectionCalendarViewProps,
+  SingleSelectionCalendarViewPropsNames,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
@@ -15,11 +19,19 @@ import { findHTMLElement } from '../lib';
 export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
 
+// IMPORTANT: keep it in sync with DayViewPropsNames
 export type DayViewProps =
   BaseCalendarViewProps
   & HeadingValueProps
   & SingleSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
+
+export const DayViewPropsNames = [
+  ...BaseCalendarViewPropsNames,
+  ...HeadingValuePropsNames,
+  ...SingleSelectionCalendarViewPropsNames,
+  ...CalendarWithHeaderViewPropsNames,
+];
 
 class DayView extends BaseCalendarView<DayViewProps, {}> {
   public render() {

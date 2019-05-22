@@ -5,9 +5,13 @@ import * as React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
+  BaseCalendarViewPropsNames,
   CalendarWithHeaderViewProps,
+  CalendarWithHeaderViewPropsNames,
   HeadingValueProps,
+  HeadingValuePropsNames,
   RangeSelectionCalendarViewProps,
+  RangeSelectionCalendarViewPropsNames,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
@@ -33,11 +37,19 @@ function getActive(start: number, end: number): number | number[] | undefined {
   }
 }
 
+// IMPORTANT: keep it in sync with DatesRangeViewPropsNames
 export type DatesRangeViewProps =
   BaseCalendarViewProps
   & HeadingValueProps
   & RangeSelectionCalendarViewProps
   & CalendarWithHeaderViewProps;
+
+export const DatesRangeViewPropsNames = [
+  ...BaseCalendarViewPropsNames,
+  ...HeadingValuePropsNames,
+  ...RangeSelectionCalendarViewPropsNames,
+  ...CalendarWithHeaderViewPropsNames,
+];
 
 class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, {}> {
   public static defaultProps = {

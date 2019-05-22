@@ -2,8 +2,11 @@ import * as React from 'react';
 
 import BaseCalendarView, {
   BaseCalendarViewProps,
+  BaseCalendarViewPropsNames,
   CalendarWithOptionalHeaderViewProps,
+  CalendarWithOptionalHeaderViewPropsNames,
   SingleSelectionCalendarViewProps,
+  SingleSelectionCalendarViewPropsNames,
 } from './BaseCalendarView';
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
@@ -13,10 +16,17 @@ import { findHTMLElement } from '../lib';
 
 const MINUTE_CALENDAR_ROW_WIDTH = 3;
 
+// IMPORTANT: keep it in sync with MinuteViewPropsNames
 export type MinuteViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
   & CalendarWithOptionalHeaderViewProps;
+
+export const MinuteViewPropsNames = [
+  ...BaseCalendarViewPropsNames,
+  ...SingleSelectionCalendarViewPropsNames,
+  ...CalendarWithOptionalHeaderViewPropsNames,
+];
 
 class MinuteView extends BaseCalendarView<MinuteViewProps, {}> {
   public render() {
