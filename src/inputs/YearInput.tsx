@@ -50,6 +50,8 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     DisableValuesPropTypes,
   );
 
+  protected readonly hasHeader = true;
+
   private getYearView: (props: any) => React.ReactElement;
 
   constructor(props) {

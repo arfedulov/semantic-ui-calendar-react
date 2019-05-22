@@ -7,9 +7,18 @@ import * as React from 'react';
 import {
   BasePickerOnChangeData,
 } from '../pickers/BasePicker';
-import DayPicker from '../pickers/dayPicker/DayPicker';
-import MonthPicker from '../pickers/monthPicker/MonthPicker';
-import YearPicker from '../pickers/YearPicker';
+import {
+  default as DayPicker,
+  DayPickerProps,
+} from '../pickers/dayPicker/DayPicker';
+import {
+  default as MonthPicker,
+  MonthPickerProps,
+} from '../pickers/monthPicker/MonthPicker';
+import {
+  default as YearPicker,
+  YearPickerProps,
+} from '../pickers/YearPicker';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -40,6 +49,7 @@ import {
   getRestProps,
   extractPropsByNames,
 } from '../lib';
+import { Omit } from '../lib/types';
 import {
   buildValue,
   parseArrayOrValue,
@@ -54,8 +64,6 @@ import {
   getMonthView,
   getDayView,
 } from './shared';
-
-import { InputViewPropsNames } from '../views/InputView';
 
 type CalendarMode = 'year' | 'month' | 'day';
 
@@ -129,6 +137,8 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       startMode: PropTypes.oneOf([ 'year', 'month', 'day' ]),
     },
   );
+
+  protected readonly hasHeader = true;
 
   private getYearView: (props: any) => React.ReactElement;
   private getMonthView: (props: any) => React.ReactElement;
@@ -235,20 +245,16 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       inline,
       marked,
       localization,
-      tabIndex,
-      pickerWidth,
-      pickerStyle,
     } = this.props;
-    const pickerProps = {
+
+    type PickerPropsPartial = Omit<DayPickerProps & MonthPickerProps & YearPickerProps, 'renderView'>;
+
+    const pickerProps: PickerPropsPartial = {
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
       inline,
       closePopup: this.closePopup,
-      tabIndex,
-      pickerWidth,
-      pickerStyle,
       onChange: this.handleSelect,
-      onHeaderClick: this.switchToPrevMode,
       initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
       value: buildValue(value, null, localization, dateFormat, null),
       enable: parseArrayOrValue(enable, dateFormat, localization),
@@ -288,6 +294,10 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     );
   }
 
+  private switchToPrevMode = (): void => {
+    tick(this.switchToPrevModeUndelayed);
+  }
+
   private switchToNextModeUndelayed = (): void => {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
@@ -302,10 +312,6 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
     }, this.onModeSwitch);
-  }
-
-  private switchToPrevMode = (): void => {
-    tick(this.switchToPrevModeUndelayed);
   }
 
   private handleSelect = (e, { value }: BasePickerOnChangeData) => {

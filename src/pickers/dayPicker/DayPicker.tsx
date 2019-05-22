@@ -38,7 +38,7 @@ export interface DayPickerOnChangeData extends BasePickerOnChangeData {
   };
 }
 
-type DayPickerProps = BasePickerProps
+export type DayPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
   & MinMaxValueProps

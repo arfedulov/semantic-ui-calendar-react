@@ -28,7 +28,7 @@ import {
   isPrevPageAvailable,
 } from './sharedFunctions';
 
-interface MonthRangePickerProps extends BasePickerProps, MinMaxValueProps {
+export interface MonthRangePickerProps extends BasePickerProps, MinMaxValueProps {
   /** Moment date formatting string. */
   dateFormat: string;
   /** Start of currently selected dates range. */

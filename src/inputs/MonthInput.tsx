@@ -52,6 +52,8 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     MinMaxValuePropTypes,
   );
 
+  protected readonly hasHeader = false;
+
   private getMonthView: (props: any) => React.ReactElement;
 
   constructor(props) {

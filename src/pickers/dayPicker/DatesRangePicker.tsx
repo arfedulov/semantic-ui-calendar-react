@@ -30,7 +30,7 @@ import {
 
 const PAGE_WIDTH = 7;
 
-interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, MarkedValuesProps {
+export interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, MarkedValuesProps {
   /** Moment date formatting string. */
   dateFormat: string;
   /** Start of currently selected dates range. */

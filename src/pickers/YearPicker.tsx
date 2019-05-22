@@ -24,7 +24,7 @@ const PAGE_WIDTH = 3;
 const PAGE_HEIGHT = 4;
 const YEARS_ON_PAGE = PAGE_WIDTH * PAGE_HEIGHT;
 
-type YearPickerProps = BasePickerProps
+export type YearPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
   & MinMaxValueProps;

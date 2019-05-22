@@ -28,7 +28,7 @@ const MINUTES_STEP = 5;
 const MINUTES_ON_PAGE = 12;
 const PAGE_WIDTH = 3;
 
-type MinutePickerProps = BasePickerProps
+export type MinutePickerProps = BasePickerProps
   & MinMaxValueProps
   & DisableValuesProps
   & TimePickerProps;

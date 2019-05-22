@@ -352,6 +352,8 @@ abstract class BaseInput<P extends BaseInputProps,
     localization: moment.locale(),
   };
 
+  protected abstract readonly hasHeader: boolean;
+
   private calendarNode: HTMLElement;
 
   private inputNode: HTMLElement;

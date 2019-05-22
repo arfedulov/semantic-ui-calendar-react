@@ -8,11 +8,26 @@ import * as React from 'react';
 import {
   BasePickerOnChangeData,
 } from '../pickers/BasePicker';
-import DayPicker from '../pickers/dayPicker/DayPicker';
-import MonthPicker from '../pickers/monthPicker/MonthPicker';
-import HourPicker from '../pickers/timePicker/HourPicker';
-import MinutePicker from '../pickers/timePicker/MinutePicker';
-import YearPicker from '../pickers/YearPicker';
+import {
+  default as DayPicker,
+  DayPickerProps,
+} from '../pickers/dayPicker/DayPicker';
+import {
+  default as MonthPicker,
+  MonthPickerProps,
+} from '../pickers/monthPicker/MonthPicker';
+import {
+  default as HourPicker,
+  HourPickerProps,
+} from '../pickers/timePicker/HourPicker';
+import {
+  default as MinutePicker,
+  MinutePickerProps,
+} from '../pickers/timePicker/MinutePicker';
+import {
+  default as YearPicker,
+  YearPickerProps,
+} from '../pickers/YearPicker';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -39,6 +54,7 @@ import BaseInput, {
 } from './BaseInput';
 
 import { tick, getRestProps } from '../lib';
+import { Omit } from '../lib/types';
 import {
   parseArrayOrValue,
   parseValue,
@@ -148,6 +164,8 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       dateTimeFormat: PropTypes.string,
     },
   );
+
+  protected readonly hasHeader = true;
 
   private getYearView: (props: any) => React.ReactElement;
   private getMonthView: (props: any) => React.ReactElement;
@@ -271,21 +289,21 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       inline,
       marked,
       localization,
-      tabIndex,
-      pickerStyle,
-      pickerWidth,
     } = this.props;
     const dateTimeFormat = this.getDateTimeFormat();
-    const pickerProps = {
-      tabIndex,
+
+    type PickerPropsPartial = Omit<DayPickerProps
+      & MonthPickerProps
+      & YearPickerProps
+      & HourPickerProps
+      & MinutePickerProps, 'renderView' | 'timeFormat'>;
+
+    const pickerProps: PickerPropsPartial = {
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
       inline,
-      pickerWidth,
-      pickerStyle,
       closePopup: this.closePopup,
       onChange: this.handleSelect,
-      onHeaderClick: this.switchToPrevMode,
       initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
       value: buildValue(value, null, localization, dateTimeFormat, null),
       minDate: parseValue(minDate, dateTimeFormat, localization),
@@ -344,6 +362,10 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     );
   }
 
+  private switchToPrevMode = (): void => {
+    tick(this.switchToPrevModeUndelayed);
+  }
+
   private getDateTimeFormat(): string {
     const {
       dateFormat,
@@ -369,10 +391,6 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
     }, this.onModeSwitch);
-  }
-
-  private switchToPrevMode = (): void => {
-    tick(this.switchToPrevModeUndelayed);
   }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,

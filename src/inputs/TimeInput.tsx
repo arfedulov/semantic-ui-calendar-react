@@ -5,11 +5,18 @@ import moment, { Moment } from 'moment';
 import * as React from 'react';
 
 import { tick, getRestProps } from '../lib';
+import { Omit } from '../lib/types';
 import {
   BasePickerOnChangeData,
 } from '../pickers/BasePicker';
-import HourPicker from '../pickers/timePicker/HourPicker';
-import MinutePicker from '../pickers/timePicker/MinutePicker';
+import {
+  default as HourPicker,
+  HourPickerProps,
+} from '../pickers/timePicker/HourPicker';
+import {
+  default as MinutePicker,
+  MinutePickerProps,
+} from '../pickers/timePicker/MinutePicker';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -74,6 +81,8 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     TimeRelatedPropTypes,
   );
 
+  protected readonly hasHeader = false;
+
   private getHourView: (props: any) => React.ReactElement;
   private getMinuteView: (props: any) => React.ReactElement;
 
@@ -127,28 +136,21 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       timeFormat,
       inline,
       localization,
-      tabIndex,
-      pickerStyle,
-      pickerWidth,
     } = this.props;
 
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat], localization);
 
-    const pickerProps = {
+    type PickerPropsPartial = Omit<HourPickerProps & MinutePickerProps, 'renderView'>;
+
+    const pickerProps: PickerPropsPartial = {
       inline,
-      onCalendarViewMount: this.onCalendarViewMount,
       isPickerInFocus: this.isPickerInFocus,
       isTriggerInFocus: this.isTriggerInFocus,
-      hasHeader: false,
-      pickerWidth,
-      pickerStyle,
-      onHeaderClick: () => undefined,
       closePopup: this.closePopup,
       initializeWith: pickInitialDate({ ...this.props, value: this.parseInternalValue() }),
       value: buildValue(currentValue, null, TIME_FORMAT[timeFormat], localization, null),
       onChange: this.handleSelect,
       timeFormat,
-      tabIndex,
       localization,
     };
     if (this.state.mode === 'hour') {

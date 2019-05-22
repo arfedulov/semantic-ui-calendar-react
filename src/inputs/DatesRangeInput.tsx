@@ -66,6 +66,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     RangeRelatedPropTypes,
   );
 
+  protected readonly hasHeader = true;
+
   private getDatesRangeView: (props: any) => React.ReactElement;
 
   constructor(props) {

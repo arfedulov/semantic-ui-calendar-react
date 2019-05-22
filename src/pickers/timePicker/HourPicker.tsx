@@ -29,7 +29,7 @@ import {
 const HOURS_ON_PAGE = 24;
 const PAGE_WIDTH = 4;
 
-type HourPickerProps = BasePickerProps
+export type HourPickerProps = BasePickerProps
   & MinMaxValueProps
   & DisableValuesProps
   & TimePickerProps;

@@ -84,6 +84,8 @@ export const RangeSelectionCalendarViewPropsNames = [
 ////////////////////////////////////////////// CalendarWithHeaderViewProps ///////////////////////////////////////////
 
 export interface CalendarWithHeaderViewProps {
+  /** Whether a calendar has header. */
+  hasHeader: boolean;
   /** Called after click on next page button. */
   onNextPageBtnClick: (e?: React.SyntheticEvent<HTMLElement>, data?: any, cb?: () => void) => void;
   /** Called after click on previous page button. */

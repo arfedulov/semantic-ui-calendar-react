@@ -10,6 +10,10 @@ import {
   DatesRangeView,
   MonthRangeView,
 } from '../views';
+import {
+  noop,
+  extractPropsByNames,
+} from '../lib';
 
 /**
  * Filter out all moments that don't have
@@ -81,13 +85,19 @@ export function getYearView(yearViewProps): React.ReactElement {
     localization,
   } = this.props;
 
+  // TODO: const sharedProps = extractPropsByNames(this.props, YearViewPropsNames);
+  // use this instead of passing inline and localization
+
   return (
     <YearView
       { ...this.getUnusedProps() }
       { ...yearViewProps }
       inline={ inline }
       onMount={ this.onCalendarViewMount }
-      localization={ localization } />
+      localization={ localization }
+      onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
+      hasHeader={ this.hasHeader }
+    />
   );
 }
 
@@ -100,9 +110,12 @@ export function getMonthView(monthViewProps): React.ReactElement {
     <MonthView
       { ...this.getUnusedProps() }
       { ...monthViewProps }
-      inline={inline}
+      inline={ inline }
       onMount={ this.onCalendarViewMount }
-      localization={this.props.localization} />
+      localization={ this.props.localization }
+      onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
+      hasHeader={ this.hasHeader }
+    />
   );
 }
 
@@ -115,9 +128,11 @@ export function getDayView(dayViewProps): React.ReactElement {
     <DayView
       { ...this.getUnusedProps() }
       { ...dayViewProps }
-      inline={inline}
+      inline={ inline }
       onMount={ this.onCalendarViewMount }
-      localization={this.props.localization}
+      localization={ this.props.localization }
+      onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
+      hasHeader={ this.hasHeader }
     />
   );
 }
@@ -133,7 +148,10 @@ export function getHourView(hourViewProps): React.ReactElement {
       { ...hourViewProps }
       inline={ inline }
       onMount={ this.onCalendarViewMount }
-      localization={this.props.localization}/>
+      localization={this.props.localization}
+      onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
+      hasHeader={ this.hasHeader }
+    />
   );
 }
 
@@ -148,7 +166,10 @@ export function getMinuteView(minuteViewProps): React.ReactElement {
       { ...minuteViewProps }
       inline={ inline }
       onMount={ this.onCalendarViewMount }
-      localization={this.props.localization}/>
+      localization={ this.props.localization }
+      onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
+      hasHeader={ this.hasHeader }
+    />
   );
 }
 
@@ -165,8 +186,10 @@ export function getDatesRangeView(datesRangeViewProps): React.ReactElement {
       { ...datesRangeViewProps }
       inline={ inline }
       onMount={ this.onCalendarViewMount }
-      markColor={markColor}
-      localization={localization}
+      markColor={ markColor }
+      localization={ localization }
+      onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
+      hasHeader={ this.hasHeader }
     />
   );
 }
@@ -182,6 +205,9 @@ export function getMonthRangeView(monthRangeViewProps): React.ReactElement {
       { ...monthRangeViewProps }
       inline={ inline }
       onMount={ this.onCalendarViewMount }
-      localization={ this.props.localization }/>
+      localization={ this.props.localization }
+      onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
+      hasHeader={ this.hasHeader }
+    />
   );
 }

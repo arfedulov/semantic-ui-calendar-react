@@ -27,7 +27,7 @@ import {
   isPrevPageAvailable,
 } from './sharedFunctions';
 
-type MonthPickerProps = BasePickerProps
+export type MonthPickerProps = BasePickerProps
   & DisableValuesProps
   & EnableValuesProps
   & MinMaxValueProps;
