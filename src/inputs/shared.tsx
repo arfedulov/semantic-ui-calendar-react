@@ -3,12 +3,19 @@ import * as React from 'react';
 
 import {
   YearView,
+  YearViewPropsNames,
   MonthView,
+  MonthViewPropsNames,
   DayView,
+  DayViewPropsNames,
   HourView,
+  HourViewPropsNames,
   MinuteView,
+  MinuteViewPropsNames,
   DatesRangeView,
+  DatesRangeViewPropsNames,
   MonthRangeView,
+  MonthRangeViewPropsNames,
 } from '../views';
 import {
   noop,
@@ -80,21 +87,14 @@ export function getDisabledYears(moments: Moment[]): Moment[] {
 }
 
 export function getYearView(yearViewProps): React.ReactElement {
-  const {
-    inline,
-    localization,
-  } = this.props;
-
-  // TODO: const sharedProps = extractPropsByNames(this.props, YearViewPropsNames);
-  // use this instead of passing inline and localization
+  const sharedProps = extractPropsByNames(this.props, YearViewPropsNames);
 
   return (
     <YearView
       { ...this.getUnusedProps() }
       { ...yearViewProps }
-      inline={ inline }
+      { ...sharedProps }
       onMount={ this.onCalendarViewMount }
-      localization={ localization }
       onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
       hasHeader={ this.hasHeader }
     />
@@ -102,17 +102,14 @@ export function getYearView(yearViewProps): React.ReactElement {
 }
 
 export function getMonthView(monthViewProps): React.ReactElement {
-  const {
-    inline,
-  } = this.props;
+  const sharedProps = extractPropsByNames(this.props, MonthViewPropsNames);
 
   return (
     <MonthView
       { ...this.getUnusedProps() }
       { ...monthViewProps }
-      inline={ inline }
+      { ...sharedProps }
       onMount={ this.onCalendarViewMount }
-      localization={ this.props.localization }
       onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
       hasHeader={ this.hasHeader }
     />
@@ -120,17 +117,14 @@ export function getMonthView(monthViewProps): React.ReactElement {
 }
 
 export function getDayView(dayViewProps): React.ReactElement {
-  const {
-    inline,
-  } = this.props;
+  const sharedProps = extractPropsByNames(this.props, DayViewPropsNames);
 
   return (
     <DayView
       { ...this.getUnusedProps() }
       { ...dayViewProps }
-      inline={ inline }
+      { ...sharedProps }
       onMount={ this.onCalendarViewMount }
-      localization={ this.props.localization }
       onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
       hasHeader={ this.hasHeader }
     />
@@ -138,17 +132,14 @@ export function getDayView(dayViewProps): React.ReactElement {
 }
 
 export function getHourView(hourViewProps): React.ReactElement {
-  const {
-    inline,
-  } = this.props;
+  const sharedProps = extractPropsByNames(this.props, HourViewPropsNames);
 
   return (
     <HourView
       { ...this.getUnusedProps() }
       { ...hourViewProps }
-      inline={ inline }
+      { ...sharedProps }
       onMount={ this.onCalendarViewMount }
-      localization={this.props.localization}
       onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
       hasHeader={ this.hasHeader }
     />
@@ -156,15 +147,13 @@ export function getHourView(hourViewProps): React.ReactElement {
 }
 
 export function getMinuteView(minuteViewProps): React.ReactElement {
-  const {
-    inline,
-  } = this.props;
+  const sharedProps = extractPropsByNames(this.props, MinuteViewPropsNames);
 
   return (
     <MinuteView
       { ...this.getUnusedProps() }
       { ...minuteViewProps }
-      inline={ inline }
+      { ...sharedProps }
       onMount={ this.onCalendarViewMount }
       localization={ this.props.localization }
       onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
@@ -174,20 +163,14 @@ export function getMinuteView(minuteViewProps): React.ReactElement {
 }
 
 export function getDatesRangeView(datesRangeViewProps): React.ReactElement {
-  const {
-    markColor,
-    localization,
-    inline,
-  } = this.props;
+  const sharedProps = extractPropsByNames(this.props, DatesRangeViewPropsNames);
 
   return (
     <DatesRangeView
       { ...this.getUnusedProps() }
       { ...datesRangeViewProps }
-      inline={ inline }
+      { ...sharedProps }
       onMount={ this.onCalendarViewMount }
-      markColor={ markColor }
-      localization={ localization }
       onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }
       hasHeader={ this.hasHeader }
     />
@@ -195,15 +178,13 @@ export function getDatesRangeView(datesRangeViewProps): React.ReactElement {
 }
 
 export function getMonthRangeView(monthRangeViewProps): React.ReactElement {
-  const {
-    inline,
-  } = this.props;
+  const sharedProps = extractPropsByNames(this.props, MonthRangeViewPropsNames);
 
   return (
     <MonthRangeView
       { ...this.getUnusedProps() }
       { ...monthRangeViewProps }
-      inline={ inline }
+      { ...sharedProps }
       onMount={ this.onCalendarViewMount }
       localization={ this.props.localization }
       onHeaderClick={ this.switchToPrevMode ? this.switchToPrevMode : noop }

@@ -422,7 +422,6 @@ abstract class BaseInput<P extends BaseInputProps,
   protected abstract parseInternalValue(): Moment;
 
   /** Return all props that aren't included in component's props ts declarations. */
-  // TODO: reimplement it as static field on *InputComponent instead of as a method
   protected abstract getUnusedProps(): object;
 
   /** Return a value for input element. */
