@@ -7,18 +7,9 @@ import * as sinon from 'sinon';
 import * as React from 'react';
 import * as _ from 'lodash';
 import moment from 'moment';
+import { createRenderViewMock } from '../../testUtils';
 
 import DayPicker from '../../../src/pickers/dayPicker/DayPicker';
-
-const createRenderViewMock = (output) => {
-  return (props) => {
-    Object.keys(props).forEach((key) => {
-      output[key] = props[key];
-    });
-
-    return <div />;
-  };
-};
 
 describe('<DayPicker />', () => {
   it('initialized with moment', () => {
