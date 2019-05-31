@@ -98,12 +98,12 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
   }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-                          { value }: BasePickerOnChangeData) => {
+    { value }: BasePickerOnChangeData) => {
     tick(this.handleSelectUndelayed, e, { value });
   }
 
   private handleSelectUndelayed = (e: React.SyntheticEvent<HTMLElement>,
-                                   { value }: BasePickerOnChangeData) => {
+    { value }: BasePickerOnChangeData) => {
     const {
       hour,
       minute,
@@ -120,7 +120,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       outputTimeString = moment({ hour, minute }).format(TIME_FORMAT[timeFormat]);
     }
     invoke(this.props, 'onChange', e, { ...this.props, value: outputTimeString });
-    if (this.props.closable && this.state.mode === 'minute') {
+    if (this.props.closable && (this.state.mode === 'minute' || this.props.disableMinute)) {
       this.closePopup();
     }
     if (!disableMinute) {
