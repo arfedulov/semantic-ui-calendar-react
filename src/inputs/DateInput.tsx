@@ -95,7 +95,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
    */
   public static readonly defaultProps = {
     ...BaseInput.defaultProps,
-    dateFormat: 'DD-MM-YYYY',
+    dateFormat: 'L',
     startMode: 'day',
     preserveViewMode: true,
     icon: 'calendar',

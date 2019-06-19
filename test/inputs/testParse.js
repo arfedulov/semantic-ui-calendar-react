@@ -109,7 +109,7 @@ describe('parseValue', () => {
 describe('dateValueToString()', () => {
   it('handles string input value', () => {
     const inputValue = '17-04-2030';
-    const dateFormat = 'DD-MM-YYYY';
+    const dateFormat = 'L';
     const locale = 'en';
 
     const producedValue = dateValueToString(inputValue, dateFormat, locale);
@@ -120,7 +120,7 @@ describe('dateValueToString()', () => {
 
   it('handles Date input value', () => {
     const inputValue = new Date('2015-08-11');
-    const dateFormat = 'DD-MM-YYYY';
+    const dateFormat = 'L';
     const locale = 'en';
 
     const producedValue = dateValueToString(inputValue, dateFormat, locale);
@@ -131,7 +131,7 @@ describe('dateValueToString()', () => {
 
   it('handles Moment input value', () => {
     const inputValue = moment('2015-08-11', 'YYYY-MM-DD');
-    const dateFormat = 'DD-MM-YYYY';
+    const dateFormat = 'L';
     const locale = 'en';
 
     const producedValue = dateValueToString(inputValue, dateFormat, locale);

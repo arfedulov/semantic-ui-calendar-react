@@ -112,7 +112,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
    */
   public static readonly defaultProps = {
     ...BaseInput.defaultProps,
-    dateFormat: 'DD-MM-YYYY',
+    dateFormat: 'L',
     timeFormat: '24',
     startMode: 'day',
     divider: ' ',
