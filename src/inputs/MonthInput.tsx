@@ -39,12 +39,12 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
     icon: 'calendar',
   };
 
-  public static readonly propTypes = Object.assign({},
-    BaseInputPropTypes,
-    DateRelatedPropTypes,
-    DisableValuesPropTypes,
-    MinMaxValuePropTypes,
-  );
+  public static readonly propTypes = {
+    ...BaseInputPropTypes,
+    ...DateRelatedPropTypes,
+    ...DisableValuesPropTypes,
+    ...MinMaxValuePropTypes,
+  };
 
   constructor(props) {
     super(props);

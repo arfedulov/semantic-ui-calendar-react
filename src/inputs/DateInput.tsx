@@ -101,19 +101,19 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     icon: 'calendar',
   };
 
-  public static readonly propTypes = Object.assign({},
-    BaseInputPropTypes,
-    DateRelatedPropTypes,
-    MultimodePropTypes,
-    DisableValuesPropTypes,
-    EnableValuesPropTypes,
-    MarkedValuesPropTypes,
-    MinMaxValuePropTypes,
-    {
+  public static readonly propTypes = {
+    ...BaseInputPropTypes,
+    ...DateRelatedPropTypes,
+    ...MultimodePropTypes,
+    ...DisableValuesPropTypes,
+    ...EnableValuesPropTypes,
+    ...MarkedValuesPropTypes,
+    ...MinMaxValuePropTypes,
+    ...{
       /** Display mode to start. */
       startMode: PropTypes.oneOf([ 'year', 'month', 'day' ]),
     },
-  );
+  };
 
   constructor(props: DateInputProps) {
     super(props);

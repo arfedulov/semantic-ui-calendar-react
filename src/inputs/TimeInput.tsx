@@ -61,11 +61,11 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
     disableMinute: false,
   };
 
-  public static readonly propTypes = Object.assign({},
-    BaseInputPropTypes,
-    MultimodePropTypes,
-    TimeRelatedPropTypes,
-  );
+  public static readonly propTypes = {
+    ...BaseInputPropTypes,
+    ...MultimodePropTypes,
+    ...TimeRelatedPropTypes,
+  };
 
   constructor(props) {
     super(props);

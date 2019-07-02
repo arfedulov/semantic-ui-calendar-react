@@ -120,22 +120,22 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     preserveViewMode: true,
   };
 
-  public static readonly propTypes = Object.assign({},
-    BaseInputPropTypes,
-    DateRelatedPropTypes,
-    TimeRelatedPropTypes,
-    MultimodePropTypes,
-    DisableValuesPropTypes,
-    MarkedValuesPropTypes,
-    MinMaxValuePropTypes,
-    {
+  public static readonly propTypes = {
+    ...BaseInputPropTypes,
+    ...DateRelatedPropTypes,
+    ...TimeRelatedPropTypes,
+    ...MultimodePropTypes,
+    ...DisableValuesPropTypes,
+    ...MarkedValuesPropTypes,
+    ...MinMaxValuePropTypes,
+    ...{
       startMode: PropTypes.oneOf([ 'year', 'month', 'day' ]),
       /** Date and time divider. */
       divider: PropTypes.string,
       /** Datetime formatting string. */
       dateTimeFormat: PropTypes.string,
     },
-  );
+  };
 
   constructor(props: DateTimeInputProps) {
     super(props);
