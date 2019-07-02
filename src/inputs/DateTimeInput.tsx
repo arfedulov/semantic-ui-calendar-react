@@ -190,7 +190,12 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       onChange,
       ...rest
     } = this.props;
-
+    let properties = {
+      ...rest
+    };
+    if (properties.disableMinute) {
+      delete properties.disableMinute;
+    }
     return (
       <InputView
         popupIsClosed={this.state.popupIsClosed}
@@ -199,7 +204,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         onFocus={this.onFocus}
         onMount={this.onInputViewMount}
         onChange={this.onInputValueChange}
-        {...rest}
+        {...properties}
         value={dateValueToString(value, dateFormat, localization)}
         renderPicker={() => this.getPicker()}
       />
