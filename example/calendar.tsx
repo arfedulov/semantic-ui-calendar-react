@@ -7,8 +7,6 @@ import {
   Form,
   Header,
   Icon,
-  Popup,
-  Button,
 } from 'semantic-ui-react';
 
 import {
@@ -95,9 +93,6 @@ class DateTimeForm extends React.Component<any, any> {
 
     return (
       <Form>
-        <Popup on='click' trigger={ <Button>+</Button> }>hello</Popup>
-        <Popup on='click' trigger={ <Button>+</Button> }>hello</Popup>
-        <Popup on='click' trigger={ <Button>+</Button> }>hello</Popup>
         <DateInput
           placeholder='Date'
           popupPosition='bottom right'
