@@ -50,13 +50,13 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     icon: 'calendar',
   };
 
-  public static readonly propTypes = Object.assign({},
-    BaseInputPropTypes,
-    DateRelatedPropTypes,
-    MarkedValuesPropTypes,
-    MinMaxValuePropTypes,
-    RangeRelatedPropTypes,
-  );
+  public static readonly propTypes = {
+    ...BaseInputPropTypes,
+    ...DateRelatedPropTypes,
+    ...MarkedValuesPropTypes,
+    ...MinMaxValuePropTypes,
+    ...RangeRelatedPropTypes,
+  };
 
   constructor(props) {
     super(props);
@@ -116,7 +116,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
     const minDateParsed = parseValue(minDate, dateFormat, localization);
     const maxDateParsed = parseValue(maxDate, dateFormat, localization);
-     
+
     let initializeWith;
 
     if (!initialDate && minDateParsed || maxDateParsed) {

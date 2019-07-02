@@ -37,12 +37,12 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     icon: 'calendar',
   };
 
-  public static readonly propTypes = Object.assign({},
-    BaseInputPropTypes,
-    DateRelatedPropTypes,
-    MinMaxValuePropTypes,
-    DisableValuesPropTypes,
-  );
+  public static readonly propTypes = {
+    ...BaseInputPropTypes,
+    ...DateRelatedPropTypes,
+    ...MinMaxValuePropTypes,
+    ...DisableValuesPropTypes,
+  };
 
   constructor(props) {
     super(props);
