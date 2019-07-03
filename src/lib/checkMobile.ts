@@ -1,6 +1,13 @@
 /** Return true if run on mobile browser. */
 const checkMobile = () => {
-    if (navigator.userAgent.match(/Android/i)
+  if (typeof window === `undefined`) {
+    return false;
+  }
+  const navigator: Navigator = window.navigator;
+  if (!navigator) {
+    return false;
+  }
+  if (navigator.userAgent.match(/Android/i)
         || navigator.userAgent.match(/webOS/i)
         || navigator.userAgent.match(/iPhone/i)
         || navigator.userAgent.match(/iPad/i)
@@ -11,7 +18,7 @@ const checkMobile = () => {
        return true;
     }
 
-    return false;
+  return false;
 };
 
 export default checkMobile;
