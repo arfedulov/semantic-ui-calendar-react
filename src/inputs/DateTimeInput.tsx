@@ -91,6 +91,8 @@ export interface DateTimeInputProps extends
   preserveViewMode?: boolean;
   /** Datetime formatting string. */
   dateTimeFormat?: string;
+  /** If true, minutes picker won't be shown after picking the hour. Default: false */
+  disableMinute?: boolean;
 }
 
 export type DateTimeInputOnChangeData = DateTimeInputProps;
@@ -118,6 +120,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     divider: ' ',
     icon: 'calendar',
     preserveViewMode: true,
+    disableMinute: false,
   };
 
   public static readonly propTypes = {
@@ -185,6 +188,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       marked,
       localization,
       onChange,
+      disableMinute,
       ...rest
     } = this.props;
 
@@ -355,14 +359,22 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
 
   private handleSelectUndelayed = (e: React.SyntheticEvent<HTMLElement>,
                                    { value }: BasePickerOnChangeData): void => {
-    if (this.props.closable && this.state.mode === 'minute') {
+    const { closable, disableMinute } = this.props;
+
+    const closeCondA = closable && this.state.mode === 'minute';
+    const closeCondB = closable && disableMinute && this.state.mode === 'hour';
+    if (closeCondA || closeCondB) {
       this.closePopup();
     }
+
+    const endAtMode = disableMinute ? 'hour' : 'minute';
+
     this.setState((prevState) => {
       const {
         mode,
       } = prevState;
-      if (mode === 'minute') {
+
+      if (mode === endAtMode) {
         const outValue = moment(value).format(this.getDateTimeFormat());
         invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
@@ -374,7 +386,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         hour: value.hour,
         minute: value.minute,
       };
-    }, () => this.state.mode !== 'minute' && this.switchToNextMode());
+    }, () => this.state.mode !== endAtMode && this.switchToNextMode());
   }
 
   /** Keeps internal state in sync with input field value. */
