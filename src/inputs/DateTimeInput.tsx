@@ -359,13 +359,13 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
 
   private handleSelectUndelayed = (e: React.SyntheticEvent<HTMLElement>,
                                    { value }: BasePickerOnChangeData): void => {
-    if (this.props.closable && this.state.mode === 'minute') {
+    const { closable, disableMinute } = this.props;
+
+    const closeCondA = closable && this.state.mode === 'minute';
+    const closeCondB = closable && disableMinute && this.state.mode === 'hour';
+    if (closeCondA || closeCondB) {
       this.closePopup();
     }
-
-    const {
-      disableMinute,
-    } = this.props;
 
     const endAtMode = disableMinute ? 'hour' : 'minute';
 
