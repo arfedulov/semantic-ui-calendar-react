@@ -188,6 +188,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       marked,
       localization,
       onChange,
+      disableMinute,
       ...rest
     } = this.props;
 
@@ -361,7 +362,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     if (this.props.closable && this.state.mode === 'minute') {
       this.closePopup();
     }
-    
+
     const {
       disableMinute,
     } = this.props;
@@ -377,7 +378,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         const outValue = moment(value).format(this.getDateTimeFormat());
         invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
       }
-      
+
       return {
         year: value.year,
         month: value.month,
