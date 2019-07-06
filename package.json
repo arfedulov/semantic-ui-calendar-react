@@ -1,7 +1,7 @@
 {
   "name": "semantic-ui-calendar-react",
   "sideEffects": false,
-  "version": "0.15.0",
+  "version": "0.15.1",
   "description": "date/time picker built from semantic-ui elements",
   "main": "dist/commonjs/index.js",
   "scripts": {
