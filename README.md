@@ -9,8 +9,22 @@ My intention was to create something that looks like this https://github.com/mde
 Here you can find a live example https://arfedulov.github.io/semantic-ui-calendar-react
 
 # installation
+
+## npm
 ```
 npm i semantic-ui-calendar-react
+```
+
+## CDN
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui-calendar-react@latest/dist/umd/semantic-ui-calendar-react.js"></script>
+```
+
+Then you can access calendar components from your scripts like this:
+
+```js
+const { DateInput } = SemanticUiCalendarReact;
 ```
 
 # usage
