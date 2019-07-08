@@ -6,7 +6,7 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist', 'umd'),
-    library: 'semantic-ui-calendar-react',
+    library: 'SemanticUiCalendarReact',
     libraryTarget: 'umd',
     filename: 'semantic-ui-calendar-react.js',
   },
