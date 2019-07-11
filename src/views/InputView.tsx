@@ -71,6 +71,8 @@ interface InputViewProps {
   onMount: (e: HTMLElement) => void;
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
+  /** Called when component looses focus. */
+  onBlur?: (e: React.SyntheticEvent<HTMLElement>) => void;
   closePopup: () => void;
   openPopup: () => void;
   /** Called on input focus. */
@@ -172,6 +174,9 @@ class InputView extends React.Component<InputViewProps, any> {
     const onBlur = (e) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
         closePopup();
+        if (this.props.onBlur) {
+          this.props.onBlur(e);
+        }
       }
     };
 
