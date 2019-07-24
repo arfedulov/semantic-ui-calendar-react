@@ -71,6 +71,8 @@ interface InputViewProps {
   onMount: (e: HTMLElement) => void;
   /** Called after input field value has changed. */
   onChange: (e: React.SyntheticEvent<HTMLElement>, data: any) => void;
+  /** Called when component looses focus. */
+  onBlur?: (e: React.SyntheticEvent<HTMLElement>) => void;
   closePopup: () => void;
   openPopup: () => void;
   /** Called on input focus. */
@@ -141,6 +143,48 @@ class InputView extends React.Component<InputViewProps, any> {
   private popupNode: HTMLElement | undefined;
   private mouseLeaveTimeout: number | null;
 
+  public onBlur = (e, ...args) => {
+    const {
+      closePopup,
+    } = this.props;
+
+    if (
+      e.relatedTarget !== this.popupNode
+      && e.relatedTarget !== this.inputNode
+      && !checkIE()
+    ) {
+      invoke(this.props, 'onBlur', e, ...args);
+      closePopup();
+    }
+  }
+
+  public onMouseLeave = (e, ...args) => {
+    const { closeOnMouseLeave, closePopup } = this.props;
+
+    if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+      if (closeOnMouseLeave) {
+        invoke(this.props, 'onMouseLeave', e, ...args);
+        this.mouseLeaveTimeout = window.setTimeout(() => {
+          if (this.mouseLeaveTimeout) {
+            closePopup();
+          }
+        }, 500);
+      }
+    }
+  }
+
+  public onMouseEnter = (e, ...args) => {
+    const { closeOnMouseLeave } = this.props;
+
+    invoke(this.props, 'onMouseEnter', e, ...args);
+    if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
+      if (closeOnMouseLeave) {
+        clearTimeout(this.mouseLeaveTimeout);
+        this.mouseLeaveTimeout = null;
+      }
+    }
+  }
+
   public render() {
     const {
       renderPicker,
@@ -169,33 +213,6 @@ class InputView extends React.Component<InputViewProps, any> {
       ...rest
     } = this.props;
 
-    const onBlur = (e) => {
-      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
-        closePopup();
-      }
-    };
-
-    const onMouseLeave = (e) => {
-      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
-        if (closeOnMouseLeave) {
-          this.mouseLeaveTimeout = window.setTimeout(() => {
-            if (this.mouseLeaveTimeout) {
-              closePopup();
-            }
-          }, 500);
-        }
-      }
-    };
-
-    const onMouseEnter = (e) => {
-      if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
-        if (closeOnMouseLeave) {
-          clearTimeout(this.mouseLeaveTimeout);
-          this.mouseLeaveTimeout = null;
-        }
-      }
-    };
-
     const inputElement = (
       <FormInputWithRef
         {...rest}
@@ -212,8 +229,8 @@ class InputView extends React.Component<InputViewProps, any> {
           invoke(this.props, 'onFocus', e, this.props);
           openPopup();
         }}
-        onBlur={onBlur}
-        onMouseEnter={onMouseEnter}
+        onBlur={this.onBlur}
+        onMouseEnter={this.onMouseEnter}
         onChange={onChange} />
     );
 
@@ -255,9 +272,9 @@ class InputView extends React.Component<InputViewProps, any> {
             mountNode={mountNode}
           >
             <div
-              onBlur={onBlur}
-              onMouseLeave={onMouseLeave}
-              onMouseEnter={onMouseEnter}
+              onBlur={this.onBlur}
+              onMouseLeave={this.onMouseLeave}
+              onMouseEnter={this.onMouseEnter}
               style={{ outline: 'none' }}
               tabIndex={0}
               ref={(ref) => this.popupNode = ref}

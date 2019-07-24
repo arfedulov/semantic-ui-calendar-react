@@ -6,6 +6,7 @@ import {
   SemanticICONS,
 } from 'semantic-ui-react';
 import * as PropTypes from 'prop-types';
+import invoke from 'lodash/invoke';
 
 import {
   TimeFormat,
@@ -287,6 +288,8 @@ abstract class BaseInput<P extends BaseInputProps,
   private inputNode: HTMLElement;
 
   protected closePopup = (): void => {
+    invoke(this.props, 'onClose');
+    invoke(this.props, 'onBlur');
     this.setState({ popupIsClosed: true });
   }
 
