@@ -143,6 +143,21 @@ class InputView extends React.Component<InputViewProps, any> {
   private popupNode: HTMLElement | undefined;
   private mouseLeaveTimeout: number | null;
 
+  public onBlur = (e, ...args) => {
+    const {
+      closePopup,
+    } = this.props;
+
+    if (
+      e.relatedTarget !== this.popupNode
+      && e.relatedTarget !== this.inputNode
+      && !checkIE()
+    ) {
+      invoke(this.props, 'onBlur', e, ...args);
+      closePopup();
+    }
+  }
+
   public render() {
     const {
       renderPicker,
@@ -171,16 +186,10 @@ class InputView extends React.Component<InputViewProps, any> {
       ...rest
     } = this.props;
 
-    const onBlur = (e, ...args) => {
-      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
-        closePopup();
-      }
-      invoke(this.props, 'onBlur', e, ...args);
-    };
-
-    const onMouseLeave = (e) => {
+    const onMouseLeave = (e, ...args) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
         if (closeOnMouseLeave) {
+          invoke(this.props, 'onMouseLeave', e, ...args);
           this.mouseLeaveTimeout = window.setTimeout(() => {
             if (this.mouseLeaveTimeout) {
               closePopup();
@@ -190,7 +199,8 @@ class InputView extends React.Component<InputViewProps, any> {
       }
     };
 
-    const onMouseEnter = (e) => {
+    const onMouseEnter = (e, ...args) => {
+      invoke(this.props, 'onMouseEnter', e, ...args);
       if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
         if (closeOnMouseLeave) {
           clearTimeout(this.mouseLeaveTimeout);
@@ -215,7 +225,7 @@ class InputView extends React.Component<InputViewProps, any> {
           invoke(this.props, 'onFocus', e, this.props);
           openPopup();
         }}
-        onBlur={onBlur}
+        onBlur={this.onBlur}
         onMouseEnter={onMouseEnter}
         onChange={onChange} />
     );
@@ -258,7 +268,7 @@ class InputView extends React.Component<InputViewProps, any> {
             mountNode={mountNode}
           >
             <div
-              onBlur={onBlur}
+              onBlur={this.onBlur}
               onMouseLeave={onMouseLeave}
               onMouseEnter={onMouseEnter}
               style={{ outline: 'none' }}
