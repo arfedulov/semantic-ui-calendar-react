@@ -171,13 +171,11 @@ class InputView extends React.Component<InputViewProps, any> {
       ...rest
     } = this.props;
 
-    const onBlur = (e) => {
+    const onBlur = (e, ...args) => {
       if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode && !checkIE()) {
         closePopup();
-        if (this.props.onBlur) {
-          this.props.onBlur(e);
-        }
       }
+      invoke(this.props, 'onBlur', e, ...args);
     };
 
     const onMouseLeave = (e) => {
