@@ -158,6 +158,33 @@ class InputView extends React.Component<InputViewProps, any> {
     }
   }
 
+  public onMouseLeave = (e, ...args) => {
+    const { closeOnMouseLeave, closePopup } = this.props;
+
+    if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
+      if (closeOnMouseLeave) {
+        invoke(this.props, 'onMouseLeave', e, ...args);
+        this.mouseLeaveTimeout = window.setTimeout(() => {
+          if (this.mouseLeaveTimeout) {
+            closePopup();
+          }
+        }, 500);
+      }
+    }
+  }
+
+  public onMouseEnter = (e, ...args) => {
+    const { closeOnMouseLeave } = this.props;
+
+    invoke(this.props, 'onMouseEnter', e, ...args);
+    if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
+      if (closeOnMouseLeave) {
+        clearTimeout(this.mouseLeaveTimeout);
+        this.mouseLeaveTimeout = null;
+      }
+    }
+  }
+
   public render() {
     const {
       renderPicker,
@@ -186,29 +213,6 @@ class InputView extends React.Component<InputViewProps, any> {
       ...rest
     } = this.props;
 
-    const onMouseLeave = (e, ...args) => {
-      if (e.relatedTarget !== this.popupNode && e.relatedTarget !== this.inputNode) {
-        if (closeOnMouseLeave) {
-          invoke(this.props, 'onMouseLeave', e, ...args);
-          this.mouseLeaveTimeout = window.setTimeout(() => {
-            if (this.mouseLeaveTimeout) {
-              closePopup();
-            }
-          }, 500);
-        }
-      }
-    };
-
-    const onMouseEnter = (e, ...args) => {
-      invoke(this.props, 'onMouseEnter', e, ...args);
-      if (e.currentTarget === this.popupNode || e.currentTarget === this.inputNode) {
-        if (closeOnMouseLeave) {
-          clearTimeout(this.mouseLeaveTimeout);
-          this.mouseLeaveTimeout = null;
-        }
-      }
-    };
-
     const inputElement = (
       <FormInputWithRef
         {...rest}
@@ -226,7 +230,7 @@ class InputView extends React.Component<InputViewProps, any> {
           openPopup();
         }}
         onBlur={this.onBlur}
-        onMouseEnter={onMouseEnter}
+        onMouseEnter={this.onMouseEnter}
         onChange={onChange} />
     );
 
@@ -269,8 +273,8 @@ class InputView extends React.Component<InputViewProps, any> {
           >
             <div
               onBlur={this.onBlur}
-              onMouseLeave={onMouseLeave}
-              onMouseEnter={onMouseEnter}
+              onMouseLeave={this.onMouseLeave}
+              onMouseEnter={this.onMouseEnter}
               style={{ outline: 'none' }}
               tabIndex={0}
               ref={(ref) => this.popupNode = ref}
