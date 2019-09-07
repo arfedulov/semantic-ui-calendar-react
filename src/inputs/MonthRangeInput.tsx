@@ -135,6 +135,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
     let { initialDate } = this.props;
 
     const disableParsed = parseArrayOrValue(disable, dateFormat, localization);
+    const minDateParsed = parseValue(minDate, dateFormat, localization);
 
     const pickerProps = {
       isPickerInFocus: this.isPickerInFocus,
@@ -157,6 +158,8 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
     if (this.state.mode === 'year') {
       if (this.state.displayYear) {
         initializeWith = moment(new Date(this.state.displayYear, 0, 1));
+      } else if (minDateParsed) {
+        initializeWith = minDateParsed;
       } else {
         initializeWith = buildValue(this.state.inputStart, initialDate, localization, dateFormat);
       }
@@ -172,6 +175,8 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
     } else {
       if (this.state.displayYear > 0) {
         initialDate = moment(new Date(this.state.displayYear, 0, 1));
+      } else if (minDateParsed) {
+        initialDate = minDateParsed;
       }
 
       initializeWith = buildValue(initialDate, this.state.inputStart, localization, dateFormat);

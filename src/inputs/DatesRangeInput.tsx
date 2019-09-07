@@ -202,13 +202,15 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
 
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
     const minDateParsed = parseValue(minDate, dateFormat, localization);
-    const maxDateParsed = parseValue(maxDate, dateFormat, localization);
 
-    let initializeWith;
+    let initializeWith: Moment;
+
     switch (this.state.mode) {
       case 'year':
         if (this.state.displayYear) {
           initializeWith = moment(new Date(this.state.displayYear, 0, 1))
+        } else if (minDateParsed) {
+          initializeWith = minDateParsed;
         } else {
           initializeWith = buildValue(this.state.inputStart, initialDate, localization, dateFormat);
         }
@@ -223,6 +225,8 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
       case 'month':
         if (this.state.displayYear) {
           initializeWith = moment(new Date(this.state.displayYear, 0, 1))
+        } else if (minDateParsed) {
+          initializeWith = minDateParsed;
         } else {
           initializeWith = buildValue(this.state.inputStart, initialDate, localization, dateFormat);
         }
@@ -238,16 +242,13 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
         )
       case 'day':
       default:
-        if (!initialDate && minDateParsed || maxDateParsed) {
-          initializeWith = minDateParsed || maxDateParsed;
-        } else {
-
-          if (this.state.displayYear > 0 && this.state.displayMonth >= 0) {
-            initialDate = moment(new Date(this.state.displayYear, this.state.displayMonth, 1));
-          }
-
-          initializeWith = buildValue(initialDate, this.state.inputStart, localization, dateFormat);
+        if (this.state.displayYear > 0 && this.state.displayMonth >= 0) {
+          initialDate = moment(new Date(this.state.displayYear, this.state.displayMonth, 1));
+        } else if (minDateParsed) {
+          initialDate = minDateParsed;
         }
+
+        initializeWith = buildValue(initialDate, this.state.inputStart, localization, dateFormat);
 
         return (
           <DatesRangePicker
