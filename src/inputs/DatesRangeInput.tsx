@@ -103,7 +103,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
   constructor(props) {
     super(props);
 
-    let {
+    const {
       start,
       end,
     } = parseDatesRange(this.props.value, this.props.dateFormat);
@@ -208,7 +208,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
     switch (this.state.mode) {
       case 'year':
         if (this.state.displayYear) {
-          initializeWith = moment(new Date(this.state.displayYear, 0, 1))
+          initializeWith = moment(new Date(this.state.displayYear, 0, 1));
         } else if (minDateParsed) {
           initializeWith = minDateParsed;
         } else {
@@ -221,10 +221,10 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
           initializeWith={initializeWith}
           disable={getDisabledYears(disableParsed)}
         />
-        )
+        );
       case 'month':
         if (this.state.displayYear) {
-          initializeWith = moment(new Date(this.state.displayYear, 0, 1))
+          initializeWith = moment(new Date(this.state.displayYear, 0, 1));
         } else if (minDateParsed) {
           initializeWith = minDateParsed;
         } else {
@@ -239,7 +239,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
             initializeWith={initializeWith}
             disable={getDisabledMonths(disableParsed)}
           />
-        )
+        );
       case 'day':
       default:
         if (this.state.displayYear > 0 && this.state.displayMonth >= 0) {
@@ -277,9 +277,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
     }
   }
 
-
-  private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-    { value }: DatesRangePickerOnChangeData) => {
+  private handleSelect = (e: React.SyntheticEvent<HTMLElement>, { value }: DatesRangePickerOnChangeData) => {
     const { dateFormat } = this.props;
     const {
       start,
@@ -288,7 +286,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
 
     this.setState({
       inputStart: start,
-      inputEnd: end
+      inputEnd: end,
     }, () => this.state.mode !== 'day' && this.switchToNextMode());
 
     let outputString = '';
@@ -307,19 +305,19 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
 
   private setYear = (e: React.SyntheticEvent<HTMLElement>, { value }: BasePickerOnChangeData): void => {
     this.setState({
-      displayYear: value.year
+      displayYear: value.year,
     }, () => this.switchToNextMode());
   }
 
   private setMonth = (e: React.SyntheticEvent<HTMLElement>, { value }: BasePickerOnChangeData): void => {
     const {
       year,
-      month
+      month,
     } = value;
 
     this.setState({
       displayYear: year,
-      displayMonth: month
+      displayMonth: month,
     }, () => this.switchToNextMode());
   }
 
@@ -353,7 +351,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, DatesRangeInputSta
 
     this.setState({
       inputStart: start,
-      inputEnd: end
+      inputEnd: end,
     });
 
     this.props.onChange(e, data);

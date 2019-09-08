@@ -35,6 +35,7 @@ function getNextMode(currentMode: CalendarMode) {
   if (currentMode === 'year') {
     return 'month';
   }
+
   return 'year';
 }
 
@@ -42,6 +43,7 @@ function getPrevMode(currentMode: CalendarMode) {
   if (currentMode === 'month') {
     return 'year';
   }
+
   return 'month';
 }
 
@@ -79,7 +81,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
       inputStart: undefined,
       inputEnd: undefined,
       displayYear: undefined,
-      popupIsClosed: true
+      popupIsClosed: true,
     };
   }
 
@@ -180,6 +182,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
       }
 
       initializeWith = buildValue(initialDate, this.state.inputStart, localization, dateFormat);
+
       return (
         <MonthRangePicker
           isPickerInFocus={this.isPickerInFocus}
@@ -201,8 +204,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
     }
   }
 
-  private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-    { value }: BasePickerOnChangeData) => {
+  private handleSelect = (e: React.SyntheticEvent<HTMLElement>, { value }: BasePickerOnChangeData) => {
     const { dateFormat } = this.props;
     const {
       start,
@@ -211,7 +213,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
 
     this.setState({
       inputStart: start,
-      inputEnd: end
+      inputEnd: end,
     }, () => this.state.mode !== 'month' && this.switchToNextMode());
 
     let outputString = '';
@@ -229,7 +231,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
 
   private setYear = (e: React.SyntheticEvent<HTMLElement>, { value }: BasePickerOnChangeData): void => {
     this.setState({
-      displayYear: value.year
+      displayYear: value.year,
     }, () => this.switchToNextMode());
   }
   private switchToNextModeUndelayed = (): void => {
@@ -262,7 +264,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, MonthRangeInputSta
 
     this.setState({
       inputStart: start,
-      inputEnd: end
+      inputEnd: end,
     });
 
     this.props.onChange(e, data);
