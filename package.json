@@ -1,7 +1,7 @@
 {
-  "name": "semantic-ui-calendar-react",
+  "name": "semantic-ui-calendar-react-new",
   "sideEffects": false,
-  "version": "0.15.3",
+  "version": "0.16.0",
   "description": "date/time picker built from semantic-ui elements",
   "main": "dist/commonjs/index.js",
   "scripts": {
@@ -25,10 +25,10 @@
     "datepicker"
   ],
   "types": "./dist/types/index.d.ts",
-  "author": "Artem Fedulov <arfedulov@gmail.com>",
-  "homepage": "https://github.com/arfedulov/semantic-ui-calendar-react#readme",
+  "author": "Yujie Zhe <richardzhe@hotmail.com>",
+  "homepage": "https://github.com/zheyujie/semantic-ui-calendar-react#readme",
   "bugs": {
-    "url": "https://github.com/arfedulov/semantic-ui-calendar-react/issues"
+    "url": "https://github.com/zheyujie/semantic-ui-calendar-react/issues"
   },
   "files": [
     "src",
@@ -36,7 +36,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/arfedulov/semantic-ui-calendar-react.git"
+    "url": "https://github.com/zheyujie/semantic-ui-calendar-react.git"
   },
   "license": "MIT",
   "peerDependencies": {
