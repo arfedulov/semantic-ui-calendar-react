@@ -11,6 +11,12 @@ export const TIME_FORMAT = {
   ampm: 'hh:mm a',
 };
 
+export const TIME_FORMAT_WITH_SECONDS = {
+  24: 'HH:mm:ss',
+  AMPM: 'hh:mm:ss A',
+  ampm: 'hh:mm:ss a',
+}
+
 type ParseValueData =
   | string
   | moment.Moment
@@ -58,6 +64,7 @@ interface DateParams {
   date?: number;
   hour?: number;
   minute?: number;
+  second?: number;
 }
 
 interface GetInitializerParams {

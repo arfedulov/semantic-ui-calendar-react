@@ -6,7 +6,7 @@ import sortBy from 'lodash/sortBy';
 
 import * as React from 'react';
 
-import MinuteView from '../../views/MinuteView';
+import SecondView from '../../views/SecondView';
 import {
   BasePickerOnChangeData,
   BasePickerProps,
@@ -25,32 +25,32 @@ import {
   isPrevPageAvailable,
 } from './sharedFunctions';
 
-const MINUTES_STEP = 5;
-const MINUTES_ON_PAGE = 12;
+const SECONDS_STEP = 5;
+const SECONDS_ON_PAGE = 12;
 const PAGE_WIDTH = 3;
 
-type MinutePickerProps = BasePickerProps
+type SecondPickerProps = BasePickerProps
   & MinMaxValueProps
   & DisableValuesProps
   & TimePickerProps
   & OptionalHeaderProps;
 
-export interface MinutePickerOnChangeData extends BasePickerOnChangeData {
+export interface SecondPickerOnChangeData extends BasePickerOnChangeData {
   value: {
     year: number,
     month: number,
     date: number,
     hour: number,
     minute: number,
+    second: number,
   };
 }
 
-class MinutePicker
-  extends SingleSelectionPicker<MinutePickerProps>
+class SecondPicker
+  extends SingleSelectionPicker<SecondPickerProps>
   implements ProvideHeadingValue {
-  public static readonly defaultProps: { timeFormat: TimeFormat, disableSecond: boolean } = {
+  public static readonly defaultProps: { timeFormat: TimeFormat } = {
     timeFormat: '24',
-    disableSecond: true,
   };
 
   constructor(props) {
@@ -78,7 +78,7 @@ class MinutePicker
     } = this.props;
 
     return (
-      <MinuteView
+      <SecondView
         { ...rest }
         values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
@@ -105,23 +105,25 @@ class MinutePicker
 
   protected buildCalendarValues(): string[] {
     /*
-      Return array of minutes (strings) like ['16:15', '16:20', ...]
+      Return array of seconds (strings) like ['15', '20', ...]
       that used to populate calendar's page.
     */
-    const { disableSecond } = this.props;
-
     const hour = this.state.date.hour() < 10
       ? '0' + this.state.date.hour().toString()
       : this.state.date.hour().toString();
 
-    return range(0, 60, MINUTES_STEP)
-      .map((minute) => `${minute < 10 ? '0' : ''}${minute}`)
-      .map((minute) => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat, !disableSecond ? '00' : null));
+    const minute = this.state.date.minute() < 10
+      ? '0' + this.state.date.minute().toString()
+      : this.state.date.minute().toString();
+
+    return range(0, 60, SECONDS_STEP)
+      .map((second) => `${second < 10 ? '0' : ''}${second}`)
+      .map((second) => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat, second));
   }
 
   protected getSelectableCellPositions(): number[] {
     const disabled = this.getDisabledPositions();
-    const all = range(0, MINUTES_ON_PAGE);
+    const all = range(0, SECONDS_ON_PAGE);
     if (disabled) {
       return all.filter((pos) => {
         return disabled.indexOf(pos) < 0;
@@ -133,11 +135,11 @@ class MinutePicker
 
   protected getInitialDatePosition(): number {
     const selectable = this.getSelectableCellPositions();
-    if (selectable.indexOf(getMinuteCellPosition(this.state.date.minute())) < 0) {
+    if (selectable.indexOf(getSecondCellPosition(this.state.date.second())) < 0) {
       return selectable[0];
     }
 
-    return getMinuteCellPosition(this.state.date.minute());
+    return getSecondCellPosition(this.state.date.second());
   }
 
   protected getDisabledPositions(): number[] {
@@ -154,20 +156,20 @@ class MinutePicker
       disabledByDisable = concat(
         disabledByDisable,
         disable.filter((date) => date.isSame(this.state.date, 'day'))
-          .map((date) => getMinuteCellPosition(date.minute())));
+          .map((date) => getSecondCellPosition(date.second())));
     }
     if (minDate) {
-      if (minDate.isSame(this.state.date, 'hour')) {
+      if (minDate.isSame(this.state.date, 'minute')) {
         disabledByMinDate = concat(
           disabledByMinDate,
-          range(0 , minDate.minute()).map((m) => getMinuteCellPosition(m)));
+          range(0 , minDate.second()).map((s) => getSecondCellPosition(s)));
       }
     }
     if (maxDate) {
-      if (maxDate.isSame(this.state.date, 'hour')) {
+      if (maxDate.isSame(this.state.date, 'minute')) {
         disabledByMaxDate = concat(
           disabledByMaxDate,
-          range(maxDate.minute() + MINUTES_STEP, 60).map((m) => getMinuteCellPosition(m)));
+          range(maxDate.second() + SECONDS_STEP, 60).map((s) => getSecondCellPosition(s)));
       }
     }
     const result = sortBy(
@@ -180,12 +182,12 @@ class MinutePicker
 
   protected getActiveCellPosition(): number {
     /*
-      Return position of a minute that should be displayed as active
+      Return position of a second that should be displayed as active
       (position in array returned by `this.buildCalendarValues`).
     */
     const { value } = this.props;
     if (value && value.isSame(this.state.date, 'date')) {
-      return Math.floor(this.props.value.minutes() / MINUTES_STEP);
+      return Math.floor(this.props.value.seconds() / SECONDS_STEP);
     }
   }
 
@@ -198,14 +200,15 @@ class MinutePicker
   }
 
   protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
-    const data: MinutePickerOnChangeData = {
+    const data: SecondPickerOnChangeData = {
       ...this.props,
       value: {
         year: this.state.date.year(),
         month: this.state.date.month(),
         date: this.state.date.date(),
         hour: this.state.date.hour(),
-        minute: this.buildCalendarValues().indexOf(value) * MINUTES_STEP,
+        minute: this.state.date.minute(),
+        second: this.buildCalendarValues().indexOf(value) * SECONDS_STEP,
       },
     };
     this.props.onChange(e, data);
@@ -234,8 +237,8 @@ class MinutePicker
   }
 }
 
-function getMinuteCellPosition(minute: number): number {
-  return Math.floor(minute / MINUTES_STEP);
+function getSecondCellPosition(second: number): number {
+  return Math.floor(second / SECONDS_STEP);
 }
 
-export default MinutePicker;
+export default SecondPicker;

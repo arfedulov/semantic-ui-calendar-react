@@ -214,6 +214,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``closeOnMouseLeave`` | {bool} Should close when cursor leaves calendar popup. Default: ``true`` |
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 | ``disableMinute`` | {bool} If ``true``, minutes picker won't be shown after picking the hour. Default: ``false`` |
+| ``disableSecond`` | {bool} If ``true``, seconds picker won't be shown after picking the minute. Default: ``true`` |
 | ``mountNode`` | {any} The node where the picker should mount. |
 | ``onClear`` | {func} Called after clear icon has clicked. |
 | ``clearable`` | {boolean} Using the clearable setting will let users remove their selection from a calendar. |
@@ -238,6 +239,7 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``timeFormat`` | {string} One of ["24", "AMPM", "ampm"]. Default: ``"24"`` |
 | ``divider`` | {string} Date and time divider. Default: `` `` |
 | ``disableMinute`` | {bool} If ``true``, minutes picker won't be shown after picking the hour. Default: ``false`` |
+| ``disableSecond`` | {bool} If ``true``, seconds picker won't be shown after picking the minute. Default: ``true`` |
 | ``popupPosition``| {string} One of ['top left', 'top right', 'bottom left', 'bottom right', 'right center', 'left center', 'top center', 'bottom center']. Default: ``top left``|
 | ``inline`` | {bool} If ``true`` inline picker displayed. Default: ``false`` |
 | ``startMode`` | {string} Display mode to start. One of ['year', 'month', 'day']. Default: ``day``   |
