@@ -48,8 +48,9 @@ export interface HourPickerOnChangeData extends BasePickerOnChangeData {
 class HourPicker
   extends SingleSelectionPicker<HourPickerProps>
   implements ProvideHeadingValue {
-  public static readonly defaultProps: { timeFormat: TimeFormat } = {
+  public static readonly defaultProps: { timeFormat: TimeFormat, disableSecond: boolean } = {
     timeFormat: '24',
+    disableSecond: true,
   };
 
   constructor(props) {
@@ -72,6 +73,7 @@ class HourPicker
       disable,
       timeFormat,
       localization,
+      disableSecond,
       ...rest
     } = this.props;
 
@@ -106,9 +108,10 @@ class HourPicker
       Return array of hours (strings) like ['16:00', '17:00', ...]
       that used to populate calendar's page.
     */
+    const { disableSecond } = this.props;
     return range(0, 24).map((h) => {
       return `${h < 10 ? '0' : ''}${h}`;
-    }).map((hour) => buildTimeStringWithSuffix(hour, '00', this.props.timeFormat));
+    }).map((hour) => buildTimeStringWithSuffix(hour, '00', this.props.timeFormat, !disableSecond ? '00' : null ));
   }
 
   protected getSelectableCellPositions(): number[] {

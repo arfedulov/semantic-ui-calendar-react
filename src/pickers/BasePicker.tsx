@@ -28,6 +28,8 @@ export interface BasePickerOnChangeData {
     hour?: number;
     /** Minute (0 - 59). */
     minute?: number;
+    /** Second (0 - 59). */
+    second?: number;
     /** Selected start date. */
     start?: Moment;
     /** Selected end date. */
@@ -92,6 +94,7 @@ export interface MarkedValuesProps {
 
 export interface TimePickerProps {
   timeFormat: TimeFormat;
+  disableSecond: boolean;
 }
 
 export type TimeFormat = 'ampm' | 'AMPM' | '24';

@@ -12,6 +12,7 @@ import DayPicker from '../pickers/dayPicker/DayPicker';
 import MonthPicker from '../pickers/monthPicker/MonthPicker';
 import HourPicker from '../pickers/timePicker/HourPicker';
 import MinutePicker from '../pickers/timePicker/MinutePicker';
+import SecondPicker from '../pickers/timePicker/SecondPicker';
 import YearPicker from '../pickers/YearPicker';
 import InputView from '../views/InputView';
 import BaseInput, {
@@ -37,6 +38,7 @@ import {
   parseArrayOrValue,
   parseValue,
   TIME_FORMAT,
+  TIME_FORMAT_WITH_SECONDS,
   buildValue,
   dateValueToString,
 } from './parse';
@@ -50,14 +52,16 @@ type CalendarMode =
   | 'month'
   | 'day'
   | 'hour'
-  | 'minute';
+  | 'minute'
+  | 'second';
 
 const nextMode: { [key: string]: CalendarMode } = {
   year: 'month',
   month: 'day',
   day: 'hour',
   hour: 'minute',
-  minute: 'year',
+  minute: 'second',
+  second: 'year'
 };
 
 function getNextMode(currentMode: CalendarMode): CalendarMode {
@@ -65,11 +69,12 @@ function getNextMode(currentMode: CalendarMode): CalendarMode {
 }
 
 const prevMode: { [key: string]: CalendarMode } = {
+  second: 'minute',
   minute: 'hour',
   hour: 'day',
   day: 'month',
   month: 'year',
-  year: 'minute',
+  year: 'second',
 };
 
 function getPrevMode(currentMode: CalendarMode): CalendarMode {
@@ -93,6 +98,8 @@ export interface DateTimeInputProps extends
   dateTimeFormat?: string;
   /** If true, minutes picker won't be shown after picking the hour. Default: false */
   disableMinute?: boolean;
+  /** If true, seconds picker won't be shown after picking the minute. Default: true */
+  disableSecond?: boolean;
 }
 
 export type DateTimeInputOnChangeData = DateTimeInputProps;
@@ -104,6 +111,7 @@ interface DateTimeInputState extends BaseInputState {
   date: number;
   hour: number;
   minute: number;
+  second: number;
 }
 
 class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
@@ -121,6 +129,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     icon: 'calendar',
     preserveViewMode: true,
     disableMinute: false,
+    disableSecond: true,
   };
 
   public static readonly propTypes = {
@@ -150,6 +159,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       date: parsedValue ? parsedValue.date() : undefined,
       hour: parsedValue ? parsedValue.hour() : undefined,
       minute: parsedValue ? parsedValue.minute() : undefined,
+      second: parsedValue ? parsedValue.second() : undefined,
       popupIsClosed: true,
     };
   }
@@ -165,6 +175,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
           date: parsed.date(),
           hour: parsed.hour(),
           minute: parsed.minute(),
+          second: parsed.second(),
         });
       }
     }
@@ -189,6 +200,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       localization,
       onChange,
       disableMinute,
+      disableSecond,
       ...rest
     } = this.props;
 
@@ -210,7 +222,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
   private parseInternalValue(): Moment {
     /*
       Creates moment instance from values stored in component's state
-      (year, month, date, hour, minute) in order to pass this moment instance to
+      (year, month, date, hour, minute, second) in order to pass this moment instance to
       underlying picker.
       Return undefined if none of these state fields has value.
     */
@@ -220,13 +232,15 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       date,
       hour,
       minute,
+      second,
     } = this.state;
     if (!isNil(year)
       || !isNil(month)
       || !isNil(date)
       || !isNil(hour)
-      || !isNil(minute)) {
-      return moment({ year, month, date, hour, minute });
+      || !isNil(minute)
+      || !isNil(second)) {
+      return moment({ year, month, date, hour, minute, second });
     }
   }
 
@@ -236,9 +250,11 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       divider,
       timeFormat,
       dateTimeFormat,
+      disableSecond
     } = this.props;
 
-    return dateTimeFormat || `${dateFormat}${divider}${TIME_FORMAT[timeFormat]}`;
+    return dateTimeFormat
+    || `${dateFormat}${divider}${disableSecond ? TIME_FORMAT[timeFormat] : TIME_FORMAT_WITH_SECONDS[timeFormat]}`;
   }
 
   private getPicker(): React.ReactNode {
@@ -256,6 +272,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       tabIndex,
       pickerStyle,
       pickerWidth,
+      disableSecond,
     } = this.props;
     const dateTimeFormat = this.getDateTimeFormat();
     const pickerProps = {
@@ -312,18 +329,32 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
           hasHeader
           {...pickerProps}
           disable={disableParsed}
+          disableSecond={disableSecond}
+        />
+      );
+    }
+    if (mode === 'minute') {
+      return (
+        <MinutePicker
+        timeFormat={this.props.timeFormat}
+        hasHeader
+        {...pickerProps}
+        disable={disableParsed}
+        disableSecond={disableSecond}
         />
       );
     }
 
     return (
-      <MinutePicker
-        timeFormat={this.props.timeFormat}
-        hasHeader
-        {...pickerProps}
-        disable={disableParsed}
+      <SecondPicker
+      timeFormat={this.props.timeFormat}
+      hasHeader
+      {...pickerProps}
+      disable={disableParsed}
+      disableSecond={disableSecond}
       />
     );
+
   }
 
   private switchToNextModeUndelayed = (): void => {
@@ -359,16 +390,19 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
 
   private handleSelectUndelayed = (e: React.SyntheticEvent<HTMLElement>,
                                    { value }: BasePickerOnChangeData): void => {
-    const { closable, disableMinute } = this.props;
+    const { closable, disableMinute, disableSecond } = this.props;
 
-    const closeCondA = closable && this.state.mode === 'minute';
+    const closeCondA = closable && this.state.mode === 'second';
     const closeCondB = closable && disableMinute && this.state.mode === 'hour';
-    if (closeCondA || closeCondB) {
+    const closeCondC = closable && disableSecond && this.state.mode === 'minute';
+    if (closeCondA || closeCondB || closeCondC) {
       this.closePopup();
     }
 
-    const endAtMode = disableMinute ? 'hour' : 'minute';
-
+    let endAtMode = disableMinute ? 'hour' : 'minute';
+    if (endAtMode === 'minute') {
+      endAtMode = disableSecond ? 'minute' : 'second';
+    }
     this.setState((prevState) => {
       const {
         mode,
@@ -385,6 +419,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         date: value.date,
         hour: value.hour,
         minute: value.minute,
+        second: value.second,
       };
     }, () => this.state.mode !== endAtMode && this.switchToNextMode());
   }
@@ -399,6 +434,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         date: parsedValue.date(),
         hour: parsedValue.hour(),
         minute: parsedValue.minute(),
+        second: parsedValue.second(),
       });
     }
     invoke(this.props, 'onChange', e, { ...this.props, value });

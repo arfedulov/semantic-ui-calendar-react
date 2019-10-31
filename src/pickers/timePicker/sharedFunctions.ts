@@ -5,23 +5,24 @@ import { TimeFormat } from '../BasePicker';
 export function buildTimeStringWithSuffix(
   hour: string,
   minute: string,
-  timeFormat: TimeFormat): string {
+  timeFormat: TimeFormat,
+  second?: string): string {
   if (timeFormat === 'ampm') {
     if (parseInt(hour, 10) < 12) {
-      return `${convertHourTo_12_Format(hour)}:${minute} am`;
+      return `${convertHourTo_12_Format(hour)}:${minute}${second ? ':'+ second : ''} am`;
     }
 
-    return `${convertHourTo_12_Format(hour)}:${minute} pm`;
+    return `${convertHourTo_12_Format(hour)}:${minute}${second ? ':'+ second : ''} pm`;
   }
   if (timeFormat === 'AMPM') {
     if (parseInt(hour, 10) < 12) {
-      return `${convertHourTo_12_Format(hour)}:${minute} AM`;
+      return `${convertHourTo_12_Format(hour)}:${minute}${second ? ':'+ second : ''} AM`;
     }
 
-    return `${convertHourTo_12_Format(hour)}:${minute} PM`;
+    return `${convertHourTo_12_Format(hour)}:${minute}${second ? ':'+ second : ''} PM`;
   }
 
-  return `${hour}:${minute}`;
+  return `${hour}:${minute}${second ? ':'+ second : ''}`;
 }
 
 function convertHourTo_12_Format(hour: string): string {

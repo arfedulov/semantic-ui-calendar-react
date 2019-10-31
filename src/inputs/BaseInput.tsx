@@ -169,6 +169,8 @@ export interface TimeRelatedProps {
   timeFormat?: TimeFormat;
   /** If true, minutes picker won't be shown after picking the hour. */
   disableMinute?: boolean;
+  /** If true, seconds picker won't be shown after picking the hour or minute. */
+  disableSecond?: boolean;
 }
 
 export const TimeRelatedPropTypes = {
@@ -176,6 +178,8 @@ export const TimeRelatedPropTypes = {
   timeFormat: PropTypes.oneOf([ 'ampm', 'AMPM', '24']),
   /** If true, minutes picker won't be shown after picking the hour. */
   disableMinute: PropTypes.bool,
+  /** If true, seconds picker won't be shown after picking the hour or minute. */
+  disableSecond: PropTypes.bool,
 };
 
 export interface DisableValuesProps {
