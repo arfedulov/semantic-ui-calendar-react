@@ -1,8 +1,8 @@
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import * as React from 'react';
 
 import YearPicker, {
-  YearPickerOnChangeData,
+  YearPickerOnChangeData, YEARS_ON_PAGE,
 } from '../pickers/YearPicker';
 import InputView from '../views/InputView';
 import BaseInput, {
@@ -77,6 +77,23 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
     );
   }
 
+  protected getInitialDateInBounds = (): Moment => {
+    const {
+      initialDate,
+      minDate,
+      maxDate,
+    } = this.props;
+
+    let date = moment(initialDate);
+    if (minDate && moment(minDate).year() % YEARS_ON_PAGE > date.year() % YEARS_ON_PAGE) {
+      date = moment(minDate);
+    } else if (maxDate && moment(maxDate).year() % YEARS_ON_PAGE < date.year() % YEARS_ON_PAGE) {
+      date = moment(maxDate);
+    }
+
+    return date;
+  }
+
   private getPicker = () => {
     const {
       value,
@@ -96,7 +113,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         onCalendarViewMount={this.onCalendarViewMount}
         closePopup={this.closePopup}
         onChange={this.handleSelect}
-        initializeWith={buildValue(value, initialDate, localization, dateFormat)}
+        initializeWith={buildValue(value, this.getInitialDateInBounds(), localization, dateFormat)}
         value={buildValue(value, null, localization, dateFormat, null)}
         disable={parseArrayOrValue(disable, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}

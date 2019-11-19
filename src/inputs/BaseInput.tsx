@@ -1,4 +1,4 @@
-import { default as moment, Moment } from 'moment';
+import { default as moment, Moment, unitOfTime } from 'moment';
 import * as React from 'react';
 import {
   SemanticTRANSITIONS,
@@ -325,6 +325,36 @@ abstract class BaseInput<P extends BaseInputProps,
 
   protected onInputViewMount = (inputNode: HTMLElement): void => {
     this.inputNode = inputNode;
+  }
+
+  /**
+   * Returns an initial date within the boundaries of minDate and maxDate for given units
+   * @param units {moment.unitOfTime.All[]} Units used to compare, ordered from largest to smallest
+   */
+  protected getInitialDateInBounds = (units: unitOfTime.All[]): Moment => {
+    const {
+      initialDate,
+      minDate,
+      maxDate,
+    } = this.props;
+
+    let date = moment(initialDate);
+    // Check, for each units in order, if minDate has a unit over current inialDate's one,
+    const leftOutOfBounds = minDate && units.reduce(
+      (outOfBound: boolean, unit) => outOfBound || moment(minDate).get(unit) > date.get(unit),
+      false);
+    // Check if maxDate has a unit under initialDate's one
+    const rightOutOfBounds = maxDate && units.reduce(
+      (outOfBound: boolean, unit) => outOfBound || moment(maxDate).get(unit) < date.get(unit),
+      false);
+
+    if (leftOutOfBounds) {
+      date = moment(minDate);
+    } else if (rightOutOfBounds) {
+      date = moment(maxDate);
+    }
+
+    return date;
   }
 }
 
