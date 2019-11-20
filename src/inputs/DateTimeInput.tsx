@@ -269,7 +269,11 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closePopup: this.closePopup,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateTimeFormat),
+      initializeWith: buildValue(
+        this.parseInternalValue(),
+        this.getInitialDateInBounds(['year', 'month']),
+        localization,
+        dateTimeFormat),
       value: buildValue(value, null, localization, dateTimeFormat, null),
       minDate: parseValue(minDate, dateTimeFormat, localization),
       maxDate: parseValue(maxDate, dateTimeFormat, localization),

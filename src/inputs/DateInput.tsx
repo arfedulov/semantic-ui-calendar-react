@@ -220,7 +220,11 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       pickerStyle,
       onChange: this.handleSelect,
       onHeaderClick: this.switchToPrevMode,
-      initializeWith: buildValue(this.parseInternalValue(), initialDate, localization, dateFormat),
+      initializeWith: buildValue(
+        this.parseInternalValue(),
+        this.getInitialDateInBounds(['year', 'month']),
+        localization,
+        dateFormat),
       value: buildValue(value, null, localization, dateFormat, null),
       enable: parseArrayOrValue(enable, dateFormat, localization),
       minDate: parseValue(minDate, dateFormat, localization),

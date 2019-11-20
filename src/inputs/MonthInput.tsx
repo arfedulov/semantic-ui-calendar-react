@@ -99,7 +99,7 @@ class MonthInput extends BaseInput<MonthInputProps, BaseInputState> {
         closePopup={this.closePopup}
         hasHeader={false}
         onChange={this.handleSelect}
-        initializeWith={buildValue(value, initialDate, localization, dateFormat)}
+        initializeWith={buildValue(value, this.getInitialDateInBounds(['year']), localization, dateFormat)}
         value={buildValue(value, null, localization, dateFormat, null)}
         disable={parseArrayOrValue(disable, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}
