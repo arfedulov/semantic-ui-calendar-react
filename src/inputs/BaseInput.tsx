@@ -64,7 +64,7 @@ export interface BaseInputProps {
   /** Duration of the CSS transition animation in milliseconds. */
   duration?: number;
   /** Named animation event to used. Must be defined in CSS. */
-  animation?: SemanticTRANSITIONS;
+  animation?: SemanticTRANSITIONS | null;
   /** Moment date localization. */
   localization?: string;
   /** Try to prevent mobile keyboard appearing. */
