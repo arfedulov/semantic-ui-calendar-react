@@ -133,7 +133,7 @@ export const MarkedValuesPropTypes = {
 
 export interface DottedProps {
   /** Array of objects specifying dot positions and colors. */
-  dots?: { date: Moment | Date; color: string }[];
+  dots?: { dates: Moment[] | Date[]; color: string }[];
 }
 
 export const DottedPropTypes = {

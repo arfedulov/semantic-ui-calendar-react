@@ -146,7 +146,7 @@ function hasDots(rowIndex: number, rowWidth: number, colIndex: number, dots: any
   }
 
   for (const dot of dots) {
-    if (rowIndex * rowWidth + colIndex === dot.index) {
+    if (dot.indexes.includes(rowIndex * rowWidth + colIndex)) {
       dotsArray.push(dot);
     }
   }

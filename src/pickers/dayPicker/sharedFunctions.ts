@@ -160,7 +160,7 @@ export function getMarkedDays(marked: Moment[], currentDate: Moment, daysOnPage:
 }
 
 /** Return day positions that should contain dots. */
-export function getDottedDays(dots: { date: Moment; color: string }[], currentDate: Moment, daysOnPage: number): object[] {
+export function getDottedDays(dots: { dates: Moment[]; color: string }[], currentDate: Moment, daysOnPage: number): object[] {
   if (dots.length === 0) {
     return [];
   }
@@ -179,13 +179,18 @@ export function getDottedDays(dots: { date: Moment; color: string }[], currentDa
     allDatesNumb[i] = 0;
   }
 
-  const dottedIndexes = dots
-    .filter(dot => dot.date.isSame(currentDate, 'month'))
-    .map(dot => {
-      return { ...dot, index: allDatesNumb.indexOf(dot.date.date()) };
-    });
+  const dotsWithIndexes = dots.map(dot => {
+    return {
+      ...dot,
+      indexes: dot.dates
+        .filter(date => date.isSame(currentDate, 'month'))
+        .map(date => date.date())
+        .map(date => allDatesNumb.indexOf(date))
+        .filter(index => includes(activeDayPositions, index)),
+    };
+  });
 
-  return dottedIndexes.filter(dot => includes(activeDayPositions, dot.index));
+  return dotsWithIndexes;
 }
 
 export function isNextPageAvailable(date: Moment, maxDate: Moment): boolean {

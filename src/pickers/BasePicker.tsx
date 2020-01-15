@@ -90,7 +90,7 @@ export interface MarkedValuesProps {
 
 export interface DottedProps {
   /** Array of objects specifying dot position and color */
-  dots?: { date: Moment; color: string }[];
+  dots?: { dates: Moment[]; color: string }[];
 }
 
 export interface TimePickerProps {

@@ -59,7 +59,7 @@ export function parseArrayOfObjects(data: parseArrayOfObjectsData, dateFormat: s
   if (isArray(data)) {
     let parsed = [...data];
     parsed.forEach(item => {
-      item.date = parseValue(item.date, dateFormat, localization);
+      item.dates = item.dates.map(date => parseValue(date, dateFormat, localization));
     });
     return parsed;
   }

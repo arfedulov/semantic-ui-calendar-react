@@ -250,11 +250,11 @@ class DateTimeFormInline extends React.Component<any, any> {
           markColor="orange"
           dots={[
             {
-              date: new Date('Wed Jan 15 2020'),
+              dates: [new Date('Jan 15 2020'), new Date('Jan 16 2020')],
               color: 'red',
             },
             {
-              date: new Date(),
+              dates: [new Date()],
               color: 'blue',
             },
           ]}
