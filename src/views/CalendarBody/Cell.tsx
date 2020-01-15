@@ -4,11 +4,30 @@ import * as React from 'react';
 import { Table, Label } from 'semantic-ui-react';
 
 import { OnValueClickData } from '../BaseCalendarView';
+import { Moment } from 'moment';
 
 const hoverCellStyles = {
   outline: '1px solid #85b7d9',
   cursor: 'pointer',
 };
+
+const dotContainerStyles = {
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '0.3rem',
+};
+
+const dotStyles = {
+  width: '0.5em',
+  height: '0.5em',
+  padding: '0',
+};
+
+export interface DotObject {
+  date: Moment;
+  color: string;
+  index: number;
+}
 
 export interface CellWidthStyle {
   width: string;
@@ -47,21 +66,13 @@ interface CellProps {
   marked?: boolean;
   /** Color of the mark. */
   markColor?: any;
+  /** Dots to display in the cell. */
+  dots?: DotObject[];
 }
 
 class Cell extends React.Component<CellProps, any> {
   public render() {
-    const {
-      itemPosition,
-      content,
-      style,
-      onClick,
-      onHover,
-      hovered,
-      marked,
-      markColor,
-      ...rest
-    } = this.props;
+    const { itemPosition, content, style, onClick, onHover, hovered, marked, markColor, dots, ...rest } = this.props;
 
     const cellStyle = {
       ...style,
@@ -69,31 +80,34 @@ class Cell extends React.Component<CellProps, any> {
     };
 
     return (
-      <Table.Cell
-        { ...rest }
-        style={cellStyle}
-        onMouseOver={this.onCellHover}
-        onClick={this.onCellClick}>
-        { (marked && !rest.disabled) ? <Label circular color={markColor} key={content}>{content}</Label>
-          : <span className = 'suicr-content-item'>{content}</span> }
+      <Table.Cell {...rest} style={cellStyle} onMouseOver={this.onCellHover} onClick={this.onCellClick}>
+        {marked && !rest.disabled ? (
+          <Label circular color={markColor} key={content}>
+            {content}
+          </Label>
+        ) : (
+          <span className="suicr-content-item">{content}</span>
+        )}
+        {dots && !!dots.length && (
+          <div style={dotContainerStyles} className="suicr-dots-container">
+            {dots.map((dot, index) => (
+              <div key={`dot-${index}-${dot.color}`} className={`suicr-dot ui label ${dot.color}`} style={dotStyles} />
+            ))}
+          </div>
+        )}
       </Table.Cell>
     );
   }
 
-  private onCellClick = (event) => {
-    const {
-      itemPosition,
-      content,
-    } = this.props;
+  private onCellClick = event => {
+    const { itemPosition, content } = this.props;
     invoke(this.props, 'onClick', event, { ...this.props, itemPosition, value: content });
-  }
+  };
 
-  private onCellHover = (event) => {
-    const {
-      itemPosition,
-    } = this.props;
+  private onCellHover = event => {
+    const { itemPosition } = this.props;
     invoke(this.props, 'onHover', event, { ...this.props, itemPosition });
-  }
+  };
 }
 
 export default Cell;

@@ -2,16 +2,9 @@ import invoke from 'lodash/invoke';
 import * as React from 'react';
 
 import InputView from '../views/InputView';
-import {
-  parseDatesRange,
-  parseValue,
-  parseArrayOrValue,
-  buildValue,
-} from './parse';
+import { parseDatesRange, parseValue, parseArrayOrValue, parseArrayOfObjects, buildValue } from './parse';
 
-import DatesRangePicker, {
-  DatesRangePickerOnChangeData,
-} from '../pickers/dayPicker/DatesRangePicker';
+import DatesRangePicker, { DatesRangePickerOnChangeData } from '../pickers/dayPicker/DatesRangePicker';
 import BaseInput, {
   BaseInputProps,
   BaseInputPropTypes,
@@ -22,18 +15,20 @@ import BaseInput, {
   MinMaxValuePropTypes,
   MarkedValuesProps,
   MarkedValuesPropTypes,
+  DottedProps,
+  DottedPropTypes,
   RangeRelatedProps,
   RangeRelatedPropTypes,
 } from './BaseInput';
 
 const DATES_SEPARATOR = ' - ';
 
-export type DatesRangeInputProps =
-  & BaseInputProps
-  & DateRelatedProps
-  & MarkedValuesProps
-  & MinMaxValueProps
-  & RangeRelatedProps;
+export type DatesRangeInputProps = BaseInputProps &
+  DateRelatedProps &
+  MarkedValuesProps &
+  DottedProps &
+  MinMaxValueProps &
+  RangeRelatedProps;
 
 export type DatesRangeInputOnChangeData = DatesRangeInputProps;
 
@@ -75,6 +70,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       closable,
       marked,
       markColor,
+      dots,
       localization,
       allowSameEndDate,
       ...rest
@@ -99,6 +95,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       dateFormat,
       markColor,
       marked,
+      dots,
       initialDate,
       localization,
       minDate,
@@ -108,18 +105,16 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       pickerStyle,
       allowSameEndDate,
     } = this.props;
-    const {
-      start,
-      end,
-    } = parseDatesRange(value, dateFormat);
+    const { start, end } = parseDatesRange(value, dateFormat);
 
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
+    const dotsParsed = parseArrayOfObjects(dots, dateFormat, localization);
     const minDateParsed = parseValue(minDate, dateFormat, localization);
     const maxDateParsed = parseValue(maxDate, dateFormat, localization);
 
     let initializeWith;
 
-    if (!initialDate && minDateParsed || maxDateParsed) {
+    if ((!initialDate && minDateParsed) || maxDateParsed) {
       initializeWith = minDateParsed || maxDateParsed;
     } else {
       initializeWith = buildValue(start, initialDate, localization, dateFormat);
@@ -139,6 +134,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         end={end}
         marked={markedParsed}
         markColor={markColor}
+        dots={dotsParsed}
         minDate={parseValue(minDate, dateFormat, localization)}
         maxDate={parseValue(maxDate, dateFormat, localization)}
         localization={localization}
@@ -151,13 +147,9 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     );
   }
 
-  private handleSelect = (e: React.SyntheticEvent<HTMLElement>,
-                          { value }: DatesRangePickerOnChangeData) => {
+  private handleSelect = (e: React.SyntheticEvent<HTMLElement>, { value }: DatesRangePickerOnChangeData) => {
     const { dateFormat } = this.props;
-    const {
-      start,
-      end,
-    } = value;
+    const { start, end } = value;
     let outputString = '';
     if (start && end) {
       outputString = `${start.format(dateFormat)}${DATES_SEPARATOR}${end.format(dateFormat)}`;

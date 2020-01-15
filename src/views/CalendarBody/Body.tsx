@@ -6,12 +6,8 @@ import { Table } from 'semantic-ui-react';
 
 import { OnValueClickData } from '../BaseCalendarView';
 import Cell from './Cell';
-import {
-  cellStyleWidth3,
-  cellStyleWidth4,
-  cellStyleWidth7,
-  CellWidthStyle,
-} from './Cell';
+import { cellStyleWidth3, cellStyleWidth4, cellStyleWidth7, CellWidthStyle } from './Cell';
+import { Moment } from 'moment';
 
 export type BodyWidth = 3 | 4 | 7;
 
@@ -34,23 +30,21 @@ interface BodyProps {
   marked?: number[];
   /** The color of the mark that will be displayed on the calendar. */
   markColor?: string;
+  /** The dots that will appear under certain days on the calendar. */
+  dots?: object[];
+}
+
+interface DotObject {
+  date: Moment;
+  color: string;
+  index: number;
 }
 
 function Body(props: BodyProps) {
-  const {
-    data,
-    width,
-    onCellClick,
-    active,
-    disabled,
-    hovered,
-    onCellHover,
-    marked,
-    markColor,
-  } = props;
+  const { data, width, onCellClick, active, disabled, hovered, onCellHover, marked, markColor, dots } = props;
   const content = buildRows(data, width).map((row, rowIndex) => (
     <Table.Row key={`${rowIndex}${row[0]}`}>
-      { row.map((item, itemIndex) => (
+      {row.map((item, itemIndex) => (
         <Cell
           style={getCellStyle(width)}
           active={isActive(rowIndex, width, itemIndex, active)}
@@ -58,41 +52,36 @@ function Body(props: BodyProps) {
           disabled={isDisabled(rowIndex, width, itemIndex, disabled)}
           marked={isMarked(rowIndex, width, itemIndex, marked)}
           markColor={markColor}
+          dots={hasDots(rowIndex, width, itemIndex, dots)}
           key={`${rowIndex * width + itemIndex}`}
           itemPosition={rowIndex * width + itemIndex}
           content={item}
           onHover={onCellHover}
-          onClick={onCellClick} />
-      )) }
+          onClick={onCellClick}
+        />
+      ))}
     </Table.Row>
   ));
 
-  return (
-    <Table.Body>
-      { content }
-    </Table.Body>
-  );
+  return <Table.Body>{content}</Table.Body>;
 }
 
 function buildRows(data: string[], width: number): string[][] {
   const height = data.length / width;
   const rows = [];
   for (let i = 0; i < height; i++) {
-    rows.push(data.slice((i * width), (i * width) + width));
+    rows.push(data.slice(i * width, i * width + width));
   }
 
   return rows;
 }
 
-function isActive(rowIndex: number,
-                  rowWidth: number,
-                  colIndex: number,
-                  active: number | number[]): boolean {
+function isActive(rowIndex: number, rowWidth: number, colIndex: number, active: number | number[]): boolean {
   if (isNil(active)) {
     return false;
   }
   if (isArray(active)) {
-    for (const activeIndex of (active as number[])) {
+    for (const activeIndex of active as number[]) {
       if (rowIndex * rowWidth + colIndex === activeIndex) {
         return true;
       }
@@ -102,10 +91,7 @@ function isActive(rowIndex: number,
   return rowIndex * rowWidth + colIndex === active;
 }
 
-function isHovered(rowIndex: number,
-                   rowWidth: number,
-                   colIndex: number,
-                   hovered: number): boolean {
+function isHovered(rowIndex: number, rowWidth: number, colIndex: number, hovered: number): boolean {
   if (isNil(hovered)) {
     return false;
   }
@@ -113,10 +99,7 @@ function isHovered(rowIndex: number,
   return rowIndex * rowWidth + colIndex === hovered;
 }
 
-function isDisabled(rowIndex: number,
-                    rowWidth: number,
-                    colIndex: number,
-                    disabledIndexes: number[]): boolean {
+function isDisabled(rowIndex: number, rowWidth: number, colIndex: number, disabledIndexes: number[]): boolean {
   if (isNil(disabledIndexes) || disabledIndexes.length === 0) {
     return false;
   }
@@ -142,10 +125,7 @@ function getCellStyle(width: BodyWidth): CellWidthStyle {
   }
 }
 
-function isMarked(rowIndex: number,
-                  rowWidth: number,
-                  colIndex: number,
-                  markedIndexes: number[]): boolean {
+function isMarked(rowIndex: number, rowWidth: number, colIndex: number, markedIndexes: number[]): boolean {
   if (isNil(markedIndexes) || markedIndexes.length === 0) {
     return false;
   }
@@ -156,6 +136,22 @@ function isMarked(rowIndex: number,
   }
 
   return false;
+}
+
+function hasDots(rowIndex: number, rowWidth: number, colIndex: number, dots: any[]): DotObject[] {
+  const dotsArray = [];
+
+  if (isNil(dots) || dots.length === 0) {
+    return dotsArray;
+  }
+
+  for (const dot of dots) {
+    if (dot.indexes.includes(rowIndex * rowWidth + colIndex)) {
+      dotsArray.push(dot);
+    }
+  }
+
+  return dotsArray;
 }
 
 export default Body;
