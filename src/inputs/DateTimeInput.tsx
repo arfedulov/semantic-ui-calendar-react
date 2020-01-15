@@ -33,7 +33,7 @@ import BaseInput, {
 } from './BaseInput';
 
 import { tick } from '../lib';
-import { parseArrayOrValue, parseValue, TIME_FORMAT, buildValue, dateValueToString } from './parse';
+import { parseArrayOrValue, parseValue, TIME_FORMAT, buildValue, dateValueToString, parseArrayOfObjects } from './parse';
 import { getDisabledMonths, getDisabledYears } from './shared';
 
 type CalendarMode = 'year' | 'month' | 'day' | 'hour' | 'minute';
@@ -155,7 +155,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         });
       }
     }
-  };
+  }
 
   public render() {
     const {
@@ -173,6 +173,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       closable,
       markColor,
       marked,
+      dots,
       localization,
       onChange,
       disableMinute,
@@ -224,6 +225,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       inline,
       marked,
       markColor,
+      dots,
       localization,
       tabIndex,
       pickerStyle,
@@ -250,6 +252,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     const disableParsed = parseArrayOrValue(disable, dateTimeFormat, localization);
     const { mode } = this.state;
     const markedParsed = parseArrayOrValue(marked, dateTimeFormat, localization);
+    const dotsParsed = parseArrayOfObjects(dots, dateFormat, localization);
     if (mode === 'year') {
       return <YearPicker {...pickerProps} disable={getDisabledYears(disableParsed)} />;
     }
@@ -257,7 +260,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       return <MonthPicker {...pickerProps} hasHeader disable={getDisabledMonths(disableParsed)} />;
     }
     if (mode === 'day') {
-      return <DayPicker {...pickerProps} marked={markedParsed} markColor={markColor} disable={disableParsed} />;
+      return <DayPicker {...pickerProps} marked={markedParsed} markColor={markColor} dots={dotsParsed} disable={disableParsed} />;
     }
     if (mode === 'hour') {
       return <HourPicker timeFormat={this.props.timeFormat} hasHeader {...pickerProps} disable={disableParsed} />;
@@ -270,31 +273,31 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
     }, this.onModeSwitch);
-  };
+  }
 
   private switchToNextMode = (): void => {
     tick(this.switchToNextModeUndelayed);
-  };
+  }
 
   private switchToPrevModeUndelayed = (): void => {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
     }, this.onModeSwitch);
-  };
+  }
 
   private switchToPrevMode = (): void => {
     tick(this.switchToPrevModeUndelayed);
-  };
+  }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>, { value }: BasePickerOnChangeData): void => {
     tick(this.handleSelectUndelayed, e, { value });
-  };
+  }
 
   private onFocus = (): void => {
     if (!this.props.preserveViewMode) {
       this.setState({ mode: this.props.startMode });
     }
-  };
+  }
 
   private handleSelectUndelayed = (e: React.SyntheticEvent<HTMLElement>, { value }: BasePickerOnChangeData): void => {
     const { closable, disableMinute } = this.props;
@@ -308,7 +311,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
     const endAtMode = disableMinute ? 'hour' : 'minute';
 
     this.setState(
-      prevState => {
+      (prevState) => {
         const { mode } = prevState;
 
         if (mode === endAtMode) {
@@ -326,7 +329,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       },
       () => this.state.mode !== endAtMode && this.switchToNextMode(),
     );
-  };
+  }
 
   /** Keeps internal state in sync with input field value. */
   private onInputValueChange = (e, { value }) => {
@@ -341,7 +344,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       });
     }
     invoke(this.props, 'onChange', e, { ...this.props, value });
-  };
+  }
 }
 
 export default DateTimeInput;

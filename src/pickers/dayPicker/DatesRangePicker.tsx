@@ -142,7 +142,7 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> imple
   }
 
   protected getSelectableCellPositions(): number[] {
-    return filter(range(0, DAYS_ON_PAGE), d => !includes(this.getDisabledPositions(), d));
+    return filter(range(0, DAYS_ON_PAGE), (d) => !includes(this.getDisabledPositions(), d));
   }
 
   protected getInitialDatePosition(): number {
@@ -270,7 +270,7 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> imple
       }
     }
     this.props.onChange(e, data);
-  };
+  }
 
   protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
@@ -279,7 +279,7 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> imple
 
       return { date: nextDate };
     }, callback);
-  };
+  }
 
   protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
@@ -288,7 +288,7 @@ class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> imple
 
       return { date: prevDate };
     }, callback);
-  };
+  }
 }
 
 /** Return position of a given date on the page.
@@ -329,7 +329,7 @@ function getDatesFromPrevMonth(date, allDays, currentMonthStartPosition) {
     return [];
   }
 
-  return allDays.slice(0, currentMonthStartPosition).map(d => parseInt(d, 10));
+  return allDays.slice(0, currentMonthStartPosition).map((d) => parseInt(d, 10));
 }
 
 function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
@@ -337,7 +337,7 @@ function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
     return [];
   }
 
-  return allDays.slice(nextMonthStartPosition, allDays.length).map(d => parseInt(d, 10));
+  return allDays.slice(nextMonthStartPosition, allDays.length).map((d) => parseInt(d, 10));
 }
 
 /** Build moment based on current page and date position on that page. */

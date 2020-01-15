@@ -34,7 +34,7 @@ interface BodyProps {
   dots?: object[];
 }
 
-interface dotObject {
+interface DotObject {
   date: Moment;
   color: string;
   index: number;
@@ -51,8 +51,8 @@ function Body(props: BodyProps) {
           hovered={isHovered(rowIndex, width, itemIndex, hovered)}
           disabled={isDisabled(rowIndex, width, itemIndex, disabled)}
           marked={isMarked(rowIndex, width, itemIndex, marked)}
-          dots={hasDots(rowIndex, width, itemIndex, dots)}
           markColor={markColor}
+          dots={hasDots(rowIndex, width, itemIndex, dots)}
           key={`${rowIndex * width + itemIndex}`}
           itemPosition={rowIndex * width + itemIndex}
           content={item}
@@ -138,8 +138,8 @@ function isMarked(rowIndex: number, rowWidth: number, colIndex: number, markedIn
   return false;
 }
 
-function hasDots(rowIndex: number, rowWidth: number, colIndex: number, dots: any[]): dotObject[] {
-  let dotsArray = [];
+function hasDots(rowIndex: number, rowWidth: number, colIndex: number, dots: any[]): DotObject[] {
+  const dotsArray = [];
 
   if (isNil(dots) || dots.length === 0) {
     return dotsArray;

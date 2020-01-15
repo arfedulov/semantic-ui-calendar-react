@@ -90,7 +90,7 @@ export interface MarkedValuesProps {
 
 export interface DottedProps {
   /** Array of objects specifying dot position and color */
-  dots?: { dates: Moment[]; color: string }[];
+  dots?: Array<{ dates: Moment[]; color: string }>;
 }
 
 export interface TimePickerProps {
@@ -133,7 +133,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     this.setState({
       hoveredCellPosition: itemPosition,
     });
-  };
+  }
 
   protected canCalendarCatchKeyboardEvents = (): boolean => {
     if (this.props.inline) {
@@ -141,7 +141,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     }
 
     return this.props.isTriggerInFocus();
-  };
+  }
 
   protected handleKeyPress = (event: KeyboardEvent): void => {
     if (!this.canCalendarCatchKeyboardEvents()) {
@@ -160,7 +160,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       default:
         this.handleArrowKeyPress(event);
     }
-  };
+  }
 
   protected handleEnterKeyPress = (event: KeyboardEvent): void => {
     const key = keyboardKey.getKey(event);
@@ -172,11 +172,11 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
         itemPosition: this.state.hoveredCellPosition,
       });
     }
-  };
+  }
 
   protected handleBlur = (): void => {
     this.props.closePopup();
-  };
+  }
 
   protected handleArrowKeyPress = (event: KeyboardEvent): void => {
     if (!this.canCalendarCatchKeyboardEvents()) {
@@ -234,7 +234,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       default:
         break;
     }
-  };
+  }
 
   /** Return a position of a value (date, year, month ...) with wich a calendar was initialized. */
   protected abstract getInitialDatePosition(): number;

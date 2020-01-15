@@ -11,13 +11,19 @@ const hoverCellStyles = {
   cursor: 'pointer',
 };
 
-const dotStyle = {
+const dotContainerStyles = {
+  display: 'flex',
+  justifyContent: 'center',
+  marginTop: '0.3rem',
+};
+
+const dotStyles = {
   width: '0.5em',
   height: '0.5em',
   padding: '0',
 };
 
-export interface dotObject {
+export interface DotObject {
   date: Moment;
   color: string;
   index: number;
@@ -61,7 +67,7 @@ interface CellProps {
   /** Color of the mark. */
   markColor?: any;
   /** Dots to display in the cell. */
-  dots?: dotObject[];
+  dots?: DotObject[];
 }
 
 class Cell extends React.Component<CellProps, any> {
@@ -82,7 +88,13 @@ class Cell extends React.Component<CellProps, any> {
         ) : (
           <span className="suicr-content-item">{content}</span>
         )}
-        <div>{dots && dots.map(dot => <div className={`ui label ${dot.color}`} style={dotStyle} />)}</div>
+        {dots && !!dots.length && (
+          <div style={dotContainerStyles} className="suicr-dots-container">
+            {dots.map((dot, index) => (
+              <div key={`dot-${index}-${dot.color}`} className={`suicr-dot ui label ${dot.color}`} style={dotStyles} />
+            ))}
+          </div>
+        )}
       </Table.Cell>
     );
   }

@@ -70,6 +70,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       closable,
       marked,
       markColor,
+      dots,
       localization,
       allowSameEndDate,
       ...rest
@@ -144,7 +145,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
         allowSameEndDate={allowSameEndDate}
       />
     );
-  };
+  }
 
   private handleSelect = (e: React.SyntheticEvent<HTMLElement>, { value }: DatesRangePickerOnChangeData) => {
     const { dateFormat } = this.props;
@@ -159,7 +160,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
     if (this.props.closable && start && end) {
       this.closePopup();
     }
-  };
+  }
 }
 
 export default DatesRangeInput;

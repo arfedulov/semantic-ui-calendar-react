@@ -113,7 +113,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> implements Provide
   }
 
   protected getSelectableCellPositions(): number[] {
-    return filter(range(0, DAYS_ON_PAGE), d => !includes(this.getDisabledPositions(), d));
+    return filter(range(0, DAYS_ON_PAGE), (d) => !includes(this.getDisabledPositions(), d));
   }
 
   protected getInitialDatePosition(): number {
@@ -181,20 +181,20 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> implements Provide
   protected isNextPageAvailable = (): boolean => {
     const { maxDate, enable } = this.props;
     if (isArray(enable)) {
-      return some(enable, enabledDate => enabledDate.isAfter(this.state.date, 'month'));
+      return some(enable, (enabledDate) => enabledDate.isAfter(this.state.date, 'month'));
     }
 
     return isNextPageAvailable(this.state.date, maxDate);
-  };
+  }
 
   protected isPrevPageAvailable = (): boolean => {
     const { minDate, enable } = this.props;
     if (isArray(enable)) {
-      return some(enable, enabledDate => enabledDate.isBefore(this.state.date, 'month'));
+      return some(enable, (enabledDate) => enabledDate.isBefore(this.state.date, 'month'));
     }
 
     return isPrevPageAvailable(this.state.date, minDate);
-  };
+  }
 
   protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
     // `value` is selected date(string) like '31' or '1'
@@ -208,7 +208,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> implements Provide
     };
 
     this.props.onChange(e, data);
-  };
+  }
 
   protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
@@ -217,7 +217,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> implements Provide
 
       return { date: nextDate };
     }, callback);
-  };
+  }
 
   protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
@@ -226,7 +226,7 @@ class DayPicker extends SingleSelectionPicker<DayPickerProps> implements Provide
 
       return { date: prevDate };
     }, callback);
-  };
+  }
 }
 
 export default DayPicker;

@@ -133,7 +133,7 @@ export const MarkedValuesPropTypes = {
 
 export interface DottedProps {
   /** Array of objects specifying dot positions and colors. */
-  dots?: { dates: Moment[] | Date[]; color: string }[];
+  dots?: Array<{ dates: Moment[] | Date[]; color: string }>;
 }
 
 export const DottedPropTypes = {
@@ -255,19 +255,19 @@ abstract class BaseInput<P extends BaseInputProps, S extends BaseInputState> ext
     invoke(this.props, 'onClose');
     invoke(this.props, 'onBlur');
     this.setState({ popupIsClosed: true });
-  };
+  }
 
   protected openPopup = (): void => {
     this.setState({ popupIsClosed: false });
-  };
+  }
 
   protected isPickerInFocus = (): boolean => {
     return document.activeElement === this.calendarNode;
-  };
+  }
 
   protected isTriggerInFocus = (): boolean => {
     return document.activeElement === this.inputNode;
-  };
+  }
 
   protected onModeSwitch = (): void => {
     // when using keyboard for selecting values on inline calendar
@@ -279,15 +279,15 @@ abstract class BaseInput<P extends BaseInputProps, S extends BaseInputState> ext
     if (this.props.inline && !this.isPickerInFocus() && this.calendarNode) {
       this.calendarNode.focus();
     }
-  };
+  }
 
   protected onCalendarViewMount = (calendarNode: HTMLElement): void => {
     this.calendarNode = calendarNode;
-  };
+  }
 
   protected onInputViewMount = (inputNode: HTMLElement): void => {
     this.inputNode = inputNode;
-  };
+  }
 }
 
 export default BaseInput;

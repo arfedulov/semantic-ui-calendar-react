@@ -38,7 +38,7 @@ type ParseArrayOrValueData = ParseValueData | ParseValueData[];
  */
 export function parseArrayOrValue(data: ParseArrayOrValueData, dateFormat: string, localization: string) {
   if (isArray(data)) {
-    const parsed = compact((data as ParseValueData[]).map(item => parseValue(item, dateFormat, localization)));
+    const parsed = compact((data as ParseValueData[]).map((item) => parseValue(item, dateFormat, localization)));
     if (parsed.length > 0) {
       return parsed;
     }
@@ -57,10 +57,11 @@ type parseArrayOfObjectsData = ParseValueArrayData;
  */
 export function parseArrayOfObjects(data: parseArrayOfObjectsData, dateFormat: string, localization: string) {
   if (isArray(data)) {
-    let parsed = [...data];
-    parsed.forEach(item => {
-      item.dates = item.dates.map(date => parseValue(date, dateFormat, localization));
+    const parsed = [...data];
+    parsed.forEach((item) => {
+      item.dates = item.dates.map((date) => parseValue(date, dateFormat, localization));
     });
+
     return parsed;
   }
 
@@ -172,7 +173,7 @@ interface Range {
  * @param {string} inputSeparator Separator for split inputString
  */
 export function parseDatesRange(inputString: string = '', dateFormat: string = '', inputSeparator: string = ' - '): Range {
-  const dates = inputString.split(inputSeparator).map(date => cleanDate(date, dateFormat));
+  const dates = inputString.split(inputSeparator).map((date) => cleanDate(date, dateFormat));
   const result: Range = {};
   let start;
   let end;

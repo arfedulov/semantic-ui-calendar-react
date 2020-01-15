@@ -132,7 +132,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         });
       }
     }
-  };
+  }
 
   public render() {
     const {
@@ -231,40 +231,40 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     }
 
     return <DayPicker {...pickerProps} disable={disableParsed} marked={markedParsed} markColor={markColor} dots={dotsParsed} />;
-  };
+  }
 
   private switchToNextModeUndelayed = (): void => {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
     }, this.onModeSwitch);
-  };
+  }
 
   private switchToNextMode = (): void => {
     tick(this.switchToNextModeUndelayed);
-  };
+  }
 
   private switchToPrevModeUndelayed = (): void => {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
     }, this.onModeSwitch);
-  };
+  }
 
   private switchToPrevMode = (): void => {
     tick(this.switchToPrevModeUndelayed);
-  };
+  }
 
   private onFocus = (): void => {
     if (!this.props.preserveViewMode) {
       this.setState({ mode: this.props.startMode });
     }
-  };
+  }
 
   private handleSelect = (e, { value }: BasePickerOnChangeData) => {
     if (this.state.mode === 'day' && this.props.closable) {
       this.closePopup();
     }
     this.setState(
-      prevState => {
+      (prevState) => {
         const { mode } = prevState;
         if (mode === 'day') {
           const outValue = moment(value).format(this.props.dateFormat);
@@ -279,7 +279,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       },
       () => this.state.mode !== 'day' && this.switchToNextMode(),
     );
-  };
+  }
 
   /** Keeps internal state in sync with input field value. */
   private onInputValueChange = (e, { value }) => {
@@ -292,7 +292,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       });
     }
     invoke(this.props, 'onChange', e, { ...this.props, value });
-  };
+  }
 }
 
 export default DateInput;

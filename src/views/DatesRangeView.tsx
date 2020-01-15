@@ -62,16 +62,17 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
       inline,
       markColor,
       markedItemIndexes,
+      dots,
       localization,
       ...rest
     } = this.props;
     const { start, end } = activeRange;
 
     return (
-      <Calendar ref={e => (this.calendarNode = findHTMLElement(e))} outlineOnFocus={inline} {...rest}>
+      <Calendar ref={(e) => (this.calendarNode = findHTMLElement(e))} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
-          className="suicr-dates-range-view-header"
+          className='suicr-dates-range-view-header'
           displayWeeks
           rangeRowContent={currentRangeHeadingValue}
           onNextPageBtnClick={onNextPageBtnClick}
@@ -92,6 +93,7 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
           disabled={disabledItemIndexes}
           markColor={markColor}
           marked={markedItemIndexes}
+          dots={dots}
         />
       </Calendar>
     );
