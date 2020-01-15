@@ -15,6 +15,7 @@ import {
   EnableValuesProps,
   MinMaxValueProps,
   MarkedValuesProps,
+  DottedProps,
   ProvideHeadingValue,
   SingleSelectionPicker,
 } from '../BasePicker';
@@ -22,6 +23,7 @@ import {
   buildDays,
   getDisabledDays,
   getMarkedDays,
+  getDottedDays,
   getInitialDatePosition,
   isNextPageAvailable,
   isPrevPageAvailable,
@@ -38,15 +40,14 @@ export interface DayPickerOnChangeData extends BasePickerOnChangeData {
   };
 }
 
-type DayPickerProps = BasePickerProps
-  & DisableValuesProps
-  & EnableValuesProps
-  & MinMaxValueProps
-  & MarkedValuesProps;
+type DayPickerProps = BasePickerProps &
+  DisableValuesProps &
+  EnableValuesProps &
+  MinMaxValueProps &
+  MarkedValuesProps &
+  DottedProps;
 
-class DayPicker
-  extends SingleSelectionPicker<DayPickerProps>
-  implements ProvideHeadingValue {
+class DayPicker extends SingleSelectionPicker<DayPickerProps> implements ProvideHeadingValue {
   constructor(props) {
     super(props);
     this.PAGE_WIDTH = PAGE_WIDTH;
@@ -68,13 +69,14 @@ class DayPicker
       maxDate,
       marked,
       markColor,
+      dots,
       localization,
       ...rest
     } = this.props;
 
     return (
       <DayView
-        { ...rest }
+        {...rest}
         values={this.buildCalendarValues()}
         hasNextPage={this.isNextPageAvailable()}
         hasPrevPage={this.isPrevPageAvailable()}
@@ -91,7 +93,9 @@ class DayPicker
         activeItemIndex={this.getActiveCellPosition()}
         markedItemIndexes={this.getMarkedPositions()}
         markColor={markColor}
-        localization={localization} />
+        dots={this.getDotsPositions()}
+        localization={localization}
+      />
     );
   }
 
@@ -109,16 +113,15 @@ class DayPicker
   }
 
   protected getSelectableCellPositions(): number[] {
-    return filter(
-      range(0, DAYS_ON_PAGE),
-      (d) => !includes(this.getDisabledPositions(), d),
-    );
+    return filter(range(0, DAYS_ON_PAGE), d => !includes(this.getDisabledPositions(), d));
   }
 
   protected getInitialDatePosition(): number {
-    return getInitialDatePosition(this.state.date.date().toString(),
-                                  this.buildCalendarValues(),
-                                  this.getSelectableCellPositions());
+    return getInitialDatePosition(
+      this.state.date.date().toString(),
+      this.buildCalendarValues(),
+      this.getSelectableCellPositions(),
+    );
   }
 
   protected getActiveCellPosition(): number {
@@ -129,7 +132,7 @@ class DayPicker
     if (this.props.value && this.props.value.isSame(this.state.date, 'month')) {
       const disabledPositions = this.getDisabledPositions();
       const active = this.buildCalendarValues()
-        .map((day, i) => includes(disabledPositions, i) ? undefined : day)
+        .map((day, i) => (includes(disabledPositions, i) ? undefined : day))
         .indexOf(this.props.value.date().toString());
       if (active >= 0) {
         return active;
@@ -142,12 +145,7 @@ class DayPicker
       Return position numbers of dates that should be displayed as disabled
       (position in array returned by `this.buildCalendarValues`).
     */
-    const {
-      disable,
-      maxDate,
-      minDate,
-      enable,
-    } = this.props;
+    const { disable, maxDate, minDate, enable } = this.props;
 
     return getDisabledDays(disable, maxDate, minDate, this.state.date, DAYS_ON_PAGE, enable);
   }
@@ -157,9 +155,7 @@ class DayPicker
       Return position numbers of dates that should be displayed as marked
       (position in array returned by `this.buildCalendarValues`).
     */
-    const {
-      marked,
-    } = this.props;
+    const { marked } = this.props;
 
     if (marked) {
       return getMarkedDays(marked, this.state.date, DAYS_ON_PAGE);
@@ -168,29 +164,37 @@ class DayPicker
     }
   }
 
+  protected getDotsPositions(): object[] {
+    /*
+      Return position numbers of dates that should be displayed as marked
+      (position in array returned by `this.buildCalendarValues`).
+    */
+    const { dots } = this.props;
+
+    if (dots) {
+      return getDottedDays(dots, this.state.date, DAYS_ON_PAGE);
+    } else {
+      return [];
+    }
+  }
+
   protected isNextPageAvailable = (): boolean => {
-    const {
-      maxDate,
-      enable,
-    } = this.props;
+    const { maxDate, enable } = this.props;
     if (isArray(enable)) {
-      return some(enable, (enabledDate) => enabledDate.isAfter(this.state.date, 'month'));
+      return some(enable, enabledDate => enabledDate.isAfter(this.state.date, 'month'));
     }
 
     return isNextPageAvailable(this.state.date, maxDate);
-  }
+  };
 
   protected isPrevPageAvailable = (): boolean => {
-    const {
-      minDate,
-      enable,
-    } = this.props;
+    const { minDate, enable } = this.props;
     if (isArray(enable)) {
-      return some(enable, (enabledDate) => enabledDate.isBefore(this.state.date, 'month'));
+      return some(enable, enabledDate => enabledDate.isBefore(this.state.date, 'month'));
     }
 
     return isPrevPageAvailable(this.state.date, minDate);
-  }
+  };
 
   protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { value }): void => {
     // `value` is selected date(string) like '31' or '1'
@@ -204,29 +208,25 @@ class DayPicker
     };
 
     this.props.onChange(e, data);
-  }
+  };
 
-  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
-                                data: any,
-                                callback: () => void): void => {
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
       const nextDate = date.clone();
       nextDate.add(1, 'month');
 
       return { date: nextDate };
     }, callback);
-  }
+  };
 
-  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
-                                data: any,
-                                callback: () => void): void => {
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
       const prevDate = date.clone();
       prevDate.subtract(1, 'month');
 
       return { date: prevDate };
     }, callback);
-  }
+  };
 }
 
 export default DayPicker;

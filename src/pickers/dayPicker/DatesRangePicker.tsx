@@ -16,6 +16,7 @@ import {
   ProvideHeadingValue,
   RangeSelectionPicker,
   MarkedValuesProps,
+  DottedProps,
 } from '../BasePicker';
 import { DAYS_ON_PAGE } from './DayPicker';
 import {
@@ -26,11 +27,12 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
   getMarkedDays,
+  getDottedDays,
 } from './sharedFunctions';
 
 const PAGE_WIDTH = 7;
 
-interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, MarkedValuesProps {
+interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, MarkedValuesProps, DottedProps {
   /** Moment date formatting string. */
   dateFormat: string;
   /** Start of currently selected dates range. */
@@ -43,9 +45,7 @@ interface DatesRangePickerProps extends BasePickerProps, MinMaxValueProps, Marke
 
 export type DatesRangePickerOnChangeData = BasePickerOnChangeData;
 
-class DatesRangePicker
-  extends RangeSelectionPicker<DatesRangePickerProps>
-  implements ProvideHeadingValue {
+class DatesRangePicker extends RangeSelectionPicker<DatesRangePickerProps> implements ProvideHeadingValue {
   constructor(props) {
     super(props);
     this.PAGE_WIDTH = PAGE_WIDTH;
@@ -68,6 +68,7 @@ class DatesRangePicker
       maxDate,
       marked,
       markColor,
+      dots,
       localization,
       allowSameEndDate,
       ...rest
@@ -75,7 +76,7 @@ class DatesRangePicker
 
     return (
       <DatesRangeView
-        { ...rest }
+        {...rest}
         values={this.buildCalendarValues()}
         onNextPageBtnClick={this.switchToNextPage}
         onPrevPageBtnClick={this.switchToPrevPage}
@@ -92,6 +93,7 @@ class DatesRangePicker
         activeRange={this.getActiveCellsPositions()}
         markedItemIndexes={this.getMarkedPositions()}
         markColor={markColor}
+        dots={this.getDotPositions()}
         disabledItemIndexes={this.getDisabledPositions()}
         localization={localization}
       />
@@ -108,12 +110,24 @@ class DatesRangePicker
       Return position numbers of dates that should be displayed as marked
       (position in array returned by `this.buildCalendarValues`).
     */
-    const {
-      marked,
-    } = this.props;
+    const { marked } = this.props;
 
     if (marked) {
       return getMarkedDays(marked, this.state.date, DAYS_ON_PAGE);
+    } else {
+      return [];
+    }
+  }
+
+  protected getDotPositions(): object[] {
+    /*
+      Return position numbers of dates that should contain dots underneath
+      (position in array returned by `this.buildCalendarValues`).
+    */
+    const { dots } = this.props;
+
+    if (dots) {
+      return getDottedDays(dots, this.state.date, DAYS_ON_PAGE);
     } else {
       return [];
     }
@@ -128,16 +142,15 @@ class DatesRangePicker
   }
 
   protected getSelectableCellPositions(): number[] {
-    return filter(
-      range(0, DAYS_ON_PAGE),
-      (d) => !includes(this.getDisabledPositions(), d),
-    );
+    return filter(range(0, DAYS_ON_PAGE), d => !includes(this.getDisabledPositions(), d));
   }
 
   protected getInitialDatePosition(): number {
-    return getInitialDatePosition(this.state.date.date().toString(),
-                                  this.buildCalendarValues(),
-                                  this.getSelectableCellPositions());
+    return getInitialDatePosition(
+      this.state.date.date().toString(),
+      this.buildCalendarValues(),
+      this.getSelectableCellPositions(),
+    );
   }
 
   // TODO: too complicated method
@@ -148,10 +161,7 @@ class DatesRangePicker
       (position in array returned by `this.buildCalendarValues`).
     */
     const { date } = this.state;
-    const {
-      start,
-      end,
-    } = this.props;
+    const { start, end } = this.props;
     const allDays = this.buildCalendarValues();
     const fromCurrentMonthDayPositions = getDefaultEnabledDayPositions(allDays, date);
 
@@ -172,7 +182,8 @@ class DatesRangePicker
         start,
         fromPrevMonthDates,
         fromCurrentMonthDates,
-        fromNextMonthDates);
+        fromNextMonthDates,
+      );
 
       const endPosition = getDatePosition(
         prevMonth,
@@ -181,18 +192,19 @@ class DatesRangePicker
         end,
         fromPrevMonthDates,
         fromCurrentMonthDates,
-        fromNextMonthDates);
+        fromNextMonthDates,
+      );
       if (startPosition && endPosition) {
         return { start: startPosition, end: endPosition };
       }
       if (startPosition) {
-        return { start: startPosition, end: DAYS_ON_PAGE - 1};
+        return { start: startPosition, end: DAYS_ON_PAGE - 1 };
       }
       if (endPosition) {
-        return { start: 0, end: endPosition};
+        return { start: 0, end: endPosition };
       }
       if (this.state.date.isBetween(start, end)) {
-        return { start: 0, end: DAYS_ON_PAGE - 1};
+        return { start: 0, end: DAYS_ON_PAGE - 1 };
       }
     }
     if (start) {
@@ -203,7 +215,8 @@ class DatesRangePicker
         start,
         fromPrevMonthDates,
         fromCurrentMonthDates,
-        fromNextMonthDates);
+        fromNextMonthDates,
+      );
 
       return { start: startPosition, end: undefined };
     }
@@ -216,10 +229,7 @@ class DatesRangePicker
       Return position numbers of dates that should be displayed as disabled
       (position in array returned by `this.buildCalendarValues`).
     */
-    const {
-      maxDate,
-      minDate,
-    } = this.props;
+    const { maxDate, minDate } = this.props;
 
     return getDisabledDays(undefined, maxDate, minDate, this.state.date, DAYS_ON_PAGE, undefined);
   }
@@ -234,23 +244,14 @@ class DatesRangePicker
 
   protected getSelectedRange(): string {
     /* Return currently selected dates range(string) to display in calendar header. */
-    const {
-      start,
-      end,
-      dateFormat,
-    } = this.props;
+    const { start, end, dateFormat } = this.props;
 
     return `${start ? start.format(dateFormat) : '- - -'} - ${end ? end.format(dateFormat) : '- - -'}`;
   }
 
   protected handleChange = (e: React.SyntheticEvent<HTMLElement>, { itemPosition }) => {
     // call `onChange` with value: { start: moment, end: moment }
-    const {
-      start,
-      end,
-      localization,
-      allowSameEndDate,
-    } = this.props;
+    const { start, end, localization, allowSameEndDate } = this.props;
     const data: DatesRangePickerOnChangeData = {
       ...this.props,
       value: {},
@@ -269,29 +270,25 @@ class DatesRangePicker
       }
     }
     this.props.onChange(e, data);
-  }
+  };
 
-  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>,
-                                data: any,
-                                callback: () => void): void => {
+  protected switchToNextPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
       const nextDate = date.clone();
       nextDate.add(1, 'month');
 
       return { date: nextDate };
     }, callback);
-  }
+  };
 
-  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>,
-                                data: any,
-                                callback: () => void): void => {
+  protected switchToPrevPage = (e: React.SyntheticEvent<HTMLElement>, data: any, callback: () => void): void => {
     this.setState(({ date }) => {
       const prevDate = date.clone();
       prevDate.subtract(1, 'month');
 
       return { date: prevDate };
     }, callback);
-  }
+  };
 }
 
 /** Return position of a given date on the page.
@@ -308,7 +305,8 @@ function getDatePosition(
   date: Moment,
   fromPrevMonthDates: number[],
   fromCurrentMonthDates: number[],
-  fromNextMonthDates: number[]): number | undefined {
+  fromNextMonthDates: number[],
+): number | undefined {
   if (date.isSame(prevMonth, 'month')) {
     const position = fromPrevMonthDates.indexOf(date.date());
     if (position >= 0) {
@@ -331,7 +329,7 @@ function getDatesFromPrevMonth(date, allDays, currentMonthStartPosition) {
     return [];
   }
 
-  return allDays.slice(0, currentMonthStartPosition).map((d) => parseInt(d, 10));
+  return allDays.slice(0, currentMonthStartPosition).map(d => parseInt(d, 10));
 }
 
 function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
@@ -339,16 +337,13 @@ function getDatesFromNextMonth(date, allDays, nextMonthStartPosition) {
     return [];
   }
 
-  return allDays.slice(nextMonthStartPosition, allDays.length).map((d) => parseInt(d, 10));
+  return allDays.slice(nextMonthStartPosition, allDays.length).map(d => parseInt(d, 10));
 }
 
 /** Build moment based on current page and date position on that page. */
-function buildMoment(pageReferenceDate: Moment,
-                     firstOnPage: number,
-                     dateToBuildPosition: number,
-                     localization: string): Moment {
+function buildMoment(pageReferenceDate: Moment, firstOnPage: number, dateToBuildPosition: number, localization: string): Moment {
   let result;
-  if (firstOnPage === 1/* page starts from first day in month */) {
+  if (firstOnPage === 1 /* page starts from first day in month */) {
     const dateOptions = {
       year: pageReferenceDate.year(),
       month: pageReferenceDate.month(),

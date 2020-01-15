@@ -4,9 +4,7 @@ import moment, { Moment } from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
 
-import {
-  BasePickerOnChangeData,
-} from '../pickers/BasePicker';
+import { BasePickerOnChangeData } from '../pickers/BasePicker';
 import DayPicker from '../pickers/dayPicker/DayPicker';
 import MonthPicker from '../pickers/monthPicker/MonthPicker';
 import YearPicker from '../pickers/YearPicker';
@@ -27,20 +25,13 @@ import BaseInput, {
   MultimodePropTypes,
   MarkedValuesProps,
   MarkedValuesPropTypes,
+  DottedProps,
+  DottedPropTypes,
 } from './BaseInput';
 
-import {
-  tick,
-} from '../lib';
-import {
-  buildValue,
-  parseArrayOrValue,
-  parseValue,
-  dateValueToString,
-} from './parse';
-import {
-  getDisabledMonths, getDisabledYears,
-} from './shared';
+import { tick } from '../lib';
+import { buildValue, parseArrayOrValue, parseValue, dateValueToString, parseArrayOfObjects } from './parse';
+import { getDisabledMonths, getDisabledYears } from './shared';
 
 type CalendarMode = 'year' | 'month' | 'day';
 
@@ -66,14 +57,15 @@ function getPrevMode(currentMode: CalendarMode) {
   return 'day';
 }
 
-export interface DateInputProps extends
-  BaseInputProps,
-  DateRelatedProps,
-  MultimodeProps,
-  DisableValuesProps,
-  EnableValuesProps,
-  MarkedValuesProps,
-  MinMaxValueProps {
+export interface DateInputProps
+  extends BaseInputProps,
+    DateRelatedProps,
+    MultimodeProps,
+    DisableValuesProps,
+    EnableValuesProps,
+    MarkedValuesProps,
+    DottedProps,
+    MinMaxValueProps {
   /** Display mode to start. */
   startMode?: CalendarMode;
 }
@@ -108,10 +100,11 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     ...DisableValuesPropTypes,
     ...EnableValuesPropTypes,
     ...MarkedValuesPropTypes,
+    ...DottedPropTypes,
     ...MinMaxValuePropTypes,
     ...{
       /** Display mode to start. */
-      startMode: PropTypes.oneOf([ 'year', 'month', 'day' ]),
+      startMode: PropTypes.oneOf(['year', 'month', 'day']),
     },
   };
 
@@ -139,7 +132,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         });
       }
     }
-  }
+  };
 
   public render() {
     const {
@@ -155,6 +148,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       closable,
       markColor,
       marked,
+      dots,
       localization,
       onChange,
       ...rest
@@ -182,11 +176,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       underlying picker.
       Return undefined if none of these state fields has value.
     */
-    const {
-      year,
-      month,
-      date,
-    } = this.state;
+    const { year, month, date } = this.state;
     if (!isNil(year) || !isNil(month) || !isNil(date)) {
       return moment({ year, month, date });
     }
@@ -203,6 +193,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       enable,
       inline,
       marked,
+      dots,
       markColor,
       localization,
       tabIndex,
@@ -229,74 +220,66 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat, localization);
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);
+    const dotsParsed = parseArrayOfObjects(dots, dateFormat, localization);
+
     const { mode } = this.state;
     if (mode === 'year') {
-      return (
-        <YearPicker
-          {...pickerProps}
-          disable={getDisabledYears(disableParsed)}
-        />
-      );
+      return <YearPicker {...pickerProps} disable={getDisabledYears(disableParsed)} />;
     }
     if (mode === 'month') {
-      return (
-        <MonthPicker
-          {...pickerProps}
-          hasHeader
-          disable={getDisabledMonths(disableParsed)}
-        />
-      );
+      return <MonthPicker {...pickerProps} hasHeader disable={getDisabledMonths(disableParsed)} />;
     }
 
-    return <DayPicker {...pickerProps} disable={disableParsed} marked={markedParsed} markColor={markColor} />;
-  }
+    return <DayPicker {...pickerProps} disable={disableParsed} marked={markedParsed} markColor={markColor} dots={dotsParsed} />;
+  };
 
   private switchToNextModeUndelayed = (): void => {
     this.setState(({ mode }) => {
       return { mode: getNextMode(mode) };
     }, this.onModeSwitch);
-  }
+  };
 
   private switchToNextMode = (): void => {
     tick(this.switchToNextModeUndelayed);
-  }
+  };
 
   private switchToPrevModeUndelayed = (): void => {
     this.setState(({ mode }) => {
       return { mode: getPrevMode(mode) };
     }, this.onModeSwitch);
-  }
+  };
 
   private switchToPrevMode = (): void => {
     tick(this.switchToPrevModeUndelayed);
-  }
+  };
 
   private onFocus = (): void => {
     if (!this.props.preserveViewMode) {
       this.setState({ mode: this.props.startMode });
     }
-  }
+  };
 
   private handleSelect = (e, { value }: BasePickerOnChangeData) => {
     if (this.state.mode === 'day' && this.props.closable) {
       this.closePopup();
     }
-    this.setState((prevState) => {
-      const {
-        mode,
-      } = prevState;
-      if (mode === 'day') {
-        const outValue = moment(value).format(this.props.dateFormat);
-        invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
-      }
+    this.setState(
+      prevState => {
+        const { mode } = prevState;
+        if (mode === 'day') {
+          const outValue = moment(value).format(this.props.dateFormat);
+          invoke(this.props, 'onChange', e, { ...this.props, value: outValue });
+        }
 
-      return {
-        year: value.year,
-        month: value.month,
-        date: value.date,
-      };
-    }, () => this.state.mode !== 'day' && this.switchToNextMode());
-  }
+        return {
+          year: value.year,
+          month: value.month,
+          date: value.date,
+        };
+      },
+      () => this.state.mode !== 'day' && this.switchToNextMode(),
+    );
+  };
 
   /** Keeps internal state in sync with input field value. */
   private onInputValueChange = (e, { value }) => {
@@ -309,7 +292,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       });
     }
     invoke(this.props, 'onChange', e, { ...this.props, value });
-  }
+  };
 }
 
 export default DateInput;

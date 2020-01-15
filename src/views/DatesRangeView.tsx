@@ -12,10 +12,7 @@ import BaseCalendarView, {
 import Calendar from './Calendar';
 import Body from './CalendarBody/Body';
 import Header from './CalendarHeader/Header';
-import {
-  DAY_CALENDAR_ROW_WIDTH,
-  WEEKS_TO_DISPLAY,
-} from './DayView';
+import { DAY_CALENDAR_ROW_WIDTH, WEEKS_TO_DISPLAY } from './DayView';
 
 import { findHTMLElement } from '../lib';
 
@@ -33,11 +30,10 @@ function getActive(start: number, end: number): number | number[] | undefined {
   }
 }
 
-type DatesRangeViewProps =
-  BaseCalendarViewProps
-  & HeadingValueProps
-  & RangeSelectionCalendarViewProps
-  & CalendarWithHeaderViewProps;
+type DatesRangeViewProps = BaseCalendarViewProps &
+  HeadingValueProps &
+  RangeSelectionCalendarViewProps &
+  CalendarWithHeaderViewProps;
 
 class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
   public static defaultProps = {
@@ -69,16 +65,13 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
       localization,
       ...rest
     } = this.props;
-    const {
-      start,
-      end,
-    } = activeRange;
+    const { start, end } = activeRange;
 
     return (
-      <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
+      <Calendar ref={e => (this.calendarNode = findHTMLElement(e))} outlineOnFocus={inline} {...rest}>
         <Header
           width={DAY_CALENDAR_ROW_WIDTH}
-          className='suicr-dates-range-view-header'
+          className="suicr-dates-range-view-header"
           displayWeeks
           rangeRowContent={currentRangeHeadingValue}
           onNextPageBtnClick={onNextPageBtnClick}
@@ -87,17 +80,19 @@ class DatesRangeView extends BaseCalendarView<DatesRangeViewProps, any> {
           hasPrevPage={hasPrevPage}
           title={currentHeadingValue}
           onHeaderClick={onHeaderClick}
-          localization={localization} />
+          localization={localization}
+        />
         <Body
           width={DAY_CALENDAR_ROW_WIDTH}
           data={values}
           onCellClick={onValueClick}
           onCellHover={onCellHover}
           hovered={hoveredItemIndex}
+          active={getActive(start, end)}
+          disabled={disabledItemIndexes}
           markColor={markColor}
           marked={markedItemIndexes}
-          active={getActive(start, end)}
-          disabled={disabledItemIndexes} />
+        />
       </Calendar>
     );
   }

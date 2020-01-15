@@ -11,10 +11,8 @@ export const TIME_FORMAT = {
   ampm: 'hh:mm a',
 };
 
-type ParseValueData =
-  | string
-  | moment.Moment
-  | Date;
+type ParseValueData = string | moment.Moment | Date;
+type ParseValueArrayData = object;
 
 /** Parse string, moment, Date.
  *
@@ -31,9 +29,7 @@ export function parseValue(value: ParseValueData, dateFormat: string, localizati
   }
 }
 
-type ParseArrayOrValueData =
-  | ParseValueData
-  | ParseValueData[];
+type ParseArrayOrValueData = ParseValueData | ParseValueData[];
 
 /** Parse string, moment, Date, string[], moment[], Date[].
  *
@@ -42,14 +38,33 @@ type ParseArrayOrValueData =
  */
 export function parseArrayOrValue(data: ParseArrayOrValueData, dateFormat: string, localization: string) {
   if (isArray(data)) {
-    const parsed = compact((data as ParseValueData[]).map((item) => parseValue(item, dateFormat, localization)));
+    const parsed = compact((data as ParseValueData[]).map(item => parseValue(item, dateFormat, localization)));
     if (parsed.length > 0) {
       return parsed;
     }
   }
-  const parsedValue = parseValue((data as ParseValueData), dateFormat, localization);
+  const parsedValue = parseValue(data as ParseValueData, dateFormat, localization);
 
   return parsedValue && [parsedValue];
+}
+
+type parseArrayOfObjectsData = ParseValueArrayData;
+
+/** Parse object[].
+ *
+ * Return array of objects in moment format. Object must be structures as such:
+ * { ..., date: new Date(), ... }
+ */
+export function parseArrayOfObjects(data: parseArrayOfObjectsData, dateFormat: string, localization: string) {
+  if (isArray(data)) {
+    let parsed = [...data];
+    parsed.forEach(item => {
+      item.date = parseValue(item.date, dateFormat, localization);
+    });
+    return parsed;
+  }
+
+  return [];
 }
 
 interface DateParams {
@@ -73,12 +88,7 @@ interface GetInitializerParams {
  * Precedense order: dateParams -> initialDate -> default value
  */
 export function getInitializer(context: GetInitializerParams): moment.Moment {
-  const {
-    dateParams,
-    initialDate,
-    dateFormat,
-    localization,
-  } = context;
+  const { dateParams, initialDate, dateFormat, localization } = context;
   if (dateParams) {
     const parsedParams = localization ? moment(dateParams).locale(localization) : moment(dateParams);
     if (parsedParams.isValid()) {
@@ -99,11 +109,13 @@ type DateValue = InitialDate;
 /** Creates moment instance from provided value or initialDate.
  *  Creates today by default.
  */
-export function buildValue(value: ParseValueData,
-                           initialDate: InitialDate,
-                           localization: string,
-                           dateFormat: string,
-                           defaultVal = moment()): Moment {
+export function buildValue(
+  value: ParseValueData,
+  initialDate: InitialDate,
+  localization: string,
+  dateFormat: string,
+  defaultVal = moment(),
+): Moment {
   const valueParsed = parseValue(value, dateFormat, localization);
   if (valueParsed) {
     return valueParsed;
@@ -159,13 +171,8 @@ interface Range {
  * @param {string} dateFormat Moment formatting string
  * @param {string} inputSeparator Separator for split inputString
  */
-export function parseDatesRange(
-  inputString: string = '',
-  dateFormat: string = '',
-  inputSeparator: string = ' - ',
-): Range {
-  const dates = inputString.split(inputSeparator)
-    .map((date) => cleanDate(date, dateFormat));
+export function parseDatesRange(inputString: string = '', dateFormat: string = '', inputSeparator: string = ' - '): Range {
+  const dates = inputString.split(inputSeparator).map(date => cleanDate(date, dateFormat));
   const result: Range = {};
   let start;
   let end;

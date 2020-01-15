@@ -15,11 +15,7 @@ import { findHTMLElement } from '../lib';
 export const DAY_CALENDAR_ROW_WIDTH = 7;
 export const WEEKS_TO_DISPLAY = 6;
 
-type DayViewProps =
-  BaseCalendarViewProps
-  & HeadingValueProps
-  & SingleSelectionCalendarViewProps
-  & CalendarWithHeaderViewProps;
+type DayViewProps = BaseCalendarViewProps & HeadingValueProps & SingleSelectionCalendarViewProps & CalendarWithHeaderViewProps;
 
 class DayView extends BaseCalendarView<DayViewProps, any> {
   public render() {
@@ -40,14 +36,15 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
       inline,
       markedItemIndexes,
       markColor,
+      dots,
       localization,
       ...rest
     } = this.props;
 
     return (
-      <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
+      <Calendar ref={e => (this.calendarNode = findHTMLElement(e))} outlineOnFocus={inline} {...rest}>
         <Header
-          className='suicr-day-view-header'
+          className="suicr-day-view-header"
           width={DAY_CALENDAR_ROW_WIDTH}
           displayWeeks
           onNextPageBtnClick={onNextPageBtnClick}
@@ -56,7 +53,8 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
           hasPrevPage={hasPrevPage}
           title={currentHeadingValue}
           onHeaderClick={onHeaderClick}
-          localization={localization} />
+          localization={localization}
+        />
         <Body
           width={DAY_CALENDAR_ROW_WIDTH}
           data={values}
@@ -66,7 +64,9 @@ class DayView extends BaseCalendarView<DayViewProps, any> {
           active={activeItemIndex}
           disabled={disabledItemIndexes}
           marked={markedItemIndexes}
-          markColor={markColor} />
+          markColor={markColor}
+          dots={dots}
+        />
       </Calendar>
     );
   }

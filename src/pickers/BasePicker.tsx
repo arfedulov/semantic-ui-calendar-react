@@ -5,9 +5,7 @@ import includes from 'lodash/includes';
 import { Moment } from 'moment';
 import * as React from 'react';
 
-import {
-  RangeIndexes,
-} from '../views/BaseCalendarView';
+import { RangeIndexes } from '../views/BaseCalendarView';
 import { SemanticCOLORS } from 'semantic-ui-react';
 
 interface HandleChangeParams {
@@ -90,6 +88,11 @@ export interface MarkedValuesProps {
   markColor?: SemanticCOLORS;
 }
 
+export interface DottedProps {
+  /** Array of objects specifying dot position and color */
+  dots?: { date: Moment; color: string }[];
+}
+
 export interface TimePickerProps {
   timeFormat: TimeFormat;
 }
@@ -123,12 +126,14 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     document.removeEventListener('keydown', this.handleKeyPress);
   }
 
-  protected onHoveredCellPositionChange = (e: React.SyntheticEvent<HTMLElement>,
-                                           { itemPosition }: { itemPosition: number }): void => {
+  protected onHoveredCellPositionChange = (
+    e: React.SyntheticEvent<HTMLElement>,
+    { itemPosition }: { itemPosition: number },
+  ): void => {
     this.setState({
       hoveredCellPosition: itemPosition,
     });
-  }
+  };
 
   protected canCalendarCatchKeyboardEvents = (): boolean => {
     if (this.props.inline) {
@@ -136,7 +141,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     }
 
     return this.props.isTriggerInFocus();
-  }
+  };
 
   protected handleKeyPress = (event: KeyboardEvent): void => {
     if (!this.canCalendarCatchKeyboardEvents()) {
@@ -155,7 +160,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       default:
         this.handleArrowKeyPress(event);
     }
-  }
+  };
 
   protected handleEnterKeyPress = (event: KeyboardEvent): void => {
     const key = keyboardKey.getKey(event);
@@ -167,11 +172,11 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
         itemPosition: this.state.hoveredCellPosition,
       });
     }
-  }
+  };
 
   protected handleBlur = (): void => {
     this.props.closePopup();
-  }
+  };
 
   protected handleArrowKeyPress = (event: KeyboardEvent): void => {
     if (!this.canCalendarCatchKeyboardEvents()) {
@@ -180,9 +185,9 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
     const key = keyboardKey.getKey(event);
     const selectableCells = this.getSelectableCellPositions();
     const nextSelectableCellPositionLeft = selectableCells
-      .slice(0, selectableCells.indexOf(this.state.hoveredCellPosition)).pop();
-    const nextSelectableCellPositionRight = selectableCells
-      .slice(selectableCells.indexOf(this.state.hoveredCellPosition) + 1)[0];
+      .slice(0, selectableCells.indexOf(this.state.hoveredCellPosition))
+      .pop();
+    const nextSelectableCellPositionRight = selectableCells.slice(selectableCells.indexOf(this.state.hoveredCellPosition) + 1)[0];
     switch (key) {
       case 'Left':
       case 'ArrowLeft':
@@ -192,8 +197,9 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
           if (this.isPrevPageAvailable()) {
             this.switchToPrevPage(null, null, () => {
               const selectableCellsPrevPage = this.getSelectableCellPositions();
-              this.onHoveredCellPositionChange(
-                null, { itemPosition: selectableCellsPrevPage[selectableCellsPrevPage.length - 1] });
+              this.onHoveredCellPositionChange(null, {
+                itemPosition: selectableCellsPrevPage[selectableCellsPrevPage.length - 1],
+              });
             });
           }
         }
@@ -228,7 +234,7 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
       default:
         break;
     }
-  }
+  };
 
   /** Return a position of a value (date, year, month ...) with wich a calendar was initialized. */
   protected abstract getInitialDatePosition(): number;
@@ -256,7 +262,6 @@ abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, 
 
   /** Return position numbers of cells that should be displayed as disabled */
   protected abstract getDisabledPositions(): number[];
-
 }
 
 export interface ProvideHeadingValue {
