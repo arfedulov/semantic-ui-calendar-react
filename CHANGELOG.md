@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.16.0 2020-01-22
+
+- fix: an issue where the picker would crash if one enters a value outside of the selectable range before opening the picker.
+
+## v0.16.1 2019-12-29
+
+- feat: allow null to be set for animation to turn it off
+
 ## v0.16.0 2019-10-26
 
 - feat: allow navigating to month/year views for DateRangeInputs
