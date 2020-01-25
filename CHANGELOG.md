@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.16.3 2020-01-25
+
+- fix: added missing dist folder in package
+
 ## v0.16.2 2020-01-22
 
 - fix: an issue where the picker would crash if one enters a value outside of the selectable range before opening the picker.
