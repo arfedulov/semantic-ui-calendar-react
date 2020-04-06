@@ -81,6 +81,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       timeFormat,
       closable,
       disableMinute,
+      inverted,
       ...rest
     } = this.props;
 
@@ -91,6 +92,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
         closePopup={this.closePopup}
         openPopup={this.openPopup}
         {...rest}
+        inverted={inverted}
         value={value}
         renderPicker={() => this.getPicker()}
       />
@@ -149,6 +151,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       tabIndex,
       pickerStyle,
       pickerWidth,
+      inverted,
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat], localization);
     const pickerProps = {
@@ -167,6 +170,7 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       timeFormat,
       tabIndex,
       localization,
+      inverted,
     };
     if (this.state.mode === 'hour') {
       return <HourPicker {...pickerProps} />;

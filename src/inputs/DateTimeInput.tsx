@@ -189,6 +189,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       localization,
       onChange,
       disableMinute,
+      inverted,
       ...rest
     } = this.props;
 
@@ -200,6 +201,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
         onFocus={this.onFocus}
         onMount={this.onInputViewMount}
         onChange={this.onInputValueChange}
+        inverted={inverted}
         {...rest}
         value={dateValueToString(value, dateFormat, localization)}
         renderPicker={() => this.getPicker()}
@@ -256,6 +258,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       tabIndex,
       pickerStyle,
       pickerWidth,
+      inverted,
     } = this.props;
     const dateTimeFormat = this.getDateTimeFormat();
     const pickerProps = {
@@ -274,6 +277,7 @@ class DateTimeInput extends BaseInput<DateTimeInputProps, DateTimeInputState> {
       minDate: parseValue(minDate, dateTimeFormat, localization),
       maxDate: parseValue(maxDate, dateTimeFormat, localization),
       localization,
+      inverted,
     };
     const disableParsed = parseArrayOrValue(disable, dateTimeFormat, localization);
     const { mode } = this.state;

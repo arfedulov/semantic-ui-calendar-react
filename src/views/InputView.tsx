@@ -33,11 +33,12 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
       onFocus,
       onBlur,
       onMouseEnter,
+      inverted,
       ...rest
     } = this.props;
 
     const ClearIcon = isString(clearIcon) ?
-      <Icon name={clearIcon as SemanticICONS} link onClick={onClear} /> :
+      <Icon name={clearIcon as SemanticICONS} link onClick={onClear} inverted={inverted}/> :
       <clearIcon.type {...clearIcon.props} link onClick={onClear} />
       ;
 
@@ -48,12 +49,13 @@ class FormInputWithRef extends React.Component<FormInputProps, any> {
         onClick={onFocus}
         onMouseEnter={onMouseEnter}
         icon
+        inverted={inverted}
         {...rest}
       >
         {value && clearable ?
           ClearIcon
           :
-          <Icon name={icon} />
+          <Icon name={icon} inverted={inverted}/>
         }
 
         <input
@@ -125,6 +127,8 @@ interface InputViewProps {
   readOnly?: boolean;
   /** Try to prevent mobile keyboard appearing. */
   hideMobileKeyboard?: boolean;
+  /** semantic compoenents ui inverted styling. */
+  inverted: boolean;
 }
 
 class InputView extends React.Component<InputViewProps, any> {
@@ -210,6 +214,7 @@ class InputView extends React.Component<InputViewProps, any> {
       icon,
       readOnly,
       hideMobileKeyboard,
+      inverted,
       ...rest
     } = this.props;
 
@@ -219,6 +224,7 @@ class InputView extends React.Component<InputViewProps, any> {
         // trying to use this hack https://stackoverflow.com/a/7610923 for hiding mobile keyboard
         readOnly={(checkMobile() && hideMobileKeyboard) || readOnly}
         icon={icon}
+        inverted={inverted}
         iconPosition={icon && iconPosition !== 'right' ? iconPosition : undefined}
         innerRef={(e) => { this.inputNode = e; onMount(e); }}
         value={value}
@@ -270,6 +276,7 @@ class InputView extends React.Component<InputViewProps, any> {
             context={this.inputNode}
             on='hover'
             mountNode={mountNode}
+            inverted={inverted}
           >
             <div
               onBlur={this.onBlur}

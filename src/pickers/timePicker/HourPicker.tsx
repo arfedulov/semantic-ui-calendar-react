@@ -48,8 +48,9 @@ export interface HourPickerOnChangeData extends BasePickerOnChangeData {
 class HourPicker
   extends SingleSelectionPicker<HourPickerProps>
   implements ProvideHeadingValue {
-  public static readonly defaultProps: { timeFormat: TimeFormat } = {
+  public static readonly defaultProps: { timeFormat: TimeFormat; inverted: boolean; } = {
     timeFormat: '24',
+    inverted: false,
   };
 
   constructor(props) {

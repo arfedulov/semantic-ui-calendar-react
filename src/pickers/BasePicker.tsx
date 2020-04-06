@@ -59,6 +59,8 @@ export interface BasePickerProps {
   tabIndex?: string;
   pickerWidth?: string;
   pickerStyle?: object;
+  /** semantic compoenents ui inverted styling. */
+  inverted: boolean;
 }
 
 export interface OptionalHeaderProps {
@@ -106,6 +108,10 @@ export interface BasePickerState extends Readonly<any> {
 /** Do not expose this class. Instead use RangeSelectionPicker and SingleSelectionPicker. */
 abstract class BasePicker<P extends BasePickerProps> extends React.Component<P, BasePickerState> {
   protected PAGE_WIDTH: number;
+
+  public static defaultProps = {
+    inverted: false
+  };
 
   constructor(props: P) {
     super(props);
