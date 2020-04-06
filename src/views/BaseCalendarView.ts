@@ -24,6 +24,8 @@ export interface BaseCalendarViewProps {
   markColor?: SemanticCOLORS;
   /** Moment date localization */
   localization?: string;
+  /** semantic component ui inverted styling. */
+  inverted: boolean;
 }
 
 export interface SingleSelectionCalendarViewProps {

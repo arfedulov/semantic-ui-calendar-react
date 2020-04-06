@@ -77,6 +77,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       markColor,
       localization,
       allowSameEndDate,
+      inverted,
       ...rest
     } = this.props;
 
@@ -84,6 +85,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         {...rest}
+        inverted={inverted}
         value={value}
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
@@ -127,6 +129,7 @@ class DatesRangeInput extends BaseInput<DatesRangeInputProps, BaseInputState> {
 
     return (
       <DatesRangePicker
+        inverted={this.props.inverted}
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
         inline={this.props.inline}

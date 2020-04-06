@@ -61,6 +61,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
       dateFormat,
       closable,
       localization,
+      inverted,
       ...rest
     } = this.props;
 
@@ -70,6 +71,7 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
         closePopup={this.closePopup}
         openPopup={this.openPopup}
         {...rest}
+        inverted={inverted}
         value={value}
         onMount={this.onInputViewMount}
         renderPicker={this.getPicker}
@@ -86,10 +88,12 @@ class YearInput extends BaseInput<YearInputProps, BaseInputState> {
       initialDate,
       dateFormat,
       localization,
+      inverted,
     } = this.props;
 
     return (
       <YearPicker
+        inverted={inverted}
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
         inline={this.props.inline}

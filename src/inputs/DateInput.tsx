@@ -157,6 +157,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       marked,
       localization,
       onChange,
+      inverted,
       ...rest
     } = this.props;
 
@@ -170,6 +171,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
         onChange={this.onInputValueChange}
         {...rest}
         renderPicker={() => this.getPicker()}
+        inverted={inverted}
         value={dateValueToString(value, dateFormat, localization)}
       />
     );
@@ -208,6 +210,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       tabIndex,
       pickerWidth,
       pickerStyle,
+      inverted,
     } = this.props;
     const pickerProps = {
       isPickerInFocus: this.isPickerInFocus,
@@ -226,6 +229,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
       minDate: parseValue(minDate, dateFormat, localization),
       maxDate: parseValue(maxDate, dateFormat, localization),
       localization,
+      inverted,
     };
     const disableParsed = parseArrayOrValue(disable, dateFormat, localization);
     const markedParsed = parseArrayOrValue(marked, dateFormat, localization);

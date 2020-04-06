@@ -16,6 +16,8 @@ interface CalendarProps {
   pickerWidth?: string;
   /** Style object for picker. */
   pickerStyle?: object;
+  /** semantic compoenents ui inverted styling. */
+  inverted: boolean;
 }
 
 class Calendar extends React.Component<CalendarProps, any> {

@@ -48,8 +48,9 @@ export interface MinutePickerOnChangeData extends BasePickerOnChangeData {
 class MinutePicker
   extends SingleSelectionPicker<MinutePickerProps>
   implements ProvideHeadingValue {
-  public static readonly defaultProps: { timeFormat: TimeFormat } = {
+  public static readonly defaultProps: { timeFormat: TimeFormat; inverted: boolean; } = {
     timeFormat: '24',
+    inverted: false,
   };
 
   constructor(props) {

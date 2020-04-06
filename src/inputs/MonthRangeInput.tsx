@@ -57,6 +57,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
       minDate,
       closable,
       localization,
+      inverted,
       ...rest
     } = this.props;
 
@@ -64,6 +65,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
       <InputView
         popupIsClosed={this.state.popupIsClosed}
         {...rest}
+        inverted={inverted}
         value={value}
         onMount={this.onInputViewMount}
         closePopup={this.closePopup}
@@ -81,6 +83,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
       maxDate,
       minDate,
       localization,
+      inverted,
     } = this.props;
     const {
       start,
@@ -89,6 +92,7 @@ class MonthRangeInput extends BaseInput<MonthRangeInputProps, BaseInputState> {
 
     return (
       <MonthRangePicker
+        inverted={inverted}
         isPickerInFocus={this.isPickerInFocus}
         isTriggerInFocus={this.isTriggerInFocus}
         inline={this.props.inline}

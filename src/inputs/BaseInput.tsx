@@ -69,6 +69,8 @@ export interface BaseInputProps {
   localization?: string;
   /** Try to prevent mobile keyboard appearing. */
   hideMobileKeyboard?: boolean;
+  /** semantic inverted prop */
+  inverted?: boolean;
 }
 
 export const BaseInputPropTypes = {
@@ -281,6 +283,7 @@ abstract class BaseInput<P extends BaseInputProps,
   public static defaultProps = {
     inline: false,
     localization: moment.locale(),
+    inverted: false,
   };
 
   private calendarNode: HTMLElement;
