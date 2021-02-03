@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { SemanticCOLORS } from 'semantic-ui-react';
+import { BodyWidth } from './CalendarBody/Body';
 
 export interface BaseCalendarViewProps {
   /** Used for passing calendar dom element to parent component. */
@@ -24,6 +25,9 @@ export interface BaseCalendarViewProps {
   markColor?: SemanticCOLORS;
   /** Moment date localization */
   localization?: string;
+  /** Number of cells in a row */
+  rowWidth?: BodyWidth;
+
 }
 
 export interface SingleSelectionCalendarViewProps {

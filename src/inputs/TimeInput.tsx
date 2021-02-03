@@ -149,6 +149,8 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       tabIndex,
       pickerStyle,
       pickerWidth,
+      minutesStep,
+      minutesPerRow,
     } = this.props;
     const currentValue = parseValue(value, TIME_FORMAT[timeFormat], localization);
     const pickerProps = {
@@ -167,6 +169,8 @@ class TimeInput extends BaseInput<TimeInputProps, TimeInputState> {
       timeFormat,
       tabIndex,
       localization,
+      minutesStep,
+      minutesPerRow,
     };
     if (this.state.mode === 'hour') {
       return <HourPicker {...pickerProps} />;

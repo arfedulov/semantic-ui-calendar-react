@@ -143,6 +143,8 @@ class DateTimeForm extends React.Component<any, any> {
           value={this.state.time}
           iconPosition='left'
           onChange={this.handleChange}
+          minutesStep={5}
+          minutesPerRow={3}
         />
         <br />
         <DateTimeInput
