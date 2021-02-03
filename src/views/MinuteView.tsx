@@ -11,14 +11,19 @@ import Header, { HeaderProps } from './CalendarHeader/Header';
 
 import { findHTMLElement } from '../lib';
 
-const MINUTE_CALENDAR_ROW_WIDTH = 3;
-
 type MinuteViewProps =
   BaseCalendarViewProps
   & SingleSelectionCalendarViewProps
   & CalendarWithOptionalHeaderViewProps;
 
 class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
+  protected MINUTE_CALENDAR_ROW_WIDTH: number;
+
+  constructor(props) {
+    super(props);
+    this.MINUTE_CALENDAR_ROW_WIDTH = 4;
+  }
+
   public render() {
     const {
       values,
@@ -37,6 +42,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       onMount,
       inline,
       localization,
+      rowWidth,
       ...rest
     } = this.props;
     const headerProps: HeaderProps = {
@@ -47,7 +53,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       hasNextPage,
       hasPrevPage,
       title: currentHeadingValue,
-      width: MINUTE_CALENDAR_ROW_WIDTH,
+      width: rowWidth,
       displayWeeks: false,
       localization,
     };
@@ -56,7 +62,7 @@ class MinuteView extends BaseCalendarView<MinuteViewProps, any> {
       <Calendar ref={(e) => this.calendarNode = findHTMLElement(e)} outlineOnFocus={inline} {...rest}>
         { hasHeader && <Header { ...headerProps } /> }
         <Body
-          width={MINUTE_CALENDAR_ROW_WIDTH}
+          width={rowWidth}
           data={values}
           hovered={hoveredItemIndex}
           onCellHover={onCellHover}

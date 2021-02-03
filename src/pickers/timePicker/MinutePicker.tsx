@@ -24,9 +24,10 @@ import {
   isNextPageAvailable,
   isPrevPageAvailable,
 } from './sharedFunctions';
+import { BodyWidth } from 'src/views/CalendarBody/Body';
 
-const MINUTES_STEP = 5;
-const MINUTES_ON_PAGE = 12;
+const DEFAULT_MINUTES_STEP = 5;
+const DEFAULT_MINUTES_PER_ROW = 3;
 const PAGE_WIDTH = 3;
 
 type MinutePickerProps = BasePickerProps
@@ -48,13 +49,22 @@ export interface MinutePickerOnChangeData extends BasePickerOnChangeData {
 class MinutePicker
   extends SingleSelectionPicker<MinutePickerProps>
   implements ProvideHeadingValue {
+
   public static readonly defaultProps: { timeFormat: TimeFormat } = {
     timeFormat: '24',
   };
 
+  protected minutesStep: number;
+  protected minutesOnPage: number;
+  protected minutesPerRow: BodyWidth;
+
   constructor(props) {
     super(props);
+    const {minutesStep: minutesStepProp, minutesPerRow: minutesPerRowProp} = props;
     this.PAGE_WIDTH = PAGE_WIDTH;
+    this.minutesStep = minutesStepProp ? minutesStepProp : DEFAULT_MINUTES_STEP;
+    this.minutesOnPage = Math.floor(60 / this.minutesStep);
+    this.minutesPerRow = minutesPerRowProp ? minutesPerRowProp : DEFAULT_MINUTES_PER_ROW;
   }
 
   public render() {
@@ -92,7 +102,8 @@ class MinutePicker
         disabledItemIndexes={this.getDisabledPositions()}
         currentHeadingValue={this.getCurrentDate()}
         activeItemIndex={this.getActiveCellPosition()}
-        localization={localization}/>
+        localization={localization}
+        rowWidth={this.minutesPerRow}/>
     );
   }
 
@@ -110,14 +121,14 @@ class MinutePicker
       ? '0' + this.state.date.hour().toString()
       : this.state.date.hour().toString();
 
-    return range(0, 60, MINUTES_STEP)
+    return range(0, 60, this.minutesStep)
       .map((minute) => `${minute < 10 ? '0' : ''}${minute}`)
       .map((minute) => buildTimeStringWithSuffix(hour, minute, this.props.timeFormat));
   }
 
   protected getSelectableCellPositions(): number[] {
     const disabled = this.getDisabledPositions();
-    const all = range(0, MINUTES_ON_PAGE);
+    const all = range(0, this.minutesOnPage);
     if (disabled) {
       return all.filter((pos) => {
         return disabled.indexOf(pos) < 0;
@@ -129,11 +140,11 @@ class MinutePicker
 
   protected getInitialDatePosition(): number {
     const selectable = this.getSelectableCellPositions();
-    if (selectable.indexOf(getMinuteCellPosition(this.state.date.minute())) < 0) {
+    if (selectable.indexOf(this.getMinuteCellPosition(this.state.date.minute())) < 0) {
       return selectable[0];
     }
 
-    return getMinuteCellPosition(this.state.date.minute());
+    return this.getMinuteCellPosition(this.state.date.minute());
   }
 
   protected getDisabledPositions(): number[] {
@@ -150,20 +161,20 @@ class MinutePicker
       disabledByDisable = concat(
         disabledByDisable,
         disable.filter((date) => date.isSame(this.state.date, 'day'))
-          .map((date) => getMinuteCellPosition(date.minute())));
+          .map((date) => this.getMinuteCellPosition(date.minute())));
     }
     if (minDate) {
       if (minDate.isSame(this.state.date, 'hour')) {
         disabledByMinDate = concat(
           disabledByMinDate,
-          range(0 , minDate.minute()).map((m) => getMinuteCellPosition(m)));
+          range(0 , minDate.minute()).map((m) => this.getMinuteCellPosition(m)));
       }
     }
     if (maxDate) {
       if (maxDate.isSame(this.state.date, 'hour')) {
         disabledByMaxDate = concat(
           disabledByMaxDate,
-          range(maxDate.minute() + MINUTES_STEP, 60).map((m) => getMinuteCellPosition(m)));
+          range(maxDate.minute() + this.minutesStep, 60).map((m) => this.getMinuteCellPosition(m)));
       }
     }
     const result = sortBy(
@@ -181,7 +192,7 @@ class MinutePicker
     */
     const { value } = this.props;
     if (value && value.isSame(this.state.date, 'date')) {
-      return Math.floor(this.props.value.minutes() / MINUTES_STEP);
+      return Math.floor(this.props.value.minutes() / this.minutesStep);
     }
   }
 
@@ -201,7 +212,7 @@ class MinutePicker
         month: this.state.date.month(),
         date: this.state.date.date(),
         hour: this.state.date.hour(),
-        minute: this.buildCalendarValues().indexOf(value) * MINUTES_STEP,
+        minute: this.buildCalendarValues().indexOf(value) * this.minutesStep,
       },
     };
     this.props.onChange(e, data);
@@ -228,10 +239,10 @@ class MinutePicker
       return { date: prevDate };
     }, callback);
   }
-}
 
-function getMinuteCellPosition(minute: number): number {
-  return Math.floor(minute / MINUTES_STEP);
+  private getMinuteCellPosition(minute: number): number {
+    return Math.floor(minute / this.minutesStep);
+  }
 }
 
 export default MinutePicker;

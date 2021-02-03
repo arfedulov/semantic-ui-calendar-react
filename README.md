@@ -226,6 +226,8 @@ You can also set locale for *Input component locally using ``localization`` prop
 | ``icon`` | {string\|false} icon to display inside Input. |
 | ``iconPosition`` | {'left'\|'right'} icon position inside Input. Default: 'right'. |
 | ``hideMobileKeyboard`` | {bool} Try to prevent mobile keyboard appearing. |
+| ``minutesStep`` | {number} Step between minutes in the minutes picker. |
+| ``minutesPerRow`` | {number} Number of cells per row in the minutes picker. |
 
 ### DateTimeInput
 
