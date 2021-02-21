@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.16.4 2021-02-21
+
+- chore: update dependencies
+
 ## v0.16.3 2020-01-25
 
 - fix: added missing dist folder in package
