@@ -3,6 +3,7 @@ import invoke from 'lodash/invoke';
 import moment, { Moment } from 'moment';
 import * as PropTypes from 'prop-types';
 import * as React from 'react';
+import isString from 'lodash/isString';
 
 import {
   BasePickerOnChangeData,
@@ -111,7 +112,7 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
     ...MinMaxValuePropTypes,
     ...{
       /** Display mode to start. */
-      startMode: PropTypes.oneOf([ 'year', 'month', 'day' ]),
+      startMode: PropTypes.oneOf(['year', 'month', 'day']),
     },
   };
 
@@ -299,15 +300,45 @@ class DateInput extends BaseInput<DateInputProps, DateInputState> {
   }
 
   /** Keeps internal state in sync with input field value. */
+  /*  When value is set, set internal states based on its value.
+      When value is empty/invalid, set internal states based on initialDate.
+      When value and initalDate are empty/invalid, set internal states to undefined so that the picker will be reset
+      (otherwise the picker will display wrongly when we manually delete the input)
+  */
   private onInputValueChange = (e, { value }) => {
+    let year: number;
+    let month: number;
+    let date: number;
+
     const parsedValue = moment(value, this.props.dateFormat);
     if (parsedValue.isValid()) {
-      this.setState({
-        year: parsedValue.year(),
-        month: parsedValue.month(),
-        date: parsedValue.date(),
-      });
+      year = parsedValue.year();
+      month = parsedValue.month();
+      date = parsedValue.date();
+    } else if (this.props.initialDate) {
+      if (isString(this.props.initialDate)) {
+        const parsedInitialDate = moment(this.props.initialDate, this.props.dateFormat);
+        if (parsedInitialDate.isValid()) {
+          year = parsedInitialDate.year();
+          month = parsedInitialDate.month();
+          date = parsedInitialDate.date();
+        }
+      } else if (moment.isMoment(this.props.initialDate) && this.props.initialDate.isValid()) {
+        year = this.props.initialDate.year();
+        month = this.props.initialDate.month();
+        date = this.props.initialDate.date();
+      } else if (moment.isDate(this.props.initialDate)) {
+        year = this.props.initialDate.getFullYear();
+        month = this.props.initialDate.getMonth();
+        date = this.props.initialDate.getDate();
+      }
     }
+
+    this.setState({
+      year,
+      month,
+      date,
+    });
     invoke(this.props, 'onChange', e, { ...this.props, value });
   }
 }

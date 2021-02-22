@@ -206,5 +206,9 @@ if (res) {
 return res.position;
 }
 
+if (selectable.length === 0) {
+  return null;
+}
+
 return selectable[0].position;
 }

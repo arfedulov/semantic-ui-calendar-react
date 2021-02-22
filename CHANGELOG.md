@@ -1,5 +1,28 @@
 # Changelog
 
+## v0.16.4 2021-02-21
+
+- chore: update dependencies
+
+## v0.16.3 2020-01-25
+
+- fix: added missing dist folder in package
+
+## v0.16.2 2020-01-22
+
+- fix: an issue where the picker would crash if one enters a value outside of the selectable range before opening the picker.
+
+## v0.16.1 2019-12-29
+
+- feat: allow null to be set for animation to turn it off
+
+## v0.16.0 2019-10-26
+
+- feat: allow navigating to month/year views for DateRangeInputs
+
+- fix: an issue where date picker may get messed up if user enters some value and then delete it.
+
+
 ## v0.15.0 2019-05-04
 
 - feat: add ``hideMobileKeyboard`` prop [`#143`](https://github.com/arfedulov/semantic-ui-calendar-react/pull/143)
