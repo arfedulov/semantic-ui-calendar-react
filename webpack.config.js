@@ -28,7 +28,9 @@ const config = {
     extensions: ['.webpack.js', '.web.js', '.ts', '.tsx', '.js', 'jsx'],
   },
   devServer: {
-    contentBase: path.resolve(__dirname, 'example'),
+    static: {
+      directory: path.resolve(__dirname, "example")
+    },
     port: 9000,
     hot: true,
   },
