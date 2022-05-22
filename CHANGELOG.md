@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.16.6 2022-05-22
+
+- chore: update dependencies
+
 ## v0.16.5 2021-10-29
 
 - chore: update dependencies
