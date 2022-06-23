@@ -67,7 +67,7 @@
     "env-cmd": "^8.0.2",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
-    "jsdom": "^13.1.0",
+    "jsdom": "^16.5.0",
     "mkdirp": "^0.5.1",
     "mocha": "^5.2.0",
     "mockdate": "^2.0.2",
